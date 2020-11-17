@@ -34,7 +34,9 @@ storage_containers = [
   "opendes",
   "osdu-wks-mappings",
   "workflow-tasks-sharing",
-  "wdms-osdu"
+  "wdms-osdu",
+  "file-staging-area",
+  "file-persistent-area"
 ]
 
 
