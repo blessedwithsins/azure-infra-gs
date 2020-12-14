@@ -87,3 +87,7 @@ spec:
               serviceName: notification
               servicePort: 80
             path: /api/notification/v1/*
+          - backend:
+              serviceName: seismic-store-service
+              servicePort: 80
+            path: /seistore-svc/api/v3/*
