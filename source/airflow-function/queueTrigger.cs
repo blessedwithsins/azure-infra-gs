@@ -135,9 +135,7 @@ namespace MyFunctionProj
         public string Content { get; set; }
         public string LogFileName { get; set; }
         public string RunID { get; set; }
-
         public string CorrelationId { get; set; }
-
         public int LineNumber { get; set; }
     }
 }
