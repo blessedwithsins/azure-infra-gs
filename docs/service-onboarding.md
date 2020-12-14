@@ -1,5 +1,5 @@
 # Service Onboarding
-This document outlines the process of onboarding a service with OSDU on Azure.
+This document outlines the process of onboarding a service with OSDU on Azure. Note that if you are a service owner who is onboarding a service, there is an issue template in this repository titled "service_onboarding_template" that we ask you use so we can track along with your process.
 
 ## Table of Contents
 1. [Infrastructure and Initial Requirements](#infrastructure-and-initial-requirements)
@@ -15,7 +15,7 @@ Quick links: [Terraform infra template](https://community.opengroup.org/osdu/pla
 ---
 
 The first step to onboarding a service with OSDU on Azure is onboarding with the infrastructure. This includes the following activities:
-- Add any additional Azure cloud infrastructure (Cosmos containers, Storage containers, fileshares, etc.) to the Terraform template. [Link](https://community.opengroup.org/osdu/platform/deployment-and-operations/infra-azure-provisioning/-/tree/master/infra/templates/osdu-r3-mvp)
+- Add any additional Azure cloud infrastructure (Cosmos containers, Storage containers, fileshares, etc.) to the Terraform template. [Link](https://community.opengroup.org/osdu/platform/deployment-and-operations/infra-azure-provisioning/-/tree/master/infra/templates/osdu-r3-mvp). Note that if the infrastructure is a part of the data-partition template, you may need to add secrets to the keyvault that are partition specific; if doing so, update the createPartition REST request to include the keys that you have added so they are accessible in service code. [Link](https://community.opengroup.org/osdu/platform/deployment-and-operations/infra-azure-provisioning/-/blob/master/tools/rest/partition.http#L48)
 - Create an ingress point for the service. [Link](https://community.opengroup.org/osdu/platform/deployment-and-operations/infra-azure-provisioning/-/blob/master/charts/osdu-common/templates/appgw-ingress.yaml)
 - Add any test data that is required for the service integration tests. [Link](https://community.opengroup.org/osdu/platform/deployment-and-operations/infra-azure-provisioning/-/tree/master/tools/test_data)
 - Update `upload-data.py` to upload any new test data files you created. [Link](https://community.opengroup.org/osdu/platform/deployment-and-operations/infra-azure-provisioning/-/blob/master/tools/test_data/upload-data.py).
@@ -57,6 +57,8 @@ Once the service is passing both Gitlab and ADO pipelines, it has to be properly
 - Add a variable group `Azure Service Release - $SERVICE_NAME` to the documentation. You should know what values to set for this variable group from creating the development and demo pipelines. [Link](https://community.opengroup.org/osdu/platform/deployment-and-operations/infra-azure-provisioning/-/blob/master/docs/service-automation.md#create-osdu-service-libraries)
 - Add a step for creating the service pipeline at the bottom of the service-automation page. [Link](https://community.opengroup.org/osdu/platform/deployment-and-operations/infra-azure-provisioning/-/blob/master/docs/service-automation.md#create-osdu-service-libraries)
 - Create a rest script with sample calls to the service for users. [Link](https://community.opengroup.org/osdu/platform/deployment-and-operations/infra-azure-provisioning/-/tree/master/tools/rest)
+- (Optional) Add documentation on how to deploy the service into an already existing manual deployment and pipeline-controlled deployment to the service repo.
+- (Optional) Create a video walkthrough explaining the process of deploying the service.
 
 ## Release 
 **Coming soon**
