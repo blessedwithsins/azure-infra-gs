@@ -31,11 +31,20 @@ if [ -z $INVALID_JWT ]; then
   usage;
 fi
 
-if [ -f ./settings_common.env ]; then
-  source ./settings_common.env;
-else
-  tput setaf 1; echo 'ERROR: common.env not found' ; tput sgr0
-fi
+# ------------------------------------------------------------------------------------------------------
+# Common Settings
+# ------------------------------------------------------------------------------------------------------
+OSDU_TENANT="opendes"
+OSDU_TENANT2="common"
+OSDU_TENANT3="othertenant2"
+COMPANY_DOMAIN="contoso.com"
+COSMOS_DB_NAME="osdu-db"
+LEGAL_SERVICE_BUS_TOPIC="legaltags"
+RECORD_SERVICE_BUS_TOPIC="recordstopic"
+LEGAL_STORAGE_CONTAINER="legal-service-azure-configuration"
+LEGAL_TAG="opendes-public-usa-dataset-7643990"
+TENANT_ID="$(az account show --query tenantId -otsv)"
+INVALID_JWT=$INVALID_JWT
 
 if [ -f ./settings_environment.env ]; then
   source ./settings_environment.env;
@@ -49,18 +58,20 @@ if [ ! -d $UNIQUE ]; then mkdir $UNIQUE; fi
 # ------------------------------------------------------------------------------------------------------
 # LocalHost Run Settings
 # ------------------------------------------------------------------------------------------------------
+KEYVAULT_URI="${ENV_KEYVAULT}"
 ENTITLEMENTS_URL="https://${ENV_HOST}/entitlements/v1"
-azure_istioauth_enabled="true"
+appinsights_key="${ENV_APPINSIGHTS_KEY}"
+osdu_unit_catalog_filename="data/unit_catalog_v2.json"
 
 # ------------------------------------------------------------------------------------------------------
 # Integration Test Settings
 # ------------------------------------------------------------------------------------------------------
 INTEGRATION_TESTER="${ENV_PRINCIPAL_ID}"
-TESTER_SERVICEPRINCIPAL_SECRET="${ENV_PRINCIPAL_SECRET}"
+AZURE_TESTER_SERVICEPRINCIPAL_SECRET="${ENV_PRINCIPAL_SECRET}"
 AZURE_AD_TENANT_ID="${TENANT_ID}"
 AZURE_AD_APP_RESOURCE_ID="${ENV_APP_ID}"
-BASE_URL=/api/unit
-VIRTUAL_SERVICE_HOST_NAME="localhost:8080"
+BASE_URL="/api/unit"
+VIRTUAL_SERVICE_HOST_NAME="${$ENV_HOST}"
 client_id="${ENV_PRINCIPAL_ID}"
 MY_TENANT="${OSDU_TENANT}"
 TIME_ZONE="UTC+0"
@@ -79,16 +90,6 @@ export RECORD_SERVICE_BUS_TOPIC=$RECORD_SERVICE_BUS_TOPIC
 export LEGAL_STORAGE_CONTAINER=$LEGAL_STORAGE_CONTAINER
 export TENANT_ID=$TENANT_ID
 export INVALID_JWT=$INVALID_JWT
-
-export NO_ACCESS_ID=$NO_ACCESS_ID
-export NO_ACCESS_SECRET=$NO_ACCESS_SECRET
-export OTHER_APP_ID=$OTHER_APP_ID
-export OTHER_APP_OID=$OTHER_APP_OID
-
-export AD_USER_EMAIL=$AD_USER_EMAIL
-export AD_USER_OID=$AD_USER_OID
-export AD_GUEST_EMAIL=$AD_GUEST_EMAIL
-export AD_GUEST_OID=$AD_GUEST_OID
 
 # ------------------------------------------------------------------------------------------------------
 # Environment Settings
@@ -118,18 +119,21 @@ export ENV_ELASTIC_PASSWORD=$ENV_ELASTIC_PASSWORD
 # ------------------------------------------------------------------------------------------------------
 # LocalHost Run Settings
 # ------------------------------------------------------------------------------------------------------
+export KEYVAULT_URI="${ENV_KEYVAULT}"
 export ENTITLEMENTS_URL="https://${ENV_HOST}/entitlements/v1"
-export azure_istioauth_enabled="true"
+export appinsights_key="${ENV_APPINSIGHTS_KEY}"
+export osdu_unit_catalog_filename="data/unit_catalog_v2.json"
 
 # ------------------------------------------------------------------------------------------------------
 # Integration Test Settings
 # ------------------------------------------------------------------------------------------------------
+#export VIRTUAL_SERVICE_HOST_NAME="localhost:8080"
+export VIRTUAL_SERVICE_HOST_NAME="${ENV_HOST}"
 export INTEGRATION_TESTER="${INTEGRATION_TESTER}"
-export TESTER_SERVICEPRINCIPAL_SECRET="${TESTER_SERVICEPRINCIPAL_SECRET}"
+export AZURE_TESTER_SERVICEPRINCIPAL_SECRET="${TESTER_SERVICEPRINCIPAL_SECRET}"
 export AZURE_AD_TENANT_ID="${AZURE_AD_TENANT_ID}"
 export AZURE_AD_APP_RESOURCE_ID="${AZURE_AD_APP_RESOURCE_ID}"
 export BASE_URL=/api/unit
-export VIRTUAL_SERVICE_HOST_NAME="localhost:8080"
 export client_id="${ENV_PRINCIPAL_ID}"
 export MY_TENANT="${OSDU_TENANT}"
 export TIME_ZONE="${TIME_ZONE}"
@@ -137,32 +141,8 @@ LOCALENV
 
 
 cat > ${UNIQUE}/${SERVICE}_local.yaml <<LOCALRUN
-ENTITLEMENTS_URL: "${ENTITLEMENTS_URL}
-azure_istioauth_enabled: "${azure_istioauth_enabled}"
+KEYVAULT_URI: "${ENV_KEYVAULT}"
+ENTITLEMENT_URL: "https://${ENV_HOST}/entitlements/v1"
+appinsights_key: "${ENV_APPINSIGHTS_KEY}"
+osdu_unit_catalog_filename: "data/unit_catalog_v2.json"
 LOCALRUN
-
-
-cat > ${UNIQUE}/${SERVICE}_local_test.yaml <<LOCALTEST
-INTEGRATION_TESTER: "${INTEGRATION_TESTER}"
-TESTER_SERVICEPRINCIPAL_SECRET: "${TESTER_SERVICEPRINCIPAL_SECRET}"
-AZURE_AD_TENANT_ID: "${AZURE_AD_TENANT_ID}"
-AZURE_AD_APP_RESOURCE_ID: "${AZURE_AD_APP_RESOURCE_ID}"
-BASE_URL: "${BASE_URL}"
-VIRTUAL_SERVICE_HOST_NAME: "${VIRTUAL_SERVICE_HOST_NAME}"
-client_id: "${client_id}"
-MY_TENANT: "${MY_TENANT}"
-TIME_ZONE: "${TIME_ZONE}"
-LOCALTEST
-
-
-cat > ${UNIQUE}/${SERVICE}_test.yaml <<DEVTEST
-INTEGRATION_TESTER: "${INTEGRATION_TESTER}"
-TESTER_SERVICEPRINCIPAL_SECRET: "${TESTER_SERVICEPRINCIPAL_SECRET}"
-AZURE_AD_TENANT_ID: "${AZURE_AD_TENANT_ID}"
-AZURE_AD_APP_RESOURCE_ID: "${AZURE_AD_APP_RESOURCE_ID}"
-BASE_URL: "${BASE_URL}"
-VIRTUAL_SERVICE_HOST_NAME: "${ENV_HOST}"
-client_id: "${client_id}"
-MY_TENANT: "${MY_TENANT}"
-TIME_ZONE: "${TIME_ZONE}"
-DEVTEST

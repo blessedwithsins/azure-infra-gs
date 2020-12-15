@@ -30,7 +30,7 @@ __[Integration Testing](https://msosdu.azureedge.net/osdu-azure-testing/osdu-azu
 - Executing Integration Tests
 - IDE Setup
 
-__Automation Pipelines__ _(Soon..)_
+__[Automation Pipelines](https://msosdu.azureedge.net/osdu-azure-pipelines/osdu-azure-pipelines.html)__
 > Use Azure Devops Pipelines to build and deploy a full environment in sync with GitLab Master Branches
 
 - Code Mirroring Pipelines
