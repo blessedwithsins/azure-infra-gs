@@ -373,6 +373,23 @@ az pipelines variable-group create \
   -ojson
 ```
 
+__Setup and Configure the ADO Library `Azure Service Release - crs-conversion-service`__
+
+This variable group is the service specific variables necessary for testing and deploying the `crs-conversion` service.
+
+| Variable | Value |
+|----------|-------|
+| MAVEN_DEPLOY_POM_FILE_PATH | `drop/provider/crs-converter-azure/crs-converter-aks` |
+
+```bash
+az pipelines variable-group create \
+  --name "Azure Service Release - crs-conversion" \
+  --authorize true \
+  --variables \
+  MAVEN_DEPLOY_POM_FILE_PATH="drop/provider/crs-converter-azure/crs-converter-aks" \
+  -ojson
+```
+
 __Create the Chart Pipelines__
 
 Create the pipelines and run things in this exact order.
@@ -605,6 +622,22 @@ az pipelines create \
 az pipelines create \
   --name 'service-unit'  \
   --repository unit-service  \
+  --branch master  \
+  --repository-type tfsgit  \
+  --yaml-path /devops/azure/pipeline.yml  \
+  -ojson
+```
+
+11. Add a Pipeline for __crs-conversion__  to deploy the Crs Conversion Service.
+
+    _Repo:_ `crs-conversion-service`
+    _Path:_ `/devops/azure/pipeline.yml`
+    _Validate:_ https://<your_dns_name>/api/crs/converter/swagger-ui.html is alive.
+
+```bash
+az pipelines create \
+  --name 'crs-conversion-service'  \
+  --repository crs-conversion-service  \
   --branch master  \
   --repository-type tfsgit  \
   --yaml-path /devops/azure/pipeline.yml  \
