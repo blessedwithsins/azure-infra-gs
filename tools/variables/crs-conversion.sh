@@ -50,7 +50,7 @@ if [ ! -d $UNIQUE ]; then mkdir $UNIQUE; fi
 # LocalHost Run Settings
 # ------------------------------------------------------------------------------------------------------
 ENTITLEMENTS_URL="https://${ENV_HOST}/entitlements/v1"
-SIS_DATA=${SRC_ROOT_DIR}/apachesis_setup/SIS_DATA
+SIS_DATA=${SRC_DIR}/apachesis_setup/SIS_DATA
 azure_istioauth_enabled="true"
 
 # ------------------------------------------------------------------------------------------------------
@@ -114,13 +114,12 @@ export ENV_ELASTIC_HOST=$ENV_ELASTIC_HOST
 export ENV_ELASTIC_PORT=$ENV_ELASTIC_PORT
 export ENV_ELASTIC_USERNAME=$ENV_ELASTIC_USERNAME
 export ENV_ELASTIC_PASSWORD=$ENV_ELASTIC_PASSWORD
-export SRC_ROOT_DIR=$SRC_ROOT_DIR
 
 # ------------------------------------------------------------------------------------------------------
 # LocalHost Run Settings
 # ------------------------------------------------------------------------------------------------------
 export ENTITLEMENTS_URL="https://${ENV_HOST}/entitlements/v1"
-export SIS_DATA=${SRC_ROOT_DIR}/apachesis_setup/SIS_DATA
+export SIS_DATA=${SRC_DIR}/apachesis_setup/SIS_DATA
 export azure_istioauth_enabled="true"
 
 # ------------------------------------------------------------------------------------------------------
