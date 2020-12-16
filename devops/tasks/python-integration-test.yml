@@ -28,6 +28,6 @@ steps:
       workingDirectory: '$(System.DefaultWorkingDirectory)/${{ parameters.testArtifactLocation }}/${{ parameters.testPythonFilePath }}'
       script: |
         #!/usr/bin/env bash
-
+        chmod +x ./run-integration-tests.sh
         ./run-integration-tests.sh
         exit $?
