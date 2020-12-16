@@ -22,6 +22,8 @@ __Infra Changes__
 - [MR 99 - Adding KV Secret for Event Grid Topic Primary Keys - Storage Service](https://community.opengroup.org/osdu/platform/deployment-and-operations/infra-azure-provisioning/-/merge_requests/99)
 
 
+__Service Onboarded__
+- [Issue 55 - Unit Service](https://community.opengroup.org/osdu/platform/deployment-and-operations/infra-azure-provisioning/-/issues/55)
 
 
 # v0.4.1 (2020-11-30)
