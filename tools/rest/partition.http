@@ -104,7 +104,7 @@ data-partition-id: {{data_partition_id}}
             "sensitive": true,
             "value": "eventgrid-recordstopic-accesskey"
         },
-		"sdms-storage-account-name": {
+        "sdms-storage-account-name": {
             "sensitive": true,
             "value": "sdms-storage"
         },
