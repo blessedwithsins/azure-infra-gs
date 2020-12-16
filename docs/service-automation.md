@@ -375,7 +375,7 @@ az pipelines variable-group create \
 
 __Setup and Configure the ADO Library `Azure Service Release - crs-conversion-service`__
 
-This variable group is the service specific variables necessary for testing and deploying the `crs-conversion` service.
+This variable group is the service specific variables necessary for testing and deploying the `crs-conversion-service` service.
 
 | Variable | Value |
 |----------|-------|
@@ -383,7 +383,7 @@ This variable group is the service specific variables necessary for testing and 
 
 ```bash
 az pipelines variable-group create \
-  --name "Azure Service Release - crs-conversion" \
+  --name "Azure Service Release - crs-conversion-service" \
   --authorize true \
   --variables \
   MAVEN_DEPLOY_POM_FILE_PATH="drop/provider/crs-converter-azure/crs-converter-aks" \
@@ -628,7 +628,7 @@ az pipelines create \
   -ojson
 ```
 
-11. Add a Pipeline for __crs-conversion__  to deploy the Crs Conversion Service.
+11. Add a Pipeline for __crs-conversion-service__  to deploy the Crs Conversion Service.
 
     _Repo:_ `crs-conversion-service`
     _Path:_ `/devops/azure/pipeline.yml`
