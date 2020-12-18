@@ -1,0 +1,14 @@
+# Any job definition that starts with `.` will be ignored.
+.tf-plan:
+  variables:
+    TF_DIRECTORY: '.' # default to root directory
+    TF_WORKSPACE_NAME: '' # defaults to empty string
+    PLAN: ''
+
+  stage: build
+
+  script:
+    - cd ${TF_DIRECTORY}/
+    - terraform init -backend-config "storage_account_name=${TF_VAR_remote_state_account}" -backend-config "container_name=${TF_VAR_remote_state_container}"
+    - terraform workspace new ${TF_WORKSPACE_NAME} || terraform workspace select ${TF_WORKSPACE_NAME}
+    - terraform plan -out=${PLAN}
