@@ -34,7 +34,6 @@ before_script:
     - cd /tmp
     - wget https://releases.hashicorp.com/terraform/${TF_VERSION}/terraform_${TF_VERSION}_linux_amd64.zip -O terraform.zip
     - unzip terraform.zip -d /usr/bin
-    - rm terrafrom.zip
     - cd $currdir
     - /usr/bin/terraform version
 
