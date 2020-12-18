@@ -14,6 +14,10 @@ image:
 variables:
   PLAN: plan.tfplan
   JSON_PLAN_FILE: tfplan.json
+  TF_VERSION: 0.12.24
+  GO_VERSION: 1.12.14
+  TEMPLATE: samples/webdata
+  TEST_CASE: testWebData
 
 cache:
   paths:
@@ -23,6 +27,21 @@ before_script:
   - alias convert_report="jq -r '([.resource_changes[]?.change.actions?]|flatten)|{\"create\":(map(select(.==\"create\"))|length),\"update\":(map(select(.==\"update\"))|length),\"delete\":(map(select(.==\"delete\"))|length)}'"
   - terraform --version
   - terraform init
+
+.install_tf_alpine: &install_tf_alpine
+  before_script:
+    - currdir=$(pwd)
+    - cd /tmp
+    - wget https://releases.hashicorp.com/terraform/${TF_VERSION}/terraform_${TF_VERSION}_linux_amd64.zip
+    - unzip terraform_${TF_VERSION}_linux_amd64.zip -d /usr/bin
+    - cd $currdir
+    - /usr/bin/terraform version
+
+.terraform_flow: &terraform_flow
+  before_script:
+    - cd $TEMPLATE
+    - rm -rf .terraform
+    - terraform init -backend-config "storage_account_name=${TF_VAR_remote_state_account}" -backend-config "container_name=${TF_VAR_remote_state_container}"
 
 stages:
   - validate
@@ -37,6 +56,28 @@ validate:
 
 include:
   - local: "tf-poc/.tf-plan.yml"
+
+cr-unit-test:
+  <<: *install_tf_alpine
+  stage: unit-test
+  image:
+    name: "golang:${GO_VERSION}-alpine"
+    entrypoint:
+      - "/usr/bin/env"
+      - "PATH=/go/bin:/usr/local/go/bin/:/usr/local/sbin:/usr/local/bin:/usr/sbin:/usr/bin:/sbin:/bin"
+  script:
+    - (if [[ "$(go version)" == "go version go${GO_VERSION} linux/amd64" ]]; then echo "✓ Go binary installed!"; else echo "Go binary not installed!"; /bin/false; fi);
+    - (if [[ "$(terraform version)" == "Terraform v${TF_VERSION}" ]]; then echo "✓ Terraform installed!"; else echo "Terraform not installed"; /bin/false; fi);
+    - currdir=$(pwd)
+    - apk add --no-cache gcc libc-dev bind-tools git
+    - go get -u -d github.com/magefile/mage
+    - magedir=$(find /go/pkg/mod/ -name magefile -type d | grep -v cache)
+    - cd $magedir/$(ls $magedir/)
+    - go run bootstrap.go
+    - cd $currdir
+    - mage test
+
+  
 
 cr-terraform-plan:
   extends: .tf-plan
