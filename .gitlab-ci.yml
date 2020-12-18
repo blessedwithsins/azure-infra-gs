@@ -76,5 +76,3 @@ apply:
     -  terraform validate
   needs: ["cr-terraform-plan"]
   when: manual
-  only:
-   - master
