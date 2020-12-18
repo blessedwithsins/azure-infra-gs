@@ -77,12 +77,12 @@ apply-cr:
     - cr-terraform-plan
   when: manual
 
-apply-dr:
+apply-dp:
   stage: deploy
   script:
     - terraform apply -input=false $PLAN
   dependencies:
-    - dr-terraform-plan
+    - dp-terraform-plan
   when: manual
 
 apply-sr:
