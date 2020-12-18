@@ -366,7 +366,7 @@ This variable group is the service specific variables necessary for testing and 
 
 ```bash
 az pipelines variable-group create \
-  --name "Azure Service Release - unit" \
+  --name "Azure Service Release - unit-service" \
   --authorize true \
   --variables \
   MAVEN_DEPLOY_POM_FILE_PATH="drop/provider/unit-azure/unit-aks" \
