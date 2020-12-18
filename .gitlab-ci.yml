@@ -74,5 +74,5 @@ apply:
   script:
     - terraform apply -input=false $PLAN
   dependencies:
-    - plan
+    - cr-terraform-plan
   when: manual
