@@ -1,0 +1,81 @@
+# This file is a template, and might need editing before it works on your project.
+# Official image for Hashicorp's Terraform. It uses light image which is Alpine
+# based as it is much lighter.
+#
+# Entrypoint is also needed as image by default set `terraform` binary as an
+# entrypoint.
+image:
+  name: registry.gitlab.com/gitlab-org/terraform-images/releases/0.12:latest
+  entrypoint:
+    - '/usr/bin/env'
+    - 'PATH=/usr/local/sbin:/usr/local/bin:/usr/sbin:/usr/bin:/sbin:/bin'
+
+# Default output file for Terraform plan
+variables:
+  PLAN: plan.tfplan
+  JSON_PLAN_FILE: tfplan.json
+
+cache:
+  paths:
+    - .terraform
+
+before_script:
+  - alias convert_report="jq -r '([.resource_changes[]?.change.actions?]|flatten)|{\"create\":(map(select(.==\"create\"))|length),\"update\":(map(select(.==\"update\"))|length),\"delete\":(map(select(.==\"delete\"))|length)}'"
+  - terraform --version
+  - terraform init
+
+stages:
+  - validate
+  - build
+  - test
+  - deploy
+
+validate:
+  stage: validate
+  script:
+    - terraform validate
+
+include:
+  - local: "tf-poc/.tf-plan.yml"
+
+cr-terraform-plan:
+  extends: .tf-plan
+  variables:
+    TF_DIRECTORY: 'infra/templates/osdu-r3-mvp/central_resources'
+    TF_WORKSPACE_NAME: 'idc-mvp-cr'
+    PLAN: 'plan.tfplan'
+
+dp-terraform-plan:
+  extends: .tf-plan
+  variables:
+    TF_DIRECTORY: 'infra/templates/osdu-r3-mvp/data_partition'
+    TF_WORKSPACE_NAME: 'idc-mvp-dp1'
+    PLAN: 'plan.tfplan'
+
+sr-terraform-plan:
+  before_script:
+    - echo "Downloading pre-req files"
+    - echo "${ssh_public_key_file}" > "infra/templates/osdu-r3-mvp/service_resources/ssh_public_key_file.pub"
+    - echo "${gitops_ssh_key_file}" > "infra/templates/osdu-r3-mvp/service_resources/gitops_ssh_key_file.pem"
+
+  extends: .tf-plan
+  variables:
+    TF_DIRECTORY: 'infra/templates/osdu-r3-mvp/service_resources'
+    TF_WORKSPACE_NAME: 'idc-mvp-sr'
+    TF_VAR_ssh_public_key_file: "ssh_public_key_file.pub"
+    TF_VAR_gitops_ssh_key_file: "gitops_ssh_key_file.pem"
+    PLAN: 'plan.tfplan'
+
+# Separate apply job for manual launching Terraform as it can be destructive
+# action.
+#apply:
+#  stage: deploy
+#  environment:
+#    name: production
+#  script:
+#    - terraform apply -input=false $PLAN
+#  dependencies:
+#    - plan
+#  when: manual
+#  only:
+#   - master
