@@ -46,7 +46,7 @@ before_script:
 stages:
   - validate
   - build
-  - test
+  - unit-test
   - deploy
 
 validate:
@@ -116,6 +116,7 @@ apply-cr:
     - terraform apply -input=false $PLAN
   dependencies:
     - cr-terraform-plan
+    - cr-unit-test
   when: manual
 
 apply-dp:
