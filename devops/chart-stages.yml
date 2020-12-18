@@ -20,6 +20,7 @@ parameters:
   hldRegPath: "providers/azure/hld-registry"
   checkoutRepo: self
   extractedChartFolder: "templates"
+  valuesOverrideFile: ""
 
 stages:
   - ${{ each provider in parameters.providers }}:
@@ -49,6 +50,7 @@ stages:
                     environment: ${{ environment }}
                     chartPath: ${{ parameters.chartPath }}
                     valuesFile: ${{ parameters.valuesFile }}
+                    valuesOverrideFile: ${{ parameters.valuesOverrideFile }}
                     skipDeploy: ${{ parameters.skipDeploy }}
                     hldRegPath: ${{ parameters.hldRegPath }}
                     checkoutRepo: ${{ parameters.checkoutRepo }}

@@ -198,6 +198,7 @@ airflow:
     ## Azure Redis Cache host
     host: $(az keyvault secret show --id https://${ENV_VAULT}.vault.azure.net/secrets/base-name-sr --query value -otsv)-cache.redis.cache.windows.net
     port: 6380
+    databaseNumber: 1
     passwordSecret: "redis"
     passwordSecretKey: "redis-password"
 
@@ -207,6 +208,12 @@ image:
   tag: $TAG
 EOF
 ```
+
+- Download [helm-config-override.yaml](https://community.opengroup.org/osdu/platform/deployment-and-operations/infra-azure-provisioning/-/raw/master/charts/airflow/helm-config-override.yaml), which will override airflow values on Azure.
+
+  `wget https://community.opengroup.org/osdu/platform/deployment-and-operations/infra-azure-provisioning/-/raw/master/charts/airflow/helm-config-override.yaml -O config_airflow_override.yaml`
+
+- Edit the newly downloaded [config_airflow_override.yaml](https://community.opengroup.org/osdu/platform/deployment-and-operations/infra-azure-provisioning/-/raw/master/charts/airflow/helm-config-override.yaml) and fill out the values if need to override any default values.
 
 __Clone Service Repositories__
 
@@ -294,7 +301,7 @@ done
 pip3 install -U PyYAML
 
 # Extract manifests from the airflow charts.
-helm template airflow ${INFRA_SRC}/charts/airflow -f ${INFRA_SRC}/charts/config_airflow.yaml | python3 ${INFRA_SRC}/charts/airflow/scripts/add-namespace.py > ${FLUX_SRC}/providers/azure/hld-registry/airflow.yaml
+helm template airflow ${INFRA_SRC}/charts/airflow -f ${INFRA_SRC}/charts/config_airflow.yaml -f ${INFRA_SRC}/charts/config_airflow_override.yaml | python3 ${INFRA_SRC}/charts/airflow/scripts/add-namespace.py > ${FLUX_SRC}/providers/azure/hld-registry/airflow.yaml
 
 # Commit and Checkin to Deploy
 (cd $FLUX_SRC \

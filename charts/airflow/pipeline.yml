@@ -54,6 +54,8 @@ variables:
     value: "charts/airflow"
   - name: valuesFile
     value: "charts/airflow/helm-config.yaml"
+  - name: valuesOverrideFile
+    value: "charts/airflow/helm-config-override.yaml"
   - name: 'MANIFEST_REPO'
     value: $[ resources.repositories['FluxRepo'].name ]
 
@@ -72,6 +74,7 @@ stages:
       serviceName: ${{ variables.serviceName }}
       chartPath: ${{ variables.chartPath }}
       valuesFile: ${{ variables.valuesFile }}
+      valuesOverrideFile: ${{ variables.valuesOverrideFile }}
       skipDeploy: ${{ variables.SKIP_DEPLOY }}
       skipCheck: true
       chartModificationScript: "scripts/add-namespace.py"

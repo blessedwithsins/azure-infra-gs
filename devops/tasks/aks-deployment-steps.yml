@@ -24,6 +24,7 @@ parameters:
   checkoutRepo: self
   chartModificationScript: ""
   extractedChartFolder: "templates"
+  valuesOverrideFile: ""
 
 steps:
     - checkout: FluxRepo
@@ -46,11 +47,24 @@ steps:
         targetFiles: |
           $(Build.SourcesDirectory)/$(HELM_SOURCE)/${{parameters.valuesFile}} => $(Build.SourcesDirectory)/$(HELM_SOURCE)/${{parameters.chartPath}}/values.yaml
       condition: ne(variables['HELM_SOURCE'], '')
+    - task: qetza.replacetokens.replacetokens-task.replacetokens@3
+      displayName: 'Helm Override Values - Build Repo'
+      inputs:
+        targetFiles: |
+          $(Build.SourcesDirectory)/$(Build.Repository.Name)/${{parameters.valuesOverrideFile}} => $(Build.SourcesDirectory)/$(Build.Repository.Name)/${{parameters.chartPath}}/valuesOverride.yaml
+      condition: and(eq(variables['HELM_SOURCE'], ''), ne('${{ parameters.valuesOverrideFile }}', ''))
+    - task: qetza.replacetokens.replacetokens-task.replacetokens@3
+      displayName: 'Helm Override Values - Helm Source Repo'
+      inputs:
+        targetFiles: |
+          $(Build.SourcesDirectory)/$(HELM_SOURCE)/${{parameters.valuesOverrideFile}} => $(Build.SourcesDirectory)/$(HELM_SOURCE)/${{parameters.chartPath}}/valuesOverride.yaml
+      condition: and(ne(variables['HELM_SOURCE'], ''), ne('${{ parameters.valuesOverrideFile }}', ''))
     - template: helm-template.yml
       parameters:
         serviceName: ${{parameters.serviceName}}
         chartPath: ${{ parameters.chartPath }}
         valuesFile: ${{ parameters.valuesFile }}
+        valuesOverrideFile: ${{ parameters.valuesOverrideFile }}
         generationPath: ${{parameters.generationPath}}
         chartModificationScript: ${{parameters.chartModificationScript}}
     - template: gitops.yml

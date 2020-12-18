@@ -45,7 +45,14 @@ steps:
           cat $(Build.SourcesDirectory)/$HELM_SOURCE_NAME/${{parameters.chartPath}}/values.yaml
 
           echo "Extracting Manifest"
-          helm template $SERVICE_NAME $CHART_PATH -f $(Build.SourcesDirectory)/$HELM_SOURCE_NAME/${{parameters.chartPath}}/values.yaml --output-dir $CHART_PATH/$GENERATION_PATH
+          if [[ "${{parameters.valuesOverrideFile}}" != "" ]]
+          then
+              cat $(Build.SourcesDirectory)/$HELM_SOURCE_NAME/${{parameters.chartPath}}/valuesOverride.yaml
+              helm template $SERVICE_NAME $CHART_PATH -f $(Build.SourcesDirectory)/$HELM_SOURCE_NAME/${{parameters.chartPath}}/values.yaml -f $(Build.SourcesDirectory)/$HELM_SOURCE_NAME/${{parameters.chartPath}}/valuesOverride.yaml --output-dir $CHART_PATH/$GENERATION_PATH
+          else
+              helm template $SERVICE_NAME $CHART_PATH -f $(Build.SourcesDirectory)/$HELM_SOURCE_NAME/${{parameters.chartPath}}/values.yaml --output-dir $CHART_PATH/$GENERATION_PATH
+          fi
+
 
           if [[ "${{parameters.chartModificationScript}}" != "" ]]
           then
