@@ -69,10 +69,26 @@ sr-terraform-plan:
 
 # Separate apply job for manual launching Terraform as it can be destructive
 # action.
-apply:
+apply-cr:
   stage: deploy
   script:
     - terraform apply -input=false $PLAN
   dependencies:
     - cr-terraform-plan
+  when: manual
+
+apply-dr:
+  stage: deploy
+  script:
+    - terraform apply -input=false $PLAN
+  dependencies:
+    - dr-terraform-plan
+  when: manual
+
+apply-sr:
+  stage: deploy
+  script:
+    - terraform apply -input=false $PLAN
+  dependencies:
+    - sr-terraform-plan
   when: manual
