@@ -72,7 +72,7 @@ sr-terraform-plan:
 apply:
   stage: deploy
   script:
-     #- terraform apply -input=false $PLAN
-    -  terraform validate
-  needs: ["cr-terraform-plan"]
+    - terraform apply -input=false $PLAN
+  dependencies:
+    - plan
   when: manual
