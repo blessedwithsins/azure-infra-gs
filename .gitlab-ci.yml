@@ -66,6 +66,7 @@ sr-terraform-plan:
     TF_VAR_gitops_ssh_key_file: "gitops_ssh_key_file.pem"
     PLAN: 'plan.tfplan'
 
+
 # Separate apply job for manual launching Terraform as it can be destructive
 # action.
 apply:
