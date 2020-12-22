@@ -104,6 +104,7 @@ airflow:
     ## Azure Redis Cache host
     host: #{base-name-sr}#-cache.redis.cache.windows.net
     port: 6380
+    ## Redis db number gets added into airflow config map.
     databaseNumber: 1
     passwordSecret: "redis"
     passwordSecretKey: "redis-password"
