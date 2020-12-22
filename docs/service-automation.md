@@ -30,6 +30,14 @@ This variable group will be used to hold the common values for the services to b
 | FILE_URL                                      | `https://<your_fqdn>/api/file/v2`           |
 | DELIVERY_URL                                  | `https://<your_fqdn>/api/delivery/v2`       |
 | CRS_CONVERSION_URL                            | `https://<your_fqdn>/api/crs/converter/v2/` |
+| REGISTER_BASE_URL                             | `https://<your_fqdn>/`                      |
+| ACL_OWNERS                                    | `data.test1`                                |
+| ACL_VIEWERS                                   | `data.test1`                                |
+| DATA_PARTITION_ID                             | `opendes`                                   |
+| TENANT_NAME                                   | `opendes`                                   |
+| VENDOR                                        | `azure`                                     |
+| LEGAL_TAG                                     | `opendes-public-usa-dataset-7643990`        |
+
 
 ```bash
 ADMIN_EMAIL="<your_cert_admin>"     # ie: admin@email.com
@@ -65,6 +73,13 @@ az pipelines variable-group create \
   FILE_URL="https://${DNS_HOST}/api/file/v2" \
   DELIVERY_URL="https://${DNS_HOST}/api/delivery/v2/" \
   CRS_CONVERSION_URL="https://${DNS_HOST}/api/crs/converter/v2/" \
+  REGISTER_BASE_URL="https://${DNS_HOST}/" \
+  ACL_OWNERS="data.test1" \
+  ACL_VIEWERS="data.test1" \
+  DATA_PARTITION_ID="opendes" \
+  TENANT_NAME="opendes" \
+  VENDOR="azure" \
+  LEGAL_TAG="opendes-public-usa-dataset-7643990" \
   -ojson
 ```
 
@@ -103,12 +118,15 @@ This variable group will be used to hold the specific environment values necessa
 | DOMAIN                                        | `contoso.com`                     |
 | ELASTIC_ENDPOINT                              | `$(opendes-elastic-endpoint)`     |
 | ELASTIC_USERNAME                              | `$(opendes-elastic-username)`     |
-| ELASTIC_PASSWORD                             | `$(opendes-elastic-password)`      |
+| ELASTIC_PASSWORD                              | `$(opendes-elastic-password)`      |
 | IDENTITY_CLIENT_ID                            | `$(osdu-identity-id)`             |
 | INTEGRATION_TESTER                            | `$(app-dev-sp-username)`          |
 | MY_TENANT                                     | `opendes`                         |
 | STORAGE_ACCOUNT                               | `$(opendes-storage)`              |
 | STORAGE_ACCOUNT_KEY                           | `$(opendes-storage-key)`          |
+| AZURE_EVENT_SUBSCRIBER_SECRET                 | Subscriber Secret used while performing handshake                      |
+| AZURE_EVENT_SUBSCRIPTION_ID                   | Subscription ID created by Base64 encoding a string formed by concatenating GET /challenge/{} endpoint in register service and Event Grid Topic <br/>  For eg. BASE64(osdu-mvp-dp1demo-esyx-grid-recordstopic + https://{DNS}/api/register/v1/challenge/1           |
+| AZURE_EVENT_TOPIC_NAME                        | Event grid Topic Name eg. `osdu-mvp-dp1demo-esyx-grid-recordstopic`          |
 
 
 ```bash
@@ -135,6 +153,9 @@ az pipelines variable-group create \
   MY_TENANT="$DATA_PARTITION_NAME" \
   STORAGE_ACCOUNT='$('${DATA_PARTITION_NAME}'-storage)' \
   STORAGE_ACCOUNT_KEY='$('${DATA_PARTITION_NAME}'-storage-key)' \
+  AZURE_EVENT_SUBSCRIBER_SECRET="secret" \
+  AZURE_EVENT_SUBSCRIPTION_ID="subscriptionId" \
+  AZURE_EVENT_TOPIC_NAME="topic name" \
   -ojson
 ```
 
@@ -373,6 +394,53 @@ az pipelines variable-group create \
   -ojson
 ```
 
+__Setup and Configure the ADO Library `Azure Service Release - register`__
+
+This variable group is the service specific variables necessary for testing and deploying the `register` service.
+
+| Variable | Value |
+|----------|-------|
+| MAVEN_DEPLOY_POM_FILE_PATH | `drop/provider/register-azure` |
+| MAVEN_INTEGRATION_TEST_OPTIONS | `-DargLine="-DREGISTER_BASE_URL_URL=$(REGISTER_BASE_URL) -DAZURE_AD_TENANT_ID=$(AZURE_TENANT_ID) -DINTEGRATION_TESTER=$(INTEGRATION_TESTER) -DTESTER_SERVICEPRINCIPAL_SECRET=$(AZURE_TESTER_SERVICEPRINCIPAL_SECRET) -DAZURE_AD_APP_RESOURCE_ID=$(AZURE_AD_APP_RESOURCE_ID) -DNO_DATA_ACCESS_TESTER=$(NO_DATA_ACCESS_TESTER) -DNO_DATA_ACCESS_TESTER_SERVICEPRINCIPAL_SECRET=$(NO_DATA_ACCESS_TESTER_SERVICEPRINCIPAL_SECRET) -DENVIRONMENT=DEV -DSUBSCRIBER_SECRET=$(AZURE_EVENT_SUBSCRIBER_SECRET) -DTEST_TOPIC_NAME=$(AZURE_EVENT_TOPIC_NAME) -DSUBSCRIPTION_ID=$(AZURE_EVENT_SUBSCRIPTION_ID)"` |
+| MAVEN_INTEGRATION_TEST_POM_FILE_PATH | `drop/deploy/testing/register-test-azure/pom.xml` |
+| SERVICE_RESOURCE_NAME | `$(AZURE_REGISTER_SERVICE_NAME)` |
+
+```bash
+az pipelines variable-group create \
+  --name "Azure Service Release - register" \
+  --authorize true \
+  --variables \
+  MAVEN_DEPLOY_POM_FILE_PATH="drop/provider/register-azure" \
+  MAVEN_INTEGRATION_TEST_OPTIONS='-DargLine="-DREGISTER_BASE_URL_URL=$(REGISTER_BASE_URL) -DAZURE_AD_TENANT_ID=$(AZURE_TENANT_ID) -DINTEGRATION_TESTER=$(INTEGRATION_TESTER) -DTESTER_SERVICEPRINCIPAL_SECRET=$(AZURE_TESTER_SERVICEPRINCIPAL_SECRET) -DAZURE_AD_APP_RESOURCE_ID=$(AZURE_AD_APP_RESOURCE_ID) -DNO_DATA_ACCESS_TESTER=$(NO_DATA_ACCESS_TESTER) -DNO_DATA_ACCESS_TESTER_SERVICEPRINCIPAL_SECRET=$(NO_DATA_ACCESS_TESTER_SERVICEPRINCIPAL_SECRET) -DENVIRONMENT=DEV -DSUBSCRIBER_SECRET=$(AZURE_EVENT_SUBSCRIBER_SECRET) -DTEST_TOPIC_NAME=$(AZURE_EVENT_TOPIC_NAME) -DSUBSCRIPTION_ID=$(AZURE_EVENT_SUBSCRIPTION_ID)"' \
+  MAVEN_INTEGRATION_TEST_POM_FILE_PATH="drop/deploy/testing/register-test-azure/pom.xml" \
+  SERVICE_RESOURCE_NAME='$(AZURE_REGISTER_SERVICE_NAME)' \
+  -ojson
+```
+
+__Setup and Configure the ADO Library `Azure Service Release - wks`__
+
+This variable group is the service specific variables necessary for testing and deploying the `wks` service.
+
+| Variable | Value |
+|----------|-------|
+| MAVEN_DEPLOY_POM_FILE_PATH | `drop/provider/wks-azure` |
+| MAVEN_INTEGRATION_TEST_OPTIONS | `-DargLine="-DAZURE_AD_TENANT_ID=$(AZURE_TENANT_ID) -DINTEGRATION_TESTER=$(INTEGRATION_TESTER) -DAZURE_TESTER_SERVICEPRINCIPAL_SECRET=$(AZURE_TESTER_SERVICEPRINCIPAL_SECRET) -DAZURE_AD_APP_RESOURCE_ID=$(AZURE_AD_APP_RESOURCE_ID) -DVENDOR=$(VENDOR) -DSTORAGE_URL=$(STORAGE_URL) -DHOST=https://$(DNS_HOST) -DLEGAL_TAG=$(LEGAL_TAG) -DDOMAIN=$(DOMAIN) -DACL_OWNERS=$(ACL_OWNERS) -DACL_VIEWERS=$(ACL_VIEWERS) -DDATA_PARTITION_ID=$(DATA_PARTITION_ID) -DTENANT_NAME=$(TENANT_NAME)"` |
+| MAVEN_INTEGRATION_TEST_POM_FILE_PATH | `drop/deploy/testing/wks-test-core/pom.xml` |
+| SERVICE_RESOURCE_NAME | `$(AZURE_WKS_SERVICE_NAME)` |
+
+```bash
+az pipelines variable-group create \
+  --name "Azure Service Release - wks" \
+  --authorize true \
+  --variables \
+  MAVEN_DEPLOY_POM_FILE_PATH="drop/provider/wks-azure" \
+  MAVEN_INTEGRATION_TEST_OPTIONS='-DargLine="-DAZURE_AD_TENANT_ID=$(AZURE_TENANT_ID) -DINTEGRATION_TESTER=$(INTEGRATION_TESTER) -DAZURE_TESTER_SERVICEPRINCIPAL_SECRET=$(AZURE_TESTER_SERVICEPRINCIPAL_SECRET) -DAZURE_AD_APP_RESOURCE_ID=$(AZURE_AD_APP_RESOURCE_ID) -DVENDOR=$(VENDOR) -DSTORAGE_URL=$(STORAGE_URL) -DHOST=https://$(DNS_HOST) -DLEGAL_TAG=$(LEGAL_TAG) -DDOMAIN=$(DOMAIN) -DACL_OWNERS=$(ACL_OWNERS) -DACL_VIEWERS=$(ACL_VIEWERS) -DDATA_PARTITION_ID=$(DATA_PARTITION_ID) -DTENANT_NAME=$(TENANT_NAME)"' \
+  MAVEN_INTEGRATION_TEST_POM_FILE_PATH="drop/deploy/testing/wks-test-core/pom.xml" \
+  SERVICE_RESOURCE_NAME='$(AZURE_WKS_SERVICE_NAME)' \
+  -ojson
+```
+
+
 __Create the Chart Pipelines__
 
 Create the pipelines and run things in this exact order.
@@ -605,6 +673,39 @@ az pipelines create \
 az pipelines create \
   --name 'service-unit'  \
   --repository unit-service  \
+  --branch master  \
+  --repository-type tfsgit  \
+  --yaml-path /devops/azure/pipeline.yml  \
+  -ojson
+```
+
+
+11. Add a Pipeline for __register__  to deploy the Register Service.
+
+    _Repo:_ `register`
+    _Path:_ `/devops/azure/pipeline.yml`
+    _Validate:_ https://<your_dns_name>/api/register/v1/swagger-ui.html is alive.
+
+```bash
+az pipelines create \
+  --name 'service-register'  \
+  --repository register  \
+  --branch master  \
+  --repository-type tfsgit  \
+  --yaml-path /devops/azure/pipeline.yml  \
+  -ojson
+```
+
+12. Add a Pipeline for __wks__  to deploy the Wks Service.
+
+    _Repo:_ `wks`
+    _Path:_ `/devops/azure/pipeline.yml`
+    _Validate:_ ScaledObject exist in osdu namespace.
+
+```bash
+az pipelines create \
+  --name 'service-wks'  \
+  --repository wks  \
   --branch master  \
   --repository-type tfsgit  \
   --yaml-path /devops/azure/pipeline.yml  \

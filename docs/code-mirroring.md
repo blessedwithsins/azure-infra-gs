@@ -18,6 +18,8 @@ Empty repositories need to be created that will be used by a pipeline to mirror 
 | file                      | https://community.opengroup.org/osdu/platform/system/file.git      |
 | unit-service              | https://community.opengroup.org/osdu/platform/system/reference/unit-service.git |
 | crs-conversion-service    | https://community.opengroup.org/osdu/platform/system/reference/crs-conversion-service.git |
+| wks                       | https://community.opengroup.org/osdu/platform/data-flow/enrichment/wks.git |
+| register                  | https://community.opengroup.org/osdu/platform/system/register.git |
 
 ```bash
 export ADO_ORGANIZATION=<organization_name>
@@ -37,7 +39,9 @@ SERVICE_LIST="infra-azure-provisioning \
               delivery \
               file \
               unit-service \
-              crs-conversion-service"
+              crs-conversion-service \
+              wks \
+              register"
 
 for SERVICE in $SERVICE_LIST;
 do
@@ -67,6 +71,8 @@ Variable Group Name:  `Mirror Variables`
 | FILE_REPO | https://dev.azure.com/osdu-demo/osdu/_git/file |
 | UNIT_REPO | https://dev.azure.com/osdu-demo/osdu/_git/unit-service |
 | CRS_CONVERSION_REPO | https://dev.azure.com/osdu-demo/osdu/_git/crs-conversion-service |
+| WKS_REPO | https://dev.azure.com/osdu-demo/osdu/_git/wks |
+| REGISTER_REPO | https://dev.azure.com/osdu-demo/osdu/_git/register |
 | ACCESS_TOKEN | <your_personal_access_token> |
 
 
@@ -92,6 +98,8 @@ az pipelines variable-group create \
   FILE_REPO=https://dev.azure.com/${ADO_ORGANIZATION}/$ADO_PROJECT/_git/file \
   UNIT_REPO=https://dev.azure.com/${ADO_ORGANIZATION}/$ADO_PROJECT/_git/unit-service \
   CRS_CONVERSION_REPO=https://dev.azure.com/${ADO_ORGANIZATION}/$ADO_PROJECT/_git/crs-conversion-service \
+  WKS_REPO=https://dev.azure.com/${ADO_ORGANIZATION}/$ADO_PROJECT/_git/wks \
+  REGISTER_REPO=https://dev.azure.com/${ADO_ORGANIZATION}/$ADO_PROJECT/_git/register \
   ACCESS_TOKEN=$ACCESS_TOKEN \
   -ojson
 ```
@@ -222,6 +230,20 @@ jobs:
       inputs:
         sourceGitRepositoryUri: 'https://community.opengroup.org/osdu/platform/system/reference/crs-conversion-service.git'
         destinationGitRepositoryUri: '$(CRS_CONVERSION_REPO)'
+        destinationGitRepositoryPersonalAccessToken: $(ACCESS_TOKEN)
+
+    - task: swellaby.mirror-git-repository.mirror-git-repository-vsts-task.mirror-git-repository-vsts-task@1
+      displayName: 'wks'
+      inputs:
+        sourceGitRepositoryUri: 'https://community.opengroup.org/osdu/platform/data-flow/enrichment/wks.git'
+        destinationGitRepositoryUri: '$(WKS_REPO)'
+        destinationGitRepositoryPersonalAccessToken: $(ACCESS_TOKEN)
+
+    - task: swellaby.mirror-git-repository.mirror-git-repository-vsts-task.mirror-git-repository-vsts-task@1
+      displayName: 'register'
+      inputs:
+        sourceGitRepositoryUri: 'https://community.opengroup.org/osdu/platform/system/register.git'
+        destinationGitRepositoryUri: '$(REGISTER_REPO)'
         destinationGitRepositoryPersonalAccessToken: $(ACCESS_TOKEN)
 EOF
 
