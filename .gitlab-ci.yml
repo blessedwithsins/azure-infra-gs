@@ -105,7 +105,7 @@ cr-unit-test:
     - git clone https://github.com/magefile/mage
     - cd mage
     - go run bootstrap.go
-    - cd $currdir/infra
+    - cd $currdir/infra/ templates/osdu-r3-mvp/central_resources
     - chmod -fR 755 *.sh || true
     - go test -v $(go list ./... | grep "unit")
 
