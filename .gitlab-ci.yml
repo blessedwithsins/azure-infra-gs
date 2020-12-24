@@ -104,7 +104,8 @@ cr-unit-test:
     - apk add --no-cache gcc libc-dev bind-tools git
     - go get -u -d github.com/magefile/mage
     - echo $GOPATH
-    - cd $GOPATH
+    - cd /go/pkg/mod/
+    - ls
     - magedir=$(find /go/pkg/mod/ -name magefile -type d | grep -v cache)
     - cd $magedir/$(ls $magedir/)
     - go run bootstrap.go
