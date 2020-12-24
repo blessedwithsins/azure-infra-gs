@@ -103,8 +103,8 @@ cr-unit-test:
     - terraform workspace new idc-mvp-crt || terraform workspace select idc-mvp-crt
     - apk add --no-cache gcc libc-dev bind-tools git
     - go get -u -d github.com/magefile/mage
-    - brew info go
-    - cd $HOME/go
+    - echo $GOPATH
+    - cd $GOPATH
     - magedir=$(find /go/pkg/mod/ -name magefile -type d | grep -v cache)
     - cd $magedir/$(ls $magedir/)
     - go run bootstrap.go
