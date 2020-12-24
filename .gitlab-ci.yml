@@ -102,12 +102,8 @@ cr-unit-test:
     - terraform init -backend-config "storage_account_name=${TF_VAR_remote_state_account}" -backend-config "container_name=${TF_VAR_remote_state_container}"
     - terraform workspace new idc-mvp-crt || terraform workspace select idc-mvp-crt
     - apk add --no-cache gcc libc-dev bind-tools git
-    - go get -u -d github.com/magefile/mage
-    - echo $GOPATH
-    - cd /go/pkg/mod/
-    - ls
-    - magedir=$(find /go/pkg/mod/ -name magefile -type d | grep -v cache)
-    - cd $magedir/$(ls $magedir/)
+    - git clone https://github.com/magefile/mage
+    - cd mage
     - go run bootstrap.go
     - cd $currdir/infra
     - chmod -fR 755 *.sh || true
