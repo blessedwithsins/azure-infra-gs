@@ -45,10 +45,9 @@ before_script:
 
 stages:
   - validate
-  - cr-unit-test
-  - unit-test
   - build
   - deploy
+  - cr-unit-test
 
 validate:
   stage: validate
@@ -57,6 +56,13 @@ validate:
 
 include:
   - local: "tf-poc/.tf-plan.yml"
+
+cr-terraform-plan:
+  extends: .tf-plan
+  variables:
+    TF_DIRECTORY: 'infra/templates/osdu-r3-mvp/central_resources'
+    TF_WORKSPACE_NAME: 'idc-mvp-cr'
+    PLAN: 'plan.tfplan'
 
 cr-unit-test:
   <<: *install_tf_alpine
@@ -79,16 +85,6 @@ cr-unit-test:
     - chmod -fR 755 *.sh || true
     - go test -v $(go list ./... | grep "unit")
 
-
-  
-
-cr-terraform-plan:
-  extends: .tf-plan
-  variables:
-    TF_DIRECTORY: 'infra/templates/osdu-r3-mvp/central_resources'
-    TF_WORKSPACE_NAME: 'idc-mvp-cr'
-    PLAN: 'plan.tfplan'
-
 dp-terraform-plan:
   extends: .tf-plan
   variables:
@@ -110,30 +106,3 @@ sr-terraform-plan:
     TF_VAR_gitops_ssh_key_file: "gitops_ssh_key_file.pem"
     PLAN: 'plan.tfplan'
 
-
-# Separate apply job for manual launching Terraform as it can be destructive
-# action.
-apply-cr:
-  stage: deploy
-  script:
-    - terraform apply -input=false $PLAN
-  dependencies:
-    - cr-terraform-plan
-    - cr-unit-test
-  when: manual
-
-apply-dp:
-  stage: deploy
-  script:
-    - terraform apply -input=false $PLAN
-  dependencies:
-    - dp-terraform-plan
-  when: manual
-
-apply-sr:
-  stage: deploy
-  script:
-    - terraform apply -input=false $PLAN
-  dependencies:
-    - sr-terraform-plan
-  when: manual
