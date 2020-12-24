@@ -45,9 +45,9 @@ before_script:
 
 stages:
   - validate
+  - unit-test
   - build
   - deploy
-  - unit-test
 
 validate:
   stage: validate
@@ -63,27 +63,6 @@ cr-terraform-plan:
     TF_DIRECTORY: 'infra/templates/osdu-r3-mvp/central_resources'
     TF_WORKSPACE_NAME: 'idc-mvp-cr'
     PLAN: 'plan.tfplan'
-
-cr-unit-test:
-  <<: *install_tf_alpine
-  stage: unit-test
-  image:
-    name: "golang:${GO_VERSION}-alpine"
-    entrypoint:
-      - "/usr/bin/env"
-      - "PATH=/go/bin:/usr/local/go/bin/:/usr/local/sbin:/usr/local/bin:/usr/sbin:/usr/bin:/sbin:/bin"
-  script:
-    - terraform version
-    - (if [[ "$(go version)" == "go version go${GO_VERSION} linux/amd64" ]]; then echo "✓ Go binary installed!"; else echo "Go binary not installed!"; /bin/false; fi);
-    - currdir=$(pwd)
-    - apk add --no-cache gcc libc-dev bind-tools git
-    - go get -u -d github.com/magefile/mage
-    - magedir=$(find /go/pkg/mod/ -name magefile -type d | grep -v cache)
-    - cd $magedir/$(ls $magedir/)
-    - go run bootstrap.go
-    - cd $currdir/infra
-    - chmod -fR 755 *.sh || true
-    - go test -v $(go list ./... | grep "unit")
 
 dp-terraform-plan:
   extends: .tf-plan
@@ -105,4 +84,30 @@ sr-terraform-plan:
     TF_VAR_ssh_public_key_file: "ssh_public_key_file.pub"
     TF_VAR_gitops_ssh_key_file: "gitops_ssh_key_file.pem"
     PLAN: 'plan.tfplan'
+
+
+cr-unit-test:
+  <<: *install_tf_alpine
+  stage: unit-test
+  image:
+    name: "golang:${GO_VERSION}-alpine"
+    entrypoint:
+      - "/usr/bin/env"
+      - "PATH=/go/bin:/usr/local/go/bin/:/usr/local/sbin:/usr/local/bin:/usr/sbin:/usr/bin:/sbin:/bin"
+  script:
+    - terraform version
+    - (if [[ "$(go version)" == "go version go${GO_VERSION} linux/amd64" ]]; then echo "✓ Go binary installed!"; else echo "Go binary not installed!"; /bin/false; fi);
+    - currdir=$(pwd)
+    - cd ${TF_DIRECTORY}/
+    - terraform init -backend-config "storage_account_name=${TF_VAR_remote_state_account}" -backend-config "container_name=${TF_VAR_remote_state_container}"
+    - terraform workspace new idc-mvp-crt || terraform workspace select idc-mvp-crt
+    - apk add --no-cache gcc libc-dev bind-tools git
+    - go get -u -d github.com/magefile/mage
+    - magedir=$(find /go/pkg/mod/ -name magefile -type d | grep -v cache)
+    - cd $magedir/$(ls $magedir/)
+    - go run bootstrap.go
+    - cd $currdir/infra
+    - chmod -fR 755 *.sh || true
+    - go test -v $(go list ./... | grep "unit")
+
 
