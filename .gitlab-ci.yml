@@ -45,6 +45,7 @@ before_script:
 
 stages:
   - validate
+  - cr-unit-test
   - unit-test
   - build
   - deploy
