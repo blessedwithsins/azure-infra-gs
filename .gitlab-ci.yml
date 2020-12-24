@@ -75,7 +75,9 @@ cr-unit-test:
     - cd $magedir/$(ls $magedir/)
     - go run bootstrap.go
     - cd $currdir/infra
-    - mage test
+    - chmod -fR 755 *.sh || true
+    - go test -v $(go list ./... | grep "unit")
+
 
   
 
