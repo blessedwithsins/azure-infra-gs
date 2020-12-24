@@ -47,7 +47,7 @@ stages:
   - validate
   - build
   - deploy
-  - cr-unit-test
+  - unit-test
 
 validate:
   stage: validate
