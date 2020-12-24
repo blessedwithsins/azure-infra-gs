@@ -100,7 +100,7 @@ cr-unit-test:
     - currdir=$(pwd)
     - cd ${TF_DIRECTORY}/
     - terraform init -backend-config "storage_account_name=${TF_VAR_remote_state_account}" -backend-config "container_name=${TF_VAR_remote_state_container}"
-    - terraform workspace select idc-mvp-cr
+    - terraform workspace new idc-mvp-cr ||terraform workspace select idc-mvp-cr
     - apk add --no-cache gcc libc-dev bind-tools git
     - git clone https://github.com/magefile/mage
     - cd mage
