@@ -64,16 +64,7 @@ stages:
         goals: 'validate'
 
     - task: Maven@3
-      displayName: 'Maven Core Build'
-      condition: ne('${{ parameters.serviceCoreMavenOptions }}', '')
-      inputs:
-        mavenPomFile: ${{ parameters.mavenPomFile }}
-        options: ${{ parameters.serviceCoreMavenOptions }}
-        goals: ${{ parameters.serviceCoreMavenGoal }}
-        publishJUnitResults: ${{ parameters.mavenPublishJUnitResults }}
-
-    - task: Maven@3
-      displayName: 'Maven Build'
+      displayName: 'Maven Build Core and Provider Code'
       inputs:
         mavenPomFile: ${{ parameters.mavenPomFile }}
         options: ${{ parameters.mavenOptions }}
