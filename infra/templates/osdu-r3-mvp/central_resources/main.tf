@@ -138,7 +138,7 @@ resource "azurerm_resource_group" "main" {
 # Key Vault
 #-------------------------------
 module "keyvault" {
-  source = "git::https://community.opengroup.org/osdu/platform/deployment-and-operations/infra-azure-provisioning.git//infra/modules/provider/azure/keyvault?ref=${var.module_version}"
+  source = "git::https://community.opengroup.org/osdu/platform/deployment-and-operations/infra-azure-provisioning.git//infra/modules/providers/azure/keyvault?ref=release/0.5.0"
 
   keyvault_name       = local.kv_name
   resource_group_name = azurerm_resource_group.main.name
@@ -150,7 +150,7 @@ module "keyvault" {
 }
 
 module "keyvault_policy" {
-  source = "git::https://community.opengroup.org/osdu/platform/deployment-and-operations/infra-azure-provisioning.git//infra/modules/provider/azure/keyvault-policy?ref=${var.module_version}"
+  source = "git::https://community.opengroup.org/osdu/platform/deployment-and-operations/infra-azure-provisioning.git//infra/modules/providers/azure/keyvault-policy?ref=release/0.5.0"
 
   vault_id  = module.keyvault.keyvault_id
   tenant_id = data.azurerm_client_config.current.tenant_id
@@ -176,7 +176,7 @@ resource "azurerm_role_assignment" "kv_roles" {
 # Storage
 #-------------------------------
 module "storage_account" {
-  source = "git::https://community.opengroup.org/osdu/platform/deployment-and-operations/infra-azure-provisioning.git//infra/modules/provider/azure/storage-account?ref=${var.module_version}"
+  source = "git::https://community.opengroup.org/osdu/platform/deployment-and-operations/infra-azure-provisioning.git//infra/modules/providers/azure/storage-account?ref=release/0.5.0"
 
   name                = local.storage_name
   resource_group_name = azurerm_resource_group.main.name
@@ -201,7 +201,7 @@ resource "azurerm_role_assignment" "storage_access" {
 # Container Registry
 #-------------------------------
 module "container_registry" {
-  source = "git::https://community.opengroup.org/osdu/platform/deployment-and-operations/infra-azure-provisioning.git//infra/modules/provider/azure/container-registry?ref=${var.module_version}"
+  source = "git::https://community.opengroup.org/osdu/platform/deployment-and-operations/infra-azure-provisioning.git//infra/modules/providers/azure/container-registry?ref=release/0.5.0"
 
 
   container_registry_name = local.container_registry_name
@@ -218,7 +218,7 @@ module "container_registry" {
 # Application Insights
 #-------------------------------
 module "app_insights" {
-  source = "git::https://community.opengroup.org/osdu/platform/deployment-and-operations/infra-azure-provisioning.git//infra/modules/provider/azure/app-insights?ref=${var.module_version}"
+  source = "git::https://community.opengroup.org/osdu/platform/deployment-and-operations/infra-azure-provisioning.git//infra/modules/providers/azure/app-insights?ref=release/0.5.0"
 
   appinsights_name                 = local.ai_name
   service_plan_resource_group_name = azurerm_resource_group.main.name
@@ -232,7 +232,7 @@ module "app_insights" {
 # Log Analytics
 #-------------------------------
 module "log_analytics" {
-  source = "git::https://community.opengroup.org/osdu/platform/deployment-and-operations/infra-azure-provisioning.git//infra/modules/provider/azure/log-analytics?ref=${var.module_version}"
+  source = "git::https://community.opengroup.org/osdu/platform/deployment-and-operations/infra-azure-provisioning.git//infra/modules/providers/azure/log-analytics?ref=release/0.5.0"
 
   name                = local.logs_name
   resource_group_name = azurerm_resource_group.main.name
@@ -263,7 +263,7 @@ module "log_analytics" {
 # AD Principal and Applications
 #-------------------------------
 module "service_principal" {
-  source = "git::https://community.opengroup.org/osdu/platform/deployment-and-operations/infra-azure-provisioning.git//infra/modules/provider/azure/service-principal?ref=${var.module_version}"
+  source = "git::https://community.opengroup.org/osdu/platform/deployment-and-operations/infra-azure-provisioning.git//infra/modules/providers/azure/service-principal?ref=release/0.5.0"
 
   name   = var.principal_name
   scopes = local.rbac_contributor_scopes
@@ -281,7 +281,7 @@ module "service_principal" {
 
 
 module "ad_application" {
-  source = "git::https://community.opengroup.org/osdu/platform/deployment-and-operations/infra-azure-provisioning.git//infra/modules/provider/azure/ad-application?ref=${var.module_version}"
+  source = "git::https://community.opengroup.org/osdu/platform/deployment-and-operations/infra-azure-provisioning.git//infra/modules/providers/azure/ad-application?ref=release/0.5.0"
 
   name                       = local.ad_app_name
   oauth2_allow_implicit_flow = true

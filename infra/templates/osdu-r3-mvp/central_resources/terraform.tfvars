@@ -19,7 +19,6 @@
    This file holds the Default Variable Configuration
 */
 
-module_version = "release/0.5.0"
 prefix         = "osdu-mvp"
 
 resource_tags = {
