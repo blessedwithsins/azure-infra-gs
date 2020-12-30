@@ -64,9 +64,10 @@ func Clean() error {
 			fmt.Printf("Removed \"%v\"\n", path)
 			return filepath.SkipDir
 		}
-		if !info.IsDir() && (info.Name() == "terraform.tfstate" ||
+    if !info.IsDir() && (info.Name() == "terraform.tfstate" ||
 			info.Name() == "terraform.tfplan" ||
-			info.Name() == "terraform.tfstate.backup") {
+      info.Name() == "terraform.tfstate.backup" ||
+      info.Name() == ".terraform.lock.hcl") {
 			os.Remove(path)
 			fmt.Printf("Removed \"%v\"\n", path)
 		}

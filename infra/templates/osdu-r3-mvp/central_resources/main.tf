@@ -27,28 +27,39 @@
 // *** WARNING  ****
 
 terraform {
-  required_version = ">= 0.12"
+  required_version = ">= 0.14"
+
   backend "azurerm" {
-    key = "terraform.tfstate"
+    key = "prod.terraform.tfstate"
+  }
+
+  required_providers {
+    azurerm = {
+      source  = "hashicorp/azurerm"
+      version = "=2.41.0"
+    }
+    azuread = {
+      source  = "hashicorp/azuread"
+      version = "=1.1.1"
+    }
+    random = {
+      source  = "hashicorp/random"
+      version = "=2.3.1"
+    }
+    null = {
+      source  = "hashicorp/null"
+      version = "=3.0.0"
+    }
   }
 }
+
 
 #-------------------------------
 # Providers
 #-------------------------------
 provider "azurerm" {
-  version = "=2.29.0"
   features {}
 }
-
-provider "azuread" {
-  version = "=1.0.0"
-}
-
-provider "random" {
-  version = "~>2.2"
-}
-
 
 
 #-------------------------------
@@ -91,7 +102,6 @@ locals {
 }
 
 
-
 #-------------------------------
 # Common Resources
 #-------------------------------
@@ -109,6 +119,7 @@ resource "random_string" "workspace_scope" {
   upper   = false
 }
 
+
 #-------------------------------
 # Resource Group
 #-------------------------------
@@ -123,12 +134,11 @@ resource "azurerm_resource_group" "main" {
 }
 
 
-
 #-------------------------------
 # Key Vault
 #-------------------------------
 module "keyvault" {
-  source = "../../../modules/providers/azure/keyvault"
+  source = "git::https://community.opengroup.org/osdu/platform/deployment-and-operations/infra-azure-provisioning.git//infra/modules/provider/azure/keyvault?ref=${var.module_version}"
 
   keyvault_name       = local.kv_name
   resource_group_name = azurerm_resource_group.main.name
@@ -140,7 +150,8 @@ module "keyvault" {
 }
 
 module "keyvault_policy" {
-  source    = "../../../modules/providers/azure/keyvault-policy"
+  source = "git::https://community.opengroup.org/osdu/platform/deployment-and-operations/infra-azure-provisioning.git//infra/modules/provider/azure/keyvault-policy?ref=${var.module_version}"
+
   vault_id  = module.keyvault.keyvault_id
   tenant_id = data.azurerm_client_config.current.tenant_id
   object_ids = [
@@ -160,11 +171,12 @@ resource "azurerm_role_assignment" "kv_roles" {
   scope                = module.keyvault.keyvault_id
 }
 
+
 #-------------------------------
 # Storage
 #-------------------------------
 module "storage_account" {
-  source = "../../../modules/providers/azure/storage-account"
+  source = "git::https://community.opengroup.org/osdu/platform/deployment-and-operations/infra-azure-provisioning.git//infra/modules/provider/azure/storage-account?ref=${var.module_version}"
 
   name                = local.storage_name
   resource_group_name = azurerm_resource_group.main.name
@@ -185,12 +197,12 @@ resource "azurerm_role_assignment" "storage_access" {
 }
 
 
-
 #-------------------------------
 # Container Registry
 #-------------------------------
 module "container_registry" {
-  source = "../../../modules/providers/azure/container-registry"
+  source = "git::https://community.opengroup.org/osdu/platform/deployment-and-operations/infra-azure-provisioning.git//infra/modules/provider/azure/container-registry?ref=${var.module_version}"
+
 
   container_registry_name = local.container_registry_name
   resource_group_name     = azurerm_resource_group.main.name
@@ -202,12 +214,11 @@ module "container_registry" {
 }
 
 
-
 #-------------------------------
 # Application Insights
 #-------------------------------
 module "app_insights" {
-  source = "../../../modules/providers/azure/app-insights"
+  source = "git::https://community.opengroup.org/osdu/platform/deployment-and-operations/infra-azure-provisioning.git//infra/modules/provider/azure/app-insights?ref=${var.module_version}"
 
   appinsights_name                 = local.ai_name
   service_plan_resource_group_name = azurerm_resource_group.main.name
@@ -217,12 +228,11 @@ module "app_insights" {
 }
 
 
-
 #-------------------------------
 # Log Analytics
 #-------------------------------
 module "log_analytics" {
-  source = "../../../modules/providers/azure/log-analytics"
+  source = "git::https://community.opengroup.org/osdu/platform/deployment-and-operations/infra-azure-provisioning.git//infra/modules/provider/azure/log-analytics?ref=${var.module_version}"
 
   name                = local.logs_name
   resource_group_name = azurerm_resource_group.main.name
@@ -249,12 +259,11 @@ module "log_analytics" {
 }
 
 
-
 #-------------------------------
 # AD Principal and Applications
 #-------------------------------
 module "service_principal" {
-  source = "../../../modules/providers/azure/service-principal"
+  source = "git::https://community.opengroup.org/osdu/platform/deployment-and-operations/infra-azure-provisioning.git//infra/modules/provider/azure/service-principal?ref=${var.module_version}"
 
   name   = var.principal_name
   scopes = local.rbac_contributor_scopes
@@ -272,7 +281,8 @@ module "service_principal" {
 
 
 module "ad_application" {
-  source                     = "../../../modules/providers/azure/ad-application"
+  source = "git::https://community.opengroup.org/osdu/platform/deployment-and-operations/infra-azure-provisioning.git//infra/modules/provider/azure/ad-application?ref=${var.module_version}"
+
   name                       = local.ad_app_name
   oauth2_allow_implicit_flow = true
 
@@ -292,7 +302,6 @@ module "ad_application" {
 }
 
 
-
 #-------------------------------
 # OSDU Identity
 #-------------------------------
@@ -304,7 +313,6 @@ resource "azurerm_user_assigned_identity" "osduidentity" {
 
   tags = var.resource_tags
 }
-
 
 
 #-------------------------------

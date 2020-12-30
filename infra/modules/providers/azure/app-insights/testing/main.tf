@@ -24,7 +24,8 @@ module "resource_group" {
 }
 
 module "app-insights" {
-  source = "../"
+  source     = "../"
+  depends_on = [module.resource_group]
 
   appinsights_name                 = "osdu-module-app-insights-${module.resource_group.random}"
   service_plan_resource_group_name = module.resource_group.name

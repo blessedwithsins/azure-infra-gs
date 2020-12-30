@@ -23,6 +23,12 @@
 #-------------------------------
 # Application Variables
 #-------------------------------
+variable "module_version" {
+  description = "(Optional) The default branch to be used for terraform modules."
+  type        = string
+  default     = "master"
+}
+
 variable "prefix" {
   description = "(Required) An identifier used to construct the names of all resources in this template."
   type        = string

@@ -24,7 +24,9 @@ module "resource_group" {
 }
 
 module "service_bus" {
-  source              = "../"
+  source     = "../"
+  depends_on = [module.resource_group]
+
   name                = "osdu-module-service-bus-${module.resource_group.random}"
   resource_group_name = module.resource_group.name
   sku                 = "Standard"

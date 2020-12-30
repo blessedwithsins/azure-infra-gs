@@ -24,7 +24,8 @@ module "resource_group" {
 }
 
 module "log_analytics" {
-  source = "../"
+  source     = "../"
+  depends_on = [module.resource_group]
 
   name                = "osdu-module-logs-${module.resource_group.random}"
   resource_group_name = module.resource_group.name

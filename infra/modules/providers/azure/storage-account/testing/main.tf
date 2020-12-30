@@ -10,7 +10,8 @@ module "resource_group" {
 }
 
 module "storage_account" {
-  source = "../"
+  source     = "../"
+  depends_on = [module.resource_group]
 
   resource_group_name = module.resource_group.name
   name                = substr("osdumodule${module.resource_group.random}", 0, 23)

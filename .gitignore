@@ -26,6 +26,7 @@ _vendor-*/
 **/terraform.tfstate.*
 **/terraform.tfstate
 **/.terraform.tfstate.lock.info
+**/.terraform.lock.hcl
 **/*.plan
 **/output/
 **/*-aks-flux/
