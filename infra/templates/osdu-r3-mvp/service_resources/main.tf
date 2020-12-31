@@ -27,9 +27,37 @@
 // *** WARNING  ****
 
 terraform {
-  required_version = ">= 0.12"
+  required_version = ">= 0.14"
+
   backend "azurerm" {
-    key = "terraform.tfstate"
+    key = "prod.terraform.tfstate"
+  }
+
+  required_providers {
+    azurerm = {
+      source  = "hashicorp/azurerm"
+      version = "=2.41.0"
+    }
+    azuread = {
+      source  = "hashicorp/azuread"
+      version = "=1.1.1"
+    }
+    random = {
+      source  = "hashicorp/random"
+      version = "=2.3.1"
+    }
+    null = {
+      source  = "hashicorp/null"
+      version = "=3.0.0"
+    }
+    kubernetes = {
+      source  = "hashicorp/kubernetes"
+      version = "=1.13.3"
+    }
+    helm = {
+      source  = "hashicorp/kubernetes"
+      version = "=2.0.1"
+    }
   }
 }
 
@@ -38,33 +66,11 @@ terraform {
 # Providers
 #-------------------------------
 provider "azurerm" {
-  version = "=2.33.0"
   features {}
-}
-
-provider "azuread" {
-  version = "=1.0.0"
-}
-
-provider "random" {
-  version = "~>2.2"
-}
-
-provider "external" {
-  version = "~> 1.0"
-}
-
-provider "local" {
-  version = "~> 1.4"
-}
-
-provider "null" {
-  version = "~>2.1.0"
 }
 
 // Hook-up kubectl Provider for Terraform
 provider "kubernetes" {
-  version                = "~> 1.11.3"
   load_config_file       = false
   host                   = module.aks.kube_config_block.0.host
   username               = module.aks.kube_config_block.0.username
@@ -76,8 +82,6 @@ provider "kubernetes" {
 
 // Hook-up helm Provider for Terraform
 provider "helm" {
-  version = "~> 1.2.3"
-
   kubernetes {
     load_config_file       = false
     host                   = module.aks.kube_config_block.0.host

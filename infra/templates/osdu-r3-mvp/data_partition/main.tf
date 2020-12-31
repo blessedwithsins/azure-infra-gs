@@ -33,9 +33,29 @@
 // *** WARNING  ****
 
 terraform {
-  required_version = ">= 0.12"
+  required_version = ">= 0.14"
+
   backend "azurerm" {
-    key = "terraform.tfstate"
+    key = "prod.terraform.tfstate"
+  }
+
+  required_providers {
+    azurerm = {
+      source  = "hashicorp/azurerm"
+      version = "=2.41.0"
+    }
+    azuread = {
+      source  = "hashicorp/azuread"
+      version = "=1.1.1"
+    }
+    random = {
+      source  = "hashicorp/random"
+      version = "=2.3.1"
+    }
+    null = {
+      source  = "hashicorp/null"
+      version = "=3.0.0"
+    }
   }
 }
 
@@ -43,26 +63,8 @@ terraform {
 # Providers
 #-------------------------------
 provider "azurerm" {
-  version = "=2.29.0"
   features {}
 }
-
-provider "azuread" {
-  version = "=1.0.0"
-}
-
-provider "random" {
-  version = "~>2.2"
-}
-
-provider "external" {
-  version = "~> 1.0"
-}
-
-provider "null" {
-  version = "~>2.1.0"
-}
-
 
 
 #-------------------------------
@@ -150,7 +152,7 @@ resource "azurerm_resource_group" "main" {
 # Storage
 #-------------------------------
 module "storage_account" {
-  source = "../../../modules/providers/azure/storage-account"
+  source = "git::https://community.opengroup.org/osdu/platform/deployment-and-operations/infra-azure-provisioning.git//infra/modules/providers/azure/storage-account?ref=release/0.5.0"
 
   name                = local.storage_name
   resource_group_name = azurerm_resource_group.main.name
@@ -181,7 +183,7 @@ resource "azurerm_role_assignment" "storage_data_contributor" {
 }
 
 module "sdms_storage_account" {
-  source = "../../../modules/providers/azure/storage-account"
+  source = "git::https://community.opengroup.org/osdu/platform/deployment-and-operations/infra-azure-provisioning.git//infra/modules/providers/azure/storage-account?ref=release/0.5.0"
 
   name                = local.sdms_storage_name
   resource_group_name = azurerm_resource_group.main.name
@@ -211,11 +213,12 @@ resource "azurerm_role_assignment" "sdms_storage_data_contributor" {
   scope                = module.sdms_storage_account.id
 }
 
+
 #-------------------------------
 # CosmosDB
 #-------------------------------
 module "cosmosdb_account" {
-  source = "../../../modules/providers/azure/cosmosdb"
+  source = "git::https://community.opengroup.org/osdu/platform/deployment-and-operations/infra-azure-provisioning.git//infra/modules/providers/azure/cosmosdb?ref=release/0.5.0"
 
   name                     = local.cosmosdb_name
   resource_group_name      = azurerm_resource_group.main.name
@@ -238,12 +241,11 @@ resource "azurerm_role_assignment" "cosmos_access" {
 }
 
 
-
 #-------------------------------
 # Azure Service Bus
 #-------------------------------
 module "service_bus" {
-  source = "../../../modules/providers/azure/service-bus"
+  source = "git::https://community.opengroup.org/osdu/platform/deployment-and-operations/infra-azure-provisioning.git//infra/modules/providers/azure/service-bus?ref=release/0.5.0"
 
   name                = local.sb_namespace
   resource_group_name = azurerm_resource_group.main.name
@@ -252,7 +254,6 @@ module "service_bus" {
 
   resource_tags = var.resource_tags
 }
-
 
 // Add Access Control to Principal
 resource "azurerm_role_assignment" "sb_access" {
@@ -268,7 +269,7 @@ resource "azurerm_role_assignment" "sb_access" {
 # Azure Event Grid
 #-------------------------------
 module "event_grid" {
-  source = "../../../modules/providers/azure/event-grid"
+  source = "git::https://community.opengroup.org/osdu/platform/deployment-and-operations/infra-azure-provisioning.git//infra/modules/providers/azure/event-grid?ref=release/0.5.0"
 
   name                = local.eventgrid_name
   resource_group_name = azurerm_resource_group.main.name
