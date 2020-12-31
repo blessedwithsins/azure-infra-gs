@@ -52,10 +52,10 @@ terraform {
     }
     kubernetes = {
       source  = "hashicorp/kubernetes"
-      version = "=1.13.3"
+      version = "~> 1.13.3"
     }
     helm = {
-      source  = "hashicorp/kubernetes"
+      source  = "hashicorp/helm"
       version = "=2.0.1"
     }
   }
@@ -83,7 +83,6 @@ provider "kubernetes" {
 // Hook-up helm Provider for Terraform
 provider "helm" {
   kubernetes {
-    load_config_file       = false
     host                   = module.aks.kube_config_block.0.host
     username               = module.aks.kube_config_block.0.username
     password               = module.aks.kube_config_block.0.password
@@ -157,7 +156,7 @@ data "terraform_remote_state" "central_resources" {
   config = {
     storage_account_name = var.remote_state_account
     container_name       = var.remote_state_container
-    key                  = format("terraform.tfstateenv:%s", var.central_resources_workspace_name)
+    key                  = format("prod.terraform.tfstateenv:%s", var.central_resources_workspace_name)
   }
 }
 
@@ -172,7 +171,6 @@ resource "random_string" "workspace_scope" {
   special = false
   upper   = false
 }
-
 
 
 #-------------------------------
@@ -214,7 +212,7 @@ resource "azurerm_user_assigned_identity" "agicidentity" {
 # Storage
 #-------------------------------
 module "storage_account" {
-  source = "../../../modules/providers/azure/storage-account"
+  source = "git::https://community.opengroup.org/osdu/platform/deployment-and-operations/infra-azure-provisioning.git//infra/modules/providers/azure/storage-account?ref=release/0.5.0"
 
   name                = local.storage_name
   resource_group_name = azurerm_resource_group.main.name
@@ -260,7 +258,7 @@ resource "azurerm_role_assignment" "airflow_log_queue_processor_roles" {
 # Network
 #-------------------------------
 module "network" {
-  source = "../../../modules/providers/azure/network"
+  source = "git::https://community.opengroup.org/osdu/platform/deployment-and-operations/infra-azure-provisioning.git//infra/modules/providers/azure/network?ref=release/0.5.0"
 
   name                = local.vnet_name
   resource_group_name = azurerm_resource_group.main.name
@@ -280,7 +278,7 @@ module "network" {
 }
 
 module "appgateway" {
-  source = "../../../modules/providers/azure/appgw"
+  source = "git::https://community.opengroup.org/osdu/platform/deployment-and-operations/infra-azure-provisioning.git//infra/modules/providers/azure/appgw?ref=release/0.5.0"
 
   name                = local.app_gw_name
   resource_group_name = azurerm_resource_group.main.name
@@ -319,12 +317,11 @@ resource "azurerm_role_assignment" "agic_app_gw_mi" {
 }
 
 
-
 #-------------------------------
 # Azure AKS
 #-------------------------------
 module "aks" {
-  source = "../../../modules/providers/azure/aks"
+  source = "git::https://community.opengroup.org/osdu/platform/deployment-and-operations/infra-azure-provisioning.git//infra/modules/providers/azure/aks?ref=release/0.5.0"
 
   name                = local.aks_cluster_name
   resource_group_name = azurerm_resource_group.main.name
@@ -393,7 +390,6 @@ resource "azurerm_role_assignment" "osdu_identity_mi_operator" {
 }
 
 
-
 #-------------------------------
 # PostgreSQL
 #-------------------------------
@@ -410,7 +406,7 @@ resource "random_password" "postgres" {
 }
 
 module "postgreSQL" {
-  source = "../../../modules/providers/azure/postgreSQL"
+  source = "git::https://community.opengroup.org/osdu/platform/deployment-and-operations/infra-azure-provisioning.git//infra/modules/providers/azure/postgreSQL?ref=release/0.5.0"
 
   resource_group_name       = azurerm_resource_group.main.name
   name                      = local.postgresql_name
@@ -446,12 +442,11 @@ resource "azurerm_role_assignment" "postgres_access" {
 }
 
 
-
 #-------------------------------
 # Azure Redis Cache
 #-------------------------------
 module "redis_cache" {
-  source = "../../../modules/providers/azure/redis-cache"
+  source = "git::https://community.opengroup.org/osdu/platform/deployment-and-operations/infra-azure-provisioning.git//infra/modules/providers/azure/redis-cache?ref=release/0.5.0"
 
   name                = local.redis_cache_name
   resource_group_name = azurerm_resource_group.main.name

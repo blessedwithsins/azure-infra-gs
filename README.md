@@ -27,7 +27,7 @@ Azure environment cost ballpark [estimate](https://tinyurl.com/y4e9s7rf). This i
 This document assumes one is running a current version of Ubuntu. Windows users can install the Ubuntu Terminal from the Microsoft Store. The Ubuntu Terminal enables Linux command-line utilities, including bash, ssh, and git that will be useful for the following deployment. _Note: You will need the Windows Subsystem for Linux installed to use the Ubuntu Terminal on Windows_.
 
 
-Currently the versions in use are [Terraform 0.12.29](https://releases.hashicorp.com/terraform/0.12.29/) and [GO 1.12.14](https://golang.org/dl/).
+Currently the versions in use are [Terraform 0.14.3](https://releases.hashicorp.com/terraform/0.14.3/) and [GO 1.12.14](https://golang.org/dl/).
 
 > Note: Terraform and Go are recommended to be installed using a [Terraform Version Manager](https://github.com/tfutils/tfenv) and a [Go Version Manager](https://github.com/stefanmaric/g)
 
@@ -47,7 +47,7 @@ az account set --subscription <your_subscription>
 
 ### Configure and Work with an Azure Devops Project
 
-> [Role Documentation](https://docs.microsoft.com/en-us/azure/devops/organizations/security/about-security-identity?view=azure-devops): Working on ADO Organizations require certain Roles for the user.  To perform these activities a user must be able to create an ADO project in an organization and have administrator level access to the Project created.   
+> [Role Documentation](https://docs.microsoft.com/en-us/azure/devops/organizations/security/about-security-identity?view=azure-devops): Working on ADO Organizations require certain Roles for the user.  To perform these activities a user must be able to create an ADO project in an organization and have administrator level access to the Project created.
 
 Configure an Azure Devops Project in your Organization called `osdu-mvp` and set the cli command to use the organization by default.
 
@@ -110,7 +110,7 @@ In order for Automated Pipelines to be able to work with this repository the fol
 
 
 ## Provision the Common Resources
-> [Role Documentation](https://docs.microsoft.com/en-us/azure/role-based-access-control/rbac-and-directory-admin-roles): Provisioning Common Resources requires owner access to the subscription, however AD Service Principals are created that will required an AD Admin to grant approval consent on the principals created.   
+> [Role Documentation](https://docs.microsoft.com/en-us/azure/role-based-access-control/rbac-and-directory-admin-roles): Provisioning Common Resources requires owner access to the subscription, however AD Service Principals are created that will required an AD Admin to grant approval consent on the principals created.
 
 
 The script `common_prepare.sh` script is a _helper_ script designed to help setup some of the common things that are necessary for infrastructure.

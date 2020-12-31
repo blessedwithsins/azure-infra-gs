@@ -21,7 +21,7 @@ locals {
   helm_pod_identity_name    = "aad-pod-identity"
   helm_pod_identity_ns      = "podidentity"
   helm_pod_identity_repo    = "https://raw.githubusercontent.com/Azure/aad-pod-identity/master/charts"
-  helm_pod_identity_version = "2.0.0"
+  helm_pod_identity_version = "3.0.0"
 }
 
 resource "kubernetes_namespace" "pod_identity" {
@@ -39,45 +39,43 @@ resource "helm_release" "aad_pod_id" {
   version    = local.helm_pod_identity_version
   namespace  = kubernetes_namespace.pod_identity.metadata.0.name
 
+  # set {
+  #   name  = "azureIdentities[0].name"
+  #   value = "podidentity"
+  # }
 
   set {
-    name  = "azureIdentities[0].enabled"
+    name  = "azureIdentities.podidentity.enabled"
     value = true
   }
 
   set {
-    name  = "azureIdentities[0].type"
-    value = 0
-  }
-
-  set {
-    name  = "azureIdentities[0].namespace"
+    name  = "azureIdentities.podidentity.namespace"
     value = kubernetes_namespace.pod_identity.metadata.0.name
   }
 
   set {
-    name  = "azureIdentities[0].name"
-    value = "podidentity"
+    name  = "azureIdentities.podidentity.type"
+    value = 0
   }
 
   set {
-    name  = "azureIdentities[0].resourceID"
+    name  = "azureIdentities.podidentity.resourceID"
     value = azurerm_user_assigned_identity.podidentity.id
   }
 
   set {
-    name  = "azureIdentities[0].clientID"
+    name  = "azureIdentities.podidentity.clientID"
     value = azurerm_user_assigned_identity.podidentity.principal_id
   }
 
-
   set {
-    name  = "azureIdentities[0].binding.selector"
+    name  = "azureIdentities.podidentity.binding.selector"
     value = "podidentity"
   }
 
   set {
-    name  = "azureIdentities[0].binding.name"
+    name  = "azureIdentities.podidentity.binding.name"
     value = "podidentitybinding"
   }
 

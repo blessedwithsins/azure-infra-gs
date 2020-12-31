@@ -20,6 +20,7 @@
 */
 
 prefix = "osdu-mvp"
+enable_osdu_namespace = false
 
 resource_tags = {
   contact = "pipeline"

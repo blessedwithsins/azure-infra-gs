@@ -20,7 +20,7 @@ locals {
   helm_flux_name    = "flux"
   helm_flux_ns      = "flux"
   helm_flux_repo    = "https://charts.fluxcd.io"
-  helm_flux_version = "1.5.0"
+  helm_flux_version = "1.6.0"
   helm_flux_secret  = "flux-git-deploy"
 }
 

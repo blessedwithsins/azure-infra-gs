@@ -28,6 +28,12 @@ variable "prefix" {
   type        = string
 }
 
+variable "enable_osdu_namespace" {
+  description = "This disables or enables the osdu namespace creation."
+  type        = bool
+  default     = true
+}
+
 variable "randomization_level" {
   description = "Number of additional random characters to include in resource names to insulate against unexpected resource name collisions."
   type        = number

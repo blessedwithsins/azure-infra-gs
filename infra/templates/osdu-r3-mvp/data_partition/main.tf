@@ -104,7 +104,6 @@ locals {
 }
 
 
-
 #-------------------------------
 # Common Resources
 #-------------------------------
@@ -117,7 +116,7 @@ data "terraform_remote_state" "central_resources" {
   config = {
     storage_account_name = var.remote_state_account
     container_name       = var.remote_state_container
-    key                  = format("terraform.tfstateenv:%s", var.central_resources_workspace_name)
+    key                  = format("prod.terraform.tfstateenv:%s", var.central_resources_workspace_name)
   }
 }
 
@@ -134,7 +133,6 @@ resource "random_string" "workspace_scope" {
 }
 
 
-
 #-------------------------------
 # Resource Group
 #-------------------------------
@@ -145,7 +143,6 @@ resource "azurerm_resource_group" "main" {
   tags = var.resource_tags
   lifecycle { ignore_changes = [tags] }
 }
-
 
 
 #-------------------------------
@@ -301,6 +298,7 @@ resource "azurerm_eventgrid_event_subscription" "service_bus_topic_subscriber" {
 
   service_bus_topic_endpoint_id = lookup(module.service_bus.topicsmap, "recordstopiceg")
 }
+
 
 #-------------------------------
 # Locks
