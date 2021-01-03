@@ -28,10 +28,16 @@ variable "prefix" {
   type        = string
 }
 
-variable "enable_osdu_namespace" {
-  description = "This disables or enables the osdu namespace creation."
-  type        = bool
-  default     = true
+variable "feature_flag" {
+  description = "(Optional) A toggle for experimental features"
+  type = object({
+    osdu_namespace = bool
+    flux           = bool
+  })
+  default = {
+    osdu_namespace = true
+    flux           = true
+  }
 }
 
 variable "randomization_level" {

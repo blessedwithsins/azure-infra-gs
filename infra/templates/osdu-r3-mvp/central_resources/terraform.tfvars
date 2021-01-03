@@ -19,7 +19,7 @@
    This file holds the Default Variable Configuration
 */
 
-prefix         = "osdu-mvp"
+prefix = "osdu-mvp"
 
 resource_tags = {
   contact = "pipeline"

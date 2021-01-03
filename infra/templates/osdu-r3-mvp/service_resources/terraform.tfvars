@@ -19,8 +19,12 @@
    This file holds the Default Variable Configuration
 */
 
+feature_flag = {
+  osdu_namespace = false
+  flux           = false
+}
+
 prefix = "osdu-mvp"
-enable_osdu_namespace = false
 
 resource_tags = {
   contact = "pipeline"
