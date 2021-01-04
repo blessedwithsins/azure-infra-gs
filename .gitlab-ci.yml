@@ -60,10 +60,12 @@ validate:
 cr-unit-test:
   <<: *install_tf_alpine
   stage: central-resources
+  needs: validate
   script:
     - echo "komakkar"
 
 cr-terraform-plan:
+  needs: validate
   extends: .tf-plan
   stage: central-resources
   variables:
@@ -71,7 +73,8 @@ cr-terraform-plan:
     TF_WORKSPACE_NAME: 'idc-mvp-cr'
     PLAN: 'plan.tfplan'
 
-data-unit-test:
+dp-unit-test:
+  needs: validate
   <<: *install_tf_alpine
   stage: data-resources
   script:
@@ -79,6 +82,7 @@ data-unit-test:
 
 
 dp-terraform-plan:
+  needs: validate
   extends: .tf-plan
   stage: data-resources
   variables:
@@ -89,6 +93,7 @@ dp-terraform-plan:
 
 sr-unit-test:
   <<: *install_tf_alpine
+  needs: validate
   stage: service-resources
   script:
     - echo "komakkar"
@@ -96,6 +101,7 @@ sr-unit-test:
 
 sr-terraform-plan:
   stage: service-resources
+  needs: validate
   before_script:
     - echo "Downloading pre-req files"
     - echo "${ssh_public_key_file}" > "infra/templates/osdu-r3-mvp/service_resources/ssh_public_key_file.pub"
