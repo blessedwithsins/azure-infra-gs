@@ -1,10 +1,12 @@
 **Note:** This file is manually edited and is best effort information at this time.
 
-# Current Master
+# v0.4.2 (2020-12-30)
 
 __Service Onboarded__
 - [Issue 55 - Unit Service](https://community.opengroup.org/osdu/platform/deployment-and-operations/infra-azure-provisioning/-/issues/55)
 - [Issue 56 - CRS Catalog Service](https://community.opengroup.org/osdu/platform/deployment-and-operations/infra-azure-provisioning/-/issues/56)
+- [Issue 54 - Register Service](https://community.opengroup.org/osdu/platform/deployment-and-operations/infra-azure-provisioning/-/issues/54)
+- [Issue 52 - Notification Service](https://community.opengroup.org/osdu/platform/deployment-and-operations/infra-azure-provisioning/-/issues/52)
 
 __Documentation Changes__
 - [MR 90 - Documentation Tweaks and Fixing Environment Variables](https://community.opengroup.org/osdu/platform/deployment-and-operations/infra-azure-provisioning/-/merge_requests/90)

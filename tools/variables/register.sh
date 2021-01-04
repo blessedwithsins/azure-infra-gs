@@ -59,7 +59,6 @@ cosmosdb_database="${COSMOS_DB_NAME}"
 server_port="8087"
 ENTITLEMENTS_API="https://${ENV_HOST}/entitlements/v1"
 RECORDS_CHANGE_PUBSUB_ENDPOINT="https://${ENV_HOST}/api/notification/v1/push-handlers/records-changed"
-SUBSCRIBER_SECRET="${ENV_AZURE_EVENT_SUBSCRIBER_SECRET}"
 
 
 # ------------------------------------------------------------------------------------------------------
@@ -144,7 +143,6 @@ export cosmosdb_database="${COSMOS_DB_NAME}"
 export server_port="${server_port}"
 export ENTITLEMENTS_API="https://${ENV_HOST}/entitlements/v1"
 export RECORDS_CHANGE_PUBSUB_ENDPOINT="https://${ENV_HOST}/api/notification/v1/push-handlers/records-changed"
-export SUBSCRIBER_SECRET="${ENV_AZURE_EVENT_SUBSCRIBER_SECRET}"
 
 
 # ------------------------------------------------------------------------------------------------------
@@ -175,7 +173,6 @@ cosmosdb_database: "${COSMOS_DB_NAME}"
 server_port: "${server_port}"
 ENTITLEMENTS_API: "https://${ENV_HOST}/entitlements/v1"
 RECORDS_CHANGE_PUBSUB_ENDPOINT: "https://${ENV_HOST}/api/notification/v1/push-handlers/records-changed"
-SUBSCRIBER_SECRET: "${ENV_AZURE_EVENT_SUBSCRIBER_SECRET}"
 LOCALRUN
 
 

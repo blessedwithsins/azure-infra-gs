@@ -121,7 +121,7 @@ This variable group will be used to hold the specific environment values necessa
 | DOMAIN                                        | `contoso.com`                     |
 | ELASTIC_ENDPOINT                              | `$(opendes-elastic-endpoint)`     |
 | ELASTIC_USERNAME                              | `$(opendes-elastic-username)`     |
-| ELASTIC_PASSWORD                              | `$(opendes-elastic-password)`      |
+| ELASTIC_PASSWORD                              | `$(opendes-elastic-password)`     |
 | IDENTITY_CLIENT_ID                            | `$(osdu-identity-id)`             |
 | INTEGRATION_TESTER                            | `$(app-dev-sp-username)`          |
 | MY_TENANT                                     | `opendes`                         |
@@ -130,7 +130,7 @@ This variable group will be used to hold the specific environment values necessa
 | AZURE_EVENT_SUBSCRIBER_SECRET                 | Subscriber Secret used while performing handshake                      |
 | AZURE_EVENT_SUBSCRIPTION_ID                   | Subscription ID created by Base64 encoding a string formed by concatenating GET /challenge/{} endpoint in register service and Event Grid Topic <br/>  For eg. BASE64(osdu-mvp-dp1demo-esyx-grid-recordstopic + https://{DNS}/api/register/v1/challenge/1           |
 | AZURE_EVENT_TOPIC_NAME                        | Event grid Topic Name eg. `osdu-mvp-dp1demo-esyx-grid-recordstopic`          |
-
+| AZURE_DNS_NAME                                | <your_FQDN>                       |
 
 ```bash
 DATA_PARTITION_NAME=opendes
@@ -159,6 +159,7 @@ az pipelines variable-group create \
   AZURE_EVENT_SUBSCRIBER_SECRET="secret" \
   AZURE_EVENT_SUBSCRIPTION_ID="subscriptionId" \
   AZURE_EVENT_TOPIC_NAME="topic name" \
+  AZURE_DNS_NAME="<your_fqdn>" \
   -ojson
 ```
 
@@ -390,7 +391,7 @@ This variable group is the service specific variables necessary for testing and 
 
 ```bash
 az pipelines variable-group create \
-  --name "Azure Service Release - unit" \
+  --name "Azure Service Release - unit-service" \
   --authorize true \
   --variables \
   MAVEN_DEPLOY_POM_FILE_PATH="drop/provider/unit-azure/unit-aks" \
@@ -478,6 +479,8 @@ This variable group is the service specific variables necessary for testing and 
 | MAVEN_INTEGRATION_TEST_OPTIONS | `-DargLine="-DAZURE_AD_TENANT_ID=$(AZURE_TENANT_ID) -DINTEGRATION_TESTER=$(INTEGRATION_TESTER) -DAZURE_AD_APP_RESOURCE_ID=$(AZURE_AD_APP_RESOURCE_ID) -DTESTER_SERVICEPRINCIPAL_SECRET=$(AZURE_TESTER_SERVICEPRINCIPAL_SECRET) -DPRIVATE_TENANT1=$(TENANT_NAME) -DPRIVATE_TENANT2=tenant2 -DSHARED_TENANT=$(TENANT_NAME) -DVENDOR=$(VENDOR) -DHOST=https://$(DNS_HOST)"` |
 | MAVEN_INTEGRATION_TEST_POM_FILE_PATH | `drop/deploy/testing/schema-test-core/pom.xml` |
 | SERVICE_RESOURCE_NAME | `$(AZURE_SCHEMA_SERVICE_NAME)` |
+| AZURE_DEPLOYMENTS_SUBDIR | `drop/deployments/scripts/azure` |
+| AZURE_DEPLOYMENTS_SCRIPTS_SUBDIR | `drop/deployments/scripts` |
 
 ```bash
 az pipelines variable-group create \
@@ -488,6 +491,8 @@ az pipelines variable-group create \
   MAVEN_INTEGRATION_TEST_OPTIONS=`-DargLine="-DAZURE_AD_TENANT_ID=$(AZURE_TENANT_ID) -DINTEGRATION_TESTER=$(INTEGRATION_TESTER) -DAZURE_AD_APP_RESOURCE_ID=$(AZURE_AD_APP_RESOURCE_ID) -DTESTER_SERVICEPRINCIPAL_SECRET=$(AZURE_TESTER_SERVICEPRINCIPAL_SECRET) -DPRIVATE_TENANT1=$(TENANT_NAME) -DPRIVATE_TENANT2=tenant2 -DSHARED_TENANT=$(TENANT_NAME) -DVENDOR=$(VENDOR) -DHOST=https://$(DNS_HOST)"` \
   MAVEN_INTEGRATION_TEST_POM_FILE_PATH="drop/deploy/testing/schema-test-core/pom.xml" \
   SERVICE_RESOURCE_NAME='$(AZURE_SCHEMA_SERVICE_NAME)' \
+  AZURE_DEPLOYMENTS_SUBDIR="drop/deployments/scripts/azure" \
+  AZURE_DEPLOYMENTS_SCRIPTS_SUBDIR="drop/deployments/scripts" \
   -ojson
 ```
 

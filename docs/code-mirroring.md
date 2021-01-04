@@ -229,7 +229,7 @@ jobs:
     - task: swellaby.mirror-git-repository.mirror-git-repository-vsts-task.mirror-git-repository-vsts-task@1
       displayName: 'unit-service'
       inputs:
-        sourceGitRepositoryUri: 'https://community.opengroup.org/osdu/platform/system/unit-service.git'
+        sourceGitRepositoryUri: 'https://community.opengroup.org/osdu/platform/system/reference/unit-service.git'
         destinationGitRepositoryUri: '$(UNIT_REPO)'
         destinationGitRepositoryPersonalAccessToken: $(ACCESS_TOKEN)
 

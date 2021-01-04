@@ -77,6 +77,10 @@ Data Ingestion is currently under development and due to initial OSDU community 
 
 Sometimes when `terraform destroy` is done improperly (errors out, is cancelled before its finished etc) the terraform state becomes __locked__. In order to fix this you must navigate to your _terraform-remote-state-container_ and manually unlock the _tf_state_
 
+## When I try to create the common resources I receive an error about the Key Vault already existing.
+
+Key Vaults are created and by default are [Soft Delete](https://docs.microsoft.com/en-us/azure/key-vault/general/soft-delete-overview) enabled.  If a keyvault or secret in a keyvault were deleted an admin would have to manually `purge` the keyvault or secret.
+
 ## I can't change the names for my infrastructure deployment
 
 When you are deploying via terraform, once you pick a name for the terraform script to use when naming Azure resources, you cannot change the naming convention so __choose carefully!!__
