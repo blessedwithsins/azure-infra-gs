@@ -215,7 +215,34 @@ resource "azurerm_monitor_diagnostic_setting" "postgres_diagnostics" {
 
 
   metric {
-    category = "AllMetrics"
+    category = "Errors"
+
+    retention_policy {
+      days    = var.log_retention_days
+      enabled = local.retention_policy
+    }
+  }
+
+  metric {
+    category = "Latency"
+
+    retention_policy {
+      days    = var.log_retention_days
+      enabled = local.retention_policy
+    }
+  }
+
+  metric {
+    category = "Saturation"
+
+    retention_policy {
+      days    = var.log_retention_days
+      enabled = local.retention_policy
+    }
+  }
+
+  metric {
+    category = "Traffic"
 
     retention_policy {
       days    = var.log_retention_days

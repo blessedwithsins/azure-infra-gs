@@ -20,8 +20,8 @@
 */
 
 feature_flag = {
-  osdu_namespace = false
-  flux           = false
+  osdu_namespace = true
+  flux           = true
 }
 
 prefix = "osdu-mvp"
