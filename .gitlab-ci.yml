@@ -60,6 +60,8 @@ validate:
 cr-unit-test:
   <<: *install_tf_alpine
   stage: central-resources
+  script:
+    - echo "komakkar"
 
 cr-terraform-plan:
   extends: .tf-plan
@@ -72,6 +74,9 @@ cr-terraform-plan:
 data-unit-test:
   <<: *install_tf_alpine
   stage: data-resources
+  script:
+    - echo "komakkar"
+
 
 dp-terraform-plan:
   extends: .tf-plan
@@ -85,6 +90,9 @@ dp-terraform-plan:
 sr-unit-test:
   <<: *install_tf_alpine
   stage: service-resources
+  script:
+    - echo "komakkar"
+
 
 sr-terraform-plan:
   stage: service-resources
