@@ -49,8 +49,6 @@ include:
 stages:
   - validate
   - central-resources
-  - data-resources
-  - service-resources
 
 validate:
   stage: validate
@@ -63,55 +61,16 @@ cr-unit-test:
   needs: ["validate"]
   script:
     - echo "komakkar"
-
-cr-terraform-plan:
-  needs: ["validate"]
-  extends: .tf-plan
-  stage: central-resources
-  variables:
-    TF_DIRECTORY: 'infra/templates/osdu-r3-mvp/central_resources'
-    TF_WORKSPACE_NAME: 'idc-mvp-cr'
-    PLAN: 'plan.tfplan'
-
-dp-unit-test:
-  needs: ["validate"]
-  <<: *install_tf_alpine
-  stage: data-resources
-  script:
-    - echo "komakkar"
-
-
-dp-terraform-plan:
-  needs: ["validate"]
-  extends: .tf-plan
-  stage: data-resources
-  variables:
-    TF_DIRECTORY: 'infra/templates/osdu-r3-mvp/data_partition'
-    TF_WORKSPACE_NAME: 'idc-mvp-dp1'
-    PLAN: 'plan.tfplan'
-
-
-sr-unit-test:
-  <<: *install_tf_alpine
-  needs: ["validate"]
-  stage: service-resources
-  script:
-    - echo "komakkar"
-
-
-sr-terraform-plan:
-  stage: service-resources
-  needs: ["validate"]
-  before_script:
-    - echo "Downloading pre-req files"
-    - echo "${ssh_public_key_file}" > "infra/templates/osdu-r3-mvp/service_resources/ssh_public_key_file.pub"
-    - echo "${gitops_ssh_key_file}" > "infra/templates/osdu-r3-mvp/service_resources/gitops_ssh_key_file.pem"
-
-  extends: .tf-plan
-  variables:
-    TF_DIRECTORY: 'infra/templates/osdu-r3-mvp/service_resources'
-    TF_WORKSPACE_NAME: 'idc-mvp-sr'
-    TF_VAR_ssh_public_key_file: "ssh_public_key_file.pub"
-    TF_VAR_gitops_ssh_key_file: "gitops_ssh_key_file.pem"
-    PLAN: 'plan.tfplan'
-
+    - terraform version
+    - (if [[ "$(go version)" == "go version go${GO_VERSION} linux/amd64" ]]; then echo "✓ Go binary installed!"; else echo "Go binary not installed!"; /bin/false; fi);
+    - currdir=$(pwd)
+    - cd ${TF_DIRECTORY}/
+    - terraform init -backend-config "storage_account_name=${TF_VAR_remote_state_account}" -backend-config "container_name=${TF_VAR_remote_state_container}"
+    - terraform workspace new idc-mvp-cr ||terraform workspace select idc-mvp-cr
+    - apk add --no-cache gcc libc-dev bind-tools git
+    - git clone https://github.com/magefile/mage
+    - cd mage
+    - go run bootstrap.go
+    - cd $currdir/infra/ templates/osdu-r3-mvp/central_resources
+    - chmod -fR 755 *.sh || true
+    - go test -v $(go list ./... | grep "unit")
