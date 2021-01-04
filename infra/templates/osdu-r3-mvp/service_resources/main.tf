@@ -30,7 +30,7 @@ terraform {
   required_version = ">= 0.14"
 
   backend "azurerm" {
-    key = "prod.terraform.tfstate"
+    key = "terraform.tfstate"
   }
 
   required_providers {
