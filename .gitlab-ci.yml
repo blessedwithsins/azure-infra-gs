@@ -43,6 +43,9 @@ before_script:
     - rm -rf .terraform
     - terraform init -backend-config "storage_account_name=${TF_VAR_remote_state_account}" -backend-config "container_name=${TF_VAR_remote_state_container}"
 
+include:
+  - local: "tf-poc/.tf-plan.yml"
+
 stages:
   - validate
   - central-resources
