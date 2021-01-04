@@ -43,35 +43,35 @@ before_script:
     - rm -rf .terraform
     - terraform init -backend-config "storage_account_name=${TF_VAR_remote_state_account}" -backend-config "container_name=${TF_VAR_remote_state_container}"
 
-include:
-  - local: "tf-poc/.tf-plan.yml"
-
 stages:
   - validate
-  - central-resources
+  - unit-test
 
 validate:
   stage: validate
   script:
     - terraform validate
 
+include:
+  - local: "tf-poc/.tf-plan.yml"
+
 cr-unit-test:
   <<: *install_tf_alpine
-  stage: central-resources
-  needs: ["validate"]
+  stage: unit-test
+  image:
+    name: "golang:${GO_VERSION}-alpine"
+    entrypoint:
+      - "/usr/bin/env"
+      - "PATH=/go/bin:/usr/local/go/bin/:/usr/local/sbin:/usr/local/bin:/usr/sbin:/usr/bin:/sbin:/bin"
   script:
-    - echo "komakkar"
     - terraform version
-    - go version
     - (if [[ "$(go version)" == "go version go${GO_VERSION} linux/amd64" ]]; then echo "✓ Go binary installed!"; else echo "Go binary not installed!"; /bin/false; fi);
     - currdir=$(pwd)
-    - cd ${TF_DIRECTORY}/
-    - terraform init -backend-config "storage_account_name=${TF_VAR_remote_state_account}" -backend-config "container_name=${TF_VAR_remote_state_container}"
-    - terraform workspace new idc-mvp-cr ||terraform workspace select idc-mvp-cr
     - apk add --no-cache gcc libc-dev bind-tools git
-    - git clone https://github.com/magefile/mage
-    - cd mage
+    - go get -u -d github.com/magefile/mage
+    - magedir=$(find /go/pkg/mod/ -name magefile -type d | grep -v cache)
+    - cd $magedir/$(ls $magedir/)
     - go run bootstrap.go
-    - cd $currdir/infra/ templates/osdu-r3-mvp/central_resources
-    - chmod -fR 755 *.sh || true
-    - go test -v $(go list ./... | grep "unit")
+    - cd $currdir/infra
+    - mage test
+
