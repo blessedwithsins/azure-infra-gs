@@ -14,7 +14,7 @@ image:
 variables:
   PLAN: plan.tfplan
   JSON_PLAN_FILE: tfplan.json
-  TF_VERSION: 0.12.24
+  TF_VERSION: 0.12.29
   GO_VERSION: 1.12.14
   TEMPLATE: samples/webdata
   TEST_CASE: testWebData
