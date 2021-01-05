@@ -212,7 +212,7 @@ resource "azurerm_user_assigned_identity" "agicidentity" {
 # Storage
 #-------------------------------
 module "storage_account" {
-  source = "git::https://community.opengroup.org/osdu/platform/deployment-and-operations/infra-azure-provisioning.git//infra/modules/providers/azure/storage-account?ref=release/0.5.0"
+  source = "../../../modules/providers/azure/storage-account"
 
   name                = local.storage_name
   resource_group_name = azurerm_resource_group.main.name
@@ -258,7 +258,7 @@ resource "azurerm_role_assignment" "airflow_log_queue_processor_roles" {
 # Network
 #-------------------------------
 module "network" {
-  source = "git::https://community.opengroup.org/osdu/platform/deployment-and-operations/infra-azure-provisioning.git//infra/modules/providers/azure/network?ref=release/0.5.0"
+  source = "../../../modules/providers/azure/network"
 
   name                = local.vnet_name
   resource_group_name = azurerm_resource_group.main.name
@@ -278,7 +278,7 @@ module "network" {
 }
 
 module "appgateway" {
-  source = "git::https://community.opengroup.org/osdu/platform/deployment-and-operations/infra-azure-provisioning.git//infra/modules/providers/azure/appgw?ref=release/0.5.0"
+  source = "../../../modules/providers/azure/appgw"
 
   name                = local.app_gw_name
   resource_group_name = azurerm_resource_group.main.name
@@ -321,7 +321,7 @@ resource "azurerm_role_assignment" "agic_app_gw_mi" {
 # Azure AKS
 #-------------------------------
 module "aks" {
-  source = "git::https://community.opengroup.org/osdu/platform/deployment-and-operations/infra-azure-provisioning.git//infra/modules/providers/azure/aks?ref=release/0.5.0"
+  source = "../../../modules/providers/azure/aks"
 
   name                = local.aks_cluster_name
   resource_group_name = azurerm_resource_group.main.name
@@ -406,7 +406,7 @@ resource "random_password" "postgres" {
 }
 
 module "postgreSQL" {
-  source = "git::https://community.opengroup.org/osdu/platform/deployment-and-operations/infra-azure-provisioning.git//infra/modules/providers/azure/postgreSQL?ref=release/0.5.0"
+  source = "../../../modules/providers/azure/postgreSQL"
 
   resource_group_name       = azurerm_resource_group.main.name
   name                      = local.postgresql_name
@@ -446,7 +446,7 @@ resource "azurerm_role_assignment" "postgres_access" {
 # Azure Redis Cache
 #-------------------------------
 module "redis_cache" {
-  source = "git::https://community.opengroup.org/osdu/platform/deployment-and-operations/infra-azure-provisioning.git//infra/modules/providers/azure/redis-cache?ref=release/0.5.0"
+  source = "../../../modules/providers/azure/redis-cache"
 
   name                = local.redis_cache_name
   resource_group_name = azurerm_resource_group.main.name

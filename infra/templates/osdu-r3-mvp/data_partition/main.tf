@@ -149,7 +149,7 @@ resource "azurerm_resource_group" "main" {
 # Storage
 #-------------------------------
 module "storage_account" {
-  source = "git::https://community.opengroup.org/osdu/platform/deployment-and-operations/infra-azure-provisioning.git//infra/modules/providers/azure/storage-account?ref=release/0.5.0"
+  source = "../../../modules/providers/azure/storage-account"
 
   name                = local.storage_name
   resource_group_name = azurerm_resource_group.main.name
@@ -180,7 +180,7 @@ resource "azurerm_role_assignment" "storage_data_contributor" {
 }
 
 module "sdms_storage_account" {
-  source = "git::https://community.opengroup.org/osdu/platform/deployment-and-operations/infra-azure-provisioning.git//infra/modules/providers/azure/storage-account?ref=release/0.5.0"
+  source = "../../../modules/providers/azure/storage-account"
 
   name                = local.sdms_storage_name
   resource_group_name = azurerm_resource_group.main.name
@@ -215,7 +215,7 @@ resource "azurerm_role_assignment" "sdms_storage_data_contributor" {
 # CosmosDB
 #-------------------------------
 module "cosmosdb_account" {
-  source = "git::https://community.opengroup.org/osdu/platform/deployment-and-operations/infra-azure-provisioning.git//infra/modules/providers/azure/cosmosdb?ref=release/0.5.0"
+  source = "../../../modules/providers/azure/cosmosdb"
 
   name                     = local.cosmosdb_name
   resource_group_name      = azurerm_resource_group.main.name
@@ -242,7 +242,7 @@ resource "azurerm_role_assignment" "cosmos_access" {
 # Azure Service Bus
 #-------------------------------
 module "service_bus" {
-  source = "git::https://community.opengroup.org/osdu/platform/deployment-and-operations/infra-azure-provisioning.git//infra/modules/providers/azure/service-bus?ref=release/0.5.0"
+  source = "../../../modules/providers/azure/service-bus"
 
   name                = local.sb_namespace
   resource_group_name = azurerm_resource_group.main.name
@@ -266,7 +266,7 @@ resource "azurerm_role_assignment" "sb_access" {
 # Azure Event Grid
 #-------------------------------
 module "event_grid" {
-  source = "git::https://community.opengroup.org/osdu/platform/deployment-and-operations/infra-azure-provisioning.git//infra/modules/providers/azure/event-grid?ref=release/0.5.0"
+  source = "../../../modules/providers/azure/event-grid"
 
   name                = local.eventgrid_name
   resource_group_name = azurerm_resource_group.main.name
