@@ -27,6 +27,8 @@ parameters:
   skipTest: 'false'
   dockerFile: ''
   checkoutRepo: self
+  testAzureMavenCacheOption: '-Dmaven.repo.local=$(Pipeline.Workspace)/.m2/repository'
+  cacheVersion: 'test-dependency-cache-v0.1'
 
 stages:
 
@@ -81,3 +83,5 @@ stages:
                   testPythonFilePath: ${{ parameters.testPythonFilePath }}
                   testPythonFile: ${{ parameters.testPythonFile }}
                   checkoutRepo: ${{ parameters.checkoutRepo }}
+                  testAzureMavenCacheOption: ${{ parameters.testAzureMavenCacheOption }}
+                  cacheVersion: ${{ parameters.cacheVersion }}

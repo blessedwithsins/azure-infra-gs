@@ -34,6 +34,8 @@ parameters:
   testPythonFile: ''
   runPythonTest: ''
   checkoutRepo: self
+  cacheVersion: ''
+  testAzureMavenCacheOption: ''
 
 steps:
   - template: detect-jar.yml
@@ -75,6 +77,15 @@ steps:
       providerName: ${{ parameters.providerName }}
       elasticEndpoint: ${{ parameters.elasticEndpoint }}
 
+  - task: Cache@2
+    inputs:
+      key: 'maven | "${{ parameters.cacheVersion }}" | "$(Agent.OS)" | **/pom.xml'
+      restoreKeys: |
+        maven | "${{ parameters.cacheVersion }}" | "$(Agent.OS)"
+        maven | "${{ parameters.cacheVersion }}"
+      path: $(Pipeline.Workspace)/.m2/repository
+    displayName: Cache Maven local repo
+
   - task: Maven@3
     displayName: 'Maven build, test, and install ${{parameters.providerName}}-test-core'
     condition: ne('${{ parameters.testCoreMavenPomFile }}', '')
@@ -96,7 +107,7 @@ steps:
     inputs:
       mavenPomFile: '$(System.DefaultWorkingDirectory)/$(MAVEN_INTEGRATION_TEST_POM_FILE_PATH)'
       goals: ${{ parameters.integrationTestMavenGoal }}
-      options: $(MAVEN_INTEGRATION_TEST_OPTIONS)
+      options: $(MAVEN_INTEGRATION_TEST_OPTIONS) ${{ parameters.testAzureMavenCacheOption }}
       publishJUnitResults: ${{ parameters.mavenPublishJUnitResults }}
 
   - template: python-integration-test.yml
