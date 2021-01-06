@@ -156,7 +156,7 @@ data "terraform_remote_state" "central_resources" {
   config = {
     storage_account_name = var.remote_state_account
     container_name       = var.remote_state_container
-    key                  = format("prod.terraform.tfstateenv:%s", var.central_resources_workspace_name)
+    key                  = format("terraform.tfstateenv:%s", var.central_resources_workspace_name)
   }
 }
 
