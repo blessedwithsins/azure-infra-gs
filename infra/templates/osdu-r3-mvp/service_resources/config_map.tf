@@ -21,6 +21,8 @@ locals {
 }
 
 resource "kubernetes_namespace" "osdu" {
+  count = var.feature_flag.osdu_namespace ? 1 : 0
+
   metadata {
     name = local.osdu_ns
     labels = {
@@ -33,6 +35,8 @@ resource "kubernetes_namespace" "osdu" {
 
 
 resource "kubernetes_config_map" "osduconfigmap" {
+  count = var.feature_flag.osdu_namespace ? 1 : 0
+
   metadata {
     name      = "osdu-svc-properties"
     namespace = local.osdu_ns

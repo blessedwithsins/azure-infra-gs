@@ -28,6 +28,18 @@ variable "prefix" {
   type        = string
 }
 
+variable "feature_flag" {
+  description = "(Optional) A toggle for experimental features"
+  type = object({
+    osdu_namespace = bool
+    flux           = bool
+  })
+  default = {
+    osdu_namespace = true
+    flux           = true
+  }
+}
+
 variable "randomization_level" {
   description = "Number of additional random characters to include in resource names to insulate against unexpected resource name collisions."
   type        = number

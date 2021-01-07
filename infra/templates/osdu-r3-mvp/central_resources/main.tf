@@ -27,28 +27,39 @@
 // *** WARNING  ****
 
 terraform {
-  required_version = ">= 0.12"
+  required_version = ">= 0.14"
+
   backend "azurerm" {
     key = "terraform.tfstate"
   }
+
+  required_providers {
+    azurerm = {
+      source  = "hashicorp/azurerm"
+      version = "=2.41.0"
+    }
+    azuread = {
+      source  = "hashicorp/azuread"
+      version = "=1.1.1"
+    }
+    random = {
+      source  = "hashicorp/random"
+      version = "=2.3.1"
+    }
+    null = {
+      source  = "hashicorp/null"
+      version = "=3.0.0"
+    }
+  }
 }
+
 
 #-------------------------------
 # Providers
 #-------------------------------
 provider "azurerm" {
-  version = "=2.29.0"
   features {}
 }
-
-provider "azuread" {
-  version = "=1.0.0"
-}
-
-provider "random" {
-  version = "~>2.2"
-}
-
 
 
 #-------------------------------
@@ -91,7 +102,6 @@ locals {
 }
 
 
-
 #-------------------------------
 # Common Resources
 #-------------------------------
@@ -109,6 +119,7 @@ resource "random_string" "workspace_scope" {
   upper   = false
 }
 
+
 #-------------------------------
 # Resource Group
 #-------------------------------
@@ -121,7 +132,6 @@ resource "azurerm_resource_group" "main" {
     ignore_changes = [tags]
   }
 }
-
 
 
 #-------------------------------
@@ -140,7 +150,8 @@ module "keyvault" {
 }
 
 module "keyvault_policy" {
-  source    = "../../../modules/providers/azure/keyvault-policy"
+  source = "../../../modules/providers/azure/keyvault-policy"
+
   vault_id  = module.keyvault.keyvault_id
   tenant_id = data.azurerm_client_config.current.tenant_id
   object_ids = [
@@ -159,6 +170,7 @@ resource "azurerm_role_assignment" "kv_roles" {
   principal_id         = local.rbac_principals[count.index]
   scope                = module.keyvault.keyvault_id
 }
+
 
 #-------------------------------
 # Storage
@@ -185,12 +197,12 @@ resource "azurerm_role_assignment" "storage_access" {
 }
 
 
-
 #-------------------------------
 # Container Registry
 #-------------------------------
 module "container_registry" {
   source = "../../../modules/providers/azure/container-registry"
+
 
   container_registry_name = local.container_registry_name
   resource_group_name     = azurerm_resource_group.main.name
@@ -200,7 +212,6 @@ module "container_registry" {
 
   resource_tags = var.resource_tags
 }
-
 
 
 #-------------------------------
@@ -215,7 +226,6 @@ module "app_insights" {
 
   resource_tags = var.resource_tags
 }
-
 
 
 #-------------------------------
@@ -249,7 +259,6 @@ module "log_analytics" {
 }
 
 
-
 #-------------------------------
 # AD Principal and Applications
 #-------------------------------
@@ -272,7 +281,8 @@ module "service_principal" {
 
 
 module "ad_application" {
-  source                     = "../../../modules/providers/azure/ad-application"
+  source = "../../../modules/providers/azure/ad-application"
+
   name                       = local.ad_app_name
   oauth2_allow_implicit_flow = true
 
@@ -292,7 +302,6 @@ module "ad_application" {
 }
 
 
-
 #-------------------------------
 # OSDU Identity
 #-------------------------------
@@ -304,7 +313,6 @@ resource "azurerm_user_assigned_identity" "osduidentity" {
 
   tags = var.resource_tags
 }
-
 
 
 #-------------------------------

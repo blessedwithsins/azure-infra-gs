@@ -57,6 +57,8 @@ Once the service is passing both Gitlab and ADO pipelines, it has to be properly
 - Add a variable group `Azure Service Release - $SERVICE_NAME` to the documentation. You should know what values to set for this variable group from creating the development and demo pipelines. [Link](https://community.opengroup.org/osdu/platform/deployment-and-operations/infra-azure-provisioning/-/blob/master/docs/service-automation.md#create-osdu-service-libraries)
 - Add a step for creating the service pipeline at the bottom of the service-automation page. [Link](https://community.opengroup.org/osdu/platform/deployment-and-operations/infra-azure-provisioning/-/blob/master/docs/service-automation.md#create-osdu-service-libraries)
 - Create a rest script with sample calls to the service for users. [Link](https://community.opengroup.org/osdu/platform/deployment-and-operations/infra-azure-provisioning/-/tree/master/tools/rest)
+- (Optional) Add documentation on how to deploy the service into an already existing manual deployment and pipeline-controlled deployment to the service repo.
+- (Optional) Create a video walkthrough explaining the process of deploying the service.
 
 ## Release 
 **Coming soon**

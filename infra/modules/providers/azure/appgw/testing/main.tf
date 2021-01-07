@@ -30,7 +30,8 @@ module "resource_group" {
 }
 
 module "keyvault" {
-  source = "../../keyvault"
+  source     = "../../keyvault"
+  depends_on = [module.resource_group]
 
   keyvault_name       = substr("osdu-module-kv-${module.resource_group.random}", 0, 24)
   resource_group_name = module.resource_group.name
@@ -92,7 +93,8 @@ resource "azurerm_key_vault_certificate" "test" {
 
 
 module "network" {
-  source = "../../network"
+  source     = "../../network"
+  depends_on = [module.resource_group]
 
   name                = "osdu-module-vnet-${module.resource_group.random}"
   resource_group_name = module.resource_group.name
@@ -109,7 +111,8 @@ module "network" {
 }
 
 module "appgateway" {
-  source = "../"
+  source     = "../"
+  depends_on = [module.resource_group]
 
   name                 = "osdu-module-gw-${module.resource_group.random}"
   resource_group_name  = module.resource_group.name

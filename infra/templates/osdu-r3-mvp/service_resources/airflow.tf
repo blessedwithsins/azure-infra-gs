@@ -128,4 +128,6 @@ resource "azurerm_eventgrid_event_subscription" "airflow_log_event_subscription"
   subject_filter {
     subject_begins_with = "/blobServices/default/containers/airflow-logs/blobs"
   }
+
+  depends_on = [azurerm_storage_queue.main]
 }

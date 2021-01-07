@@ -24,12 +24,15 @@ module "resource_group" {
 }
 
 module "keyvault" {
-  source              = "../../keyvault"
+  source     = "../../keyvault"
+  depends_on = [module.resource_group]
+
   resource_group_name = module.resource_group.name
 }
 
 module "keyvault-policy" {
-  source = "../"
+  source     = "../"
+  depends_on = [module.resource_group]
 
   vault_id   = module.keyvault.keyvault_id
   tenant_id  = ""

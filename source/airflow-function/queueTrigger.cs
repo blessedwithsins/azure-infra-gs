@@ -26,8 +26,9 @@ namespace MyFunctionProj
             JObject o = JObject.Parse(myQueueItem);
             string blobUrl = (string)o["data"]["url"];
             string runID = blobUrl.Split("/")[5]; // the 2nd part after containerName
+            string correlationId = blobUrl.Split("/")[9];
             log.LogInformation($"C# Queue trigger function processed: blobUrl - {blobUrl}");
-
+            log.LogInformation($"C# Queue trigger function processed: correlationId - {correlationId}");
             string connection = GetEnvironmentVariable("AzureWebJobsStorage");
             string customerId = GetEnvironmentVariable("AzureLogWorkspaceCustomerId");
             string sharedKey = GetEnvironmentVariable("AzureLogWorkspaceSharedKey");
@@ -104,6 +105,7 @@ namespace MyFunctionProj
                     // then start to deal the next record
                     logLineEntity.LogFileName = blobUrl;
                     logLineEntity.RunID = runID;
+                    logLineEntity.CorrelationId = correlationId;
                     logLineEntity.LogTimestamp = m.Value;
                     logLineEntity.Task = task.Match(line).Value;
                     logLineEntity.LogLevel = logLevel.Match(line).Value;
@@ -133,6 +135,7 @@ namespace MyFunctionProj
         public string Content { get; set; }
         public string LogFileName { get; set; }
         public string RunID { get; set; }
+        public string CorrelationId { get; set; }
         public int LineNumber { get; set; }
     }
 }

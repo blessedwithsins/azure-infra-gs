@@ -32,19 +32,19 @@ variable "resource_group_name" {
 variable "keyvault_key_permissions" {
   description = "Permissions that the service principal has for accessing keys from KeyVault"
   type        = list(string)
-  default     = ["create", "delete", "get"]
+  default     = ["create", "get", "list", "delete", "encrypt", "decrypt", "recover", "restore", "purge"]
 }
 
 variable "keyvault_secret_permissions" {
   description = "Permissions that the service principal has for accessing secrets from KeyVault"
   type        = list(string)
-  default     = ["set", "delete", "get", "list"]
+  default     = ["set", "get", "list", "delete", "recover", "restore", "purge"]
 }
 
 variable "keyvault_certificate_permissions" {
   description = "Permissions that the service principal has for accessing certificates from KeyVault"
   type        = list(string)
-  default     = ["create", "delete", "get", "list"]
+  default     = ["create", "get", "list", "delete", "recover", "restore", "purge"]
 }
 
 variable "resource_tags" {

@@ -26,7 +26,7 @@ import (
 
 var workspace = "osdu-services-" + strings.ToLower(random.UniqueId())
 var location = "eastus"
-var count = 7
+var count = 8
 
 var tfOptions = &terraform.Options{
 	TerraformDir: "./",

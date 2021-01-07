@@ -2,14 +2,13 @@
 #
 #  Purpose: Create the Developer Environment Variables.
 #  Usage:
-#    storage.sh
-
+#    notification.sh
 ###############################
 ## ARGUMENT INPUT            ##
 ###############################
-usage() { echo "Usage: DNS_HOST=<your_host> INVALID_JWT=<your_token> file.sh " 1>&2; exit 1; }
+usage() { echo "Usage: DNS_HOST=<your_host> INVALID_JWT=<your_token> notification.sh " 1>&2; exit 1; }
 
-SERVICE="file"
+SERVICE="notification"
 
 if [ -z $UNIQUE ]; then
   tput setaf 1; echo 'ERROR: UNIQUE not provided' ; tput sgr0
@@ -49,39 +48,34 @@ if [ ! -d $UNIQUE ]; then mkdir $UNIQUE; fi
 # ------------------------------------------------------------------------------------------------------
 # LocalHost Run Settings
 # ------------------------------------------------------------------------------------------------------
-LOG_PREFIX="file"
 AZURE_TENANT_ID="${TENANT_ID}"
 AZURE_CLIENT_ID="${ENV_PRINCIPAL_ID}"
 AZURE_CLIENT_SECRET="${ENV_PRINCIPAL_SECRET}"
-keyvault_url="${ENV_KEYVAULT}"
+KEYVAULT_URI="${ENV_KEYVAULT}"
+aad_client_id="${ENV_APP_ID}"
 appinsights_key="${ENV_APPINSIGHTS_KEY}"
 cosmosdb_database="${COSMOS_DB_NAME}"
-AZURE_AD_APP_RESOURCE_ID="${ENV_APP_ID}"
-osdu_entitlements_url="https://${ENV_HOST}/entitlements/v1"
-osdu_entitlements_app_key="${API_KEY}"
-osdu_storage_url="https://${ENV_HOST}/api/storage/v2/"
-AZURE_STORAGE_ACCOUNT="${ENV_STORAGE}" # also used for testing
-aad_client_id="${ENV_APP_ID}"
-storage_account="${ENV_STORAGE}"
 server_port="8082"
-azure_istioauth_enabled="false"
+entitlements_service_endpoint="https://${ENV_HOST}/entitlements/v1"
+registeration_service_endpoint="https://${ENV_HOST}/register/v1"
+maxCacheSize="20"
 
 # ------------------------------------------------------------------------------------------------------
 # Integration Test Settings
 # ------------------------------------------------------------------------------------------------------
-FILE_SERVICE_HOST="http://localhost:${server_port}/api/file/v2"
-FILE_SERVICE_HOST_REMOTE="https://${ENV_HOST}/api/file/v2"
-DATA_PARTITION_ID="opendes"
+NOTIFICATION_BASE_URL="https://${ENV_HOST}/api/notification/v1/"
+REGISTER_CUSTOM_PUSH_URL_HMAC="https://${ENV_HOST}/api/register/v1/test/challenge/1"
+NOTIFICATION_REGISTER_BASE_URL="https://${ENV_HOST}"
+AZURE_AD_TENANT_ID="${TENANT_ID}"
 INTEGRATION_TESTER="${ENV_PRINCIPAL_ID}"
 TESTER_SERVICEPRINCIPAL_SECRET="${ENV_PRINCIPAL_SECRET}"
-AZURE_AD_TENANT_ID="${TENANT_ID}"
 AZURE_AD_APP_RESOURCE_ID="${ENV_APP_ID}"
 NO_DATA_ACCESS_TESTER="${NO_ACCESS_ID}"
 NO_DATA_ACCESS_TESTER_SERVICEPRINCIPAL_SECRET="${NO_ACCESS_SECRET}"
-USER_ID="osdu-user"
-EXIST_FILE_ID="8900a83f-18c6-4b1d-8f38-309a208779cc"
-TIME_ZONE="UTC+0"
-STAGING_CONTAINER_NAME="file-staging-area"
+ENVIRONMENT="DEV"
+HMAC_SECRET="${ENV_AZURE_EVENT_SUBSCRIBER_SECRET}"
+TOPIC_ID="${ENV_AZURE_EVENT_TOPIC_NAME}"
+
 
 cat > ${UNIQUE}/${SERVICE}.envrc <<LOCALENV
 # ------------------------------------------------------------------------------------------------------
@@ -131,96 +125,86 @@ export ENV_ELASTIC_HOST=$ENV_ELASTIC_HOST
 export ENV_ELASTIC_PORT=$ENV_ELASTIC_PORT
 export ENV_ELASTIC_USERNAME=$ENV_ELASTIC_USERNAME
 export ENV_ELASTIC_PASSWORD=$ENV_ELASTIC_PASSWORD
-
+export ENV_AZURE_EVENT_SUBSCRIBER_SECRET=$ENV_AZURE_EVENT_SUBSCRIBER_SECRET
+export ENV_AZURE_EVENT_SUBSCRIPTION_ID=$ENV_AZURE_EVENT_SUBSCRIPTION_ID
+export ENV_AZURE_EVENT_SUBSCRIPTION_ID_LOCAL=$ENV_AZURE_EVENT_SUBSCRIPTION_ID_LOCAL
+export ENV_AZURE_EVENT_TOPIC_NAME=$ENV_AZURE_EVENT_TOPIC_NAME
 
 # ------------------------------------------------------------------------------------------------------
 # LocalHost Run Settings
 # ------------------------------------------------------------------------------------------------------
-export LOG_PREFIX="${LOG_PREFIX}"
-export AZURE_TENANT_ID="${AZURE_TENANT_ID}"
-export AZURE_CLIENT_ID="${AZURE_CLIENT_ID}"
-export AZURE_CLIENT_SECRET="${AZURE_CLIENT_SECRET}"
-export keyvault_url="${keyvault_url}"
-export appinsights_key="${appinsights_key}"
-export cosmosdb_database="${cosmosdb_database}"
-export AZURE_AD_APP_RESOURCE_ID="${AZURE_AD_APP_RESOURCE_ID}"
-export osdu_entitlements_url="${osdu_entitlements_url}"
-export osdu_entitlements_app_key="${osdu_entitlements_app_key}"
-export osdu_storage_url="${osdu_storage_url}"
-export AZURE_STORAGE_ACCOUNT="${AZURE_STORAGE_ACCOUNT}"
-export aad_client_id="${aad_client_id}"
-export storage_account="${storage_account}"
+export AZURE_TENANT_ID="${TENANT_ID}"
+export AZURE_CLIENT_ID="${ENV_PRINCIPAL_ID}"
+export AZURE_CLIENT_SECRET="${ENV_PRINCIPAL_SECRET}"
+export KEYVAULT_URI="${ENV_KEYVAULT}"
+export aad_client_id="${ENV_APP_ID}"
+export appinsights_key="${ENV_APPINSIGHTS_KEY}"
+export cosmosdb_database="${COSMOS_DB_NAME}"
 export server_port="${server_port}"
-export azure_istioauth_enabled="${azure_istioauth_enabled}"
+export entitlements_service_endpoint="https://${ENV_HOST}/entitlements/v1"
+export registeration_service_endpoint="https://${ENV_HOST}/register/v1"
+export maxCacheSize="${maxCacheSize}"
+
 
 # ------------------------------------------------------------------------------------------------------
 # Integration Test Settings
 # ------------------------------------------------------------------------------------------------------
-export FILE_SERVICE_HOST="${FILE_SERVICE_HOST}"
-export DATA_PARTITION_ID="${DATA_PARTITION_ID}"
-export INTEGRATION_TESTER="${INTEGRATION_TESTER}"
-export TESTER_SERVICEPRINCIPAL_SECRET="${TESTER_SERVICEPRINCIPAL_SECRET}"
-export AZURE_AD_TENANT_ID="${AZURE_AD_TENANT_ID}"
-export AZURE_AD_APP_RESOURCE_ID="${AZURE_AD_APP_RESOURCE_ID}"
-export NO_DATA_ACCESS_TESTER="${NO_DATA_ACCESS_TESTER}"
-export NO_DATA_ACCESS_TESTER_SERVICEPRINCIPAL_SECRET="${NO_DATA_ACCESS_TESTER_SERVICEPRINCIPAL_SECRET}"
-export AZURE_STORAGE_ACCOUNT="${AZURE_STORAGE_ACCOUNT}"
-export USER_ID="${USER_ID}"
-export EXIST_FILE_ID="${EXIST_FILE_ID}"
-export TIME_ZONE="${TIME_ZONE}"
-export STAGING_CONTAINER_NAME="${STAGING_CONTAINER_NAME}"
+export NOTIFICATION_BASE_URL="https://${ENV_HOST}/api/notification/v1/"
+export REGISTER_CUSTOM_PUSH_URL_HMAC="https://${ENV_HOST}/api/register/v1/test/challenge/1"
+export NOTIFICATION_REGISTER_BASE_URL="https://${ENV_HOST}"
+export AZURE_AD_TENANT_ID="${TENANT_ID}"
+export INTEGRATION_TESTER="${ENV_PRINCIPAL_ID}"
+export TESTER_SERVICEPRINCIPAL_SECRET="${ENV_PRINCIPAL_SECRET}"
+export AZURE_AD_APP_RESOURCE_ID="${ENV_APP_ID}"
+export NO_DATA_ACCESS_TESTER="${NO_ACCESS_ID}"
+export NO_DATA_ACCESS_TESTER_SERVICEPRINCIPAL_SECRET="${NO_ACCESS_SECRET}"
+export ENVIRONMENT="DEV"
+export HMAC_SECRET="${ENV_AZURE_EVENT_SUBSCRIBER_SECRET}"
+export TOPIC_ID="${ENV_AZURE_EVENT_TOPIC_NAME}"
 LOCALENV
 
-
 cat > ${UNIQUE}/${SERVICE}_local.yaml <<LOCALRUN
-LOG_PREFIX: "${LOG_PREFIX}"
-AZURE_TENANT_ID: "${AZURE_TENANT_ID}"
-AZURE_CLIENT_ID: "${AZURE_CLIENT_ID}"
-AZURE_CLIENT_SECRET: "${AZURE_CLIENT_SECRET}"
-keyvault_url: "${keyvault_url}"
-appinsights_key: "${appinsights_key}"
-cosmosdb_database: "${cosmosdb_database}"
-AZURE_AD_APP_RESOURCE_ID: "${AZURE_AD_APP_RESOURCE_ID}"
-osdu_entitlements_url: "${osdu_entitlements_url}"
-osdu_entitlements_app_key: "${osdu_entitlements_app_key}"
-osdu_storage_url: "${osdu_storage_url}"
-AZURE_STORAGE_ACCOUNT: "${AZURE_STORAGE_ACCOUNT}"
-aad_client_id: "${aad_client_id}"
-storage_account: "${storage_account}"
+AZURE_TENANT_ID: "${TENANT_ID}"
+AZURE_CLIENT_ID: "${ENV_PRINCIPAL_ID}"
+AZURE_CLIENT_SECRET: "${ENV_PRINCIPAL_SECRET}"
+KEYVAULT_URI: "${ENV_KEYVAULT}"
+aad_client_id: "${ENV_APP_ID}"
+appinsights_key: "${ENV_APPINSIGHTS_KEY}"
+cosmosdb_database: "${COSMOS_DB_NAME}"
 server_port: "${server_port}"
-azure_istioauth_enabled: "${azure_istioauth_enabled}"
+entitlements_service_endpoint: "https://${ENV_HOST}/entitlements/v1"
+registeration_service_endpoint: "https://${ENV_HOST}/register/v1"
+maxCacheSize: "${maxCacheSize}"
 LOCALRUN
 
 
 cat > ${UNIQUE}/${SERVICE}_local_test.yaml <<LOCALTEST
-FILE_SERVICE_HOST: "${FILE_SERVICE_HOST}"
-DATA_PARTITION_ID: "${DATA_PARTITION_ID}"
-INTEGRATION_TESTER: "${INTEGRATION_TESTER}"
-TESTER_SERVICEPRINCIPAL_SECRET: "${TESTER_SERVICEPRINCIPAL_SECRET}"
-AZURE_AD_TENANT_ID: "${AZURE_AD_TENANT_ID}"
-AZURE_AD_APP_RESOURCE_ID: "${AZURE_AD_APP_RESOURCE_ID}"
-NO_DATA_ACCESS_TESTER: "${NO_DATA_ACCESS_TESTER}"
-NO_DATA_ACCESS_TESTER_SERVICEPRINCIPAL_SECRET: "${NO_DATA_ACCESS_TESTER_SERVICEPRINCIPAL_SECRET}"
-AZURE_STORAGE_ACCOUNT: "${AZURE_STORAGE_ACCOUNT}"
-USER_ID: "${USER_ID}"
-EXIST_FILE_ID: "${EXIST_FILE_ID}"
-TIME_ZONE: "${TIME_ZONE}"
-STAGING_CONTAINER_NAME: "${STAGING_CONTAINER_NAME}"
+NOTIFICATION_BASE_URL: "https://localhost:${server_port}/api/notification/v1/"
+REGISTER_CUSTOM_PUSH_URL_HMAC: "https://${ENV_HOST}/api/register/v1/test/challenge/1"
+NOTIFICATION_REGISTER_BASE_URL: "https://${ENV_HOST}"
+AZURE_AD_TENANT_ID: "${TENANT_ID}"
+INTEGRATION_TESTER: "${ENV_PRINCIPAL_ID}"
+TESTER_SERVICEPRINCIPAL_SECRET: "${ENV_PRINCIPAL_SECRET}"
+AZURE_AD_APP_RESOURCE_ID: "${ENV_APP_ID}"
+NO_DATA_ACCESS_TESTER: "${NO_ACCESS_ID}"
+NO_DATA_ACCESS_TESTER_SERVICEPRINCIPAL_SECRET: "${NO_ACCESS_SECRET}"
+ENVIRONMENT: "DEV"
+HMAC_SECRET: "${ENV_AZURE_EVENT_SUBSCRIBER_SECRET}"
+TOPIC_ID: "${ENV_AZURE_EVENT_TOPIC_NAME}"
 LOCALTEST
 
 
 cat > ${UNIQUE}/${SERVICE}_test.yaml <<DEVTEST
-FILE_SERVICE_HOST: "${FILE_SERVICE_HOST_REMOTE}"
-DATA_PARTITION_ID: "${DATA_PARTITION_ID}"
-INTEGRATION_TESTER: "${INTEGRATION_TESTER}"
-TESTER_SERVICEPRINCIPAL_SECRET: "${TESTER_SERVICEPRINCIPAL_SECRET}"
-AZURE_AD_TENANT_ID: "${AZURE_AD_TENANT_ID}"
-AZURE_AD_APP_RESOURCE_ID: "${AZURE_AD_APP_RESOURCE_ID}"
-NO_DATA_ACCESS_TESTER: "${NO_DATA_ACCESS_TESTER}"
-NO_DATA_ACCESS_TESTER_SERVICEPRINCIPAL_SECRET: "${NO_DATA_ACCESS_TESTER_SERVICEPRINCIPAL_SECRET}"
-AZURE_STORAGE_ACCOUNT: "${AZURE_STORAGE_ACCOUNT}"
-USER_ID: "${USER_ID}"
-EXIST_FILE_ID: "${EXIST_FILE_ID}"
-TIME_ZONE: "${TIME_ZONE}"
-STAGING_CONTAINER_NAME: "${STAGING_CONTAINER_NAME}"
+NOTIFICATION_BASE_URL: "https://${ENV_HOST}/api/notification/v1/"
+REGISTER_CUSTOM_PUSH_URL_HMAC: "https://${ENV_HOST}/api/register/v1/test/challenge/1"
+NOTIFICATION_REGISTER_BASE_URL: "https://${ENV_HOST}"
+AZURE_AD_TENANT_ID: "${TENANT_ID}"
+INTEGRATION_TESTER: "${ENV_PRINCIPAL_ID}"
+TESTER_SERVICEPRINCIPAL_SECRET: "${ENV_PRINCIPAL_SECRET}"
+AZURE_AD_APP_RESOURCE_ID: "${ENV_APP_ID}"
+NO_DATA_ACCESS_TESTER: "${NO_ACCESS_ID}"
+NO_DATA_ACCESS_TESTER_SERVICEPRINCIPAL_SECRET: "${NO_ACCESS_SECRET}"
+ENVIRONMENT: "DEV"
+HMAC_SECRET: "${ENV_AZURE_EVENT_SUBSCRIBER_SECRET}"
+TOPIC_ID: "${ENV_AZURE_EVENT_TOPIC_NAME}"
 DEVTEST

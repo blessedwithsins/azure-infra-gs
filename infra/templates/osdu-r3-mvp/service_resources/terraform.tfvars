@@ -19,6 +19,11 @@
    This file holds the Default Variable Configuration
 */
 
+feature_flag = {
+  osdu_namespace = true
+  flux           = true
+}
+
 prefix = "osdu-mvp"
 
 resource_tags = {

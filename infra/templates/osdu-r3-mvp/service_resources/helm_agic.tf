@@ -20,7 +20,7 @@ locals {
   helm_agic_name    = "agic"
   helm_agic_ns      = "agic"
   helm_agic_repo    = "https://appgwingress.blob.core.windows.net/ingress-azure-helm-package/"
-  helm_agic_version = "1.2.0"
+  helm_agic_version = "1.3.0"
 }
 
 

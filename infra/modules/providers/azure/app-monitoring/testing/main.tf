@@ -23,7 +23,8 @@ module "resource_group" {
 }
 
 module "app_monitoring" {
-  source = "../"
+  source     = "../"
+  depends_on = [module.resource_group]
 
   resource_group_name = module.resource_group.name
   action_group_name   = var.action_group_name
