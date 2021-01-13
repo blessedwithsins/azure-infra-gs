@@ -510,6 +510,23 @@ az pipelines variable-group create \
   -ojson
 ```
 
+__Setup and Configure the ADO Library `Azure Service Release - crs-catalog-service`__
+
+This variable group is the service specific variables necessary for testing and deploying the `crs-catalog` service.
+
+| Variable | Value |
+|----------|-------|
+| MAVEN_DEPLOY_POM_FILE_PATH | `drop/provider/crs-catalog-azure/crs-catalog-aks` |
+
+```bash
+az pipelines variable-group create \
+  --name "Azure Service Release - crs-catalog-service" \
+  --authorize true \
+  --variables \
+  MAVEN_DEPLOY_POM_FILE_PATH="drop/provider/crs-catalog-azure/crs-catalog-aks"
+  -ojson
+```
+
 __Create the Chart Pipelines__
 
 Create the pipelines and run things in this exact order.
@@ -749,6 +766,8 @@ az pipelines create \
 ```
 
 
+
+
 11. Add a Pipeline for __register__  to deploy the Register Service.
 
     _Repo:_ `register`
@@ -807,6 +826,21 @@ az pipelines create \
 az pipelines create \
   --name 'service-schema'  \
   --repository schema-service  \
+  --branch master  \
+  --repository-type tfsgit  \
+  --yaml-path /devops/azure/pipeline.yml  \
+  -ojson
+```
+15. Add a Pipeline for __crs-catalog__  to deploy the CRS-Catalog Service.
+
+    _Repo:_ `crs-catalog-service`
+    _Path:_ `/devops/azure/pipeline.yml`
+    _Validate:_ https://<your_dns_name>/api/crs/catalog/swagger-ui.html is alive.
+
+```bash
+az pipelines create \
+  --name 'service-crs-catalog'  \
+  --repository crs-catalog-service  \
   --branch master  \
   --repository-type tfsgit  \
   --yaml-path /devops/azure/pipeline.yml  \

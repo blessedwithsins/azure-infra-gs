@@ -224,8 +224,8 @@ git clone https://community.opengroup.org/osdu/platform/system/indexer-service.g
 git clone https://community.opengroup.org/osdu/platform/system/search-service.git $SRC_DIR/search-service
 git clone https://community.opengroup.org/osdu/platform/system/file.git $SRC_DIR/file-service
 git clone https://community.opengroup.org/osdu/platform/system/delivery.git $SRC_DIR/delivery
-git clone https://community.opengroup.org/osdu/platform/system/unit-service.git $SRC_DIR/unit-service
-git clone https://community.opengroup.org/osdu/platform/system/crs-catalog-service.git $SRC_DIR/crs-catalog-service
+git clone https://community.opengroup.org/osdu/platform/system/reference/unit-service.git $SRC_DIR/unit-service
+git clone https://community.opengroup.org/osdu/platform/system/reference/crs-catalog-service.git $SRC_DIR/crs-catalog-service
 git clone https://community.opengroup.org/osdu/platform/system/reference/crs-conversion-service.git $SRC_DIR/crs-conversion-service
 git clone https://community.opengroup.org/osdu/platform/system/notification.git $SRC_DIR/notification
 git clone https://community.opengroup.org/osdu/platform/data-flow/enrichment/wks.git $SRC_DIR/wks

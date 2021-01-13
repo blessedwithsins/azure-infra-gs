@@ -266,18 +266,18 @@ jobs:
         destinationGitRepositoryPersonalAccessToken: $(ACCESS_TOKEN)
 
     - task: swellaby.mirror-git-repository.mirror-git-repository-vsts-task.mirror-git-repository-vsts-task@1
-          displayName: 'notification'
-          inputs:
-            sourceGitRepositoryUri: 'https://community.opengroup.org/osdu/platform/system/notification.git'
-            destinationGitRepositoryUri: '$(NOTIFICATION_REPO)'
-            destinationGitRepositoryPersonalAccessToken: $(ACCESS_TOKEN)
+        displayName: 'notification'
+        inputs:
+          sourceGitRepositoryUri: 'https://community.opengroup.org/osdu/platform/system/notification.git'
+          destinationGitRepositoryUri: '$(NOTIFICATION_REPO)'
+          destinationGitRepositoryPersonalAccessToken: $(ACCESS_TOKEN)
 
     - task: swellaby.mirror-git-repository.mirror-git-repository-vsts-task.mirror-git-repository-vsts-task@1
-          displayName: 'schema-service'
-          inputs:
-            sourceGitRepositoryUri: 'https://community.opengroup.org/osdu/platform/system/schema-service.git'
-            destinationGitRepositoryUri: '$(SCHEMA_REPO)'
-            destinationGitRepositoryPersonalAccessToken: $(ACCESS_TOKEN)
+        displayName: 'schema-service'
+        inputs:
+          sourceGitRepositoryUri: 'https://community.opengroup.org/osdu/platform/system/schema-service.git'
+          destinationGitRepositoryUri: '$(SCHEMA_REPO)'
+          destinationGitRepositoryPersonalAccessToken: $(ACCESS_TOKEN)
 
 EOF
 
