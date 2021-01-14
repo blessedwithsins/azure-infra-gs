@@ -27,6 +27,10 @@ When you are deploying via terraform, once you pick a name for the terraform scr
 
 This is likely an issue with the `Application.ReadWrite.OwnedBy` permissions that is required by the service principal `osdu-mvp-[your unique here]-terraform`. Please verify that the service principal has been granted the permission and that the permission has recieved admin consent.
 
+## My Service Principal is running into permission errors
+
+This is most likely a problem with the permission of the service principal that is running the deployment. The service principal that is running the deployment must have permissions to to create other service principals. If it doesn't have this permission, it might be a limitation of your AAD tenant configuration. Please discuss with your AAD tenant provider to see if permission can be granted.
+
 
 # Infrastructure Provisioning Questions
 
