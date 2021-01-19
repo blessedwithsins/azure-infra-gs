@@ -2,14 +2,14 @@
 #
 #  Purpose: Create the Developer Environment Variables.
 #  Usage:
-#    unit.sh
+#    crs-catalog.sh
 
 ###############################
 ## ARGUMENT INPUT            ##
 ###############################
-usage() { echo "Usage: DNS_HOST=<your_host> INVALID_JWT=<your_token> unit.sh " 1>&2; exit 1; }
+usage() { echo "Usage: DNS_HOST=<your_host> INVALID_JWT=<your_token> crs-catalog.sh " 1>&2; exit 1; }
 
-SERVICE="unit"
+SERVICE="crs-catalog"
 
 if [ -z $UNIQUE ]; then
   tput setaf 1; echo 'ERROR: UNIQUE not provided' ; tput sgr0
@@ -61,7 +61,7 @@ if [ ! -d $UNIQUE ]; then mkdir $UNIQUE; fi
 KEYVAULT_URI="${ENV_KEYVAULT}"
 ENTITLEMENTS_URL="https://${ENV_HOST}/entitlements/v1"
 appinsights_key="${ENV_APPINSIGHTS_KEY}"
-osdu_unit_catalog_filename="data/unit_catalog_v2.json"
+osdu_unit_catalog_filename="data/crs_catalog_v2.json"
 
 # ------------------------------------------------------------------------------------------------------
 # Integration Test Settings
@@ -120,7 +120,7 @@ export ENV_ELASTIC_PASSWORD=$ENV_ELASTIC_PASSWORD
 export KEYVAULT_URI="${ENV_KEYVAULT}"
 export ENTITLEMENTS_URL="https://${ENV_HOST}/entitlements/v1"
 export appinsights_key="${ENV_APPINSIGHTS_KEY}"
-export osdu_unit_catalog_filename="data/unit_catalog_v2.json"
+export osdu_crs_catalog_filename="data/crs_catalog_v2.json"
 
 # ------------------------------------------------------------------------------------------------------
 # Integration Test Settings
@@ -140,5 +140,5 @@ cat > ${UNIQUE}/${SERVICE}_local.yaml <<LOCALRUN
 KEYVAULT_URI: "${ENV_KEYVAULT}"
 ENTITLEMENT_URL: "https://${ENV_HOST}/entitlements/v1"
 appinsights_key: "${ENV_APPINSIGHTS_KEY}"
-osdu_unit_catalog_filename: "data/unit_catalog_v2.json"
+osdu_crs_catalog_filename: "data/crs_catalog_v2.json"
 LOCALRUN

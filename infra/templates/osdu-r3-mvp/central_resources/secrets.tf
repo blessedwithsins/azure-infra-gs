@@ -28,6 +28,10 @@ locals {
   storage_account_name = format("tbl-storage")
   storage_key_name     = format("%s-key", local.storage_account_name)
 
+  graph_connection  = format("graph-db-connection")
+  graph_endpoint    = format("graph-db-endpoint")
+  graph_primary_key = format("graph-db-primary-key")
+
   logs_id_name  = "log-workspace-id"
   logs_key_name = "log-workspace-key"
 }
@@ -80,6 +84,27 @@ resource "azurerm_key_vault_secret" "storage_key" {
   key_vault_id = module.keyvault.keyvault_id
 }
 
+
+#-------------------------------
+# GraphDB
+#-------------------------------
+resource "azurerm_key_vault_secret" "graph_connection" {
+  name         = local.graph_connection
+  value        = module.graph_account.properties.cosmosdb.connection_strings[0]
+  key_vault_id = module.keyvault.keyvault_id
+}
+
+resource "azurerm_key_vault_secret" "graph_endpoint" {
+  name         = local.graph_endpoint
+  value        = module.graph_account.properties.cosmosdb.endpoint
+  key_vault_id = module.keyvault.keyvault_id
+}
+
+resource "azurerm_key_vault_secret" "graph_key" {
+  name         = local.graph_primary_key
+  value        = module.graph_account.properties.cosmosdb.primary_master_key
+  key_vault_id = module.keyvault.keyvault_id
+}
 
 
 #-------------------------------

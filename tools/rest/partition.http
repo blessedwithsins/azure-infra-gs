@@ -103,6 +103,14 @@ data-partition-id: {{data_partition_id}}
         "eventgrid-recordstopic-accesskey": {
             "sensitive": true,
             "value": "eventgrid-recordstopic-accesskey"
+        },
+        "eventgrid-resourcegroup": {
+            "sensitive": true,
+            "value": "eventgrid-resourcegroup"
+        },
+        "encryption-key-identifier": {
+            "sensitive": true,
+            "value": "encryption-key-identifier"
         }
     }
 }

@@ -17,11 +17,13 @@ Empty repositories need to be created that will be used by a pipeline to mirror 
 | delivery                  | https://community.opengroup.org/osdu/platform/system/delivery.git       |
 | file                      | https://community.opengroup.org/osdu/platform/system/file.git      |
 | unit-service              | https://community.opengroup.org/osdu/platform/system/reference/unit-service.git |
+| crs-catalog-service       | https://community.opengroup.org/osdu/platform/system/reference/crs-catalog-service.git |
 | crs-conversion-service    | https://community.opengroup.org/osdu/platform/system/reference/crs-conversion-service.git |
 | wks                       | https://community.opengroup.org/osdu/platform/data-flow/enrichment/wks.git |
 | register                  | https://community.opengroup.org/osdu/platform/system/register.git |
 | notification              | https://community.opengroup.org/osdu/platform/system/notification.git|
 | schema-service            | https://community.opengroup.org/osdu/platform/system/schema-service.git|
+| ingestion-workflow        | https://community.opengroup.org/osdu/platform/data-flow/ingestion/ingestion-workflow.git |
 
 ```bash
 export ADO_ORGANIZATION=<organization_name>
@@ -41,11 +43,13 @@ SERVICE_LIST="infra-azure-provisioning \
               delivery \
               file \
               unit-service \
+              crs-catalog-service \
               crs-conversion-service \
               wks \
               register \
               notification \
-              schema-service"
+              schema-service \
+              ingestion-workflow"
 
 for SERVICE in $SERVICE_LIST;
 do
@@ -74,11 +78,13 @@ Variable Group Name:  `Mirror Variables`
 | DELIVERY_REPO | https://dev.azure.com/osdu-demo/osdu/_git/delivery |
 | FILE_REPO | https://dev.azure.com/osdu-demo/osdu/_git/file |
 | UNIT_REPO | https://dev.azure.com/osdu-demo/osdu/_git/unit-service |
+| CRS_CATALOG_REPO | https://dev.azure.com/osdu-demo/osdu/_git/crs-catalog-service |
 | CRS_CONVERSION_REPO | https://dev.azure.com/osdu-demo/osdu/_git/crs-conversion-service |
 | WKS_REPO | https://dev.azure.com/osdu-demo/osdu/_git/wks |
 | REGISTER_REPO | https://dev.azure.com/osdu-demo/osdu/_git/register |
 | NOTIFICATION_REPO | https://dev.azure.com/osdu-demo/osdu/_git/notification |
 | SCHEMA_REPO | https://dev.azure.com/osdu-demo/osdu/_git/schema-service |
+| INGESTION_WORKFLOW_REPO | https://dev.azure.com/osdu-demo/osdu/_git/ingestion-workflow |
 | ACCESS_TOKEN | <your_personal_access_token> |
 
 
@@ -103,11 +109,13 @@ az pipelines variable-group create \
   DELIVERY_REPO=https://dev.azure.com/${ADO_ORGANIZATION}/$ADO_PROJECT/_git/delivery \
   FILE_REPO=https://dev.azure.com/${ADO_ORGANIZATION}/$ADO_PROJECT/_git/file \
   UNIT_REPO=https://dev.azure.com/${ADO_ORGANIZATION}/$ADO_PROJECT/_git/unit-service \
+  CRS_CATALOG_REPO=https://dev.azure.com/osdu-demo/osdu/_git/unit-service \
   CRS_CONVERSION_REPO=https://dev.azure.com/${ADO_ORGANIZATION}/$ADO_PROJECT/_git/crs-conversion-service \
   WKS_REPO=https://dev.azure.com/${ADO_ORGANIZATION}/$ADO_PROJECT/_git/wks \
   REGISTER_REPO=https://dev.azure.com/${ADO_ORGANIZATION}/$ADO_PROJECT/_git/register \
   NOTIFICATION_REPO=https://dev.azure.com/${ADO_ORGANIZATION}/$ADO_PROJECT/_git/notification \
-  SCHEMA_REPO=https://dev.azure.com/${ADO_ORGANIZATION}/$ADO_PROJECT/_git/schema-service \ 
+  SCHEMA_REPO=https://dev.azure.com/${ADO_ORGANIZATION}/$ADO_PROJECT/_git/schema-service \
+  INGESTION_WORKFLOW_REPO=https://dev.azure.com/${ADO_ORGANIZATION}/$ADO_PROJECT/_git/ingestion-workflow \ 
   ACCESS_TOKEN=$ACCESS_TOKEN \
   -ojson
 ```
@@ -232,6 +240,13 @@ jobs:
         sourceGitRepositoryUri: 'https://community.opengroup.org/osdu/platform/system/reference/unit-service.git'
         destinationGitRepositoryUri: '$(UNIT_REPO)'
         destinationGitRepositoryPersonalAccessToken: $(ACCESS_TOKEN)
+    
+    - task: swellaby.mirror-git-repository.mirror-git-repository-vsts-task.mirror-git-repository-vsts-task@1
+      displayName: 'crs-catalog-service'
+      inputs:
+        sourceGitRepositoryUri: 'https://community.opengroup.org/osdu/platform/system/reference/crs-catalog-service.git'
+        destinationGitRepositoryUri: '$(CRS_CATALOG_REPO)'
+        destinationGitRepositoryPersonalAccessToken: $(ACCESS_TOKEN)
 
     - task: swellaby.mirror-git-repository.mirror-git-repository-vsts-task.mirror-git-repository-vsts-task@1
       displayName: 'crs-conversion-service'
@@ -267,6 +282,12 @@ jobs:
             sourceGitRepositoryUri: 'https://community.opengroup.org/osdu/platform/system/schema-service.git'
             destinationGitRepositoryUri: '$(SCHEMA_REPO)'
             destinationGitRepositoryPersonalAccessToken: $(ACCESS_TOKEN)
+    - task: swellaby.mirror-git-repository.mirror-git-repository-vsts-task.mirror-git-repository-vsts-task@1
+      displayName: 'ingestion-workflow'
+      inputs:
+        sourceGitRepositoryUri: 'https://community.opengroup.org/osdu/platform/data-flow/ingestion/ingestion-workflow.git'
+        destinationGitRepositoryUri: '$(INGESTION_WORKFLOW_REPO)'
+        destinationGitRepositoryPersonalAccessToken: $(ACCESS_TOKEN)
 
 EOF
 
@@ -282,4 +303,5 @@ az pipelines create \
   --yaml-path /pipeline.yml  \
   -ojson
 ```
+
 

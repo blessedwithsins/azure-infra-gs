@@ -33,6 +33,23 @@ resource "azurerm_storage_account" "main" {
   identity {
     type = "SystemAssigned"
   }
+
+  blob_properties {
+    delete_retention_policy {
+      days = var.retention_days
+    }
+    dynamic "cors_rule" {
+      for_each = var.blob_cors_rule
+      content {
+        # Enable Cors Rules
+        allowed_headers    = cors_rule.value["allowed_headers"]
+        allowed_methods    = cors_rule.value["allowed_methods"]
+        allowed_origins    = cors_rule.value["allowed_origins"]
+        exposed_headers    = cors_rule.value["exposed_headers"]
+        max_age_in_seconds = cors_rule.value["max_age_in_seconds"]
+      }
+    }
+  }
 }
 
 resource "azurerm_storage_container" "main" {

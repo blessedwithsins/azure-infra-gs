@@ -169,7 +169,7 @@ resource "azurerm_monitor_diagnostic_setting" "aks_diagnostics" {
   }
 
   metric {
-    category = "AllMetrics"
+    category = "API Server (PREVIEW)"
 
     retention_policy {
       days    = var.log_retention_days

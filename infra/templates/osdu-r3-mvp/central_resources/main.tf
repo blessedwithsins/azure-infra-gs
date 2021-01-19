@@ -84,6 +84,7 @@ locals {
 
   kv_name                 = "${local.base_name_21}-kv"
   storage_name            = "${replace(local.base_name_21, "-", "")}tbl"
+  graphdb_name            = "${local.base_name}-graph"
   container_registry_name = "${replace(local.base_name_21, "-", "")}cr"
   osdupod_identity_name   = "${local.base_name}-osdu-identity"
   ai_name                 = "${local.base_name}-ai"
@@ -196,13 +197,38 @@ resource "azurerm_role_assignment" "storage_access" {
   scope                = module.storage_account.id
 }
 
+#-------------------------------
+# CosmosDB
+#-------------------------------
+module "graph_account" {
+  source = "../../../modules/providers/azure/cosmosdb"
+
+  name                     = local.graphdb_name
+  resource_group_name      = azurerm_resource_group.main.name
+  primary_replica_location = var.cosmosdb_replica_location
+  automatic_failover       = var.cosmosdb_automatic_failover
+  consistency_level        = var.cosmosdb_consistency_level
+  graph_databases          = var.cosmos_graph_databases
+  graphs                   = var.cosmos_graphs
+
+  resource_tags = var.resource_tags
+}
+
+// Add Access Control to Principal
+resource "azurerm_role_assignment" "graph_access" {
+  count = length(local.rbac_principals)
+
+  role_definition_name = "Contributor"
+  principal_id         = local.rbac_principals[count.index]
+  scope                = module.graph_account.account_id
+}
+
 
 #-------------------------------
 # Container Registry
 #-------------------------------
 module "container_registry" {
   source = "../../../modules/providers/azure/container-registry"
-
 
   container_registry_name = local.container_registry_name
   resource_group_name     = azurerm_resource_group.main.name
@@ -337,5 +363,12 @@ resource "azurerm_management_lock" "sa_lock" {
 resource "azurerm_management_lock" "acr_lock" {
   name       = "osdu_acr_lock"
   scope      = module.container_registry.container_registry_id
+  lock_level = "CanNotDelete"
+}
+
+// Lock the GraphDB
+resource "azurerm_management_lock" "graph_lock" {
+  name       = "osdu_graph_db_lock"
+  scope      = module.graph_account.account_id
   lock_level = "CanNotDelete"
 }

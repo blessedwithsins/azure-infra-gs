@@ -177,6 +177,20 @@ airflow:
   workers:
     podLabels:
       aadpodidbinding: "osdu-identity"
+    autoscaling:
+      enabled: true
+      ## minReplicas is picked from Values.workers.replicas and default value is 1
+      maxReplicas: 3
+      metrics:
+      - type: Resource
+        resource:
+          name: memory
+          target:
+            type: Utilization
+            averageUtilization: 50
+    resources:
+      requests:
+        memory: "512Mi"
   flower:
     enabled: false
   postgresql:
@@ -231,6 +245,7 @@ git clone https://community.opengroup.org/osdu/platform/system/notification.git 
 git clone https://community.opengroup.org/osdu/platform/data-flow/enrichment/wks.git $SRC_DIR/wks
 git clone https://community.opengroup.org/osdu/platform/system/register.git $SRC_DIR/register
 git clone https://community.opengroup.org/osdu/platform/system/schema-service.git $SRC_DIR/schema-service
+git clonehttps://community.opengroup.org/osdu/platform/data-flow/ingestion/ingestion-workflow.git $SRC_DIR/ingestion-workflow
 ```
 
 
@@ -324,7 +339,8 @@ SERVICE_LIST="infra-azure-provisioning \
               wks \
               register \
               notification \
-              schema"
+              schema \
+              ingestion-workflow"
 
 for SERVICE in SERVICE_LIST;
 do
