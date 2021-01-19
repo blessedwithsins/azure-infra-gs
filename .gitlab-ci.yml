@@ -72,6 +72,6 @@ cr-unit-test:
     - magedir=$(find /go/pkg/mod/ -name magefile -type d | grep -v cache)
     - cd $magedir/$(ls $magedir/)
     - go run bootstrap.go
-    - cd $currdir
+    - cd $currdir/infra
     - mage test
 
