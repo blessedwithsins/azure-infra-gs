@@ -41,7 +41,7 @@ before_script:
   before_script:
     - cd $TEMPLATE
     - rm -rf .terraform
-    - terraform init -backend-config "storage_account_name=${TF_VAR_remote_state_account}" -backend-config "container_name=${TF_VAR_remote_state_container}"
+    - terraform init -upgrade -backend-config "storage_account_name=${TF_VAR_remote_state_account}" -backend-config "container_name=${TF_VAR_remote_state_container}"
 
 stages:
   - validate
