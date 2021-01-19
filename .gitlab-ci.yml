@@ -73,5 +73,5 @@ cr-unit-test:
     - cd $magedir/$(ls $magedir/)
     - go run bootstrap.go
     - cd $currdir/infra
-    - mage serviceUnitTest             
+    - mage centralUnitTest             
 
