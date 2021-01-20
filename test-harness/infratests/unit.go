@@ -58,7 +58,8 @@ type UnitTestFixture struct {
 func RunUnitTests(fixture *UnitTestFixture) {
 	terraform.Init(fixture.GoTest, fixture.TfOptions)
 	
-	workspaceName := "komakkar"
+	workspaceName := fixture.Workspace
+
 	if workspaceName == "" {
 		workspaceName = "default-unit-testing"
 	}
