@@ -1,78 +1,41 @@
-# This file is a template, and might need editing before it works on your project.
-# Official image for Hashicorp's Terraform. It uses light image which is Alpine
-# based as it is much lighter.
-#
-# Entrypoint is also needed as image by default set `terraform` binary as an
-# entrypoint.
-image:
-  name: registry.gitlab.com/gitlab-org/terraform-images/releases/0.12:latest
-  entrypoint:
-    - '/usr/bin/env'
-    - 'PATH=/usr/local/sbin:/usr/local/bin:/usr/sbin:/usr/bin:/sbin:/bin'
-
-# Default output file for Terraform plan
-variables:
-  PLAN: plan.tfplan
-  JSON_PLAN_FILE: tfplan.json
-  TF_VERSION: 0.14.4 
-  GO_VERSION: 1.12.14
-  TEMPLATE: samples/webdata
-  TEST_CASE: testWebData
-
-cache:
-  paths:
-    - .terraform
-
-before_script:
-  - alias convert_report="jq -r '([.resource_changes[]?.change.actions?]|flatten)|{\"create\":(map(select(.==\"create\"))|length),\"update\":(map(select(.==\"update\"))|length),\"delete\":(map(select(.==\"delete\"))|length)}'"
-  - terraform --version
-  - terraform init
-
-.install_tf_alpine: &install_tf_alpine
-  before_script:
-    - currdir=$(pwd)
-    - cd /tmp
-    - wget https://releases.hashicorp.com/terraform/${TF_VERSION}/terraform_${TF_VERSION}_linux_amd64.zip -O terraform.zip
-    - unzip terraform.zip -d /usr/bin
-    - cd $currdir
-    - /usr/bin/terraform version
-
-.terraform_flow: &terraform_flow
-  before_script:
-    - terraform state replace-provider 'registry.terraform.io/-/azurerm' 'registry.terraform.io/hashicorp/azurerm'
-    - cd $TEMPLATE
-    - rm -rf .terraform
-    - terraform init -upgrade -backend-config "storage_account_name=${TF_VAR_remote_state_account}" -backend-config "container_name=${TF_VAR_remote_state_container}"
 
 stages:
   - validate
-  - unit-test
+  - common-resource
+  - data-resource
+  - service-resource
 
 validate:
-  stage: validate
-  script:
-    - terraform validate
-
-include:
-  - local: "tf-poc/.tf-plan.yml"
+    stage: validate
+    script: 
+        - echo "validate script"
 
 cr-unit-test:
-  <<: *install_tf_alpine
-  stage: unit-test
-  image:
-    name: "golang:${GO_VERSION}-alpine"
-    entrypoint:
-      - "/usr/bin/env"
-      - "PATH=/go/bin:/usr/local/go/bin/:/usr/local/sbin:/usr/local/bin:/usr/sbin:/usr/bin:/sbin:/bin"
-  script:
-    - (if [[ "$(go version)" == "go version go${GO_VERSION} linux/amd64" ]]; then echo "✓ Go binary installed!"; else echo "Go binary not installed!"; /bin/false; fi);
-    - (if [[ "$(terraform version)" == "Terraform v0.14.4" ]]; then echo "✓ Terrafrom binary installed!"; else echo "Terraform binary not installed!"; /bin/false; fi);
-    - echo "Terraform workspace ${TF_WORKSPACE}"
-    - currdir=$(pwd)
-    - apk add --no-cache gcc libc-dev bind-tools git
-    - go get -u -d github.com/magefile/mage
-    - magedir=$(find /go/pkg/mod/ -name magefile -type d | grep -v cache)
-    - cd $magedir/$(ls $magedir/)
-    - go run bootstrap.go
-    - cd $currdir/infra
-    - mage centralUnitTest
+    stage: common-resource
+    script:
+        - echo "unit test cr"
+
+cr-plan:
+    stage: common-resource
+    script:
+        - echo "cr plan"
+
+sr-unit-test:
+    stage: service-resource
+    script:
+        - echo "unit test sr"
+        
+sr-plan:
+    stage: service-resource
+    script:
+        - echo "sr plan"
+
+dr-unit-test:
+    stage: data-resource
+    script:
+        - echo "unit test dr"
+
+dr-plan:
+    stage: data-resource
+    script:
+        - echo "dr plan"
