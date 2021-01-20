@@ -26,6 +26,7 @@ parameters:
   integrationTestMavenGoal: 'package'
   skipDeploy: false
   skipTest: 'false'
+  dockerTagLatest: 'false'
   dockerFile: ''
   checkoutRepo: self
   testAzureMavenCacheOption: '-Dmaven.repo.local=$(Pipeline.Workspace)/.m2/repository'
@@ -81,6 +82,7 @@ stages:
                   hldRegPath: ${{ parameters.hldRegPath }}
                   skipDeploy: ${{ parameters.skipDeploy }}
                   skipTest: ${{ parameters.skipTest }}
+                  dockerTagLatest: ${{ parameters.dockerTagLatest }}
                   runPythonTest: ${{ parameters.runPythonTest }}
                   testPythonFilePath: ${{ parameters.testPythonFilePath }}
                   testPythonFile: ${{ parameters.testPythonFile }}
