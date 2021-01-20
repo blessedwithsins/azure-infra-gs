@@ -1,8 +1,7 @@
-
 stages:
   - validate
-  - common-resource
-  - data-resource
+  - build
+  - unit-test
   - service-resource
 
 validate:
@@ -11,31 +10,31 @@ validate:
         - echo "validate script"
 
 cr-unit-test:
-    stage: common-resource
+    stage: test
     script:
         - echo "unit test cr"
 
 cr-plan:
-    stage: common-resource
+    stage: build
     script:
         - echo "cr plan"
 
 sr-unit-test:
-    stage: service-resource
+    stage: test
     script:
         - echo "unit test sr"
         
 sr-plan:
-    stage: service-resource
+    stage: build
     script:
         - echo "sr plan"
 
 dr-unit-test:
-    stage: data-resource
+    stage: test
     script:
         - echo "unit test dr"
 
 dr-plan:
-    stage: data-resource
+    stage: build
     script:
         - echo "dr plan"
