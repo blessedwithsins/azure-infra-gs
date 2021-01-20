@@ -56,7 +56,7 @@ type UnitTestFixture struct {
 //	- Run `terraform plan`
 //	- Validate terraform plan file.
 func RunUnitTests(fixture *UnitTestFixture) {
-	//terraform.Init(fixture.GoTest, fixture.TfOptions)
+	terraform.Init(fixture.GoTest, fixture.TfOptions)
 
 	workspaceName := fixture.Workspace
 	if workspaceName == "" {
