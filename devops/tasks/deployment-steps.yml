@@ -29,6 +29,7 @@ parameters:
   testArtifactLocation: 'drop/deploy'
   elasticEndpoint: ''
   skipTest: ''
+  dockerTagLatest: 'false'
   dockerFile: ''
   testPythonFilePath: ''
   testPythonFile: ''
@@ -53,6 +54,7 @@ steps:
       imageRepoName: ${{ parameters.serviceName }}
       artifactName: ${{ parameters.artifactName }}
       dockerFile: ${{ parameters.dockerFile }}
+      dockerTagLatest: ${{ parameters.dockerTagLatest }}
 
   - template: aks-deployment-steps.yml
     parameters:
