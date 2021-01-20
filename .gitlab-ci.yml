@@ -68,6 +68,7 @@ cr-unit-test:
     - terraform version
     - (if [[ "$(go version)" == "go version go${GO_VERSION} linux/amd64" ]]; then echo "✓ Go binary installed!"; else echo "Go binary not installed!"; /bin/false; fi);
     - echo "Terraform v${TF_VERSION}"
+    - echo "Terraform workspace ${TF_WORKSPACE}"
     - currdir=$(pwd)
     - apk add --no-cache gcc libc-dev bind-tools git
     - go get -u -d github.com/magefile/mage
