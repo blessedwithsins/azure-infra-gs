@@ -27,28 +27,39 @@
 // *** WARNING  ****
 
 terraform {
-  required_version = ">= 0.12"
+  required_version = ">= 0.14"
+
   backend "azurerm" {
     key = "terraform.tfstate"
   }
+
+  required_providers {
+    azurerm = {
+      source  = "hashicorp/azurerm"
+      version = "=2.41.0"
+    }
+    azuread = {
+      source  = "hashicorp/azuread"
+      version = "=1.1.1"
+    }
+    random = {
+      source  = "hashicorp/random"
+      version = "=2.3.1"
+    }
+    null = {
+      source  = "hashicorp/null"
+      version = "=3.0.0"
+    }
+  }
 }
+
 
 #-------------------------------
 # Providers
 #-------------------------------
 provider "azurerm" {
-  version = "=2.29.0"
   features {}
 }
-
-provider "azuread" {
-  version = "=1.0.0"
-}
-
-provider "random" {
-  version = "~>2.2"
-}
-
 
 
 #-------------------------------
@@ -73,6 +84,7 @@ locals {
 
   kv_name                 = "${local.base_name_21}-kv"
   storage_name            = "${replace(local.base_name_21, "-", "")}tbl"
+  graphdb_name            = "${local.base_name}-graph"
   container_registry_name = "${replace(local.base_name_21, "-", "")}cr"
   osdupod_identity_name   = "${local.base_name}-osdu-identity"
   ai_name                 = "${local.base_name}-ai"
@@ -89,7 +101,6 @@ locals {
     module.service_principal.id
   ]
 }
-
 
 
 #-------------------------------
@@ -109,6 +120,7 @@ resource "random_string" "workspace_scope" {
   upper   = false
 }
 
+
 #-------------------------------
 # Resource Group
 #-------------------------------
@@ -121,7 +133,6 @@ resource "azurerm_resource_group" "main" {
     ignore_changes = [tags]
   }
 }
-
 
 
 #-------------------------------
@@ -140,7 +151,8 @@ module "keyvault" {
 }
 
 module "keyvault_policy" {
-  source    = "../../../modules/providers/azure/keyvault-policy"
+  source = "../../../modules/providers/azure/keyvault-policy"
+
   vault_id  = module.keyvault.keyvault_id
   tenant_id = data.azurerm_client_config.current.tenant_id
   object_ids = [
@@ -159,6 +171,7 @@ resource "azurerm_role_assignment" "kv_roles" {
   principal_id         = local.rbac_principals[count.index]
   scope                = module.keyvault.keyvault_id
 }
+
 
 #-------------------------------
 # Storage
@@ -184,6 +197,31 @@ resource "azurerm_role_assignment" "storage_access" {
   scope                = module.storage_account.id
 }
 
+#-------------------------------
+# CosmosDB
+#-------------------------------
+module "graph_account" {
+  source = "../../../modules/providers/azure/cosmosdb"
+
+  name                     = local.graphdb_name
+  resource_group_name      = azurerm_resource_group.main.name
+  primary_replica_location = var.cosmosdb_replica_location
+  automatic_failover       = var.cosmosdb_automatic_failover
+  consistency_level        = var.cosmosdb_consistency_level
+  graph_databases          = var.cosmos_graph_databases
+  graphs                   = var.cosmos_graphs
+
+  resource_tags = var.resource_tags
+}
+
+// Add Access Control to Principal
+resource "azurerm_role_assignment" "graph_access" {
+  count = length(local.rbac_principals)
+
+  role_definition_name = "Contributor"
+  principal_id         = local.rbac_principals[count.index]
+  scope                = module.graph_account.account_id
+}
 
 
 #-------------------------------
@@ -202,7 +240,6 @@ module "container_registry" {
 }
 
 
-
 #-------------------------------
 # Application Insights
 #-------------------------------
@@ -215,7 +252,6 @@ module "app_insights" {
 
   resource_tags = var.resource_tags
 }
-
 
 
 #-------------------------------
@@ -249,7 +285,6 @@ module "log_analytics" {
 }
 
 
-
 #-------------------------------
 # AD Principal and Applications
 #-------------------------------
@@ -272,7 +307,8 @@ module "service_principal" {
 
 
 module "ad_application" {
-  source                     = "../../../modules/providers/azure/ad-application"
+  source = "../../../modules/providers/azure/ad-application"
+
   name                       = local.ad_app_name
   oauth2_allow_implicit_flow = true
 
@@ -292,7 +328,6 @@ module "ad_application" {
 }
 
 
-
 #-------------------------------
 # OSDU Identity
 #-------------------------------
@@ -304,7 +339,6 @@ resource "azurerm_user_assigned_identity" "osduidentity" {
 
   tags = var.resource_tags
 }
-
 
 
 #-------------------------------
@@ -329,5 +363,12 @@ resource "azurerm_management_lock" "sa_lock" {
 resource "azurerm_management_lock" "acr_lock" {
   name       = "osdu_acr_lock"
   scope      = module.container_registry.container_registry_id
+  lock_level = "CanNotDelete"
+}
+
+// Lock the GraphDB
+resource "azurerm_management_lock" "graph_lock" {
+  name       = "osdu_graph_db_lock"
+  scope      = module.graph_account.account_id
   lock_level = "CanNotDelete"
 }

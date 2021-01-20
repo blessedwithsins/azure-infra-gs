@@ -62,8 +62,9 @@ osdu_entitlements_app_key="${API_KEY}"
 osdu_storage_url="https://${ENV_HOST}/api/storage/v2/"
 AZURE_STORAGE_ACCOUNT="${ENV_STORAGE}" # also used for testing
 aad_client_id="${ENV_APP_ID}"
+storage_account="${ENV_STORAGE}"
 server_port="8082"
-azure_istioauth_enabled="true"
+azure_istioauth_enabled="false"
 
 # ------------------------------------------------------------------------------------------------------
 # Integration Test Settings
@@ -148,6 +149,7 @@ export osdu_entitlements_app_key="${osdu_entitlements_app_key}"
 export osdu_storage_url="${osdu_storage_url}"
 export AZURE_STORAGE_ACCOUNT="${AZURE_STORAGE_ACCOUNT}"
 export aad_client_id="${aad_client_id}"
+export storage_account="${storage_account}"
 export server_port="${server_port}"
 export azure_istioauth_enabled="${azure_istioauth_enabled}"
 
@@ -184,6 +186,7 @@ osdu_entitlements_app_key: "${osdu_entitlements_app_key}"
 osdu_storage_url: "${osdu_storage_url}"
 AZURE_STORAGE_ACCOUNT: "${AZURE_STORAGE_ACCOUNT}"
 aad_client_id: "${aad_client_id}"
+storage_account: "${storage_account}"
 server_port: "${server_port}"
 azure_istioauth_enabled: "${azure_istioauth_enabled}"
 LOCALRUN

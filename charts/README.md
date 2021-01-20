@@ -118,7 +118,7 @@ airflow:
       AIRFLOW__CORE__REMOTE_LOG_CONN_ID: "az_log"
       AIRFLOW__CORE__REMOTE_BASE_LOG_FOLDER: "wasb-airflowlog"
       AIRFLOW__CORE__LOGGING_CONFIG_CLASS: "log_config.DEFAULT_LOGGING_CONFIG"
-      AIRFLOW__CORE__LOG_FILENAME_TEMPLATE: "{{ run_id }}/{{ ti.dag_id }}/{{ ti.task_id }}/{{ ts }}/{{ try_number }}.log"
+      AIRFLOW__CORE__LOG_FILENAME_TEMPLATE: "{{ run_id }}/{{ ti.dag_id }}/{{ ti.task_id }}/{{ ts }}/{% if 'correlationId' in dag_run.conf %}{{ dag_run.conf['correlationId'] }}{% else %}None{% endif %}/{{ try_number }}.log"
       AIRFLOW__CELERY__SSL_ACTIVE: "True"
       AIRFLOW__WEBSERVER__ENABLE_PROXY_FIX: "True"
       AIRFLOW__CORE__PLUGINS_FOLDER: "/opt/airflow/plugins"
@@ -177,6 +177,20 @@ airflow:
   workers:
     podLabels:
       aadpodidbinding: "osdu-identity"
+    autoscaling:
+      enabled: true
+      ## minReplicas is picked from Values.workers.replicas and default value is 1
+      maxReplicas: 3
+      metrics:
+      - type: Resource
+        resource:
+          name: memory
+          target:
+            type: Utilization
+            averageUtilization: 50
+    resources:
+      requests:
+        memory: "512Mi"
   flower:
     enabled: false
   postgresql:
@@ -226,6 +240,12 @@ git clone https://community.opengroup.org/osdu/platform/system/file.git $SRC_DIR
 git clone https://community.opengroup.org/osdu/platform/system/delivery.git $SRC_DIR/delivery
 git clone https://community.opengroup.org/osdu/platform/system/unit-service.git $SRC_DIR/unit-service
 git clone https://community.opengroup.org/osdu/platform/system/crs-catalog-service.git $SRC_DIR/crs-catalog-service
+git clone https://community.opengroup.org/osdu/platform/system/reference/crs-conversion-service.git $SRC_DIR/crs-conversion-service
+git clone https://community.opengroup.org/osdu/platform/system/notification.git $SRC_DIR/notification
+git clone https://community.opengroup.org/osdu/platform/data-flow/enrichment/wks.git $SRC_DIR/wks
+git clone https://community.opengroup.org/osdu/platform/system/register.git $SRC_DIR/register
+git clone https://community.opengroup.org/osdu/platform/system/schema-service.git $SRC_DIR/schema-service
+git clonehttps://community.opengroup.org/osdu/platform/data-flow/ingestion/ingestion-workflow.git $SRC_DIR/ingestion-workflow
 ```
 
 
@@ -303,7 +323,26 @@ helm template airflow ${INFRA_SRC}/charts/airflow -f ${INFRA_SRC}/charts/config_
   && git push origin $UNIQUE)
 
 # Extract manifests from each service chart.
-for SERVICE in partition entitlements-azure legal storage indexer-queue indexer-service search-service file-service delivery unit-service crs-catalog-service;
+SERVICE_LIST="infra-azure-provisioning \
+              partition \
+              entitlements-azure \
+              legal \
+              storage \
+              indexer-queue \
+              indexer-service \
+              search-service \
+              delivery \
+              file \
+              unit-service \
+              crs-conversion-service \
+              crs-catalog-service \
+              wks \
+              register \
+              notification \
+              schema \
+              ingestion-workflow"
+
+for SERVICE in SERVICE_LIST;
 do
   helm template $SERVICE ${SRC_DIR}/$SERVICE/devops/azure/chart --set image.branch=$BRANCH --set image.tag=$TAG > ${FLUX_SRC}/providers/azure/hld-registry/$SERVICE.yaml
 done

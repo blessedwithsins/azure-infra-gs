@@ -24,7 +24,8 @@ module "resource_group" {
 }
 
 module "container-registry" {
-  source = "../"
+  source     = "../"
+  depends_on = [module.resource_group]
 
   resource_group_name              = module.resource_group.name
   container_registry_name          = "osdu-module-container-registry-${module.resource_group.random}"

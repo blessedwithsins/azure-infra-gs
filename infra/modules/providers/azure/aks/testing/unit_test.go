@@ -24,7 +24,7 @@ import (
 
 var name = "cluster-"
 var location = "eastus"
-var count = 12
+var count = 13
 
 var tfOptions = &terraform.Options{
 	TerraformDir: "./",

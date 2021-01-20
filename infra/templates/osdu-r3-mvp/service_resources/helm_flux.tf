@@ -20,11 +20,13 @@ locals {
   helm_flux_name    = "flux"
   helm_flux_ns      = "flux"
   helm_flux_repo    = "https://charts.fluxcd.io"
-  helm_flux_version = "1.5.0"
+  helm_flux_version = "1.6.0"
   helm_flux_secret  = "flux-git-deploy"
 }
 
 resource "kubernetes_namespace" "flux" {
+  count = var.feature_flag.osdu_namespace ? 1 : 0
+
   metadata {
     name = local.helm_flux_ns
   }
@@ -33,6 +35,8 @@ resource "kubernetes_namespace" "flux" {
 }
 
 resource "kubernetes_secret" "flux_ssh" {
+  count = var.feature_flag.osdu_namespace ? 1 : 0
+
   metadata {
     name      = local.helm_flux_secret
     namespace = local.helm_flux_ns
@@ -48,6 +52,8 @@ resource "kubernetes_secret" "flux_ssh" {
 }
 
 resource "helm_release" "flux" {
+  count = var.feature_flag.osdu_namespace ? 1 : 0
+
   name       = local.helm_flux_name
   repository = local.helm_flux_repo
   chart      = "flux"

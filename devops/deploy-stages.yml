@@ -23,10 +23,13 @@ parameters:
   testCoreMavenPomFile: ''
   testCoreMavenOptions: ''
   testCoreMavenGoal: 'install'
+  integrationTestMavenGoal: 'package'
   skipDeploy: false
   skipTest: 'false'
   dockerFile: ''
   checkoutRepo: self
+  testAzureMavenCacheOption: '-Dmaven.repo.local=$(Pipeline.Workspace)/.m2/repository'
+  cacheVersion: 'test-dependency-cache-v0.1'
 
 stages:
 
@@ -68,6 +71,7 @@ stages:
                   testCoreMavenPomFile: ${{ parameters.testCoreMavenPomFile }}
                   testCoreMavenGoal: ${{ parameters.testCoreMavenGoal }}
                   testCoreMavenOptions: ${{ parameters.testCoreMavenOptions }}
+                  integrationTestMavenGoal: ${{ parameters.integrationTestMavenGoal }}
                   artifactName: ${{ variables.artifactName }}
                   elasticEndpoint: $(ELASTIC_ENDPOINT)
                   environment: ${{ environment }}
@@ -81,3 +85,5 @@ stages:
                   testPythonFilePath: ${{ parameters.testPythonFilePath }}
                   testPythonFile: ${{ parameters.testPythonFile }}
                   checkoutRepo: ${{ parameters.checkoutRepo }}
+                  testAzureMavenCacheOption: ${{ parameters.testAzureMavenCacheOption }}
+                  cacheVersion: ${{ parameters.cacheVersion }}

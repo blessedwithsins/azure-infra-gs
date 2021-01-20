@@ -27,3 +27,20 @@ resource_tags = {
 
 # Storage Settings
 storage_replication_type = "LRS"
+
+# Database Settings
+cosmosdb_consistency_level = "Session"
+cosmos_graph_databases = [
+  {
+    name       = "osdu-graph"
+    throughput = 4000
+  }
+]
+
+cosmos_graphs = [
+  {
+    name               = "users"
+    database_name      = "osdu-graph"
+    partition_key_path = "/oid"
+  }
+]

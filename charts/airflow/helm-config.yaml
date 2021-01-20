@@ -24,7 +24,7 @@ airflow:
       AIRFLOW__CORE__REMOTE_LOG_CONN_ID: "az_log"
       AIRFLOW__CORE__REMOTE_BASE_LOG_FOLDER: "wasb-airflowlog"
       AIRFLOW__CORE__LOGGING_CONFIG_CLASS: "log_config.DEFAULT_LOGGING_CONFIG"
-      AIRFLOW__CORE__LOG_FILENAME_TEMPLATE: "{{ run_id }}/{{ ti.dag_id }}/{{ ti.task_id }}/{{ ts }}/{{ try_number }}.log"
+      AIRFLOW__CORE__LOG_FILENAME_TEMPLATE: "{{ run_id }}/{{ ti.dag_id }}/{{ ti.task_id }}/{{ ts }}/{% if 'correlationId' in dag_run.conf %}{{ dag_run.conf['correlationId'] }}{% else %}None{% endif %}/{{ try_number }}.log"
       AIRFLOW__CELERY__SSL_ACTIVE: "True"
       AIRFLOW__WEBSERVER__ENABLE_PROXY_FIX: "True"
       AIRFLOW__CORE__PLUGINS_FOLDER: "/opt/airflow/plugins"
@@ -82,7 +82,21 @@ airflow:
     baseUrl: "http://localhost/airflow"
   workers:
     podLabels:
-      aadpodidbinding: "osdu-identity"             
+      aadpodidbinding: "osdu-identity"
+    autoscaling:
+      enabled: true
+      ## minReplicas is picked from Values.workers.replicas and default value is 1
+      maxReplicas: 3
+      metrics:
+      - type: Resource
+        resource:
+          name: memory
+          target:
+            type: Utilization
+            averageUtilization: 60
+    resources:
+      requests:
+        memory: "512Mi"             
   flower:
     enabled: false
   postgresql:

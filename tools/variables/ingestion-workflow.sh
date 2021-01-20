@@ -2,14 +2,14 @@
 #
 #  Purpose: Create the Developer Environment Variables.
 #  Usage:
-#    crs_catalog.sh
+#    ingestion-workflow.sh
 
 ###############################
 ## ARGUMENT INPUT            ##
 ###############################
-usage() { echo "Usage: DNS_HOST=<your_host> INVALID_JWT=<your_token> crs_catalog.sh " 1>&2; exit 1; }
+usage() { echo "Usage: DNS_HOST=<your_host> INVALID_JWT=<your_token> ingestion-workflow.sh " 1>&2; exit 1; }
 
-SERVICE="catalog"
+SERVICE="ingestion-workflow"
 
 if [ -z $UNIQUE ]; then
   tput setaf 1; echo 'ERROR: UNIQUE not provided' ; tput sgr0
@@ -49,20 +49,36 @@ if [ ! -d $UNIQUE ]; then mkdir $UNIQUE; fi
 # ------------------------------------------------------------------------------------------------------
 # LocalHost Run Settings
 # ------------------------------------------------------------------------------------------------------
-ENTITLEMENTS_URL="https://${ENV_HOST}/entitlements/v1"
-client_id="${ENV_PRINCIPAL_ID}"
+AZURE_TENANT_ID="${TENANT_ID}"
+AZURE_CLIENT_ID="${ENV_PRINCIPAL_ID}"
+AZURE_CLIENT_SECRET="${ENV_PRINCIPAL_SECRET}"
+KEYVAULT_URI="${ENV_KEYVAULT}"
+aad_client_id="${ENV_APP_ID}"
+appinsights_key="${ENV_APPINSIGHTS_KEY}"
+cosmosdb_database="${COSMOS_DB_NAME}"
+entitlements_service_api_key="${API_KEY}"
+entitlements_service_endpoint="https://${ENV_HOST}/entitlements/v1/"
+airflow_url="https://${ENV_HOST}/airflow"
+airflow_username="admin"
+airflow_password="${AIRFLOW_ADMIN_PASSWORD}"
+LOG_PREFIX="workflow"
+server_port="8085"
 azure_istioauth_enabled="true"
+partition_service_endpoint="https://${ENV_HOST}/api/partition/v1"
 
 # ------------------------------------------------------------------------------------------------------
 # Integration Test Settings
 # ------------------------------------------------------------------------------------------------------
-AZURE_DEPLOY_CLIENT_ID="${ENV_PRINCIPAL_ID}"
-AZURE_DEPLOY_CLIENT_SECRET="${ENV_PRINCIPAL_SECRET}"
-AZURE_DEPLOY_TENANT="${TENANT_ID}"
+AZURE_AD_TENANT_ID="${TENANT_ID}"
+INTEGRATION_TESTER="${ENV_PRINCIPAL_ID}"
+AZURE_TESTER_SERVICEPRINCIPAL_SECRET="${ENV_PRINCIPAL_SECRET}"
 AZURE_AD_APP_RESOURCE_ID="${ENV_APP_ID}"
-VIRTUAL_SERVICE_HOST_NAME=localhost:8080
-MY_TENANT="${OSDU_TENANT}"
-TIME_ZONE="UTC+0"
+NO_DATA_ACCESS_TESTER="${NO_ACCESS_ID}"
+NO_DATA_ACCESS_TESTER_SERVICEPRINCIPAL_SECRET="${NO_ACCESS_SECRET}"
+WORKFLOW_HOST="https://${ENV_HOST}/api/workflow/v1"
+DEFAULT_DATA_PARTITION_ID_TENANT1="${OSDU_TENANT}"
+DOMAIN="${COMPANY_DOMAIN}"
+FINISHED_WORKFLOW_ID="c80a2419-8527-4804-b96a-6b6444f0d361"
 
 cat > ${UNIQUE}/${SERVICE}.envrc <<LOCALENV
 # ------------------------------------------------------------------------------------------------------
@@ -113,51 +129,82 @@ export ENV_ELASTIC_PORT=$ENV_ELASTIC_PORT
 export ENV_ELASTIC_USERNAME=$ENV_ELASTIC_USERNAME
 export ENV_ELASTIC_PASSWORD=$ENV_ELASTIC_PASSWORD
 
-
 # ------------------------------------------------------------------------------------------------------
 # LocalHost Run Settings
 # ------------------------------------------------------------------------------------------------------
-export ENTITLEMENTS_URL="https://${ENV_HOST}/entitlements/v1"
+export AZURE_TENANT_ID="${TENANT_ID}"
+export AZURE_CLIENT_ID="${ENV_PRINCIPAL_ID}"
+export AZURE_CLIENT_SECRET="${ENV_PRINCIPAL_SECRET}"
+export KEYVAULT_URI="${ENV_KEYVAULT}"
+export aad_client_id="${ENV_APP_ID}"
+export appinsights_key="${ENV_APPINSIGHTS_KEY}"
+export cosmosdb_database="${COSMOS_DB_NAME}"
+export entitlements_service_api_key="${API_KEY}"
+export entitlements_service_endpoint="https://${ENV_HOST}/entitlements/v1/"
+export airflow_url="https://${ENV_HOST}/airflow"
+export airflow_username="admin"
+export airflow_password="${AIRFLOW_ADMIN_PASSWORD}"
+export LOG_PREFIX="workflow"
+export server_port="8085"
 export azure_istioauth_enabled="true"
-export client_id="${ENV_PRINCIPAL_ID}"
+export partition_service_endpoint="https://${ENV_HOST}/api/partition/v1"
 
 # ------------------------------------------------------------------------------------------------------
 # Integration Test Settings
 # ------------------------------------------------------------------------------------------------------
-export AZURE_DEPLOY_CLIENT_ID="${AZURE_DEPLOY_CLIENT_ID}"
-export AZURE_DEPLOY_CLIENT_SECRET="${AZURE_DEPLOY_CLIENT_SECRET}"
-export AZURE_DEPLOY_TENANT="${AZURE_DEPLOY_TENANT}"
-export AZURE_AD_APP_RESOURCE_ID="${AZURE_AD_APP_RESOURCE_ID}"
-export VIRTUAL_SERVICE_HOST_NAME=localhost:8080
-export MY_TENANT="${OSDU_TENANT}"
-export TIME_ZONE="${TIME_ZONE}"
+export AZURE_AD_TENANT_ID="${TENANT_ID}"
+export INTEGRATION_TESTER="${ENV_PRINCIPAL_ID}"
+export AZURE_TESTER_SERVICEPRINCIPAL_SECRET="${ENV_PRINCIPAL_SECRET}"
+export AZURE_AD_APP_RESOURCE_ID="${ENV_APP_ID}"
+export NO_DATA_ACCESS_TESTER="${NO_ACCESS_ID}"
+export NO_DATA_ACCESS_TESTER_SERVICEPRINCIPAL_SECRET="${NO_ACCESS_SECRET}"
+export WORKFLOW_HOST="https://${ENV_HOST}/api/workflow/v1"
+export DEFAULT_DATA_PARTITION_ID_TENANT1="${OSDU_TENANT}"
+export DOMAIN="${COMPANY_DOMAIN}"
+export FINISHED_WORKFLOW_ID="c80a2419-8527-4804-b96a-6b6444f0d361"
 LOCALENV
 
-
 cat > ${UNIQUE}/${SERVICE}_local.yaml <<LOCALRUN
-ENTITLEMENTS_URL: "${ENTITLEMENTS_URL}
-export client_id: "${ENV_PRINCIPAL_ID}"
-azure_istioauth_enabled: "${azure_istioauth_enabled}"
+AZURE_TENANT_ID: "${TENANT_ID}"
+AZURE_CLIENT_ID: "${ENV_PRINCIPAL_ID}"
+AZURE_CLIENT_SECRET: "${ENV_PRINCIPAL_SECRET}"
+KEYVAULT_URI: "${ENV_KEYVAULT}"
+aad_client_id: "${ENV_APP_ID}"
+appinsights_key: "${ENV_APPINSIGHTS_KEY}"
+cosmosdb_database: "${COSMOS_DB_NAME}"
+entitlements_service_api_key: "${API_KEY}"
+entitlements_service_endpoint: "https://${ENV_HOST}/entitlements/v1/"
+airflow_url: "https://${ENV_HOST}/airflow"
+airflow_username: "admin"
+airflow_password: "${AIRFLOW_ADMIN_PASSWORD}"
+LOG_PREFIX: "workflow"
+server_port: "8085"
+azure_istioauth_enabled: "true"
+partition_service_endpoint: "https://${ENV_HOST}/api/partition/v1"
 LOCALRUN
 
-
 cat > ${UNIQUE}/${SERVICE}_local_test.yaml <<LOCALTEST
-AZURE_DEPLOY_CLIENT_ID: "${AZURE_DEPLOY_CLIENT_ID}"
-AZURE_DEPLOY_CLIENT_SECRET: "${AZURE_DEPLOY_CLIENT_SECRET}"
-AZURE_DEPLOY_TENANT: "${AZURE_DEPLOY_TENANT}"
-AZURE_AD_APP_RESOURCE_ID: "${AZURE_AD_APP_RESOURCE_ID}"
-VIRTUAL_SERVICE_HOST_NAME: "localhost:8080"
-MY_TENANT: "${OSDU_TENANT}"
-TIME_ZONE: "${TIME_ZONE}"
+AZURE_AD_TENANT_ID: "${TENANT_ID}"
+INTEGRATION_TESTER: "${ENV_PRINCIPAL_ID}"
+AZURE_TESTER_SERVICEPRINCIPAL_SECRET: "${ENV_PRINCIPAL_SECRET}"
+AZURE_AD_APP_RESOURCE_ID: "${ENV_APP_ID}"
+NO_DATA_ACCESS_TESTER: "${NO_ACCESS_ID}"
+NO_DATA_ACCESS_TESTER_SERVICEPRINCIPAL_SECRET: "${NO_ACCESS_SECRET}"
+WORKFLOW_HOST: "https://${ENV_HOST}/api/workflow/v1"
+DEFAULT_DATA_PARTITION_ID_TENANT1: "${OSDU_TENANT}"
+DOMAIN: "${COMPANY_DOMAIN}"
+FINISHED_WORKFLOW_ID: "c80a2419-8527-4804-b96a-6b6444f0d361"
 LOCALTEST
 
-
 cat > ${UNIQUE}/${SERVICE}_test.yaml <<DEVTEST
-AZURE_DEPLOY_CLIENT_ID: "${AZURE_DEPLOY_CLIENT_ID}"
-AZURE_DEPLOY_CLIENT_SECRET: "${AZURE_DEPLOY_CLIENT_SECRET}"
-AZURE_DEPLOY_TENANT: "${AZURE_DEPLOY_TENANT}"
-AZURE_AD_APP_RESOURCE_ID: "${AZURE_AD_APP_RESOURCE_ID}"
-VIRTUAL_SERVICE_HOST_NAME: "${ENV_HOST}"
-MY_TENANT: "${OSDU_TENANT}"
-TIME_ZONE: "${TIME_ZONE}"
+AZURE_AD_TENANT_ID: "${TENANT_ID}"
+INTEGRATION_TESTER: "${ENV_PRINCIPAL_ID}"
+AZURE_TESTER_SERVICEPRINCIPAL_SECRET: "${ENV_PRINCIPAL_SECRET}"
+AZURE_AD_APP_RESOURCE_ID: "${ENV_APP_ID}"
+NO_DATA_ACCESS_TESTER: "${NO_ACCESS_ID}"
+NO_DATA_ACCESS_TESTER_SERVICEPRINCIPAL_SECRET: "${NO_ACCESS_SECRET}"
+WORKFLOW_HOST: "https://${ENV_HOST}/api/workflow/v1"
+DEFAULT_DATA_PARTITION_ID_TENANT1: "${OSDU_TENANT}"
+DOMAIN: "${COMPANY_DOMAIN}"
+FINISHED_WORKFLOW_ID: "c80a2419-8527-4804-b96a-6b6444f0d361"
 DEVTEST

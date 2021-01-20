@@ -84,3 +84,101 @@ resource "azurerm_monitor_diagnostic_setting" "acr_diagnostics" {
     }
   }
 }
+
+#-------------------------------
+# GraphDB
+#-------------------------------
+resource "azurerm_monitor_diagnostic_setting" "graph_diagnostics" {
+  name                       = "graph_diagnostics"
+  target_resource_id         = module.graph_account.account_id
+  log_analytics_workspace_id = module.log_analytics.id
+
+  // This one always off.
+  log {
+    category = "CassandraRequests"
+    enabled  = false
+
+    retention_policy {
+      days    = 0
+      enabled = false
+    }
+  }
+
+  log {
+    category = "ControlPlaneRequests"
+
+    retention_policy {
+      days    = var.log_retention_days
+      enabled = local.retention_policy
+    }
+  }
+
+  log {
+    category = "DataPlaneRequests"
+    enabled  = true
+
+    retention_policy {
+      days    = var.log_retention_days
+      enabled = local.retention_policy
+    }
+  }
+
+  // This one always off.
+  log {
+    category = "GremlinRequests"
+    enabled  = true
+
+    retention_policy {
+      days    = var.log_retention_days
+      enabled = local.retention_policy
+    }
+  }
+
+  // This one always off.
+  log {
+    category = "MongoRequests"
+    enabled  = false
+
+    retention_policy {
+      days    = 0
+      enabled = false
+    }
+  }
+
+  log {
+    category = "PartitionKeyRUConsumption"
+
+    retention_policy {
+      days    = var.log_retention_days
+      enabled = local.retention_policy
+    }
+  }
+
+  log {
+    category = "PartitionKeyStatistics"
+
+    retention_policy {
+      days    = var.log_retention_days
+      enabled = local.retention_policy
+    }
+  }
+
+  log {
+    category = "QueryRuntimeStatistics"
+    enabled  = true
+
+    retention_policy {
+      days    = var.log_retention_days
+      enabled = local.retention_policy
+    }
+  }
+
+  metric {
+    category = "Requests"
+
+    retention_policy {
+      days    = var.log_retention_days
+      enabled = local.retention_policy
+    }
+  }
+}

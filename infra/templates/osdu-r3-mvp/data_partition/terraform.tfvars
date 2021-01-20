@@ -33,12 +33,10 @@ storage_containers = [
   "legal-service-azure-configuration",
   "opendes",
   "osdu-wks-mappings",
-  "workflow-tasks-sharing",
   "wdms-osdu",
   "file-staging-area",
   "file-persistent-area"
 ]
-
 
 # Database Settings
 cosmosdb_consistency_level = "Session"

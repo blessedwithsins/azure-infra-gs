@@ -20,7 +20,7 @@ parameters:
   serviceBase: ''
   copyFileContentsToFlatten: ''
   copyFileContents: ''
-  mavenGoal: 'clean install'
+  mavenGoal: 'clean package'
   serviceCoreMavenGoal: 'install'
   serviceCoreMavenOptions: ''
   testingRootFolder: 'testing/integration-tests'
@@ -28,6 +28,7 @@ parameters:
   mavenPublishJUnitResults: false
   mavenOptions: ''
   checkoutRepo: self
+  cacheVersion: 'service-dependency-cache-v0.1'
 
 stages:
 
@@ -47,11 +48,22 @@ stages:
     - download: none
     - checkout: ${{ parameters.checkoutRepo }}
       persistCredentials: true
+
+    - task: Cache@2
+      inputs:
+        key: 'maven | "${{ parameters.cacheVersion }}" | "$(Agent.OS)" | **/pom.xml'
+        restoreKeys: |
+          maven | "${{ parameters.cacheVersion }}" | "$(Agent.OS)"
+          maven | "${{ parameters.cacheVersion }}"
+        path: $(Pipeline.Workspace)/.m2/repository
+      displayName: Cache Maven local repo
+
     - task: Maven@3
       displayName: 'Maven: validate'
       inputs:
         mavenPomFile: ${{ parameters.mavenPomFile }}
         goals: 'validate'
+
     - task: Maven@3
       displayName: 'Maven Core Build'
       condition: ne('${{ parameters.serviceCoreMavenOptions }}', '')

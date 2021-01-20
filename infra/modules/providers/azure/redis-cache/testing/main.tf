@@ -24,7 +24,8 @@ module "resource_group" {
 }
 
 module "redis-cache" {
-  source = "../"
+  source     = "../"
+  depends_on = [module.resource_group]
 
   name                = "osdu-module-redis-cache-${module.resource_group.random}"
   resource_group_name = module.resource_group.name

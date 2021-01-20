@@ -87,3 +87,7 @@ spec:
               serviceName: notification
               servicePort: 80
             path: /api/notification/v1/*
+          - backend:
+              serviceName: well-planning
+              servicePort: 80
+            path: /api/well-planning/*

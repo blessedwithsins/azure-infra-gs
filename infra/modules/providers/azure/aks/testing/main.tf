@@ -23,7 +23,8 @@ module "resource_group" {
 }
 
 module "network" {
-  source = "../../network"
+  source     = "../../network"
+  depends_on = [module.resource_group]
 
   name                = format("osdu-module-vnet-%s", module.resource_group.random)
   resource_group_name = module.resource_group.name
@@ -54,7 +55,8 @@ resource "null_resource" "save-key" {
 data "azurerm_client_config" "current" {}
 
 module "aks" {
-  source = "../"
+  source     = "../"
+  depends_on = [module.resource_group]
 
   name                = format("osdu-module-cluster-%s", module.resource_group.random)
   resource_group_name = module.resource_group.name

@@ -26,6 +26,13 @@ resource "azurerm_cosmosdb_account" "cosmosdb" {
 
   enable_automatic_failover = var.automatic_failover
 
+  dynamic "capabilities" {
+    for_each = var.graph_databases == null ? [] : [1]
+    content {
+      name = "EnableGremlin"
+    }
+  }
+
   consistency_policy {
     consistency_level = var.consistency_level
   }
@@ -69,6 +76,54 @@ resource "azurerm_cosmosdb_sql_container" "cosmos_collections" {
   # autoscale_settings {
   #   max_throughput = var.sql_collections[count.index].throughput
   # }
+
+  lifecycle {
+    ignore_changes = [
+      autoscale_settings,
+      throughput
+    ]
+  }
+}
+
+resource "azurerm_cosmosdb_gremlin_database" "cosmos_dbs" {
+  depends_on          = [azurerm_cosmosdb_account.cosmosdb]
+  count               = var.graph_databases == null ? 0 : length(var.graph_databases)
+  name                = var.graph_databases[count.index].name
+  account_name        = var.name
+  resource_group_name = data.azurerm_resource_group.cosmosdb.name
+  throughput          = null
+
+  autoscale_settings {
+    max_throughput = var.graph_databases[count.index].throughput
+  }
+
+  lifecycle {
+    ignore_changes = [
+      autoscale_settings,
+      throughput
+    ]
+  }
+}
+
+resource "azurerm_cosmosdb_gremlin_graph" "cosmos_graphs" {
+  depends_on          = [azurerm_cosmosdb_gremlin_database.cosmos_dbs]
+  count               = length(var.graphs)
+  name                = var.graphs[count.index].name
+  account_name        = var.name
+  database_name       = var.graphs[count.index].database_name
+  resource_group_name = data.azurerm_resource_group.cosmosdb.name
+  partition_key_path  = var.graphs[count.index].partition_key_path
+
+  index_policy {
+    automatic      = true
+    indexing_mode  = "Consistent"
+    included_paths = ["/*"]
+  }
+
+  conflict_resolution_policy {
+    mode                     = "LastWriterWins"
+    conflict_resolution_path = "/_ts"
+  }
 
   lifecycle {
     ignore_changes = [

@@ -24,7 +24,8 @@ module "resource_group" {
 }
 
 module "keyvault" {
-  source = "../../keyvault"
+  source     = "../../keyvault"
+  depends_on = [module.resource_group]
 
   resource_group_name = module.resource_group.name
 }

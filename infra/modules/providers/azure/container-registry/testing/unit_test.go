@@ -25,7 +25,7 @@ import (
 )
 
 var location = "eastus"
-var count = 5
+var count = 6
 var workspace = "osdu-services-" + strings.ToLower(random.UniqueId())
 
 var tfOptions = &terraform.Options{
@@ -60,7 +60,7 @@ func TestTemplate(t *testing.T) {
 		"sku" : "Standard",
 		"tags" : {
 			"osdu" : "module"
-		} 
+		}
 	}`)
 
 	testFixture := infratests.UnitTestFixture{

@@ -21,6 +21,11 @@
 
 /*
 
+feature_flag = {
+  osdu_namespace = false
+  flux           = false
+}
+
 prefix = "osdu-mvp"
 
 resource_tags = {

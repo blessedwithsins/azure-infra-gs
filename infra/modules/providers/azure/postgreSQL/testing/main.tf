@@ -24,7 +24,8 @@ module "resource_group" {
 }
 
 module "network" {
-  source = "../../network"
+  source     = "../../network"
+  depends_on = [module.resource_group]
 
   name                = "osdu-module-vnet-${module.resource_group.random}"
   resource_group_name = module.resource_group.name
@@ -41,7 +42,8 @@ module "network" {
 }
 
 module "postgreSQL" {
-  source = "../"
+  source     = "../"
+  depends_on = [module.resource_group]
 
   resource_group_name = module.resource_group.name
   name                = "osdu-module-db-${module.resource_group.random}"

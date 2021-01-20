@@ -20,7 +20,7 @@ locals {
   helm_certs_name    = "jetstack"
   helm_certs_ns      = "cert-manager"
   helm_certs_repo    = "https://charts.jetstack.io"
-  helm_certs_version = "v0.16.1"
+  helm_certs_version = "v1.1.0"
 }
 
 resource "kubernetes_namespace" "certs" {
