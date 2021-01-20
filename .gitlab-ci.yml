@@ -2,7 +2,6 @@ stages:
   - validate
   - build
   - unit-test
-  - service-resource
 
 validate:
     stage: validate
@@ -10,7 +9,7 @@ validate:
         - echo "validate script"
 
 cr-unit-test:
-    stage: test
+    stage: unit-test
     script:
         - echo "unit test cr"
 
@@ -20,7 +19,7 @@ cr-plan:
         - echo "cr plan"
 
 sr-unit-test:
-    stage: test
+    stage: unit-test
     script:
         - echo "unit test sr"
         
@@ -30,7 +29,7 @@ sr-plan:
         - echo "sr plan"
 
 dr-unit-test:
-    stage: test
+    stage: unit-test
     script:
         - echo "unit test dr"
 
