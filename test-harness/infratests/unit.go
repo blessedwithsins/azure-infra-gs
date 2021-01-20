@@ -56,7 +56,6 @@ type UnitTestFixture struct {
 //	- Run `terraform plan`
 //	- Validate terraform plan file.
 func RunUnitTests(fixture *UnitTestFixture) {
-	terraform.Init(fixture.GoTest, fixture.TfOptions)
 
 	workspaceName := fixture.Workspace
 	if workspaceName == "" {
@@ -69,6 +68,7 @@ func RunUnitTests(fixture *UnitTestFixture) {
 		terraform.FormatArgs(fixture.TfOptions, "workspace", "show")...)
 
 	terraform.WorkspaceSelectOrNew(fixture.GoTest, fixture.TfOptions, workspaceName)
+	terraform.Init(fixture.GoTest, fixture.TfOptions)
 	defer terraform.RunTerraformCommand(fixture.GoTest, fixture.TfOptions, "workspace", "delete", workspaceName)
 	defer terraform.WorkspaceSelectOrNew(fixture.GoTest, fixture.TfOptions, startingWorkspaceName)
 
