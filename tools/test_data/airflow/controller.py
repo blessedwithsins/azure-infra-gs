@@ -33,7 +33,7 @@ trigger = CustomDagRunOperator(
     task_id='trigger_dagrun',
     trigger_dag_id="{{ dag_run.conf['_trigger_config']['trigger_dag_id'] }}",
     trigger_dag_run_id="{{ dag_run.conf['_trigger_config']['trigger_dag_run_id'] }}",
-    execution_time="{{ execution_date }}",
+    execution_date="{{ execution_date }}",
     python_callable=conditionally_trigger,
     dag=dag,
 )

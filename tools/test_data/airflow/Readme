@@ -1,0 +1,6 @@
+- install the dependencies 
+    pip install azure-core  
+    pip install azure-storage-file-share
+
+-set the environment variable 
+    AIRFLOW_FILE_SHARE_CONNECTION_STRING
