@@ -1,0 +1,39 @@
+stages:
+  - validate
+  - build
+  - unit-test
+
+validate:
+  stage: validate
+  script:
+    - echo "validate script"
+
+cr-unit-test:
+  stage: unit-test
+  script:
+    - echo "unit test cr"
+
+cr-plan:
+  stage: build
+  script:
+    - echo "cr plan"
+
+sr-unit-test:
+  stage: unit-test
+  script:
+    - echo "unit test sr"
+
+sr-plan:
+  stage: build
+  script:
+    - echo "sr plan"
+
+dr-unit-test:
+  stage: unit-test
+  script:
+    - echo "unit test dr"
+
+dr-plan:
+  stage: build
+  script:
+    - echo "dr plan"
