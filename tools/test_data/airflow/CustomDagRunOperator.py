@@ -45,7 +45,7 @@ class CustomDagRunOperator(BaseOperator):
         should look like ``def foo(context, dag_run_obj):``
     :type python_callable: python callable
     """
-    template_fields = ['trigger_dag_id','trigger_dag_run_id']
+    template_fields = ['trigger_dag_id','trigger_dag_run_id','execution_time']
     template_ext = tuple()
     ui_color = '#ffefeb'
 
@@ -54,12 +54,14 @@ class CustomDagRunOperator(BaseOperator):
             self,
             trigger_dag_id,
             trigger_dag_run_id,
+            execution_date,
             python_callable,
             *args, **kwargs):
         super(CustomDagRunOperator, self).__init__(*args, **kwargs)
         self.python_callable = python_callable
         self.trigger_dag_id = trigger_dag_id
         self.trigger_dag_run_id = trigger_dag_run_id
+        self.execution_date = execution_date
 
     def execute(self, context):
         dro = DagRunOrder(run_id=self.trigger_dag_run_id)
@@ -74,6 +76,7 @@ class CustomDagRunOperator(BaseOperator):
                 run_id=dro.run_id,
                 state=State.RUNNING,
                 conf=dro.payload,
+                execution_date=self.execution_date,
                 external_trigger=True)
             self.log.info("Creating DagRun %s", dr)
             session.add(dr)

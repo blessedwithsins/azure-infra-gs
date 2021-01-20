@@ -16,11 +16,10 @@
 FILE: upload.py
 
 DESCRIPTION:
-    This script uploads common scenarios like instantiating a client,
-    creating a file share, and uploading a file to a share.
+    This script uploads a file to a share, it creates the directory if missing.
 
 USAGE:
-    python file_samples_hello_world.py
+    python upload.py
 
     Set the environment variables with values before running the sample:
     1) AIRFLOW_FILE_SHARE_CONNECTION_STRING - the connection string to airflow storage account
@@ -41,11 +40,11 @@ from azure.storage.fileshare import (
     ShareFileClient
 )
 SOURCE_FILE_CONTROLLER = './controller.py'
-DEST_FILE_CONTROLLER = 'dags/system/controller.py'
+DEST_FILE_CONTROLLER = 'dags/_system/controller.py'
 SOURCE_FILE_OPERATOR = './CustomDagRunOperator.py'
-DEST_FILE_OPERATOR = 'plugins/operators/system/CustomDagRunOperator.py'
+DEST_FILE_OPERATOR = 'plugins/operators/_system/CustomDagRunOperator.py'
 SOURCE_FILE_SENSOR = './DagStatusSensor.py'
-DEST_FILE_SENSOR = 'plugins/sensors/system/DagStatusSensor.py'
+DEST_FILE_SENSOR = 'plugins/sensors/_system/DagStatusSensor.py'
 
 class FileShareSamples(object):
 
