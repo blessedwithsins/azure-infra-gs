@@ -20,6 +20,7 @@ parameters:
   jarFilePath: ''
   artifactName: ''
   dockerFile: ''
+  dockerTagLatest: 'false'
 
 steps:
   - task: AzureCLI@1
@@ -27,8 +28,10 @@ steps:
     condition: and(succeeded(), eq('${{ parameters.providerName }}', 'Azure'))
     env:
       JAR_FILE_PATH: ${{ parameters.jarFilePath }}
-      IMAGE: $(CONTAINER_REGISTRY_NAME).azurecr.io/${{ parameters.imageRepoName }}-${{ parameters.environment }}:$(Build.SourceVersion)
+      IMAGE: $(CONTAINER_REGISTRY_NAME).azurecr.io/${{ parameters.imageRepoName }}-${{ parameters.environment }}
+      IMAGE_TAG_DEFAULT: $(Build.SourceVersion)
       DOCKERFILE: ${{ parameters.dockerFile }}
+      IMAGE_TAG_LATEST: ${{ parameters.dockerTagLatest }}
 
     inputs:
       azureSubscription: '$(SERVICE_CONNECTION_NAME)'
@@ -57,13 +60,17 @@ steps:
           cp ${{ parameters.artifactName }}/${DOCKERFILE} Dockerfile
         fi
 
+        if [[ ${IMAGE_TAG_LATEST} == 'true' ]]; then
+            IMAGE_TAG_DEFAULT='latest'
+        fi
+
         jar_file_name=$(basename $JAR_FILE_PATH)
         cp $JAR_FILE_PATH .
 
         echo "Tagging and Pushing $IMAGE to ACR for JAR $jar_file_name from $JAR_FILE_PATH"
         echo "------------------------------------"
-        docker build --build-arg JAR_FILE=./$jar_file_name -t $IMAGE .
+        docker build --build-arg JAR_FILE=./$jar_file_name -t $IMAGE:$IMAGE_TAG_DEFAULT .
 
-        docker push $IMAGE
+        docker push $IMAGE:$IMAGE_TAG_DEFAULT
         echo "Show recent tags of repository ${{ parameters.imageRepoName }}"
         az acr repository show-tags -n $(CONTAINER_REGISTRY_NAME) --repository ${{ parameters.imageRepoName }}-${{ parameters.environment }} --top 10 --orderby time_desc
