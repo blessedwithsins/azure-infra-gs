@@ -27,7 +27,8 @@ steps:
     condition: and(succeeded(), eq('${{ parameters.providerName }}', 'Azure'))
     env:
       JAR_FILE_PATH: ${{ parameters.jarFilePath }}
-      IMAGE: $(CONTAINER_REGISTRY_NAME).azurecr.io/${{ parameters.imageRepoName }}-${{ parameters.environment }}:$(Build.SourceVersion)
+      IMAGE: $(CONTAINER_REGISTRY_NAME).azurecr.io/${{ parameters.imageRepoName }}-${{ parameters.environment }}
+      IMAGE_TAG: $(Build.SourceVersion)
       DOCKERFILE: ${{ parameters.dockerFile }}
 
     inputs:
@@ -62,8 +63,11 @@ steps:
 
         echo "Tagging and Pushing $IMAGE to ACR for JAR $jar_file_name from $JAR_FILE_PATH"
         echo "------------------------------------"
-        docker build --build-arg JAR_FILE=./$jar_file_name -t $IMAGE .
+        docker build --build-arg JAR_FILE=./$jar_file_name -t $IMAGE:$IMAGE_TAG -t $IMAGE:latest.
 
-        docker push $IMAGE
+        #docker push --all-tags $IMAGE - compatible with >= 20.10.0 Docker client
+        docker push $IMAGE:$IMAGE_TAG
+        docker push $IMAGE:latest
+        
         echo "Show recent tags of repository ${{ parameters.imageRepoName }}"
         az acr repository show-tags -n $(CONTAINER_REGISTRY_NAME) --repository ${{ parameters.imageRepoName }}-${{ parameters.environment }} --top 10 --orderby time_desc
