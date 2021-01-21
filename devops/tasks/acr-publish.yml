@@ -32,6 +32,7 @@ steps:
       IMAGE_TAG_DEFAULT: $(Build.SourceVersion)
       DOCKERFILE: ${{ parameters.dockerFile }}
       IMAGE_TAG_LATEST: ${{ parameters.dockerTagLatest }}
+      SOURCE_BRANCH: $(Build.SourceBranchName)
 
     inputs:
       azureSubscription: '$(SERVICE_CONNECTION_NAME)'
@@ -60,7 +61,7 @@ steps:
           cp ${{ parameters.artifactName }}/${DOCKERFILE} Dockerfile
         fi
 
-        if [[ ${IMAGE_TAG_LATEST} == 'true' ]]; then
+        if [[ ${IMAGE_TAG_LATEST} == 'true' ]] && [[ ${SOURCE_BRANCH} == 'master' ]]; then
             IMAGE_TAG_DEFAULT='latest'
         fi
 
