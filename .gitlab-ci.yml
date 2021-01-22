@@ -5,36 +5,26 @@ stages:
 
 include:
   - 'devops/premerge_pipeline/.tf-plan.yml'
+  - 'devops/premerge_pipeline/.unit-test.yml'
+  - 'devops/premerge_pipeline/.validate.yml'
 
 validate:
-    stage: validate
-    script: 
-        - echo "validate script"
+  extends: .validate
 
 cr-unit-test:
-    stage: unit-test
-    script:
-        - echo "unit test cr"
+  extends: .unit-test
 
 cr-plan:
-    stage: build
-    script:
-        - echo "cr plan"
+  extends: .tf-plan
 
 sr-unit-test:
-    stage: unit-test
-    script:
-        - echo "unit test sr"
-        
+  extends: .unit-test
+
 sr-plan:
-    extends: .tf-plan
+  extends: .tf-plan
 
 dr-unit-test:
-    stage: unit-test
-    script:
-        - echo "unit test dr"
+  extends: .unit-test
 
 dr-plan:
-    stage: build
-    script:
-        - echo "dr plan"
+  extends: .tf-plan
