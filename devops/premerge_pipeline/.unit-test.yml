@@ -1,0 +1,4 @@
+.unit-test:
+    stage: unit-test
+    script:
+      - echo "unit test job"
