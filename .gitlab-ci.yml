@@ -3,6 +3,9 @@ stages:
   - build
   - unit-test
 
+include:
+  - 'devops/premerge_pipeline/.tf-plan.yml'
+
 validate:
     stage: validate
     script: 
@@ -24,9 +27,7 @@ sr-unit-test:
         - echo "unit test sr"
         
 sr-plan:
-    stage: build
-    script:
-        - echo "sr plan"
+    extends: .tf-plan
 
 dr-unit-test:
     stage: unit-test
