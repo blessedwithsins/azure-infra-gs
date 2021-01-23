@@ -226,6 +226,7 @@ git clone https://community.opengroup.org/osdu/platform/system/file.git $SRC_DIR
 git clone https://community.opengroup.org/osdu/platform/system/delivery.git $SRC_DIR/delivery
 git clone https://community.opengroup.org/osdu/platform/system/unit-service.git $SRC_DIR/unit-service
 git clone https://community.opengroup.org/osdu/platform/system/crs-catalog-service.git $SRC_DIR/crs-catalog-service
+git clone https://community.opengroup.org/osdu/platform/domain-data-mgmt-services/seismic/seismic-dms-suite/seismic-store-service.git $SRC_DIR/seismic-store-service
 ```
 
 

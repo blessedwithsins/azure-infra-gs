@@ -29,6 +29,7 @@ This variable group will be used to hold the common values for the services to b
 | FILE_URL                                      | `https://<your_fqdn>/api/file/v2`         |
 | DELIVERY_URL                                  | `https://<your_fqdn>/api/delivery/v2`         |
 | SEARCH_URL                                    | `https://<your_fqdn>/api/search/v2/`         |
+| AGENT_IMAGE                                   | `ubuntu-latest`                           | 
 
 
 ```bash
@@ -64,6 +65,7 @@ az pipelines variable-group create \
   FILE_URL="https://${DNS_HOST}/api/file/v2" \
   DELIVERY_URL="https://${DNS_HOST}/api/delivery/v2/" \
   SEARCH_URL="https://${DNS_HOST}/api/search/v2/" \
+  AGENT_IMAGE="ubuntu-latest" \
   -ojson
 ```
 
@@ -103,9 +105,12 @@ This variable group will be used to hold the specific environment values necessa
 | ELASTIC_ENDPOINT                              | `$(opendes-elastic-endpoint)`     |
 | ELASTIC_USERNAME                              | `$(opendes-elastic-username)`     |
 | ELASTIC_PASSWORD                             | `$(opendes-elastic-password)`      |
+| ENVIRONMENT_NAME                              | <your_environment_name_or_identifier>     |
 | IDENTITY_CLIENT_ID                            | `$(osdu-identity-id)`             |
 | INTEGRATION_TESTER                            | `$(app-dev-sp-username)`          |
 | MY_TENANT                                     | `opendes`                         |
+| PROVIDER_NAME                                 | `azure`                           |
+| REDIS_PORT                                    | `6380`                           |
 | STORAGE_ACCOUNT                               | `$(opendes-storage)`              |
 | STORAGE_ACCOUNT_KEY                           | `$(opendes-storage-key)`          |
 
@@ -113,6 +118,9 @@ This variable group will be used to hold the specific environment values necessa
 ```bash
 DATA_PARTITION_NAME=opendes
 DNS_HOST="<your_ingress_hostname>"  # ie: osdu.contoso.com
+ENVIRONMENT_NAME="<your_environment_name_or_identifier>" # ie: dev-sp-id
+PROVIDER_NAME=azure
+REDIS_PORT="6380"
 
 az pipelines variable-group create \
   --name "Azure Target Env - ${UNIQUE}" \
@@ -129,9 +137,12 @@ az pipelines variable-group create \
   ELASTIC_ENDPOINT='$('${DATA_PARTITION_NAME}'-elastic-endpoint)' \
   ELASTIC_USERNAME='$('${DATA_PARTITION_NAME}'-elastic-username)' \
   ELASTIC_PASSWORD='$('${DATA_PARTITION_NAME}'-elastic-password)' \
+  ENVIRONMENT_NAME="$ENVIRONMENT_NAME" \
   IDENTITY_CLIENT_ID='$(identity_id)' \
   INTEGRATION_TESTER='$(app-dev-sp-username)' \
   MY_TENANT="$DATA_PARTITION_NAME" \
+  PROVIDER_NAME="$PROVIDER_NAME" \
+  REDIS_PORT="$REDIS_PORT" \
   STORAGE_ACCOUNT='$('${DATA_PARTITION_NAME}'-storage)' \
   STORAGE_ACCOUNT_KEY='$('${DATA_PARTITION_NAME}'-storage-key)' \
   -ojson
@@ -354,6 +365,60 @@ az pipelines variable-group create \
   -ojson
 ```
 
+__Setup and Configure the ADO Library `Azure Service Release - seismic-store-service`__
+
+This variable group is the service specific variables necessary for testing and deploying the `seismic-store-service` service.
+
+| Variable                         | Value                                                                                   |
+|----------------------------------|-----------------------------------------------------------------------------------------|
+| e2eAdminEmail                    | <your_sslcert_admin_email>                                                              |
+| e2eDataPartition                 | `opendes`                                                                               |
+| e2eLegaltag01                    | `opendes-public-usa-dataset-7643990`                                                    |
+| e2eLegaltag02                    | `opendes-dps-integration-test-valid2-legal-tag`                                         |
+| e2eNewUser                       | `integration.newuser.test@azureglobal1.onmicrosoft.com`                                 |
+| e2eSubproject                    | `demo`                                                                                  |
+| e2eSubprojectLongname            | `looooooooooooooooooooooooooooooooooooooooooooooooooooongnaaaaaaaaaaaaaaaaaaaameeeeeee` |
+| e2eTenant                        | `opendes`                                                                               |
+| PORT                             | `80`                                                                                    |
+| REPLICA_COUNT                    | `1`                                                                                     |
+| serviceUrlSuffix                 | `seistore-svc/api/v3`                                                                   |
+| utest.mount.dir                  | `/service`                                                                              |
+| utest.runtime.image              | `seistore-svc-runtime`                                                                  |
+
+```bash
+e2eAdminEmail="<your_cert_admin>"     # ie: admin@email.com
+e2eDataPartition=opendes
+e2eLegaltag01=opendes-public-usa-dataset-7643990
+e2eLegaltag02=opendes-dps-integration-test-valid2-legal-tag
+e2eNewUser=integration.newuser.test@azureglobal1.onmicrosoft.com
+e2eSubproject=demo
+e2eSubprojectLongname=looooooooooooooooooooooooooooooooooooooooooooooooooooongnaaaaaaaaaaaaaaaaaaaameeeeeee
+e2eTenant=opendes
+PORT="80"
+REPLICA_COUNT="1"
+serviceUrlSuffix="seistore-svc/api/v3"
+utest.mount.dir="/service"
+utest.runtime.image=seistore-svc-runtime
+
+az pipelines variable-group create \
+  --name "Azure Service Release - seismic-store-service" \
+  --authorize true \
+  --variables \
+  e2eAdminEmail=${e2eAdminEmail} \
+  e2eDataPartition=${e2eDataPartition} \
+  e2eLegaltag01=${e2eLegaltag01} \
+  e2eLegaltag02=${e2eLegaltag02} \
+  e2eNewUser=${e2eNewUser} \
+  e2eSubproject=${e2eSubproject} \
+  e2eSubprojectLongname=${e2eSubprojectLongname} \
+  e2eTenant=${e2eTenant} \
+  PORT='${PORT}' \
+  REPLICA_COUNT='${REPLICA_COUNT}' \
+  serviceUrlSuffix='${serviceUrlSuffix}' \
+  utest.mount.dir='${utest.mount.dir}' \
+  utest.runtime.image=${utest.runtime.image} \
+  -ojson
+```
 
 __Create the Chart Pipelines__
 
@@ -571,6 +636,22 @@ az pipelines create \
 az pipelines create \
   --name 'service-delivery'  \
   --repository delivery  \
+  --branch master  \
+  --repository-type tfsgit  \
+  --yaml-path /devops/azure/pipeline.yml  \
+  -ojson
+```
+
+9. Add a Pipeline for __seismic-store-service__  to deploy the Seismic Store Service.
+
+    _Repo:_ `seismic-store-service`
+    _Path:_ `/devops/azure/pipeline.yml`
+    _Validate:_ https://<your_dns_name>//seistore-svc/api/v3/svcstatus is alive.
+
+```bash
+az pipelines create \
+  --name 'service-seismic-store'  \
+  --repository seismic-store-service  \
   --branch master  \
   --repository-type tfsgit  \
   --yaml-path /devops/azure/pipeline.yml  \

@@ -16,6 +16,7 @@ Empty repositories need to be created that will be used by a pipeline to mirror 
 | search-service            | https://community.opengroup.org/osdu/platform/system/search-service.git |
 | delivery                  | https://community.opengroup.org/osdu/platform/system/delivery.git       |
 | file                      | https://community.opengroup.org/osdu/platform/system/file.git      |
+| seismic-store-service     | https://community.opengroup.org/osdu/platform/domain-data-mgmt-services/seismic/seismic-dms-suite/seismic-store-service.git |
 
 ```bash
 export ADO_ORGANIZATION=<organization_name>
@@ -50,6 +51,7 @@ Variable Group Name:  `Mirror Variables`
 | SEARCH_REPO | https://dev.azure.com/osdu-demo/osdu/_git/search-service |
 | DELIVERY_REPO | https://dev.azure.com/osdu-demo/osdu/_git/delivery |
 | FILE_REPO | https://dev.azure.com/osdu-demo/osdu/_git/file |
+| SISMIC_STORE_SERVICE_REPO | https://dev.azure.com/osdu-demo/osdu/_git/seismic-store-service |
 | ACCESS_TOKEN | <your_personal_access_token> |
 
 
@@ -73,6 +75,7 @@ az pipelines variable-group create \
   SEARCH_REPO=https://dev.azure.com/${ADO_ORGANIZATION}/$ADO_PROJECT/_git/search-service \
   DELIVERY_REPO=https://dev.azure.com/${ADO_ORGANIZATION}/$ADO_PROJECT/_git/delivery \
   FILE_REPO=https://dev.azure.com/${ADO_ORGANIZATION}/$ADO_PROJECT/_git/file \
+  SISMIC_STORE_SERVICE_REPO=https://dev.azure.com/${ADO_ORGANIZATION}/$ADO_PROJECT/_git/seismic-store-service \
   ACCESS_TOKEN=$ACCESS_TOKEN \
   -ojson
 ```
@@ -189,6 +192,13 @@ jobs:
       inputs:
         sourceGitRepositoryUri: 'https://community.opengroup.org/osdu/platform/system/file.git'
         destinationGitRepositoryUri: '$(FILE_REPO)'
+        destinationGitRepositoryPersonalAccessToken: $(ACCESS_TOKEN)
+		
+    - task: swellaby.mirror-git-repository.mirror-git-repository-vsts-task.mirror-git-repository-vsts-task@1
+      displayName: 'seismic-store-service'
+      inputs:
+        sourceGitRepositoryUri: 'https://community.opengroup.org/osdu/platform/domain-data-mgmt-services/seismic/seismic-dms-suite/seismic-store-service.git'
+        destinationGitRepositoryUri: '$(SISMIC_STORE_SERVICE_REPO)'
         destinationGitRepositoryPersonalAccessToken: $(ACCESS_TOKEN)
 EOF
 
