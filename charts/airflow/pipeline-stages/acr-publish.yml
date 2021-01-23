@@ -45,7 +45,7 @@ steps:
         IFS="|"; for dockerFile in $DOCKER_FILE_PATHS; do
           dockerFile=`echo $dockerFile | sed -e 's/^[[:space:]]*//'`
           cd $(Build.SourcesDirectory)/$SOURCE/$dockerFile
-          IMAGE=$(CONTAINER_REGISTRY_NAME).azurecr.io/$dockerFile-${{ parameters.environment }}:$(Build.SourceVersion)
+          IMAGE=$(CONTAINER_REGISTRY_NAME).azurecr.io/$dockerFile-${{ parameters.environment }}:$(Build.BuildNumber)
           echo "Tagging and Pushing $IMAGE to ACR "
           echo "------------------------------------"
           docker build -t $IMAGE .
