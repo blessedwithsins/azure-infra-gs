@@ -95,3 +95,7 @@ spec:
               serviceName: entitlements
               servicePort: 80
             path: /entitlements/v2/*
+          - backend:
+              serviceName: seismic-store-service
+              servicePort: 80
+            path: /seistore-svc/api/v3/*

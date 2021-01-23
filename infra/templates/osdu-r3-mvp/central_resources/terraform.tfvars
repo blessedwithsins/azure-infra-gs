@@ -47,8 +47,8 @@ cosmos_graph_databases = [
 
 cosmos_graphs = [
   {
-    name               = "users"
+    name               = "Entitlements"
     database_name      = "osdu-graph"
-    partition_key_path = "/oid"
+    partition_key_path = "/dataPartitionId"
   }
 ]

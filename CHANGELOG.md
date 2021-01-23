@@ -1,11 +1,12 @@
 **Note:** This file is manually edited and is best effort information at this time.
 
-# Current Master
+# v0.4.3 (2021-1-25)
 
 __Service Onboarded__
 - [Issue 60 - Schema Service](https://community.opengroup.org/osdu/platform/deployment-and-operations/infra-azure-provisioning/-/issues/60)
 - [Issue 65 - CRS Conversion Service](https://community.opengroup.org/osdu/platform/deployment-and-operations/infra-azure-provisioning/-/issues/65)
 - [Issue 53 - WKS Service](https://community.opengroup.org/osdu/platform/deployment-and-operations/infra-azure-provisioning/-/issues/53)
+- [Issue 43 - Workflow Service](https://community.opengroup.org/osdu/platform/deployment-and-operations/infra-azure-provisioning/-/issues/43)
 
 
 __Infra Changes__

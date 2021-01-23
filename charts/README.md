@@ -247,8 +247,14 @@ git clone https://community.opengroup.org/osdu/platform/data-flow/enrichment/wks
 git clone https://community.opengroup.org/osdu/platform/system/register.git $SRC_DIR/register
 git clone https://community.opengroup.org/osdu/platform/system/schema-service.git $SRC_DIR/schema-service
 git clonehttps://community.opengroup.org/osdu/platform/data-flow/ingestion/ingestion-workflow.git $SRC_DIR/ingestion-workflow
+git clone https://community.opengroup.org/osdu/platform/domain-data-mgmt-services/seismic/seismic-dms-suite/seismic-store-service.git $SRC_DIR/seismic-store-service
 ```
 
+__Additional Manual Steps__
+Following services require additional steps for manual setup. 
+- [CRS Catalog Service](https://community.opengroup.org/osdu/platform/deployment-and-operations/infra-azure-provisioning/-/issues/56)
+- [CRS Conversion Serice](https://community.opengroup.org/osdu/platform/deployment-and-operations/infra-azure-provisioning/-/issues/65) 
+- [Unit Service](https://community.opengroup.org/osdu/platform/deployment-and-operations/infra-azure-provisioning/-/issues/55) 
 
 __Kubernetes API Access__
 
@@ -334,14 +340,14 @@ SERVICE_LIST="infra-azure-provisioning \
               indexer-service \
               search-service \
               delivery \
-              file \
+              file-service \
               unit-service \
               crs-conversion-service \
               crs-catalog-service \
               wks \
               register \
               notification \
-              schema \
+              schema-service \
               ingestion-workflow"
 
 for SERVICE in $SERVICE_LIST;
