@@ -27,7 +27,7 @@ steps:
     condition: and(succeeded(), eq('${{ parameters.providerName }}', 'Azure'))
     env:
       JAR_FILE_PATH: ${{ parameters.jarFilePath }}
-      IMAGE: $(CONTAINER_REGISTRY_NAME).azurecr.io/${{ parameters.imageRepoName }}-${{ parameters.environment }}:$(Build.SourceVersion)
+      IMAGE: $(CONTAINER_REGISTRY_NAME).azurecr.io/${{ parameters.imageRepoName }}-${{ parameters.environment }}:$(Build.BuildNumber)
       DOCKERFILE: ${{ parameters.dockerFile }}
 
     inputs:

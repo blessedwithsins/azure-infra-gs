@@ -124,4 +124,4 @@ airflow:
 image:
   repository: #{container-registry}#.azurecr.io
   branch: #{ENVIRONMENT_NAME}#
-  tag: #{Build.SourceVersion}#
+  tag: #{Build.BuildNumber}#

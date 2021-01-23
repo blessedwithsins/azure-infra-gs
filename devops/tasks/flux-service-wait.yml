@@ -17,7 +17,7 @@ steps:
   - task: AzureCLI@1
     displayName: 'Flux Deployment Wait'
     env:
-      IMAGE: $(CONTAINER_REGISTRY_NAME).azurecr.io/${{ parameters.imageRepoName }}-${{ parameters.environment }}:$(Build.SourceVersion)
+      IMAGE: $(CONTAINER_REGISTRY_NAME).azurecr.io/${{ parameters.imageRepoName }}-${{ parameters.environment }}:$(Build.BuildNumber)
       SERVICE_NAME: ${{parameters.serviceName}}
       BASE_NAME_SR: $(base-name-sr)
     inputs:

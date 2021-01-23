@@ -22,7 +22,7 @@ steps:
       SERVICE_NAME: ${{parameters.serviceName}}
       GENERATION_PATH: ${{parameters.generationPath}}
       BRANCH: $(Build.SourceBranchName)
-      TAG: $(Build.SourceVersion)
+      TAG: $(Build.BuildNumber)
     inputs:
       targetType: 'inline'
       script: |
