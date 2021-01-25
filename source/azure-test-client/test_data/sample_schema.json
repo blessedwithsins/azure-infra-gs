@@ -1,0 +1,16 @@
+{
+    "kind": "opendes:smoketest:dummydata:0.0.1",
+    "schema": [
+        {
+            "path": "data.int-tag.score-int",
+            "kind": "int",
+            "ext": {}
+        },
+        {
+            "path": "data.double-tag.score-double",
+            "kind": "double",
+            "ext": {}
+        }
+    ],
+    "ext": null
+  }

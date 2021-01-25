@@ -1,0 +1,26 @@
+[{
+    "data": {
+      "int-tag": {
+        "score-int": 58377304471659395
+      },
+      "double-tag": {
+        "score-double": 5.837730447165939E7
+      },
+      "count": 123456789
+    },
+    "version": 1591087431362345,
+    "kind": "opendes:smoketest:dummydata:0.0.1",
+    "acl": {
+      "viewers": [
+        "data.test1@opendes.contoso.com"
+      ],
+      "owners": [
+        "data.test1@opendes.contoso.com"
+      ]
+    },
+    "legal": {
+      "legaltags": ["opendes-smoketest-tag"],
+      "otherRelevantDataCountries": ["BR"]
+    }
+  }]
+  
