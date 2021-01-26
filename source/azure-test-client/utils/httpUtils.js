@@ -1,59 +1,71 @@
-'use strict';
+"use strict";
 
-const should = require('chai').Should();
+const should = require("chai").Should();
 const request = require("supertest");
-const config = require('../config');
-const appInsights = require('applicationinsights');
+const config = require("../config");
+const appInsights = require("applicationinsights");
 
 // Configure AI
 appInsights.setup().start();
 const client = appInsights.defaultClient;
-appInsights.defaultClient.context.tags[appInsights.defaultClient.context.keys.cloudRole] = `smoke-test-probe`
-
+appInsights.defaultClient.context.tags[
+  appInsights.defaultClient.context.keys.cloudRole
+] = `smoke-test-probe`;
 
 const results = {
-    SUCCESS: 1,
-    FAIL: 0
+  SUCCESS: 1,
+  FAIL: 0,
 };
 
-
 const failRequest = (test, actualResponse) => {
-    client.trackMetric({
-        name: test.name, 
-        value: results.FAIL
-    });    
-    client.trackEvent({
-        name: `${test.name}-event`,
-        properties: {
-            success: false,
-            service: test.service,
-            expectedResponses: test.expectedResponses,
-            actualResponse: actualResponse
-        }
-    });
+  client.trackMetric({
+    name: test.name,
+    value: results.FAIL,
+  });
+  client.trackEvent({
+    name: `${test.name}-event`,
+    properties: {
+      success: false,
+      service: test.service,
+      expectedResponses: test.expectedResponses,
+      actualResponse: actualResponse,
+    },
+  });
 
-    console.log(`Failed scenario ${test.name}! Expected response code(s) ${test.expectedResponses}, but got ${actualResponse}`)
-    throw new Error(`Failed scenario ${test.name}! Expected response code(s) ${test.expectedResponses}, but got ${actualResponse}`);
-}
+  console.log(
+    `Failed scenario ${test.name}! Expected response code(s) ${test.expectedResponses}, but got ${actualResponse}`
+  );
+  throw new Error(
+    `Failed scenario ${test.name}! Expected response code(s) ${test.expectedResponses}, but got ${actualResponse}`
+  );
+};
 
 const passRequest = (test, actualResponse) => {
-    client.trackMetric({
-        name: test.name, 
-        value: results.SUCCESS
-    });
-    client.trackEvent({
-        name: `${test.name}-event`,
-        properties: {
-            success: true,
-            service: test.service,
-            expectedResponses: test.expectedResponses,
-            actualResponse: actualResponse
-        }
-    });
-}
+  client.trackMetric({
+    name: test.name,
+    value: results.SUCCESS,
+  });
+  client.trackEvent({
+    name: `${test.name}-event`,
+    properties: {
+      success: true,
+      service: test.service,
+      expectedResponses: test.expectedResponses,
+      actualResponse: actualResponse,
+    },
+  });
+};
 
+const logScenarioResults = (scenarioName, passed) => {
+  const val = passed == true ? 1 : 0;
+  client.trackMetric({
+    name: scenarioName,
+    value: val,
+  });
+};
 
 module.exports = {
-    failRequest: failRequest,
-    passRequest: passRequest
-}
+  failRequest: failRequest,
+  passRequest: passRequest,
+  logScenarioResults: logScenarioResults,
+};
