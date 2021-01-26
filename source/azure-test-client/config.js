@@ -20,5 +20,5 @@ module.exports = {
   telemetry_settings: {
     metrics: process.env.TRACK_METRICS,
     events: process.env.TRACK_EVENTS,
-  },
+  }
 };

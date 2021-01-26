@@ -4,7 +4,8 @@
   "description": "Test client used to run automated or manual smoke tests on an OSDU environment",
   "main": "index.js",
   "scripts": {
-    "test": "mocha scenarios"
+    "test": "mocha scenarios",
+    "probe:core": "mocha scenarios/probe_core"
   },
   "author": "Microsoft",
   "license": "APACHE",

@@ -13,8 +13,12 @@ const storageHost = request(config.api_host.storage);
 const searchHost = request(config.api_host.search);
 
 // Test Data
-const kind = "opendes:smoketest:dummydata:0.0.1"
-const tag = "opendes-smoketest-tag"
+let partition = 'opendes';
+if (process.env.DATA_PARTITION !== undefined) {
+  partition = process.env.DATA_PARTITION;
+}
+let kind = partition + ":smoketest:dummydata:0.0.1";
+let tag = partition + "-smoketest-tag";
 
 // Setup App Insights
 let insights = false;
