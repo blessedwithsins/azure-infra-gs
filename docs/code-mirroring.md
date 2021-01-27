@@ -52,6 +52,7 @@ SERVICE_LIST="infra-azure-provisioning \
               register \
               notification \
               schema-service \
+              seismic-store-service \
               ingestion-workflow"
 
 for SERVICE in $SERVICE_LIST;
