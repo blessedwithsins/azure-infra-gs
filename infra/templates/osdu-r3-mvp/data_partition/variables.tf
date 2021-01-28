@@ -129,6 +129,7 @@ variable "cosmos_sql_collections" {
     name               = string
     database_name      = string
     partition_key_path = string
+    unique_key_paths   = list(string)
   }))
   default = []
 }

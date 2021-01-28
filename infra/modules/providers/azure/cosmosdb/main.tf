@@ -73,9 +73,8 @@ resource "azurerm_cosmosdb_sql_container" "cosmos_collections" {
   resource_group_name = data.azurerm_resource_group.cosmosdb.name
   partition_key_path  = var.sql_collections[count.index].partition_key_path
   unique_key {
-    paths = var.sql_collections[count.index].unique_key_paths == null ? [] : var.sql_collections[count.index].unique_key_paths
+    paths = var.sql_collections[count.index].unique_key_paths
   }
-
   # autoscale_settings {
   #   max_throughput = var.sql_collections[count.index].throughput
   # }
