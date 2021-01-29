@@ -1,0 +1,4 @@
+.tf-lint:
+  stage: validate
+  script:
+    - terraform fmt -recursive -check

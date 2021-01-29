@@ -1,15 +1,29 @@
+variables:
+  TF_VERSION: 0.14.4
+  GO_VERSION: 1.12.14
+
 stages:
   - validate
   - build
   - unit-test
 
+image:
+  name: hashicorp/terraform:$TF_VERSION
+  entrypoint:
+    - '/usr/bin/env'
+    - 'PATH=/usr/local/sbin:/usr/local/bin:/usr/sbin:/usr/bin:/sbin:/bin'
+
 include:
   - 'devops/premerge_pipeline/.tf-plan.yml'
+  - 'devops/premerge_pipeline/.go-lint.yml'
+  - 'devops/premerge_pipeline/.tf-lint.yml'
   - 'devops/premerge_pipeline/.unit-test.yml'
-  - 'devops/premerge_pipeline/.validate.yml'
 
-validate:
-  extends: .validate
+tf-lint:
+  extends: .tf-lint
+
+go-lint:
+  extends: .go-lint
 
 cr-unit-test:
   extends: .unit-test
