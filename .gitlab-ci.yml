@@ -4,19 +4,13 @@ image:
     - '/usr/bin/env'
     - 'PATH=/usr/local/sbin:/usr/local/bin:/usr/sbin:/usr/bin:/sbin:/bin'
 
-# Default output file for Terraform plan
 variables:
-  PLAN: plan.tfplan
-  JSON_PLAN_FILE: tfplan.json
   TF_VERSION: 0.14.4 
   GO_VERSION: 1.12.14
-  TEMPLATE: samples/webdata
-  TEST_CASE: testWebData
 
 cache:
   paths:
     - .terraform
-
 
 stages:
   - validate
@@ -41,7 +35,7 @@ cr-plan:
 
 sr-unit-test:
   variables:
-    TEST_SUITE_NAME: servicelUnitTest
+    TEST_SUITE_NAME: serviceUnitTest
   extends: .unit-test
 
 sr-plan:
@@ -50,6 +44,9 @@ sr-plan:
 dr-unit-test:
   variables:
     TEST_SUITE_NAME: partitionUnitTest
+    TF_VAR_elasticsearch_endpoint: ""
+    TF_VAR_elasticsearch_username: ""
+    TF_VAR_elasticsearch_password: ""
   extends: .unit-test
 
 dr-plan:
