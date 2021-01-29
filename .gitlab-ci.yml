@@ -42,7 +42,8 @@ validate:
   extends: .validate
 
 cr-unit-test:
-  before_script: install_tf_alpine
+  before_script: 
+    -install_tf_alpine
   variables:
     TEST_SUITE_NAME: centralUnitTest
   extends: .unit-test
@@ -62,7 +63,8 @@ sr-plan:
   extends: .tf-plan
 
 dr-unit-test:
-  before_script: install_tf_alpine
+  before_script: 
+    - install_tf_alpine
   variables:
     TEST_SUITE_NAME: partitionUnitTest
     TF_VAR_elasticsearch_endpoint: ""
