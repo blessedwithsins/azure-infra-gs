@@ -1,4 +1,0 @@
-.validate:
-    stage: validate
-    script:
-      - echo "validate job"
