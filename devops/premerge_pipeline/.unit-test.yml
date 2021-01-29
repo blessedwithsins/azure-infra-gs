@@ -1,25 +1,20 @@
-.service_variables: &service_variables
-  script:
-    - echo "Downloading pre-req files"
-    - echo "${ssh_public_key_file}" > "infra/templates/osdu-r3-mvp/service_resources/ssh_public_key_file.pub"
-    - echo "${gitops_ssh_key_file}" > "infra/templates/osdu-r3-mvp/service_resources/gitops_ssh_key_file.pem"
-    - export TF_VAR_ssh_public_key_file="ssh_public_key_file.pub"
-    - export TF_VAR_gitops_ssh_url="gitops_ssh_key_file.pem"
-    - export TF_VAR_gitops_ssh_key_file=""
+.service_variables: &service_variables |
+    echo "Downloading pre-req files"
+    echo "${ssh_public_key_file}" > "infra/templates/osdu-r3-mvp/service_resources/ssh_public_key_file.pub"
+    echo "${gitops_ssh_key_file}" > "infra/templates/osdu-r3-mvp/service_resources/gitops_ssh_key_file.pem"
+    export TF_VAR_ssh_public_key_file="ssh_public_key_file.pub"
+    export TF_VAR_gitops_ssh_url=""
+    export TF_VAR_gitops_ssh_key_file="gitops_ssh_key_file.pem"
 
-.install_tf_alpine: &install_tf_alpine
-  before_script:
-    - currdir=$(pwd)
-    - cd /tmp
-    - wget https://releases.hashicorp.com/terraform/${TF_VERSION}/terraform_${TF_VERSION}_linux_amd64.zip
-    - unzip terraform_${TF_VERSION}_linux_amd64.zip -d /usr/bin
-    - cd $currdir
-    - /usr/bin/terraform version
+.install_tf_alpine: &install_tf_alpine |
+    currdir=$(pwd)
+    cd /tmp
+    wget https://releases.hashicorp.com/terraform/${TF_VERSION}/terraform_${TF_VERSION}_linux_amd64.zip
+    unzip terraform_${TF_VERSION}_linux_amd64.zip -d /usr/bin
+    cd $currdir
+    /usr/bin/terraform version
 
 .unit-test:
-    extends:
-        - .install_tf_alpine
-        - .service_variables
     variables:
         TEST_SUITE_NAME: ""
     stage: unit-test
@@ -29,6 +24,8 @@
         - "/usr/bin/env"
         - "PATH=/go/bin:/usr/local/go/bin/:/usr/local/sbin:/usr/local/bin:/usr/sbin:/usr/bin:/sbin:/bin"
     script:
+        - *service_variables
+        - *install_tf_alpine
         - currdir=$(pwd)
         - apk add --no-cache gcc libc-dev bind-tools git
         - go get -u -d github.com/magefile/mage
