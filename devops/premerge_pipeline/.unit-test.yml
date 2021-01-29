@@ -1,3 +1,12 @@
+.service_variables: &service_variables
+  script:
+    - echo "Downloading pre-req files"
+    - echo "${ssh_public_key_file}" > "infra/templates/osdu-r3-mvp/service_resources/ssh_public_key_file.pub"
+    - echo "${gitops_ssh_key_file}" > "infra/templates/osdu-r3-mvp/service_resources/gitops_ssh_key_file.pem"
+    - export TF_VAR_ssh_public_key_file="ssh_public_key_file.pub"
+    - export TF_VAR_gitops_ssh_url="gitops_ssh_key_file.pem"
+    - export TF_VAR_gitops_ssh_key_file=""
+
 .install_tf_alpine: &install_tf_alpine
   before_script:
     - currdir=$(pwd)
@@ -8,7 +17,9 @@
     - /usr/bin/terraform version
 
 .unit-test:
-    <<: *install_tf_alpine
+    extends:
+        - .install_tf_alpine
+        - .service_variables
     variables:
         TEST_SUITE_NAME: ""
     stage: unit-test

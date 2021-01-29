@@ -36,9 +36,6 @@ cr-plan:
 sr-unit-test:
   variables:
     TEST_SUITE_NAME: serviceUnitTest
-    TF_VAR_ssh_public_key_file: ""
-    TF_VAR_gitops_ssh_url: ""
-    TF_VAR_gitops_ssh_key_file: ""
   extends: .unit-test
 
 sr-plan:
