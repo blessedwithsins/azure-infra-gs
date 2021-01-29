@@ -14,7 +14,6 @@
         - cd $currdir
         - terraform version
         - (if [[ "$(go version)" == "go version go${GO_VERSION} linux/amd64" ]]; then echo "✓ Go binary installed!"; else echo "Go binary not installed!"; /bin/false; fi);
-        - (if [[ "$(terraform version)" == "Terraform v0.14.4" ]]; then echo "✓ Terrafrom binary installed!"; else echo "Terraform binary not installed!"; /bin/false; fi);
         - echo "Terraform workspace ${TF_WORKSPACE}"
         - currdir=$(pwd)
         - apk add --no-cache gcc libc-dev bind-tools git
