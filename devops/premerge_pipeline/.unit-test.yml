@@ -12,7 +12,7 @@
         - wget https://releases.hashicorp.com/terraform/${TF_VERSION}/terraform_${TF_VERSION}_linux_amd64.zip -O terraform.zip
         - unzip terraform.zip -d /usr/bin
         - cd $currdir
-        - /usr/bin/terraform version
+        - terraform version
         - (if [[ "$(go version)" == "go version go${GO_VERSION} linux/amd64" ]]; then echo "✓ Go binary installed!"; else echo "Go binary not installed!"; /bin/false; fi);
         - (if [[ "$(terraform version)" == "Terraform v0.14.4" ]]; then echo "✓ Terrafrom binary installed!"; else echo "Terraform binary not installed!"; /bin/false; fi);
         - echo "Terraform workspace ${TF_WORKSPACE}"
