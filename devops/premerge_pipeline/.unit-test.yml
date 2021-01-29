@@ -22,4 +22,4 @@
         - cd $magedir/$(ls $magedir/)
         - go run bootstrap.go
         - cd $currdir/infra
-        - mage $TEST_SUITE_NAME
+        - mage ${TEST_SUITE_NAME}
