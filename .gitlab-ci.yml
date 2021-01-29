@@ -38,7 +38,11 @@ before_script:
     - rm -rf .terraform
     - terraform init -upgrade -backend-config "storage_account_name=${TF_VAR_remote_state_account}" -backend-config "container_name=${TF_VAR_remote_state_container}"
 
-
+stages:
+  - validate
+  - build
+  - unit-test
+  
 include:
   - 'devops/premerge_pipeline/.tf-plan.yml'
   - 'devops/premerge_pipeline/.unit-test.yml'
