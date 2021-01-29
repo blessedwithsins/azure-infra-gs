@@ -34,10 +34,6 @@ cr-plan:
   extends: .tf-plan
 
 sr-unit-test:
-  before_script:
-    - echo "Downloading pre-req files"
-    - echo "${ssh_public_key_file}" > "infra/templates/osdu-r3-mvp/service_resources/ssh_public_key_file.pub"
-    - echo "${gitops_ssh_key_file}" > "infra/templates/osdu-r3-mvp/service_resources/gitops_ssh_key_file.pem"
   variables:
     TEST_SUITE_NAME: serviceUnitTest
     TF_VAR_ssh_public_key_file: ""
