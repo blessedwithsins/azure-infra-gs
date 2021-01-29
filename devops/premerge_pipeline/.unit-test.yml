@@ -1,4 +1,15 @@
+.install_tf_alpine: &install_tf_alpine
+  before_script:
+    - currdir=$(pwd)
+    - cd /tmp
+    - wget https://releases.hashicorp.com/terraform/${TF_VERSION}/terraform_${TF_VERSION}_linux_amd64.zip
+    - unzip terraform_${TF_VERSION}_linux_amd64.zip -d /usr/bin
+    - cd $currdir
+    - /usr/bin/terraform version
+
+
 .unit-test:
+    <<: *install_tf_alpine
     variables:
         TEST_SUITE_NAME: ""
     stage: unit-test
@@ -8,12 +19,6 @@
         - "/usr/bin/env"
         - "PATH=/go/bin:/usr/local/go/bin/:/usr/local/sbin:/usr/local/bin:/usr/sbin:/usr/bin:/sbin:/bin"
     script:
-        - currdir=$(pwd)
-        - cd /tmp
-        - wget https://releases.hashicorp.com/terraform/${TF_VERSION}/terraform_${TF_VERSION}_linux_amd64.zip -O terraform.zip
-        - unzip terraform.zip -d /usr/bin
-        - cd $currdir
-        - terraform version
         - echo "Terraform workspace ${TF_WORKSPACE}"
         - currdir=$(pwd)
         - apk add --no-cache gcc libc-dev bind-tools git
