@@ -1,4 +1,4 @@
 .tf-lint:
   stage: validate
   script:
-    - echo "asdf"
+    - terraform fmt -recursive -check
