@@ -1,5 +1,6 @@
 .unit-test:
-
+    variables:
+        TEST_SUITE_NAME: ""
     stage: unit-test
     image:
         name: "golang:${GO_VERSION}-alpine"
@@ -13,7 +14,6 @@
         - unzip terraform.zip -d /usr/bin
         - cd $currdir
         - terraform version
-        - (if [[ "$(go version)" == "go version go${GO_VERSION} linux/amd64" ]]; then echo "✓ Go binary installed!"; else echo "Go binary not installed!"; /bin/false; fi);
         - echo "Terraform workspace ${TF_WORKSPACE}"
         - currdir=$(pwd)
         - apk add --no-cache gcc libc-dev bind-tools git
@@ -22,4 +22,4 @@
         - cd $magedir/$(ls $magedir/)
         - go run bootstrap.go
         - cd $currdir/infra
-        - mage centralUnitTest
+        - mage $TEST_SUITE_NAME
