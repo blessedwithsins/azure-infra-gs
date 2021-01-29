@@ -1,48 +1,52 @@
-image:
-  name: registry.gitlab.com/gitlab-org/terraform-images/releases/0.12:latest
-  entrypoint:
-    - '/usr/bin/env'
-    - 'PATH=/usr/local/sbin:/usr/local/bin:/usr/sbin:/usr/bin:/sbin:/bin'
-
 variables:
-  TF_VERSION: 0.14.4 
+  TF_VERSION: 0.14.4
   GO_VERSION: 1.12.14
-
-cache:
-  paths:
-    - .terraform
 
 stages:
   - validate
   - build
   - unit-test
-  
-include:
-  - 'devops/premerge_pipeline/.tf-plan.yml'
-  - 'devops/premerge_pipeline/.unit-test.yml'
-  - 'devops/premerge_pipeline/.validate.yml'
+
+image:
+  name: hashicorp/terraform:$TF_VERSION
+  entrypoint:
+    - '/usr/bin/env'
+    - 'PATH=/usr/local/sbin:/usr/local/bin:/usr/sbin:/usr/bin:/sbin:/bin'
+
+cache:
+  paths:
+    - .terraform
 
 .service_variables: &service_variables |
-    echo "Downloading pre-req files"
-    echo "${ssh_public_key_file}" > "infra/templates/osdu-r3-mvp/service_resources/ssh_public_key_file.pub"
-    echo "${gitops_ssh_key_file}" > "infra/templates/osdu-r3-mvp/service_resources/gitops_ssh_key_file.pem"
-    export TF_VAR_ssh_public_key_file="ssh_public_key_file.pub"
-    export TF_VAR_gitops_ssh_url=""
-    export TF_VAR_gitops_ssh_key_file="gitops_ssh_key_file.pem"
+  echo "Downloading pre-req files"
+  echo "${ssh_public_key_file}" > "infra/templates/osdu-r3-mvp/service_resources/ssh_public_key_file.pub"
+  echo "${gitops_ssh_key_file}" > "infra/templates/osdu-r3-mvp/service_resources/gitops_ssh_key_file.pem"
+  export TF_VAR_ssh_public_key_file="ssh_public_key_file.pub"
+  export TF_VAR_gitops_ssh_url=""
+  export TF_VAR_gitops_ssh_key_file="gitops_ssh_key_file.pem"
 
 .install_tf_alpine: &install_tf_alpine |
-    currdir=$(pwd)
-    cd /tmp
-    wget https://releases.hashicorp.com/terraform/${TF_VERSION}/terraform_${TF_VERSION}_linux_amd64.zip
-    unzip terraform_${TF_VERSION}_linux_amd64.zip -d /usr/bin
-    cd $currdir
-    /usr/bin/terraform version
+  currdir=$(pwd)
+  cd /tmp
+  wget https://releases.hashicorp.com/terraform/${TF_VERSION}/terraform_${TF_VERSION}_linux_amd64.zip
+  unzip terraform_${TF_VERSION}_linux_amd64.zip -d /usr/bin
+  cd $currdir
+  /usr/bin/terraform version
 
-validate:
-  extends: .validate
+include:
+  - 'devops/premerge_pipeline/.tf-plan.yml'
+  - 'devops/premerge_pipeline/.go-lint.yml'
+  - 'devops/premerge_pipeline/.tf-lint.yml'
+  - 'devops/premerge_pipeline/.unit-test.yml'
+
+tf-lint:
+  extends: .tf-lint
+
+go-lint:
+  extends: .go-lint
 
 cr-unit-test:
-  before_script: 
+  before_script:
     - *install_tf_alpine
   variables:
     TEST_SUITE_NAME: centralUnitTest
@@ -63,7 +67,7 @@ sr-plan:
   extends: .tf-plan
 
 dr-unit-test:
-  before_script: 
+  before_script:
     - *install_tf_alpine
   variables:
     TEST_SUITE_NAME: partitionUnitTest
