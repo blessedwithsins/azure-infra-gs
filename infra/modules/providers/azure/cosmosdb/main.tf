@@ -118,6 +118,7 @@ resource "azurerm_cosmosdb_gremlin_graph" "cosmos_graphs" {
     automatic      = true
     indexing_mode  = "Consistent"
     included_paths = ["/*"]
+    excluded_paths = ["/\"_etag\"/?"]
   }
 
   conflict_resolution_policy {

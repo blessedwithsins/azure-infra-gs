@@ -311,6 +311,7 @@ module "ad_application" {
 
   name                       = local.ad_app_name
   oauth2_allow_implicit_flow = true
+  group_membership_claims    = "None"
 
   reply_urls = [
     "http://localhost:8080",

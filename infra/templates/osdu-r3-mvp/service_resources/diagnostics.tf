@@ -169,7 +169,7 @@ resource "azurerm_monitor_diagnostic_setting" "aks_diagnostics" {
   }
 
   metric {
-    category = "API Server (PREVIEW)"
+    category = "AllMetrics"
 
     retention_policy {
       days    = var.log_retention_days
@@ -213,36 +213,8 @@ resource "azurerm_monitor_diagnostic_setting" "postgres_diagnostics" {
     }
   }
 
-
   metric {
-    category = "Errors"
-
-    retention_policy {
-      days    = var.log_retention_days
-      enabled = local.retention_policy
-    }
-  }
-
-  metric {
-    category = "Latency"
-
-    retention_policy {
-      days    = var.log_retention_days
-      enabled = local.retention_policy
-    }
-  }
-
-  metric {
-    category = "Saturation"
-
-    retention_policy {
-      days    = var.log_retention_days
-      enabled = local.retention_policy
-    }
-  }
-
-  metric {
-    category = "Traffic"
+    category = "AllMetrics"
 
     retention_policy {
       days    = var.log_retention_days
