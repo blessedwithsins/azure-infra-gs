@@ -1,81 +1,80 @@
-# This file is a template, and might need editing before it works on your project.
-# Official image for Hashicorp's Terraform. It uses light image which is Alpine
-# based as it is much lighter.
-#
-# Entrypoint is also needed as image by default set `terraform` binary as an
-# entrypoint.
+variables:
+  TF_VERSION: 0.14.4
+  GO_VERSION: 1.12.14
+
+stages:
+  - validate
+  - build
+  - unit-test
+
 image:
-  name: registry.gitlab.com/gitlab-org/terraform-images/releases/0.12:latest
+  name: hashicorp/terraform:$TF_VERSION
   entrypoint:
     - '/usr/bin/env'
     - 'PATH=/usr/local/sbin:/usr/local/bin:/usr/sbin:/usr/bin:/sbin:/bin'
-
-# Default output file for Terraform plan
-variables:
-  PLAN: plan.tfplan
-  JSON_PLAN_FILE: tfplan.json
 
 cache:
   paths:
     - .terraform
 
-before_script:
-  - alias convert_report="jq -r '([.resource_changes[]?.change.actions?]|flatten)|{\"create\":(map(select(.==\"create\"))|length),\"update\":(map(select(.==\"update\"))|length),\"delete\":(map(select(.==\"delete\"))|length)}'"
-  - terraform --version
-  - terraform init
+.service_variables: &service_variables |
+  echo "Downloading pre-req files"
+  echo "${ssh_public_key_file}" > "infra/templates/osdu-r3-mvp/service_resources/ssh_public_key_file.pub"
+  echo "${gitops_ssh_key_file}" > "infra/templates/osdu-r3-mvp/service_resources/gitops_ssh_key_file.pem"
+  export TF_VAR_ssh_public_key_file="ssh_public_key_file.pub"
+  export TF_VAR_gitops_ssh_url=""
+  export TF_VAR_gitops_ssh_key_file="gitops_ssh_key_file.pem"
 
-stages:
-  - validate
-  - build
-  - test
-  - deploy
-
-validate:
-  stage: validate
-  script:
-    - terraform validate
+.install_tf_alpine: &install_tf_alpine |
+  currdir=$(pwd)
+  cd /tmp
+  wget https://releases.hashicorp.com/terraform/${TF_VERSION}/terraform_${TF_VERSION}_linux_amd64.zip
+  unzip terraform_${TF_VERSION}_linux_amd64.zip -d /usr/bin
+  cd $currdir
+  /usr/bin/terraform version
 
 include:
-  - local: "tf-poc/.tf-plan.yml"
+  - 'devops/premerge_pipeline/.tf-plan.yml'
+  - 'devops/premerge_pipeline/.go-lint.yml'
+  - 'devops/premerge_pipeline/.tf-lint.yml'
+  - 'devops/premerge_pipeline/.unit-test.yml'
 
-cr-terraform-plan:
-  extends: .tf-plan
-  variables:
-    TF_DIRECTORY: 'infra/templates/osdu-r3-mvp/central_resources'
-    TF_WORKSPACE_NAME: 'idc-mvp-cr'
-    PLAN: 'plan.tfplan'
+tf-lint:
+  extends: .tf-lint
 
-dp-terraform-plan:
-  extends: .tf-plan
-  variables:
-    TF_DIRECTORY: 'infra/templates/osdu-r3-mvp/data_partition'
-    TF_WORKSPACE_NAME: 'idc-mvp-dp1'
-    PLAN: 'plan.tfplan'
+go-lint:
+  extends: .go-lint
 
-sr-terraform-plan:
+cr-unit-test:
   before_script:
-    - echo "Downloading pre-req files"
-    - echo "${ssh_public_key_file}" > "infra/templates/osdu-r3-mvp/service_resources/ssh_public_key_file.pub"
-    - echo "${gitops_ssh_key_file}" > "infra/templates/osdu-r3-mvp/service_resources/gitops_ssh_key_file.pem"
-
-  extends: .tf-plan
+    - *install_tf_alpine
   variables:
-    TF_DIRECTORY: 'infra/templates/osdu-r3-mvp/service_resources'
-    TF_WORKSPACE_NAME: 'idc-mvp-sr'
-    TF_VAR_ssh_public_key_file: "ssh_public_key_file.pub"
-    TF_VAR_gitops_ssh_key_file: "gitops_ssh_key_file.pem"
-    PLAN: 'plan.tfplan'
+    TEST_SUITE_NAME: centralUnitTest
+  extends: .unit-test
 
-# Separate apply job for manual launching Terraform as it can be destructive
-# action.
-apply:
-  stage: deploy
-  environment:
-    name: production
-  script:
-    - terraform apply -input=false $PLAN
-  dependencies:
-    - plan
-  when: manual
-  only:
-   - master
+cr-plan:
+  extends: .tf-plan
+
+sr-unit-test:
+  before_script:
+    - *install_tf_alpine
+    - *service_variables
+  variables:
+    TEST_SUITE_NAME: serviceUnitTest
+  extends: .unit-test
+
+sr-plan:
+  extends: .tf-plan
+
+dr-unit-test:
+  before_script:
+    - *install_tf_alpine
+  variables:
+    TEST_SUITE_NAME: partitionUnitTest
+    TF_VAR_elasticsearch_endpoint: ""
+    TF_VAR_elasticsearch_username: ""
+    TF_VAR_elasticsearch_password: ""
+  extends: .unit-test
+
+dr-plan:
+  extends: .tf-plan
