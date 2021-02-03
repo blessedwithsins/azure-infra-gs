@@ -461,3 +461,9 @@ resource "azurerm_role_assignment" "redis_cache" {
   principal_id         = local.rbac_principals[count.index]
   scope                = module.redis_cache.id
 }
+
+resource "azurerm_management_lock" "sa_lock" {
+  name       = "osdu_ds_sa_lock"
+  scope      = module.storage_account.id
+  lock_level = "CanNotDelete"
+}
