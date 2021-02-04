@@ -354,8 +354,8 @@ resource "azurerm_management_lock" "db_lock" {
   lock_level = "CanNotDelete"
 }
 
-resource "azurerm_management_lock" "injest_sa_lock" {
-  name       = "osdu_injest_sa_lock"
+resource "azurerm_management_lock" "ingest_sa_lock" {
+  name       = "osdu_ingest_sa_lock"
   scope      = module.ingest_storage_account.id
   lock_level = "CanNotDelete"
 }

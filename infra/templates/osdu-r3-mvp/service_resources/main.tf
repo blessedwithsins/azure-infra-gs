@@ -462,6 +462,10 @@ resource "azurerm_role_assignment" "redis_cache" {
   scope                = module.redis_cache.id
 }
 
+
+#-------------------------------
+# Locks
+#-------------------------------
 resource "azurerm_management_lock" "sa_lock" {
   name       = "osdu_ds_sa_lock"
   scope      = module.storage_account.id
