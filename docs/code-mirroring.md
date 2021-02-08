@@ -52,7 +52,8 @@ SERVICE_LIST="infra-azure-provisioning \
               register \
               notification \
               schema-service \
-              ingestion-workflow"
+              ingestion-workflow \
+              seismic-store-service"
 
 for SERVICE in $SERVICE_LIST;
 do
@@ -115,7 +116,7 @@ az pipelines variable-group create \
   DELIVERY_REPO=https://dev.azure.com/${ADO_ORGANIZATION}/$ADO_PROJECT/_git/delivery \
   FILE_REPO=https://dev.azure.com/${ADO_ORGANIZATION}/$ADO_PROJECT/_git/file \
   UNIT_REPO=https://dev.azure.com/${ADO_ORGANIZATION}/$ADO_PROJECT/_git/unit-service \
-  CRS_CATALOG_REPO=https://dev.azure.com/osdu-demo/osdu/_git/unit-service \
+  CRS_CATALOG_REPO=https://dev.azure.com/${ADO_ORGANIZATION}/$ADO_PROJECT/_git/crs-catalog-service \
   CRS_CONVERSION_REPO=https://dev.azure.com/${ADO_ORGANIZATION}/$ADO_PROJECT/_git/crs-conversion-service \
   WKS_REPO=https://dev.azure.com/${ADO_ORGANIZATION}/$ADO_PROJECT/_git/wks \
   REGISTER_REPO=https://dev.azure.com/${ADO_ORGANIZATION}/$ADO_PROJECT/_git/register \
@@ -284,18 +285,18 @@ jobs:
         destinationGitRepositoryPersonalAccessToken: $(ACCESS_TOKEN)
 
     - task: swellaby.mirror-git-repository.mirror-git-repository-vsts-task.mirror-git-repository-vsts-task@1
-          displayName: 'notification'
-          inputs:
-            sourceGitRepositoryUri: 'https://community.opengroup.org/osdu/platform/system/notification.git'
-            destinationGitRepositoryUri: '$(NOTIFICATION_REPO)'
-            destinationGitRepositoryPersonalAccessToken: $(ACCESS_TOKEN)
+      displayName: 'notification'
+      inputs:
+        sourceGitRepositoryUri: 'https://community.opengroup.org/osdu/platform/system/notification.git'
+        destinationGitRepositoryUri: '$(NOTIFICATION_REPO)'
+        destinationGitRepositoryPersonalAccessToken: $(ACCESS_TOKEN)
 
     - task: swellaby.mirror-git-repository.mirror-git-repository-vsts-task.mirror-git-repository-vsts-task@1
-          displayName: 'schema-service'
-          inputs:
-            sourceGitRepositoryUri: 'https://community.opengroup.org/osdu/platform/system/schema-service.git'
-            destinationGitRepositoryUri: '$(SCHEMA_REPO)'
-            destinationGitRepositoryPersonalAccessToken: $(ACCESS_TOKEN)
+      displayName: 'schema-service'
+      inputs:
+        sourceGitRepositoryUri: 'https://community.opengroup.org/osdu/platform/system/schema-service.git'
+        destinationGitRepositoryUri: '$(SCHEMA_REPO)'
+        destinationGitRepositoryPersonalAccessToken: $(ACCESS_TOKEN)
     - task: swellaby.mirror-git-repository.mirror-git-repository-vsts-task.mirror-git-repository-vsts-task@1
       displayName: 'ingestion-workflow'
       inputs:

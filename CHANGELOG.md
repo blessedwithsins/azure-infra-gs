@@ -2,6 +2,9 @@
 
 # Current Master
 
+__Infra Changes__
+- [Issue 106 - Arch Change - Data Partition - Ingestion Workflow Database and Storage new collections and fileshares](https://community.opengroup.org/osdu/platform/deployment-and-operations/infra-azure-provisioning/-/issues/106)
+
 __Bug Fixes__
 - [Bug 102 - Users with a lot of groups receive a 400 Bad Request when making API calls](https://community.opengroup.org/osdu/platform/deployment-and-operations/infra-azure-provisioning/-/issues/102)
 - [Bug 101 - Comsos Graph module always requires a change on tf plan](https://community.opengroup.org/osdu/platform/deployment-and-operations/infra-azure-provisioning/-/issues/101)

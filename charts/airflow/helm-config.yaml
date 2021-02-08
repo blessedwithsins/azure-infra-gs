@@ -29,6 +29,7 @@ airflow:
       AIRFLOW__WEBSERVER__ENABLE_PROXY_FIX: "True"
       AIRFLOW__CORE__PLUGINS_FOLDER: "/opt/airflow/plugins"
       AIRFLOW__SCHEDULER__DAG_DIR_LIST_INTERVAL: 60
+      AIRFLOW__CORE__LOGGING_LEVEL: DEBUG
     extraEnv:
     - name: AIRFLOW__CORE__FERNET_KEY
       valueFrom:
@@ -40,6 +41,13 @@ airflow:
         secretKeyRef:
           name: airflow
           key: remote-log-connection
+    - name: CLOUD_PROVIDER
+      value: "azure"
+    - name: KEYVAULT_URI
+      valueFrom:
+        configMapKeyRef:
+          name: osdu-svc-properties
+          key: ENV_KEYVAULT
     extraConfigmapMounts:
         - name: remote-log-config
           mountPath: /opt/airflow/config
@@ -49,7 +57,13 @@ airflow:
         "flask-bcrypt",
         "apache-airflow[statsd]",
         "apache-airflow[kubernetes]",
-        "apache-airflow-backport-providers-microsoft-azure"
+        "apache-airflow-backport-providers-microsoft-azure",
+        "dataclasses",
+        "google-cloud-storage",
+        "azure-identity",
+        "azure-keyvault-secrets",
+        "msal",
+        "https://azglobalosdutestlake.blob.core.windows.net/pythonsdk/osdu_api-0.0.4.tar.gz"
     ]
     extraVolumeMounts:
         - name: azure-keyvault

@@ -123,6 +123,7 @@ airflow:
       AIRFLOW__WEBSERVER__ENABLE_PROXY_FIX: "True"
       AIRFLOW__CORE__PLUGINS_FOLDER: "/opt/airflow/plugins"
       AIRFLOW__SCHEDULER__DAG_DIR_LIST_INTERVAL: 60
+      AIRFLOW__CORE__LOGGING_LEVEL: DEBUG
     extraEnv:
       - name: AIRFLOW__CORE__FERNET_KEY
         valueFrom:
@@ -134,6 +135,13 @@ airflow:
           secretKeyRef:
             name: airflow
             key: remote-log-connection
+      - name: CLOUD_PROVIDER
+        value: "azure"
+      - name: KEYVAULT_URI
+        valueFrom:
+          configMapKeyRef:
+            name: osdu-svc-properties
+            key: ENV_KEYVAULT
     extraConfigmapMounts:
       - name: remote-log-config
         mountPath: /opt/airflow/config
@@ -143,7 +151,13 @@ airflow:
         "flask-bcrypt",
         "apache-airflow[statsd]",
         "apache-airflow[kubernetes]",
-        "apache-airflow-backport-providers-microsoft-azure"
+        "apache-airflow-backport-providers-microsoft-azure",
+        "dataclasses",
+        "google-cloud-storage",
+        "azure-identity",
+        "azure-keyvault-secrets",
+        "msal",
+        "https://azglobalosdutestlake.blob.core.windows.net/pythonsdk/osdu_api-0.0.4.tar.gz"
     ]
     extraVolumeMounts:
       - name: azure-keyvault
@@ -239,8 +253,8 @@ git clone https://community.opengroup.org/osdu/platform/system/indexer-service.g
 git clone https://community.opengroup.org/osdu/platform/system/search-service.git $SRC_DIR/search-service
 git clone https://community.opengroup.org/osdu/platform/system/file.git $SRC_DIR/file-service
 git clone https://community.opengroup.org/osdu/platform/system/delivery.git $SRC_DIR/delivery
-git clone https://community.opengroup.org/osdu/platform/system/unit-service.git $SRC_DIR/unit-service
-git clone https://community.opengroup.org/osdu/platform/system/crs-catalog-service.git $SRC_DIR/crs-catalog-service
+git clone https://community.opengroup.org/osdu/platform/system/reference/ unit-service.git $SRC_DIR/unit-service
+git clone https://community.opengroup.org/osdu/platform/system/reference/crs-catalog-service.git $SRC_DIR/crs-catalog-service
 git clone https://community.opengroup.org/osdu/platform/system/reference/crs-conversion-service.git $SRC_DIR/crs-conversion-service
 git clone https://community.opengroup.org/osdu/platform/system/notification.git $SRC_DIR/notification
 git clone https://community.opengroup.org/osdu/platform/data-flow/enrichment/wks.git $SRC_DIR/wks

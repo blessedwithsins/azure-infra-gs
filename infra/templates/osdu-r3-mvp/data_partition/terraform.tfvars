@@ -56,110 +56,149 @@ cosmos_databases = [
 ]
 cosmos_sql_collections = [
   {
-    name               = "LegalTag"
-    database_name      = "osdu-db"
-    partition_key_path = "/id"
+    name                  = "LegalTag"
+    database_name         = "osdu-db"
+    partition_key_path    = "/id"
+    partition_key_version = null
   },
   {
-    name               = "StorageRecord"
-    database_name      = "osdu-db"
-    partition_key_path = "/id"
+    name                  = "StorageRecord"
+    database_name         = "osdu-db"
+    partition_key_path    = "/id"
+    partition_key_version = null
   },
   {
-    name               = "StorageSchema"
-    database_name      = "osdu-db"
-    partition_key_path = "/kind"
+    name                  = "StorageSchema"
+    database_name         = "osdu-db"
+    partition_key_path    = "/kind"
+    partition_key_version = null
   },
   {
-    name               = "TenantInfo"
-    database_name      = "osdu-db"
-    partition_key_path = "/id"
+    name                  = "TenantInfo"
+    database_name         = "osdu-db"
+    partition_key_path    = "/id"
+    partition_key_version = null
   },
   {
-    name               = "UserInfo"
-    database_name      = "osdu-db"
-    partition_key_path = "/id"
+    name                  = "UserInfo"
+    database_name         = "osdu-db"
+    partition_key_path    = "/id"
+    partition_key_version = null
   },
   {
-    name               = "Authority"
-    database_name      = "osdu-db"
-    partition_key_path = "/id"
+    name                  = "Authority"
+    database_name         = "osdu-db"
+    partition_key_path    = "/id"
+    partition_key_version = null
 
   },
   {
-    name               = "EntityType"
-    database_name      = "osdu-db"
-    partition_key_path = "/id"
+    name                  = "EntityType"
+    database_name         = "osdu-db"
+    partition_key_path    = "/id"
+    partition_key_version = null
   },
   {
-    name               = "SchemaInfo"
-    database_name      = "osdu-db"
-    partition_key_path = "/partitionId"
+    name                  = "SchemaInfo"
+    database_name         = "osdu-db"
+    partition_key_path    = "/partitionId"
+    partition_key_version = null
   },
   {
-    name               = "Source"
-    database_name      = "osdu-db"
-    partition_key_path = "/id"
+    name                  = "Source"
+    database_name         = "osdu-db"
+    partition_key_path    = "/id"
+    partition_key_version = null
   },
   {
-    name               = "RegisterAction"
-    database_name      = "osdu-db"
-    partition_key_path = "/dataPartitionId"
+    name                  = "RegisterAction"
+    database_name         = "osdu-db"
+    partition_key_path    = "/dataPartitionId"
+    partition_key_version = null
   },
   {
-    name               = "RegisterDdms"
-    database_name      = "osdu-db"
-    partition_key_path = "/dataPartitionId"
+    name                  = "RegisterDdms"
+    database_name         = "osdu-db"
+    partition_key_path    = "/dataPartitionId"
+    partition_key_version = null
   },
   {
-    name               = "RegisterSubscription"
-    database_name      = "osdu-db"
-    partition_key_path = "/dataPartitionId"
+    name                  = "RegisterSubscription"
+    database_name         = "osdu-db"
+    partition_key_path    = "/dataPartitionId"
+    partition_key_version = null
   },
   {
-    name               = "IngestionStrategy"
-    database_name      = "osdu-db"
-    partition_key_path = "/workflowType"
+    name                  = "IngestionStrategy"
+    database_name         = "osdu-db"
+    partition_key_path    = "/workflowType"
+    partition_key_version = null
   },
   {
-    name               = "WorkflowStatus"
-    database_name      = "osdu-db"
-    partition_key_path = "/workflowId"
+    name                  = "WorkflowStatus"
+    database_name         = "osdu-db"
+    partition_key_path    = "/workflowId"
+    partition_key_version = null
   },
   {
-    name               = "Workflow"
-    database_name      = "osdu-db"
-    partition_key_path = "/workflowId"
+    name                  = "Workflow"
+    database_name         = "osdu-db"
+    partition_key_path    = "/workflowId"
+    partition_key_version = null
   },
   {
-    name               = "WorkflowRun"
-    database_name      = "osdu-db"
-    partition_key_path = "/workflowId"
+    name                  = "WorkflowRun"
+    database_name         = "osdu-db"
+    partition_key_path    = "/workflowId"
+    partition_key_version = null
   },
   {
-    name               = "RelationshipStatus"
-    database_name      = "osdu-db"
-    partition_key_path = "/id"
+    name                  = "RelationshipStatus"
+    database_name         = "osdu-db"
+    partition_key_path    = "/id"
+    partition_key_version = null
   },
   {
-    name               = "MappingInfo"
-    database_name      = "osdu-db"
-    partition_key_path = "/sourceSchemaKind"
+    name                  = "MappingInfo"
+    database_name         = "osdu-db"
+    partition_key_path    = "/sourceSchemaKind"
+    partition_key_version = null
   },
   {
-    name               = "WorkflowTasksSharingInfo"
-    database_name      = "osdu-db"
-    partition_key_path = "/workflowId"
+    name                  = "WorkflowTasksSharingInfo"
+    database_name         = "osdu-db"
+    partition_key_path    = "/workflowId"
+    partition_key_version = null
   },
   {
-    name               = "FileLocationEntity"
-    database_name      = "osdu-db"
-    partition_key_path = "/id"
+    name                  = "FileLocationEntity"
+    database_name         = "osdu-db"
+    partition_key_path    = "/id"
+    partition_key_version = null
   },
   {
-    name               = "WorkflowCustomOperatorInfo"
-    database_name      = "osdu-db"
-    partition_key_path = "/operatorId"
+    name                  = "WorkflowCustomOperatorInfo"
+    database_name         = "osdu-db"
+    partition_key_path    = "/operatorId"
+    partition_key_version = null
+  },
+  {
+    name                  = "WorkflowV2"
+    database_name         = "osdu-db"
+    partition_key_path    = "/partitionKey"
+    partition_key_version = 2
+  },
+  {
+    name                  = "WorkflowRunV2"
+    database_name         = "osdu-db"
+    partition_key_path    = "/partitionKey"
+    partition_key_version = 2
+  },
+  {
+    name                  = "WorkflowCustomOperatorV2"
+    database_name         = "osdu-db"
+    partition_key_path    = "/partitionKey"
+    partition_key_version = 2
   }
 ]
 
