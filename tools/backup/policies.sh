@@ -55,7 +55,7 @@ main() {
 	backupCosmosDBAccounts $resourceGroup
 }
 
-
+# Input Management
 resourceGroup=""
 help="false"
 while getopts ":r::h::" opt; do
