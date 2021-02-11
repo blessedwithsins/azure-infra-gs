@@ -16,6 +16,7 @@ BACKUP_RETENTION_IN_HOURS=672
 RESOURCETYPE_STORAGE_ACCOUNT="Microsoft.Storage/storageAccounts"
 RESOURCETYPE_COSMOSDB_ACCOUNT="Microsoft.DocumentDb/databaseAccounts"
 QUERY_FOR_NAME='[].name'
+
 # arguments (message)
 function log() {
   echo >&2 "[update_backup_policies.sh] $1"
@@ -73,8 +74,8 @@ main() {
         exit 0
     fi
 
-	configureDataProtectionPoliciesForStorageAccounts $resourceGroup
-	configureBackupPoliciesForCosmosDbAccounts $resourceGroup
+	configureDataProtectionPoliciesForStorageAccounts ${resourceGroup}
+	configureBackupPoliciesForCosmosDbAccounts ${resourceGroup}
 }
 
 # Input Management
