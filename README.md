@@ -192,7 +192,6 @@ __Azure AD Admin Consent__
 For more information on Azure identity and authorization, see the official Microsoft documentation [here](https://docs.microsoft.com/en-us/azure/active-directory/develop/v2-permissions-and-consent).
 
 
-
 ## Elastic Search Setup
 
 Infrastructure requires a bring your own Elastic Search Instance of a version of 6.8.x with a valid https endpoint and the access information must now be stored in the Common KeyVault. The recommended method of Elastic Search is to use the [Elastic Cloud Managed Service from the Marketplace](https://azuremarketplace.microsoft.com/en-us/marketplace/apps/elastic.ec-azure?tab=Overview).
@@ -221,6 +220,10 @@ EOF
 cp .envrc .envrc_${UNIQUE}
 ```
 
+## Configure Back Up
+Back is enabled by default. To set the backup policies, utilize the script 
+[here](https://community.opengroup.org/osdu/platform/deployment-and-operations/infra-azure-provisioning/-/tree/master/tools).
+The script should be run whenever you bring up a Resource Group in your deployment.
 
 ## Configure Key Access in Manifest Repository
 
