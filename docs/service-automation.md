@@ -39,7 +39,6 @@ This variable group will be used to hold the common values for the services to b
 | DATA_PARTITION_ID                             | `opendes`                                   |
 | TENANT_NAME                                   | `opendes`                                   |
 | VENDOR                                        | `azure`                                     |
-| LEGAL_TAG                                     | `opendes-public-usa-dataset-7643990`        |
 | OSDU_TENANT                                   | `opendes`                                   |
 | NOTIFICATION_REGISTER_BASE_URL                | `https://<your_fqdn>`                       |
 | NOTIFICATION_BASE_URL                         | `https://<your_fqdn>/api/notification/v1/`  |
@@ -90,7 +89,6 @@ az pipelines variable-group create \
   DATA_PARTITION_ID="opendes" \
   TENANT_NAME="opendes" \
   VENDOR="azure" \
-  LEGAL_TAG="opendes-public-usa-dataset-7643990" \
   NOTIFICATION_REGISTER_BASE_URL="https://${DNS_HOST}" \
   NOTIFICATION_BASE_URL="https://${DNS_HOST}/api/notification/v1/" \
   REGISTER_CUSTOM_PUSH_URL_HMAC="https://${DNS_HOST}/api/register/v1/test/challenge/1" \
@@ -138,6 +136,7 @@ This variable group will be used to hold the specific environment values necessa
 | IDENTITY_CLIENT_ID                            | `$(osdu-identity-id)`             |
 | INTEGRATION_TESTER                            | `$(app-dev-sp-username)`          |
 | MY_TENANT                                     | `opendes`                         |
+| LEGAL_TAG                                     | `opendes-public-usa-dataset-7643990`        |
 | PROVIDER_NAME                                 | `azure`                           |
 | REDIS_PORT                                    | `6380`                            |
 | STORAGE_ACCOUNT                               | `$(opendes-storage)`              |
@@ -153,6 +152,7 @@ This variable group will be used to hold the specific environment values necessa
 
 ```bash
 DATA_PARTITION_NAME=opendes
+LEGAL_TAG=opendes-public-usa-dataset-7643990
 DNS_HOST="<your_ingress_hostname>"  # ie: osdu.contoso.com
 ENVIRONMENT_NAME=$UNIQUE
 PROVIDER_NAME=azure
@@ -178,6 +178,7 @@ az pipelines variable-group create \
   IDENTITY_CLIENT_ID='$(identity_id)' \
   INTEGRATION_TESTER='$(app-dev-sp-username)' \
   MY_TENANT="$DATA_PARTITION_NAME" \
+  LEGAL_TAG="$LEGAL_TAG" \
   PROVIDER_NAME="$PROVIDER_NAME" \
   REDIS_PORT="$REDIS_PORT" \
   STORAGE_ACCOUNT='$('${DATA_PARTITION_NAME}'-storage)' \
