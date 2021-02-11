@@ -26,21 +26,25 @@ function configureDataProtectionPoliciesForStorageAccounts() {
 	local resourceGroup=$1
   log "Setting Data Protection policies for all Storage Accounts in the Resource Group: ${resourceGroup}."
 
-	storageAccounts=$(az resource list --resource-group "${resourceGroup}" --resource-type $RESOURCETYPE_STORAGE_ACCOUNT --query $QUERY_FOR_NAME -o tsv)
+	storageAccounts=$(az resource list \
+	                    --resource-group "${resourceGroup}" \
+	                    --resource-type "${RESOURCETYPE_STORAGE_ACCOUNT}" \
+	                    --query "${QUERY_FOR_NAME}" \
+	                    --output tsv)
 
 	for storageAccount in $storageAccounts ;
 		do
 			storageAccount=$(echo "${storageAccount}" | sed -r 's/\/r//g')
 			log "Setting backup policies for Storage Account: ${storageAccount}."
 			az storage account blob-service-properties update \
-        --resource-group "$resourceGroup" \
-        --account-name "$storageAccount" \
-        --enable-delete-retention $ENABLE_DELETE_RETENTION \
-        --delete-retention-days $DELETE_RETENTION_DAYS \
-        --enable-versioning $ENABLE_VERSIONING \
-        --enable-change-feed $ENABLE_CHANGE_FEED \
-        --enable-restore-policy $ENABLE_RESTORE_POLICY \
-        --restore-days $RESTORE_DAYS;
+        --resource-group "${resourceGroup}" \
+        --account-name "${storageAccount}" \
+        --enable-delete-retention "${ENABLE_DELETE_RETENTION}" \
+        --delete-retention-days "${DELETE_RETENTION_DAYS}" \
+        --enable-versioning "${ENABLE_VERSIONING}" \
+        --enable-change-feed "${ENABLE_CHANGE_FEED}" \
+        --enable-restore-policy "${ENABLE_RESTORE_POLICY}" \
+        --restore-days "${RESTORE_DAYS}";
 	  done;
 }
 
@@ -48,17 +52,22 @@ function configureBackupPoliciesForCosmosDbAccounts() {
 	local resourceGroup=$1
   log "Setting backup policies all CosmosDB Accounts in Resource Group: ${resourceGroup}."
 
-	cosmosdbAccounts=$(az resource list --resource-group  "${resourceGroup}" --resource-type $RESOURCETYPE_COSMOSDB_ACCOUNT --query QUERY_FOR_NAME -o tsv)
+	cosmosdbAccounts=$(az resource list \
+	                     --resource-group "${resourceGroup}" \
+	                     --resource-type "${RESOURCETYPE_COSMOSDB_ACCOUNT}" \
+	                     --query "${QUERY_FOR_NAME}" \
+	                     --output tsv)
+	echo $cosmosdbAccounts
 
 	for cosmosDbAccount in $cosmosdbAccounts ;
 		do
 		  cosmosDbAccount=$(echo "${cosmosDbAccount}" | sed -r 's/\/r//g')
 			log "Setting backup policies for CosmosDB Account: ${cosmosDbAccount}."
 			az cosmosdb update \
-				--name "$cosmosDbAccount"\
-				--resource-group "$resourceGroup"\
-				--backup-interval $BACKUP_INTERVAL_IN_MINUTES \
-				--backup-retention $BACKUP_RETENTION_IN_HOURS;
+				--name "${cosmosDbAccount}"\
+				--resource-group "${resourceGroup}"\
+				--backup-interval "${BACKUP_INTERVAL_IN_MINUTES}" \
+				--backup-retention "${BACKUP_RETENTION_IN_HOURS}" ;
 	  done;
 }
 
@@ -74,8 +83,8 @@ main() {
         exit 0
     fi
 
-	configureDataProtectionPoliciesForStorageAccounts ${resourceGroup}
-	configureBackupPoliciesForCosmosDbAccounts ${resourceGroup}
+	configureDataProtectionPoliciesForStorageAccounts "${resourceGroup}"
+	configureBackupPoliciesForCosmosDbAccounts "${resourceGroup}"
 }
 
 # Input Management
