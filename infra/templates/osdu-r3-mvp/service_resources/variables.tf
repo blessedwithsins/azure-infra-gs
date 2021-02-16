@@ -310,6 +310,7 @@ variable "flux_recreate" {
 
 variable "gitops_ssh_url" {
   type        = string
+  default     = "git@ssh.dev.azure.com:v3/msazure/One/AzureGlobal-AGE-Energy"
   description = "(Required) ssh git clone repository URL with Kubernetes manifests including services which runs in the cluster. Flux monitors this repo for Kubernetes manifest additions/changes periodically and apply them in the cluster."
 }
 
@@ -321,13 +322,13 @@ variable "gitops_ssh_key_file" {
 variable "gitops_branch" {
   type        = string
   description = "(Optional) The branch for flux to watch"
-  default     = "master"
+  default     = "osdu-mvp-idc-env"
 }
 
 variable "gitops_path" {
   type        = string
   description = "(Optional) The path for flux to watch"
-  default     = "providers/azure/hld-registry"
+  default     = "src/k8-gitops-manifests/providers/azure/hld-registry"
 }
 
 variable "ssl_policy_type" {
