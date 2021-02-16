@@ -209,6 +209,7 @@ airflow:
         "apache-airflow-backport-providers-microsoft-azure",
         "dataclasses",
         "google-cloud-storage",
+        "python-keycloak",
         "msal",
         "azure-identity",
         "azure-keyvault-secrets",

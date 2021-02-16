@@ -1044,3 +1044,18 @@ az pipelines create \
   --yaml-path /devops/azure/pipeline.yml  \
   -ojson
 ```
+20. Add a Pipeline for __wellbore-domain-services__  to deploy the Wellbore Domain Services.
+
+    _Repo:_ `wellbore-domain-services`
+    _Path:_ `/devops/azure/pipeline.yml`
+    _Validate:_ https://<your_dns_name>/api/os-wellbore-ddms/docs is alive.
+
+```bash
+az pipelines create \
+  --name 'wellbore-domain-services'  \
+  --repository wellbore-domain-services  \
+  --branch master  \
+  --repository-type tfsgit  \
+  --yaml-path /devops/azure/pipeline.yml  \
+  -ojson
+```

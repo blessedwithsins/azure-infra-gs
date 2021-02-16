@@ -330,6 +330,7 @@ git clone https://community.opengroup.org/osdu/platform/system/register.git $SRC
 git clone https://community.opengroup.org/osdu/platform/system/schema-service.git $SRC_DIR/schema-service
 git clonehttps://community.opengroup.org/osdu/platform/data-flow/ingestion/ingestion-workflow.git $SRC_DIR/ingestion-workflow
 git clone https://community.opengroup.org/osdu/platform/domain-data-mgmt-services/seismic/seismic-dms-suite/seismic-store-service.git $SRC_DIR/seismic-store-service
+git clone https://community.opengroup.org:osdu/platform/domain-data-mgmt-services/wellbore/wellbore-domain-services.git $SRC_DIR/wellbore-domain-services
 ```
 
 __Additional Manual Steps__
@@ -337,6 +338,8 @@ Following services require additional steps for manual setup.
 - [CRS Catalog Service](https://community.opengroup.org/osdu/platform/deployment-and-operations/infra-azure-provisioning/-/issues/56)
 - [CRS Conversion Serice](https://community.opengroup.org/osdu/platform/deployment-and-operations/infra-azure-provisioning/-/issues/65)
 - [Unit Service](https://community.opengroup.org/osdu/platform/deployment-and-operations/infra-azure-provisioning/-/issues/55)
+- [Wellbore DMS](https://community.opengroup.org/osdu/platform/deployment-and-operations/infra-azure-provisioning/-/issues/36)
+
 
 __Kubernetes API Access__
 
@@ -436,6 +439,19 @@ for SERVICE in $SERVICE_LIST;
 do
   helm template $SERVICE ${SRC_DIR}/$SERVICE/devops/azure/chart --set image.branch=$BRANCH --set image.tag=$TAG > ${FLUX_SRC}/providers/azure/hld-registry/$SERVICE.yaml
 done
+
+
+SERVICE=wellbore-domain-services
+helm template $SERVICE ${SRC_DIR}/$SERVICE/devops/azure/chart \
+  --set image.repository=${CONTAINER_REGISTRY_NAME}.azurecr.io/${SERVICE}-${BRANCH} \
+  --set image.tag=$TAG \
+  --set annotations.buildNumber=undefined \
+  --set annotations.buildOrigin=manual \
+  --set annotations.commitBranch=undefined \
+  --set annotations.commitId=undefined \
+  --set labels.env=dev \
+  > ${FLUX_SRC}/providers/azure/hld-registry/$SERVICE.yaml
+
 
 # Commit and Checkin to Deploy
 (cd $FLUX_SRC \
