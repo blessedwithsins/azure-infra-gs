@@ -155,6 +155,13 @@ airflow:
       AIRFLOW__SCHEDULER__DAG_DIR_LIST_INTERVAL: 60
       AIRFLOW__CORE__LOGGING_LEVEL: DEBUG
     extraEnv:
+    - name: CLOUD_PROVIDER
+      value: "azure"
+    - name: AIRFLOW_VAR_KEYVAULT_URI
+      valueFrom:
+        configMapKeyRef:
+          name: osdu-svc-properties
+          key: ENV_KEYVAULT
     - name: AIRFLOW__CORE__FERNET_KEY
       valueFrom:
         secretKeyRef:
@@ -165,13 +172,6 @@ airflow:
         secretKeyRef:
           name: airflow
           key: remote-log-connection
-    - name: CLOUD_PROVIDER
-      value: "azure"
-    - name: KEYVAULT_URI
-      valueFrom:
-        configMapKeyRef:
-          name: osdu-svc-properties
-          key: ENV_KEYVAULT
     - name: AIRFLOW_VAR_AZURE_TENANT_ID
       valueFrom:
         secretKeyRef:
@@ -194,9 +194,9 @@ airflow:
           key: application-appid
     - name: AIRFLOW_VAR_APPINSIGHTS_KEY
       valueFrom:
-         secretKeyRef:
+        secretKeyRef:
           name: central-logging
-          key: appinsights                              
+          key: appinsights
     extraConfigmapMounts:
         - name: remote-log-config
           mountPath: /opt/airflow/config
@@ -209,12 +209,13 @@ airflow:
         "apache-airflow-backport-providers-microsoft-azure",
         "dataclasses",
         "google-cloud-storage",
+        "python-keycloak",
+        "msal",
         "azure-identity",
         "azure-keyvault-secrets",
-        "msal",
-        "https://azglobalosdutestlake.blob.core.windows.net/pythonsdk/osdu_api-0.0.4.tar.gz",
         "azure-storage-blob",
-        "azure-servicebus"
+        "azure-servicebus",
+        "https://azglobalosdutestlake.blob.core.windows.net/pythonsdk/osdu_api-0.0.4.tar.gz"
     ]
     extraVolumeMounts:
         - name: azure-keyvault
