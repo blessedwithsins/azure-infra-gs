@@ -23,9 +23,14 @@ function log() {
 }
 
 function configureDataProtectionPoliciesForStorageAccounts() {
+    log "function:start: ${FUNCNAME}"
+	log "Setting Data Protection policies for all Storage Accounts in the Resource Group: ${resourceGroup}."
+	log "following properties would be updated:"
+	log "DELETE_RETENTION_DAYS: ${DELETE_RETENTION_DAYS}"
+	log "RESTORE_DAYS: ${RESTORE_DAYS}"
+	
 	local resourceGroup=$1
-  log "Setting Data Protection policies for all Storage Accounts in the Resource Group: ${resourceGroup}."
-
+	
 	storageAccounts=$(az resource list \
 	                    --resource-group "${resourceGroup}" \
 	                    --resource-type "${RESOURCETYPE_STORAGE_ACCOUNT}" \
@@ -46,19 +51,24 @@ function configureDataProtectionPoliciesForStorageAccounts() {
         --enable-restore-policy "${ENABLE_RESTORE_POLICY}" \
         --restore-days "${RESTORE_DAYS}";
 	  done;
+	log "function:end: ${FUNCNAME}"
 }
 
 function configureBackupPoliciesForCosmosDbAccounts() {
-	local resourceGroup=$1
-  log "Setting backup policies all CosmosDB Accounts in Resource Group: ${resourceGroup}."
+	log "function:start: ${FUNCNAME}"
+	log "Setting backup policies all CosmosDB Accounts in Resource Group: ${resourceGroup}."
+	log "following properties would be updated:"
+	log "BACKUP_INTERVAL_IN_MINUTES: ${BACKUP_INTERVAL_IN_MINUTES}"
+	log "BACKUP_RETENTION_IN_HOURS: ${BACKUP_RETENTION_IN_HOURS}"	
 
+	local resourceGroup=$1
+	
 	cosmosdbAccounts=$(az resource list \
 	                     --resource-group "${resourceGroup}" \
 	                     --resource-type "${RESOURCETYPE_COSMOSDB_ACCOUNT}" \
 	                     --query "${QUERY_FOR_NAME}" \
 	                     --output tsv)
-	echo $cosmosdbAccounts
-
+	
 	for cosmosDbAccount in $cosmosdbAccounts ;
 		do
 		  cosmosDbAccount=$(echo "${cosmosDbAccount}" | sed -r 's/\/r//g')
@@ -69,9 +79,11 @@ function configureBackupPoliciesForCosmosDbAccounts() {
 				--backup-interval "${BACKUP_INTERVAL_IN_MINUTES}" \
 				--backup-retention "${BACKUP_RETENTION_IN_HOURS}" ;
 	  done;
+	log "function:end: ${FUNCNAME}"  
 }
 
 main() {
+	log "function:start: ${FUNCNAME}"
 	local resourceGroup=$1
 	local help=$2
 
@@ -85,6 +97,7 @@ main() {
 
 	configureDataProtectionPoliciesForStorageAccounts "${resourceGroup}"
 	configureBackupPoliciesForCosmosDbAccounts "${resourceGroup}"
+	log "function:end: ${FUNCNAME}"
 }
 
 # Input Management
