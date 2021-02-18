@@ -662,6 +662,29 @@ az pipelines variable-group create \
   -ojson
 ```
 
+__Setup and Configure the ADO Library `Azure Service Release - ingestion-service`__
+
+This variable group is the service specific variables necessary for testing and deploying the `ingestion` service.
+
+| Variable | Value |
+|----------|-------|
+| MAVEN_DEPLOY_POM_FILE_PATH     | `drop/provider/ingest-azure` |
+
+No Test Path is needed since the service has python tests
+
+```bash
+az pipelines variable-group create \
+  --name "Azure Service Release - ingestion-service" \
+  --authorize true \
+  --variables \
+  MAVEN_DEPLOY_POM_FILE_PATH="drop/provider/ingest-azure" 
+  MAVEN_INTEGRATION_TEST_OPTIONS=`-DargLine=""` \
+  MAVEN_INTEGRATION_TEST_POM_FILE_PATH="drop/deploy/testing/ingest-test-azurepom.xml" \
+  SERVICE_RESOURCE_NAME='$(AZURE_INGESTION_SERVICE_NAME)' \
+  -ojson
+```
+
+
 __Create the Chart Pipelines__
 
 Create the pipelines and run things in this exact order.
@@ -1054,6 +1077,22 @@ az pipelines create \
 az pipelines create \
   --name 'wellbore-domain-services'  \
   --repository wellbore-domain-services  \
+  --branch master  \
+  --repository-type tfsgit  \
+  --yaml-path /devops/azure/pipeline.yml  \
+  -ojson
+```
+
+21. Add a Pipeline for __ingestion-service__  to deploy the Ingestion Service.
+
+    _Repo:_ `ingestion-service`
+    _Path:_ `/devops/azure/pipeline.yml`
+    _Validate:_ https://<your_dns_name>/api/ingestion/docs is alive.
+
+```bash
+az pipelines create \
+  --name 'ingestion-service'  \
+  --repository ingestion-service  \
   --branch master  \
   --repository-type tfsgit  \
   --yaml-path /devops/azure/pipeline.yml  \

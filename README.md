@@ -263,6 +263,8 @@ __Manual Installation__
 
 1. Register your partition with the Data Partition API by following the instructions [here](./tools/rest/README.md) to configure your IDE to make authenticated requests to your OSDU instance and send the API request located [here](./tools/rest/partition.http) (createPartition).
 
+1. Load Service Data following directions [here](./docs/service-data.md).
+
 
 
 __Automated Pipeline Installation__

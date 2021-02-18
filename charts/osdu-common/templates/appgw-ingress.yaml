@@ -99,3 +99,7 @@ spec:
               serviceName: seismic-store-service
               servicePort: 80
             path: /seistore-svc/api/v3/*
+          - backend:
+              serviceName: ingestion-service
+              servicePort: 80
+            path: /api/ingestion/*

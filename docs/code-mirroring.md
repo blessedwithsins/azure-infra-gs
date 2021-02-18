@@ -27,6 +27,7 @@ Empty repositories need to be created that will be used by a pipeline to mirror 
 | ingestion-workflow        | https://community.opengroup.org/osdu/platform/data-flow/ingestion/ingestion-workflow.git |
 | seismic-store-service     | https://community.opengroup.org/osdu/platform/domain-data-mgmt-services/seismic/seismic-dms-suite/seismic-store-service.git |
 | wellbore-domain-services  | https://community.opengroup.org/osdu/platform/domain-data-mgmt-services/wellbore/wellbore-domain-services.git |
+| ingestion-service         | https://community.opengroup.org/osdu/platform/data-flow/ingestion/ingestion-service.git |
 
 ```bash
 export ADO_ORGANIZATION=<organization_name>
@@ -55,7 +56,8 @@ SERVICE_LIST="infra-azure-provisioning \
               schema-service \
               ingestion-workflow \
               seismic-store-service \
-              wellbore-domain-services"
+              wellbore-domain-services \
+              ingestion-service"
 
 
 for SERVICE in $SERVICE_LIST;
@@ -95,6 +97,7 @@ Variable Group Name:  `Mirror Variables`
 | INGESTION_WORKFLOW_REPO | https://dev.azure.com/osdu-demo/osdu/_git/ingestion-workflow |
 | SEISMIC_STORE_SERVICE_REPO | https://dev.azure.com/osdu-demo/osdu/_git/seismic-store-service |
 | WELLBORE_DOMAIN_SERVICSE_REPO | https://dev.azure.com/osdu-demo/osdu/_git/wellbore-domain-services |
+| INGESTION_SERVICE_REPO | https://dev.azure.com/osdu-demo/osdu/_git/ingestion-service |
 | ACCESS_TOKEN | <your_personal_access_token> |
 
 
@@ -129,6 +132,7 @@ az pipelines variable-group create \
   INGESTION_WORKFLOW_REPO=https://dev.azure.com/${ADO_ORGANIZATION}/$ADO_PROJECT/_git/ingestion-workflow \
   SEISMIC_STORE_SERVICE_REPO=https://dev.azure.com/${ADO_ORGANIZATION}/$ADO_PROJECT/_git/seismic-store-service \
   WELLBORE_DOMAIN_SERVICSE_REPO=https://dev.azure.com/${ADO_ORGANIZATION}/$ADO_PROJECT/_git/wellbore-domain-services \
+  INGESTION_SERVICE_REPO=https://dev.azure.com/${ADO_ORGANIZATION}/$ADO_PROJECT/_git/ingestion-service \
   ACCESS_TOKEN=$ACCESS_TOKEN \
   -ojson
 ```
@@ -322,6 +326,13 @@ jobs:
       inputs:
         sourceGitRepositoryUri: 'https://community.opengroup.org/osdu/platform/domain-data-mgmt-services/wellbore/wellbore-domain-services.git'
         destinationGitRepositoryUri: '$(WELLBORE_DOMAIN_SERVICSE_REPO)'
+        destinationGitRepositoryPersonalAccessToken: $(ACCESS_TOKEN)
+
+    - task: swellaby.mirror-git-repository.mirror-git-repository-vsts-task.mirror-git-repository-vsts-task@1
+      displayName: 'ingestion-service'
+      inputs:
+        sourceGitRepositoryUri: 'https://community.opengroup.org/osdu/platform/data-flow/ingestion/ingestion-service.git'
+        destinationGitRepositoryUri: '$(INGESTION_SERVICE_REPO)'
         destinationGitRepositoryPersonalAccessToken: $(ACCESS_TOKEN)
 
 
