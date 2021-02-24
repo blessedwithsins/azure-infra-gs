@@ -104,7 +104,7 @@ steps:
 
   - task: Maven@3
     displayName: 'Maven run integration test'
-    condition: and(succeeded(), contains('${{ join(' ',parameters.integrationTestAt) }}', '${{ parameters.environment }}')
+    condition: and(succeeded(), contains('${{ join(' ',parameters.integrationTestAt) }}', '${{ parameters.environment }}'))
     inputs:
       mavenPomFile: '$(System.DefaultWorkingDirectory)/$(MAVEN_INTEGRATION_TEST_POM_FILE_PATH)'
       goals: ${{ parameters.integrationTestMavenGoal }}
