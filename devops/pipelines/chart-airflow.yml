@@ -51,7 +51,7 @@ stages:
       dockerFilePaths: "airflow-function|airflow-statsd"
       providers:
         - name: Azure
-          environments: ["demo"]
+          environments: ["perf"]
 
   - template: /devops/chart-stages.yml
     parameters:
@@ -65,4 +65,4 @@ stages:
       extractedChartFolder: "templates|charts/airflow/templates"
       providers:
         - name: Azure
-          environments: ["demo"]
+          environments: ["perf"]
