@@ -85,18 +85,146 @@ Create the helm chart values file necessary to install airflow charts.
 # Setup Variables
 BRANCH="master"
 TAG="latest"
+DNS_HOST="<your_ingress_hostname>"  # ie: osdu.contoso.com
 
 GROUP=$(az group list --query "[?contains(name, 'cr${UNIQUE}')].name" -otsv)
 ENV_VAULT=$(az keyvault list --resource-group $GROUP --query [].name -otsv)
 
 # Translate Values File
 cat > config_airflow.yaml << EOF
-# This file contains the essential configs for the osdu airflow on azure helm chart
+################################################################################
+# Specify the azure environment specific values
+#
 appinsightstatsd:
   aadpodidbinding: "osdu-identity"
+
+################################################################################
+# Specify any optional override values
+#
+image:
+  repository: $(az keyvault secret show --id https://${ENV_VAULT}.vault.azure.net/secrets/container-registry --query value -otsv).azurecr.io
+  branch: $BRANCH
+  tag: $TAG
+
 airflowLogin:
   name: admin
+
+
+################################################################################
+# Specify the airflow configuration
+#
 airflow:
+
+  ###################################
+  # Kubernetes - Ingress Configs
+  ###################################
+  ingress:
+    enabled: false                  #<-- Set this enabled to true for Admin UI
+    web:
+      annotations:
+        kubernetes.io/ingress.class: azure/application-gateway
+        appgw.ingress.kubernetes.io/request-timeout: "300"
+        appgw.ingress.kubernetes.io/connection-draining: "true"
+        appgw.ingress.kubernetes.io/connection-draining-timeout: "30"
+        cert-manager.io/cluster-issuer: letsencrypt
+        cert-manager.io/acme-challenge-type: http01
+      path: "/airflow"
+      host: $DNS_HOST
+      livenessPath: "/airflow/health"
+      tls:
+        enabled: true
+        secretName: osdu-certificate
+      precedingPaths:
+        - path: "/airflow/*"
+          serviceName: airflow-web
+          servicePort: 8080
+
+  ###################################
+  # Database - External Database
+  ###################################
+  postgresql:
+    enabled: false
+  externalDatabase:
+    type: postgres
+    ## Azure PostgreSQL Database username, formatted as {username}@{hostname}
+    user:  osdu_admin@$(az keyvault secret show --id https://${ENV_VAULT}.vault.azure.net/secrets/base-name-sr --query value -otsv)-pg
+    passwordSecret: "postgres"
+    passwordSecretKey: "postgres-password"
+    ## Azure PostgreSQL Database host
+    host: $(az keyvault secret show --id https://${ENV_VAULT}.vault.azure.net/secrets/base-name-sr --query value -otsv)-pg.postgres.database.azure.com
+    port: 5432
+    properties: "?sslmode=require"
+    database: airflow
+
+  ###################################
+  # Database - External Redis
+  ###################################
+  redis:
+    enabled: false
+  externalRedis:
+    ## Azure Redis Cache host
+    host: $(az keyvault secret show --id https://${ENV_VAULT}.vault.azure.net/secrets/base-name-sr --query value -otsv)-cache.redis.cache.windows.net
+    port: 6380
+    passwordSecret: "redis"
+    passwordSecretKey: "redis-password"
+
+  ###################################
+  # Airflow - DAGs Configs
+  ###################################
+  dags:
+    installRequirements: true
+    persistence:
+      enabled: true
+      existingClaim: airflowdagpvc
+      subPath: "dags"
+
+  ###################################
+  # Airflow - WebUI Configs
+  ###################################
+  web:
+    podLabels:
+      aadpodidbinding: "osdu-identity"
+    baseUrl: "http://localhost/airflow"
+
+  ###################################
+  # Airflow - Worker Configs
+  ###################################
+  workers:
+    podLabels:
+      aadpodidbinding: "osdu-identity"
+    autoscaling:
+      enabled: true
+      ## minReplicas is picked from Values.workers.replicas and default value is 1
+      maxReplicas: 3
+      metrics:
+      - type: Resource
+        resource:
+          name: memory
+          target:
+            type: Utilization
+            averageUtilization: 50
+    resources:
+      requests:
+        memory: "512Mi"
+
+  ###################################
+  # Airflow - Flower Configs
+  ###################################
+  flower:
+    enabled: false
+
+  ###################################
+  # Airflow - Scheduler Configs
+  ###################################
+  scheduler:
+    podLabels:
+      aadpodidbinding: "osdu-identity"
+    variables: |
+      {}
+
+  ###################################
+  # Airflow - Common Configs
+  ###################################
   airflow:
     image:
       repository: apache/airflow
@@ -123,6 +251,7 @@ airflow:
       AIRFLOW__WEBSERVER__ENABLE_PROXY_FIX: "True"
       AIRFLOW__CORE__PLUGINS_FOLDER: "/opt/airflow/plugins"
       AIRFLOW__SCHEDULER__DAG_DIR_LIST_INTERVAL: 60
+      AIRFLOW__CORE__LOGGING_LEVEL: DEBUG
     extraEnv:
       - name: AIRFLOW__CORE__FERNET_KEY
         valueFrom:
@@ -134,6 +263,13 @@ airflow:
           secretKeyRef:
             name: airflow
             key: remote-log-connection
+      - name: CLOUD_PROVIDER
+        value: "azure"
+      - name: KEYVAULT_URI
+        valueFrom:
+          configMapKeyRef:
+            name: osdu-svc-properties
+            key: ENV_KEYVAULT
     extraConfigmapMounts:
       - name: remote-log-config
         mountPath: /opt/airflow/config
@@ -143,7 +279,13 @@ airflow:
         "flask-bcrypt",
         "apache-airflow[statsd]",
         "apache-airflow[kubernetes]",
-        "apache-airflow-backport-providers-microsoft-azure"
+        "apache-airflow-backport-providers-microsoft-azure",
+        "dataclasses",
+        "google-cloud-storage",
+        "azure-identity",
+        "azure-keyvault-secrets",
+        "msal",
+        "https://azglobalosdutestlake.blob.core.windows.net/pythonsdk/osdu_api-0.0.4.tar.gz"
     ]
     extraVolumeMounts:
       - name: azure-keyvault
@@ -159,66 +301,6 @@ airflow:
           readOnly: true
           volumeAttributes:
             secretProviderClass: azure-keyvault
-  dags:
-    installRequirements: true
-    persistence:
-      enabled: true
-      existingClaim: airflowdagpvc
-      subPath: "dags"
-  scheduler:
-    podLabels:
-      aadpodidbinding: "osdu-identity"
-    variables: |
-      {}
-  web:
-    podLabels:
-      aadpodidbinding: "osdu-identity"
-    baseUrl: "http://localhost/airflow"
-  workers:
-    podLabels:
-      aadpodidbinding: "osdu-identity"
-    autoscaling:
-      enabled: true
-      ## minReplicas is picked from Values.workers.replicas and default value is 1
-      maxReplicas: 3
-      metrics:
-      - type: Resource
-        resource:
-          name: memory
-          target:
-            type: Utilization
-            averageUtilization: 50
-    resources:
-      requests:
-        memory: "512Mi"
-  flower:
-    enabled: false
-  postgresql:
-    enabled: false
-  externalDatabase:
-    type: postgres
-    ## Azure PostgreSQL Database username, formatted as {username}@{hostname}
-    user:  osdu_admin@$(az keyvault secret show --id https://${ENV_VAULT}.vault.azure.net/secrets/base-name-sr --query value -otsv)-pg
-    passwordSecret: "postgres"
-    passwordSecretKey: "postgres-password"
-    ## Azure PostgreSQL Database host
-    host: $(az keyvault secret show --id https://${ENV_VAULT}.vault.azure.net/secrets/base-name-sr --query value -otsv)-pg.postgres.database.azure.com
-    port: 5432
-    properties: "?sslmode=require"
-    database: airflow
-  redis:
-    enabled: false
-  externalRedis:
-    ## Azure Redis Cache host
-    host: $(az keyvault secret show --id https://${ENV_VAULT}.vault.azure.net/secrets/base-name-sr --query value -otsv)-cache.redis.cache.windows.net
-    port: 6380
-    passwordSecret: "redis"
-    passwordSecretKey: "redis-password"
-
-image:
-  repository: $(az keyvault secret show --id https://${ENV_VAULT}.vault.azure.net/secrets/container-registry --query value -otsv).azurecr.io
-  branch: $BRANCH
-  tag: $TAG
 EOF
 ```
 
@@ -239,8 +321,8 @@ git clone https://community.opengroup.org/osdu/platform/system/indexer-service.g
 git clone https://community.opengroup.org/osdu/platform/system/search-service.git $SRC_DIR/search-service
 git clone https://community.opengroup.org/osdu/platform/system/file.git $SRC_DIR/file-service
 git clone https://community.opengroup.org/osdu/platform/system/delivery.git $SRC_DIR/delivery
-git clone https://community.opengroup.org/osdu/platform/system/unit-service.git $SRC_DIR/unit-service
-git clone https://community.opengroup.org/osdu/platform/system/crs-catalog-service.git $SRC_DIR/crs-catalog-service
+git clone https://community.opengroup.org/osdu/platform/system/reference/ unit-service.git $SRC_DIR/unit-service
+git clone https://community.opengroup.org/osdu/platform/system/reference/crs-catalog-service.git $SRC_DIR/crs-catalog-service
 git clone https://community.opengroup.org/osdu/platform/system/reference/crs-conversion-service.git $SRC_DIR/crs-conversion-service
 git clone https://community.opengroup.org/osdu/platform/system/notification.git $SRC_DIR/notification
 git clone https://community.opengroup.org/osdu/platform/data-flow/enrichment/wks.git $SRC_DIR/wks
@@ -248,13 +330,17 @@ git clone https://community.opengroup.org/osdu/platform/system/register.git $SRC
 git clone https://community.opengroup.org/osdu/platform/system/schema-service.git $SRC_DIR/schema-service
 git clonehttps://community.opengroup.org/osdu/platform/data-flow/ingestion/ingestion-workflow.git $SRC_DIR/ingestion-workflow
 git clone https://community.opengroup.org/osdu/platform/domain-data-mgmt-services/seismic/seismic-dms-suite/seismic-store-service.git $SRC_DIR/seismic-store-service
+git clone https://community.opengroup.org:osdu/platform/domain-data-mgmt-services/wellbore/wellbore-domain-services.git $SRC_DIR/wellbore-domain-services
+git clone https://community.opengroup.org/osdu/platform/data-flow/ingestion/ingestion-service.git $SRC_DIR/ingestion-service
 ```
 
 __Additional Manual Steps__
-Following services require additional steps for manual setup. 
+Following services require additional steps for manual setup.
 - [CRS Catalog Service](https://community.opengroup.org/osdu/platform/deployment-and-operations/infra-azure-provisioning/-/issues/56)
-- [CRS Conversion Serice](https://community.opengroup.org/osdu/platform/deployment-and-operations/infra-azure-provisioning/-/issues/65) 
-- [Unit Service](https://community.opengroup.org/osdu/platform/deployment-and-operations/infra-azure-provisioning/-/issues/55) 
+- [CRS Conversion Serice](https://community.opengroup.org/osdu/platform/deployment-and-operations/infra-azure-provisioning/-/issues/65)
+- [Unit Service](https://community.opengroup.org/osdu/platform/deployment-and-operations/infra-azure-provisioning/-/issues/55)
+- [Wellbore DMS](https://community.opengroup.org/osdu/platform/deployment-and-operations/infra-azure-provisioning/-/issues/36)
+
 
 __Kubernetes API Access__
 
@@ -348,12 +434,26 @@ SERVICE_LIST="infra-azure-provisioning \
               register \
               notification \
               schema-service \
-              ingestion-workflow"
+              ingestion-workflow \
+              ingestion-service"
 
 for SERVICE in $SERVICE_LIST;
 do
   helm template $SERVICE ${SRC_DIR}/$SERVICE/devops/azure/chart --set image.branch=$BRANCH --set image.tag=$TAG > ${FLUX_SRC}/providers/azure/hld-registry/$SERVICE.yaml
 done
+
+
+SERVICE=wellbore-domain-services
+helm template $SERVICE ${SRC_DIR}/$SERVICE/devops/azure/chart \
+  --set image.repository=${CONTAINER_REGISTRY_NAME}.azurecr.io/${SERVICE}-${BRANCH} \
+  --set image.tag=$TAG \
+  --set annotations.buildNumber=undefined \
+  --set annotations.buildOrigin=manual \
+  --set annotations.commitBranch=undefined \
+  --set annotations.commitId=undefined \
+  --set labels.env=dev \
+  > ${FLUX_SRC}/providers/azure/hld-registry/$SERVICE.yaml
+
 
 # Commit and Checkin to Deploy
 (cd $FLUX_SRC \

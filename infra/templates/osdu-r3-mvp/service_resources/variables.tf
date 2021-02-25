@@ -214,6 +214,12 @@ variable "aks_agent_vm_count" {
   default     = "3"
 }
 
+variable "aks_agent_vm_maxcount" {
+  description = "The max number of nodes allocated to the AKS cluster"
+  type        = string
+  default     = "10"
+}
+
 variable "aks_agent_vm_size" {
   type        = string
   description = "The size of each VM in the Agent Pool (e.g. Standard_F1). Changing this forces a new resource to be created."

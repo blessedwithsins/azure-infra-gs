@@ -78,7 +78,7 @@ spec:
           - backend:
               serviceName: ingestion-workflow
               servicePort: 80
-            path: /api/workflow/v1/*
+            path: /api/workflow/*
           - backend:
               serviceName: os-wellbore-ddms
               servicePort: 80
@@ -100,6 +100,6 @@ spec:
               servicePort: 80
             path: /seistore-svc/api/v3/*
           - backend:
-              serviceName: airflow-web
-              servicePort: 8080
-            path: /airflow/*
+              serviceName: ingestion-service
+              servicePort: 80
+            path: /api/ingestion/*

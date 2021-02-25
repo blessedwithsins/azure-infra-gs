@@ -47,9 +47,10 @@ variable "consistency_level" {
 variable "sql_collections" {
   description = "The list of cosmos collection names to create. Names must be unique per cosmos instance."
   type = list(object({
-    name               = string
-    database_name      = string
-    partition_key_path = string
+    name                  = string
+    database_name         = string
+    partition_key_path    = string
+    partition_key_version = number
   }))
   default = []
 }

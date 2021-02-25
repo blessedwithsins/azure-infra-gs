@@ -65,13 +65,14 @@ resource "azurerm_cosmosdb_sql_database" "cosmos_dbs" {
 
 
 resource "azurerm_cosmosdb_sql_container" "cosmos_collections" {
-  depends_on          = [azurerm_cosmosdb_sql_database.cosmos_dbs]
-  count               = length(var.sql_collections)
-  name                = var.sql_collections[count.index].name
-  account_name        = var.name
-  database_name       = var.sql_collections[count.index].database_name
-  resource_group_name = data.azurerm_resource_group.cosmosdb.name
-  partition_key_path  = var.sql_collections[count.index].partition_key_path
+  depends_on            = [azurerm_cosmosdb_sql_database.cosmos_dbs]
+  count                 = length(var.sql_collections)
+  name                  = var.sql_collections[count.index].name
+  account_name          = var.name
+  database_name         = var.sql_collections[count.index].database_name
+  resource_group_name   = data.azurerm_resource_group.cosmosdb.name
+  partition_key_path    = var.sql_collections[count.index].partition_key_path
+  partition_key_version = var.sql_collections[count.index].partition_key_version
 
   # autoscale_settings {
   #   max_throughput = var.sql_collections[count.index].throughput

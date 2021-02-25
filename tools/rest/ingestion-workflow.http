@@ -38,11 +38,53 @@ grant_type=refresh_token
 @ENDPOINT = https://{{OSDU_HOST}}
 @INGESTION_WORKLFOW_HOST = {{ENDPOINT}}/api/workflow/v1
 @data_partition_id = opendes
+@workflow_name = Default_ingest
 
 # -----------------------
 # API: Ingestion Workflow
 # -----------------------
 
+##### NOT IMPLEMENTED YET
 ###
-# @name SwaggerUI
-GET {{INGESTION_WORKLFOW_HOST}}/swagger-ui.html
+# @name getAllWorkflow
+GET {{INGESTION_WORKLFOW_HOST}}/workflow
+Authorization: Bearer {{access_token}}
+Content-Type: application/json
+data-partition-id: {{data_partition_id}}
+
+
+
+###
+# @name createWorkflow
+POST {{INGESTION_WORKLFOW_HOST}}/workflow
+Authorization: Bearer {{access_token}}
+Content-Type: application/json
+data-partition-id: {{data_partition_id}}
+
+{
+  "workflowName": "{{workflow_name}}",
+  "description": "Test Register a Workflow",
+  "registrationInstructions": {
+    "active": true,
+    "concurrentWorkflowRun": 5,
+    "concurrentTaskRun": 5,
+    "workflowDetailContent": ""
+  }
+}
+
+
+###
+# @name getWorkflow
+GET {{INGESTION_WORKLFOW_HOST}}/workflow/{{workflow_name}}
+Authorization: Bearer {{access_token}}
+Content-Type: application/json
+data-partition-id: {{data_partition_id}}
+
+
+##### NOT IMPLEMENTED FULLY YET
+###
+# @name deleteWorkflow
+DELETE {{INGESTION_WORKLFOW_HOST}}/workflow/{{workflow_name}}
+Authorization: Bearer {{access_token}}
+Content-Type: application/json
+data-partition-id: {{data_partition_id}}

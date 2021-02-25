@@ -52,20 +52,23 @@ Authorization: Bearer {{access_token}}
 Accept: application/json
 data-partition-id: {{data_partition_id}}
 
-
 ###
-# @name getAllSchemaOfKind
-GET {{STORAGE_HOST}}/query/kinds
+# @name getSchemaWithLimit
+GET {{STORAGE_HOST}}/query/kinds?limit=10
 Authorization: Bearer {{access_token}}
 Accept: application/json
 data-partition-id: {{data_partition_id}}
 
-{
-"kind": "opendes:osdu:*:*",
-"limit":1,
-"offset":0,
-"aggregateBy": "kind"
-}
+@cursor = {{getSchemaWithLimit.response.body.cursor}}
+
+
+###
+# @name getAllSchemaWithCursor
+GET {{STORAGE_HOST}}/query/kinds?limit=10&cursor={{cursor}}
+Authorization: Bearer {{access_token}}
+Accept: application/json
+data-partition-id: {{data_partition_id}}
+
 
 
 ###
@@ -451,12 +454,27 @@ data-partition-id: {{data_partition_id}}
 
 
 ###
+# @name getRecordByKind
+GET {{STORAGE_HOST}}/query/records?kind={{kind}}
+Authorization: Bearer {{access_token}}
+Accept: application/json
+data-partition-id: {{data_partition_id}}
+
+
+###
 # @name deleteSchema
 DELETE {{STORAGE_HOST}}/schemas/{{kind}}
 Authorization: Bearer {{access_token}}
 Accept: application/json
 data-partition-id: {{data_partition_id}}
 
+
+###
+# @name GetRecordByKind
+GET {{STORAGE_HOST}}/query/records?kind={{kind}}
+Authorization: Bearer {{access_token}}
+Accept: application/json
+data-partition-id: {{data_partition_id}}
 
 
 ###

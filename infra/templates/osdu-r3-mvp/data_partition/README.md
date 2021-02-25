@@ -5,7 +5,7 @@ The `osdu` - `data_partition` template is intended to provision to Azure resourc
 
 __PreRequisites__
 
-> These are typically performed by the `common_prepare.sh` scripts.
+> If you have run the `common_prepare.sh` scripts then skip the below section for environment variables and go directly to Configure.
 
 Requires the use of [direnv](https://direnv.net/) for environment variable management.
 

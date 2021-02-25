@@ -324,6 +324,7 @@ module "aks" {
   agent_vm_count     = var.aks_agent_vm_count
   agent_vm_size      = var.aks_agent_vm_size
   agent_vm_disk      = var.aks_agent_vm_disk
+  max_node_count     = var.aks_agent_vm_maxcount
   vnet_subnet_id     = module.network.subnets.1
   ssh_public_key     = file(var.ssh_public_key_file)
   kubernetes_version = var.kubernetes_version

@@ -5,6 +5,7 @@
     {
       "name": "common",
       "groups": [
+        "service.storage.creator",
         "service.storage.admin",
         "service.legal.admin",
         "data.datalake.admin",
@@ -32,6 +33,7 @@
     {
       "name": "opendes",
       "groups": [
+        "service.storage.creator",
         "service.storage.admin",
         "service.legal.admin",
         "data.datalake.viewer",
