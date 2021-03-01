@@ -660,8 +660,8 @@ az pipelines variable-group create \
   REPLICA_COUNT='${REPLICA_COUNT}' \
   serviceUrlSuffix='${serviceUrlSuffix}' \
   hldRegPath='${hldRegPath}' \
-  utest_mount_dir='${utest.mount.dir}' \
-  utest_runtime_image=${utest.runtime.image} \
+  utest_mount_dir='${utest_mount_dir}' \
+  utest_runtime_image=${utest_runtime_image} \
   -ojson
 ```
 
