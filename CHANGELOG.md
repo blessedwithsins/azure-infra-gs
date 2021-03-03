@@ -3,6 +3,29 @@
 # Current Master
 
 __Bug Fixes__
+- [Bug 119 - Add Airflow python package `python-keycloak`](https://community.opengroup.org/osdu/platform/deployment-and-operations/infra-azure-provisioning/-/issues/119)
+
+
+__Infra Changes__
+- [Arch 123 - Obsolete Cosmos DB Tables and add new v2 tables](https://community.opengroup.org/osdu/platform/deployment-and-operations/infra-azure-provisioning/-/issues/123)
+- [Issue 127](https://community.opengroup.org/osdu/platform/deployment-and-operations/infra-azure-provisioning/-/issues/127)
+- [Feature 126 - Add support to pass JAVA_OPTS to java command in DockerFile](https://community.opengroup.org/osdu/platform/deployment-and-operations/infra-azure-provisioning/-/issues/126)
+- [Feature 125 - Enable Manifest Ingestion](https://community.opengroup.org/osdu/platform/deployment-and-operations/infra-azure-provisioning/-/issues/125)
+
+
+# v0.5 (2021-2-11)
+
+__Service Onboarded__
+- [Issue 60 - Seismic DMS Service](https://community.opengroup.org/osdu/platform/deployment-and-operations/infra-azure-provisioning/-/issues/44)
+- [Issue 111 - CSV DAGS](https://community.opengroup.org/osdu/platform/deployment-and-operations/infra-azure-provisioning/-/issues/111)
+
+__Infra Changes__
+- [Issue 106 - Arch Change - Data Partition - Ingestion Workflow Database and Storage new collections and fileshares](https://community.opengroup.org/osdu/platform/deployment-and-operations/infra-azure-provisioning/-/issues/106)
+
+__Bug Fixes__
+- [Bug 109 - Add Entitlement Role](https://community.opengroup.org/osdu/platform/deployment-and-operations/infra-azure-provisioning/-/issues/109#related-issues)
+- [Bug 108 - Add VM Agent Max Nodes Option](https://community.opengroup.org/osdu/platform/deployment-and-operations/infra-azure-provisioning/-/issues/108)
+- [Bug 103 - Enable opt-in airflow ui ingress](https://community.opengroup.org/osdu/platform/deployment-and-operations/infra-azure-provisioning/-/issues/103)
 - [Bug 102 - Users with a lot of groups receive a 400 Bad Request when making API calls](https://community.opengroup.org/osdu/platform/deployment-and-operations/infra-azure-provisioning/-/issues/102)
 - [Bug 101 - Comsos Graph module always requires a change on tf plan](https://community.opengroup.org/osdu/platform/deployment-and-operations/infra-azure-provisioning/-/issues/101)
 - [Bug 100 - Airflow statsd not building in pipeline](https://community.opengroup.org/osdu/platform/deployment-and-operations/infra-azure-provisioning/-/issues/100)

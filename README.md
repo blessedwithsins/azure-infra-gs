@@ -192,10 +192,9 @@ __Azure AD Admin Consent__
 For more information on Azure identity and authorization, see the official Microsoft documentation [here](https://docs.microsoft.com/en-us/azure/active-directory/develop/v2-permissions-and-consent).
 
 
-
 ## Elastic Search Setup
 
-Infrastructure requires a bring your own Elastic Search Instance of a version of 6.8.x with a valid https endpoint and the access information must now be stored in the Common KeyVault. The recommended method of Elastic Search is to use the [Elastic Cloud Managed Service from the Marketplace](https://azuremarketplace.microsoft.com/en-us/marketplace/apps/elastic.ec-azure?tab=Overview).
+Infrastructure requires a bring your own Elastic Search Instance of a version of 7.x (ie: 7.11.1) with a valid https endpoint and the access information must now be stored in the Common KeyVault. The recommended method of Elastic Search is to use the [Elastic Cloud Managed Service from the Marketplace](https://azuremarketplace.microsoft.com/en-us/marketplace/apps/elastic.ec-azure?tab=Overview).
 
 > Note: Elastic Cloud Managed Service requires a Credit Card to be associated to the subscription for billing purposes.
 
@@ -221,6 +220,10 @@ EOF
 cp .envrc .envrc_${UNIQUE}
 ```
 
+## Configure Back Up
+Back is enabled by default. To set the backup policies, utilize the script
+[here](https://community.opengroup.org/osdu/platform/deployment-and-operations/infra-azure-provisioning/-/tree/master/tools).
+The script should be run whenever you bring up a Resource Group in your deployment.
 
 ## Configure Key Access in Manifest Repository
 
@@ -259,6 +262,8 @@ __Manual Installation__
 1. Upload the Integration Test Data following directions [here](./tools/test_data).
 
 1. Register your partition with the Data Partition API by following the instructions [here](./tools/rest/README.md) to configure your IDE to make authenticated requests to your OSDU instance and send the API request located [here](./tools/rest/partition.http) (createPartition).
+
+1. Load Service Data following directions [here](./docs/service-data.md).
 
 
 

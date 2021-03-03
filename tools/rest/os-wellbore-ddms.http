@@ -1,7 +1,7 @@
 # -------HTTP REST CLIENT -------
 # https://marketplace.visualstudio.com/items?itemName=humao.rest-client
 
-## This script provides a few samples for calling ingestion-workflow.
+## This script provides a few samples for calling os-wellbore-ddms service.
 
 
 
@@ -36,52 +36,27 @@ grant_type=refresh_token
 ###
 @access_token = {{refresh.response.body.access_token}}
 @ENDPOINT = https://{{OSDU_HOST}}
-@INGESTION_WORKLFOW_HOST = {{ENDPOINT}}/api/workflow/v1
+@HOST = {{ENDPOINT}}/api/os-wellbore-ddms
 @data_partition_id = opendes
-@workflow_name = Default_ingest
+@kind = opendes:qa-test:well-master:0.2.0
+@id = <a_valid_well_id>
 
 # -----------------------
-# API: Ingestion Workflow
+# API: os-wellbore-ddms
 # -----------------------
 
 ###
-# @name getAllWorkflow
-GET {{INGESTION_WORKLFOW_HOST}}/workflow
+# @name about
+GET {{HOST}}/ddms/v2/about
 Authorization: Bearer {{access_token}}
-Content-Type: application/json
-data-partition-id: {{data_partition_id}}
+Accept: application/json
 
 
 ###
-# @name createWorkflow
-POST {{INGESTION_WORKLFOW_HOST}}/workflow
+# @name get well
+GET {{HOST}}/ddms/v2/wells/{{id}}
 Authorization: Bearer {{access_token}}
-Content-Type: application/json
-data-partition-id: {{data_partition_id}}
-
-{
-  "workflowName": "{{workflow_name}}",
-  "description": "Test Register a Workflow",
-  "registrationInstructions": {
-    "active": true,
-    "concurrentWorkflowRun": 5,
-    "concurrentTaskRun": 5,
-    "workflowDetailContent": ""
-  }
-}
-
-
-###
-# @name getWorkflow
-GET {{INGESTION_WORKLFOW_HOST}}/workflow/{{workflow_name}}
-Authorization: Bearer {{access_token}}
-Content-Type: application/json
+Accept: application/json
 data-partition-id: {{data_partition_id}}
 
 
-###
-# @name deleteWorkflow
-DELETE {{INGESTION_WORKLFOW_HOST}}/workflow/{{workflow_name}}
-Authorization: Bearer {{access_token}}
-Content-Type: application/json
-data-partition-id: {{data_partition_id}}

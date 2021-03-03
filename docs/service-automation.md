@@ -39,12 +39,12 @@ This variable group will be used to hold the common values for the services to b
 | DATA_PARTITION_ID                             | `opendes`                                   |
 | TENANT_NAME                                   | `opendes`                                   |
 | VENDOR                                        | `azure`                                     |
-| LEGAL_TAG                                     | `opendes-public-usa-dataset-7643990`        |
 | OSDU_TENANT                                   | `opendes`                                   |
 | NOTIFICATION_REGISTER_BASE_URL                | `https://<your_fqdn>`                       |
 | NOTIFICATION_BASE_URL                         | `https://<your_fqdn>/api/notification/v1/`  |
 | REGISTER_CUSTOM_PUSH_URL_HMAC                 | `https://<your_fqdn>/api/register/v1/test/challenge/1`|
 | AGENT_IMAGE                                   | `ubuntu-latest`                             | 
+| PROVIDER_NAME                                 | `azure`                                     | 
 
 
 ```bash
@@ -52,6 +52,7 @@ ADMIN_EMAIL="<your_cert_admin>"     # ie: admin@email.com
 DNS_HOST="<your_ingress_hostname>"  # ie: osdu.contoso.com
 SERVICE_CONNECTION_NAME=osdu-mvp-$UNIQUE
 INVALID_TOKEN="<an_invalid_token>"
+PROVIDER_NAME=azure
 
 az pipelines variable-group create \
   --name "Azure - OSDU" \
@@ -81,7 +82,7 @@ az pipelines variable-group create \
   SEARCH_URL="https://${DNS_HOST}/api/search/v2/" \
   FILE_URL="https://${DNS_HOST}/api/file/v2" \
   DELIVERY_URL="https://${DNS_HOST}/api/delivery/v2/" \
-  UNIT_URL="https://${DNS_HOST}/api/unit/v2/"
+  UNIT_URL="https://${DNS_HOST}/api/unit/v2/" \
   CRS_CATALOG_URL="https://${DNS_HOST}/api/crs/catalog/v2/" \
   CRS_CONVERSION_URL="https://${DNS_HOST}/api/crs/converter/v2/" \
   REGISTER_BASE_URL="https://${DNS_HOST}/" \
@@ -90,11 +91,12 @@ az pipelines variable-group create \
   DATA_PARTITION_ID="opendes" \
   TENANT_NAME="opendes" \
   VENDOR="azure" \
-  LEGAL_TAG="opendes-public-usa-dataset-7643990" \
+  OSDU_TENANT="opendes" \
   NOTIFICATION_REGISTER_BASE_URL="https://${DNS_HOST}" \
   NOTIFICATION_BASE_URL="https://${DNS_HOST}/api/notification/v1/" \
   REGISTER_CUSTOM_PUSH_URL_HMAC="https://${DNS_HOST}/api/register/v1/test/challenge/1" \
-  AGENT_IMAGE="ubuntu-latest"
+  AGENT_IMAGE="ubuntu-latest" \
+  PROVIDER_NAME="$PROVIDER_NAME" \
   -ojson
 ```
 
@@ -138,7 +140,7 @@ This variable group will be used to hold the specific environment values necessa
 | IDENTITY_CLIENT_ID                            | `$(osdu-identity-id)`             |
 | INTEGRATION_TESTER                            | `$(app-dev-sp-username)`          |
 | MY_TENANT                                     | `opendes`                         |
-| PROVIDER_NAME                                 | `azure`                           |
+| LEGAL_TAG                                     | `opendes-public-usa-dataset-7643990`        |
 | REDIS_PORT                                    | `6380`                            |
 | STORAGE_ACCOUNT                               | `$(opendes-storage)`              |
 | STORAGE_ACCOUNT_KEY                           | `$(opendes-storage-key)`          |
@@ -153,9 +155,9 @@ This variable group will be used to hold the specific environment values necessa
 
 ```bash
 DATA_PARTITION_NAME=opendes
+LEGAL_TAG=opendes-public-usa-dataset-7643990
 DNS_HOST="<your_ingress_hostname>"  # ie: osdu.contoso.com
-ENVIRONMENT_NAME="<your_environment_name_or_identifier>" # ie: dev-sp-id
-PROVIDER_NAME=azure
+ENVIRONMENT_NAME=$UNIQUE
 REDIS_PORT="6380"
 
 
@@ -178,7 +180,7 @@ az pipelines variable-group create \
   IDENTITY_CLIENT_ID='$(identity_id)' \
   INTEGRATION_TESTER='$(app-dev-sp-username)' \
   MY_TENANT="$DATA_PARTITION_NAME" \
-  PROVIDER_NAME="$PROVIDER_NAME" \
+  LEGAL_TAG="$LEGAL_TAG" \
   REDIS_PORT="$REDIS_PORT" \
   STORAGE_ACCOUNT='$('${DATA_PARTITION_NAME}'-storage)' \
   STORAGE_ACCOUNT_KEY='$('${DATA_PARTITION_NAME}'-storage-key)' \
@@ -483,7 +485,7 @@ This variable group is the service specific variables necessary for testing and 
 
 | Variable | Value |
 |----------|-------|
-| MAVEN_DEPLOY_POM_FILE_PATH     | `drop/provider/crs-converter-azure/crs-catalog-aks` |
+| MAVEN_DEPLOY_POM_FILE_PATH     | `drop/provider/crs-catalog-azure/crs-catalog-aks` |
 
 No Test Path is needed since the service has python tests
 
@@ -625,8 +627,9 @@ This variable group is the service specific variables necessary for testing and 
 | PORT                             | `80`                                                                                    |
 | REPLICA_COUNT                    | `1`                                                                                     |
 | serviceUrlSuffix                 | `seistore-svc/api/v3`                                                                   |
-| utest.mount.dir                  | `/service`                                                                              |
-| utest.runtime.image              | `seistore-svc-runtime`                                                                  |
+| hldRegPath                       | `providers/azure/hld-registry`                                                          |
+| utest_mount_dir                  | `/service`                                                                              |
+| utest_runtime_image              | `seistore-svc-runtime`                                                                  |
 
 ```bash
 e2eAdminEmail="<your_cert_admin>"     # ie: admin@email.com
@@ -639,8 +642,9 @@ e2eTenant=opendes
 PORT="80"
 REPLICA_COUNT="1"
 serviceUrlSuffix="seistore-svc/api/v3"
-utest.mount.dir="/service"
-utest.runtime.image=seistore-svc-runtime
+hldRegPath="providers/azure/hld-registry"
+utest_mount_dir="/service"
+utest_runtime_image=seistore-svc-runtime
 
 az pipelines variable-group create \
   --name "Azure Service Release - seismic-store-service" \
@@ -656,10 +660,34 @@ az pipelines variable-group create \
   PORT='${PORT}' \
   REPLICA_COUNT='${REPLICA_COUNT}' \
   serviceUrlSuffix='${serviceUrlSuffix}' \
-  utest.mount.dir='${utest.mount.dir}' \
-  utest.runtime.image=${utest.runtime.image} \
+  hldRegPath='${hldRegPath}' \
+  utest_mount_dir='${utest_mount_dir}' \
+  utest_runtime_image=${utest_runtime_image} \
   -ojson
 ```
+
+__Setup and Configure the ADO Library `Azure Service Release - ingestion-service`__
+
+This variable group is the service specific variables necessary for testing and deploying the `ingestion` service.
+
+| Variable | Value |
+|----------|-------|
+| MAVEN_DEPLOY_POM_FILE_PATH     | `drop/provider/ingest-azure` |
+
+No Test Path is needed since the service has python tests
+
+```bash
+az pipelines variable-group create \
+  --name "Azure Service Release - ingestion-service" \
+  --authorize true \
+  --variables \
+  MAVEN_DEPLOY_POM_FILE_PATH="drop/provider/ingest-azure" 
+  MAVEN_INTEGRATION_TEST_OPTIONS=`-DargLine=""` \
+  MAVEN_INTEGRATION_TEST_POM_FILE_PATH="drop/deploy/testing/ingest-test-azurepom.xml" \
+  SERVICE_RESOURCE_NAME='$(AZURE_INGESTION_SERVICE_NAME)' \
+  -ojson
+```
+
 
 __Create the Chart Pipelines__
 
@@ -750,7 +778,7 @@ az pipelines create \
   -ojson
 ```
 
-**Stop here**. Before you continue, you must register your partition with the Data Partition API by following the instructions [here](./tools/rest/README.md) to configure your IDE to make authenticated requests to your OSDU instance and send the API request located [here](./tools/rest/partition.http) (createPartition).
+**Stop here**. Before you continue, you must register your partition with the Data Partition API by following the instructions [here](../tools/rest/README.md) to configure your IDE to make authenticated requests to your OSDU instance and send the API request located [here](../tools/rest/partition.http) (createPartition).
 
 2. Add a Pipeline for __service-entitlements-azure__  to deploy the Entitlements Service.
     > This pipeline may have to be run twice for integration tests to pass due to a preload data issue.
@@ -899,7 +927,7 @@ az pipelines create \
   -ojson
 ```
 
-10. Add a Pipeline for __unit__  to deploy the Unit Service.
+11. Add a Pipeline for __unit__  to deploy the Unit Service.
 
     _Repo:_ `unit-service`
     _Path:_ `/devops/azure/pipeline.yml`
@@ -915,7 +943,7 @@ az pipelines create \
   -ojson
 ```
 
-11. Add a Pipeline for __crs-catalog-service__  to deploy the Crs Catalog Service.
+12. Add a Pipeline for __crs-catalog-service__  to deploy the Crs Catalog Service.
 
     _Repo:_ `crs-catalog-service`
     _Path:_ `/devops/azure/pipeline.yml`
@@ -931,7 +959,7 @@ az pipelines create \
   -ojson
 ```
 
-12. Add a Pipeline for __crs-conversion-service__  to deploy the Crs Conversion Service.
+13. Add a Pipeline for __crs-conversion-service__  to deploy the Crs Conversion Service.
 
     _Repo:_ `crs-conversion-service`
     _Path:_ `/devops/azure/pipeline.yml`
@@ -948,7 +976,7 @@ az pipelines create \
 ```
 
 
-13. Add a Pipeline for __register__  to deploy the Register Service.
+14. Add a Pipeline for __register__  to deploy the Register Service.
 
     _Repo:_ `register`
     _Path:_ `/devops/azure/pipeline.yml`
@@ -964,7 +992,7 @@ az pipelines create \
   -ojson
 ```
 
-14. Add a Pipeline for __notification__  to deploy the Notification Service.
+15. Add a Pipeline for __notification__  to deploy the Notification Service.
 
     _Repo:_ `notification-service`
     _Path:_ `/devops/azure/pipeline.yml`
@@ -980,7 +1008,7 @@ az pipelines create \
   -ojson
 ```
 
-15. Add a Pipeline for __wks__  to deploy the Wks Service.
+16. Add a Pipeline for __wks__  to deploy the Wks Service.
 
     _Repo:_ `wks`
     _Path:_ `/devops/azure/pipeline.yml`
@@ -996,7 +1024,7 @@ az pipelines create \
   -ojson
 ```
 
-16. Add a Pipeline for __ingestion-workflow__  to deploy the Schema Service.
+17. Add a Pipeline for __ingestion-workflow__  to deploy the Schema Service.
 
     _Repo:_ `ingestion-workflow`
     _Path:_ `/devops/azure/pipeline.yml`
@@ -1011,7 +1039,7 @@ az pipelines create \
   --yaml-path /devops/azure/pipeline.yml  \
   -ojson
 ```
-16. Add a Pipeline for __seismic-store-service__  to deploy the Seismic Store Service.
+18. Add a Pipeline for __seismic-store-service__  to deploy the Seismic Store Service.
 
     _Repo:_ `seismic-store-service`
     _Path:_ `/devops/azure/pipeline.yml`
@@ -1027,7 +1055,7 @@ az pipelines create \
   -ojson
 ```
 
-17. Add a Pipeline for __service-entitlements__  to deploy the Entitlements Service.
+19. Add a Pipeline for __service-entitlements__  to deploy the Entitlements Service.
     > This pipeline may have to be run twice for integration tests to pass due to a preload data issue.
 
     _Repo:_ `entitlements`
@@ -1038,6 +1066,37 @@ az pipelines create \
 az pipelines create \
   --name 'service-entitlements'  \
   --repository entitlements  \
+  --branch master  \
+  --repository-type tfsgit  \
+  --yaml-path /devops/azure/pipeline.yml  \
+  -ojson
+```
+20. Add a Pipeline for __wellbore-domain-services__  to deploy the Wellbore Domain Services.
+
+    _Repo:_ `wellbore-domain-services`
+    _Path:_ `/devops/azure/pipeline.yml`
+    _Validate:_ https://<your_dns_name>/api/os-wellbore-ddms/docs is alive.
+
+```bash
+az pipelines create \
+  --name 'wellbore-domain-services'  \
+  --repository wellbore-domain-services  \
+  --branch master  \
+  --repository-type tfsgit  \
+  --yaml-path /devops/azure/pipeline.yml  \
+  -ojson
+```
+
+21. Add a Pipeline for __ingestion-service__  to deploy the Ingestion Service.
+
+    _Repo:_ `ingestion-service`
+    _Path:_ `/devops/azure/pipeline.yml`
+    _Validate:_ https://<your_dns_name>/api/ingestion/docs is alive.
+
+```bash
+az pipelines create \
+  --name 'ingestion-service'  \
+  --repository ingestion-service  \
   --branch master  \
   --repository-type tfsgit  \
   --yaml-path /devops/azure/pipeline.yml  \

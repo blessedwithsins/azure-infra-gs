@@ -64,30 +64,8 @@ _Question:_ How do I manage infrastructure updates and possible breaking changes
 
 __Release Naming Strategy__
 
-A release naming strategy needs to be in place with the OSDU forum and then can be extended for use by OSDU on Azure.  A typical naming convention that is helpful is some type of [Semantic Versioning](https://semver.org/).  Consider the following possible naming patterns.
+A release naming strategy is attempting to be put in place from the OSDU forum and information on it can be found [here](http://osdu.projects.opengroup.org/pmc/work-products/versioning-strategy/).
 
-`[Major]:[Minor]:[Patch]`
-
-A naming pattern of this would require the OSDU forum to drop a release marker across the system and ensure that integration tests passed on the point in time timeline.  Patch however tends to lead to the idea that individual services are being bug fixed and not all services might have the same patch version.  This breaks the timeline model requirement of ensuring integration tests passed.
-
-`[Horizon]:[Milestone]:[Iteration]`
-
-A naming pattern might make sense based on the OSDU forum tracking to horizon's and milestones.  Additionally though is the concept of what might be thought of as an Developer Iteration release.
-
-Example 1:
-The OSDU forum drops a release marker of H1:M1:0.  This could indicate a release with a certain level of certification.
-
-- Horizon _(All Providers)_
-  - Integration Tests pass
-  - Validation Scenarios pass
-  - Certification Processes completed
-- Milestone _(All Providers)_
-  - Integration Tests pass
-  - Validation Scenarios pass
-- Iteration _(Single Provider specific)_
-  - Integration Tests pass
-
-The Iteration then can be aligned to developer releases that are faster moving but have less quality control checks applied and can be triggered or not triggered as desired by each cloud provider.
 
 ## OSDU on Azure Current Release Strategy
 

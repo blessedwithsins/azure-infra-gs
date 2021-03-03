@@ -77,7 +77,7 @@ ENVIRONMENT="demo"
 REGION="centralus"
 REGION_PAIR="eastus2"
 PARTITION_NAME="opendes"
-ELASTIC_VERSION="6.8.12"
+ELASTIC_VERSION="7.11.1"
 GIT_REPO=git@ssh.dev.azure.com:v3/${ADO_ORGANIZATION}/${ADO_PROJECT}/k8-gitops-manifests
 
 az pipelines variable-group create \

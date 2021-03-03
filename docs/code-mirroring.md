@@ -26,6 +26,8 @@ Empty repositories need to be created that will be used by a pipeline to mirror 
 | schema-service            | https://community.opengroup.org/osdu/platform/system/schema-service.git|
 | ingestion-workflow        | https://community.opengroup.org/osdu/platform/data-flow/ingestion/ingestion-workflow.git |
 | seismic-store-service     | https://community.opengroup.org/osdu/platform/domain-data-mgmt-services/seismic/seismic-dms-suite/seismic-store-service.git |
+| wellbore-domain-services  | https://community.opengroup.org/osdu/platform/domain-data-mgmt-services/wellbore/wellbore-domain-services.git |
+| ingestion-service         | https://community.opengroup.org/osdu/platform/data-flow/ingestion/ingestion-service.git |
 
 ```bash
 export ADO_ORGANIZATION=<organization_name>
@@ -52,7 +54,11 @@ SERVICE_LIST="infra-azure-provisioning \
               register \
               notification \
               schema-service \
-              ingestion-workflow"
+              ingestion-workflow \
+              seismic-store-service \
+              wellbore-domain-services \
+              ingestion-service"
+
 
 for SERVICE in $SERVICE_LIST;
 do
@@ -90,6 +96,8 @@ Variable Group Name:  `Mirror Variables`
 | SCHEMA_REPO | https://dev.azure.com/osdu-demo/osdu/_git/schema-service |
 | INGESTION_WORKFLOW_REPO | https://dev.azure.com/osdu-demo/osdu/_git/ingestion-workflow |
 | SEISMIC_STORE_SERVICE_REPO | https://dev.azure.com/osdu-demo/osdu/_git/seismic-store-service |
+| WELLBORE_DOMAIN_SERVICSE_REPO | https://dev.azure.com/osdu-demo/osdu/_git/wellbore-domain-services |
+| INGESTION_SERVICE_REPO | https://dev.azure.com/osdu-demo/osdu/_git/ingestion-service |
 | ACCESS_TOKEN | <your_personal_access_token> |
 
 
@@ -115,14 +123,16 @@ az pipelines variable-group create \
   DELIVERY_REPO=https://dev.azure.com/${ADO_ORGANIZATION}/$ADO_PROJECT/_git/delivery \
   FILE_REPO=https://dev.azure.com/${ADO_ORGANIZATION}/$ADO_PROJECT/_git/file \
   UNIT_REPO=https://dev.azure.com/${ADO_ORGANIZATION}/$ADO_PROJECT/_git/unit-service \
-  CRS_CATALOG_REPO=https://dev.azure.com/osdu-demo/osdu/_git/unit-service \
+  CRS_CATALOG_REPO=https://dev.azure.com/${ADO_ORGANIZATION}/$ADO_PROJECT/_git/crs-catalog-service \
   CRS_CONVERSION_REPO=https://dev.azure.com/${ADO_ORGANIZATION}/$ADO_PROJECT/_git/crs-conversion-service \
   WKS_REPO=https://dev.azure.com/${ADO_ORGANIZATION}/$ADO_PROJECT/_git/wks \
   REGISTER_REPO=https://dev.azure.com/${ADO_ORGANIZATION}/$ADO_PROJECT/_git/register \
   NOTIFICATION_REPO=https://dev.azure.com/${ADO_ORGANIZATION}/$ADO_PROJECT/_git/notification \
   SCHEMA_REPO=https://dev.azure.com/${ADO_ORGANIZATION}/$ADO_PROJECT/_git/schema-service \
-  INGESTION_WORKFLOW_REPO=https://dev.azure.com/${ADO_ORGANIZATION}/$ADO_PROJECT/_git/ingestion-workflow \ 
-  SEISMIC_STORE_SERVICE_REPO=https://dev.azure.com/${ADO_ORGANIZATION}/$ADO_PROJECT/_git/seismic-store-service
+  INGESTION_WORKFLOW_REPO=https://dev.azure.com/${ADO_ORGANIZATION}/$ADO_PROJECT/_git/ingestion-workflow \
+  SEISMIC_STORE_SERVICE_REPO=https://dev.azure.com/${ADO_ORGANIZATION}/$ADO_PROJECT/_git/seismic-store-service \
+  WELLBORE_DOMAIN_SERVICSE_REPO=https://dev.azure.com/${ADO_ORGANIZATION}/$ADO_PROJECT/_git/wellbore-domain-services \
+  INGESTION_SERVICE_REPO=https://dev.azure.com/${ADO_ORGANIZATION}/$ADO_PROJECT/_git/ingestion-service \
   ACCESS_TOKEN=$ACCESS_TOKEN \
   -ojson
 ```
@@ -284,29 +294,45 @@ jobs:
         destinationGitRepositoryPersonalAccessToken: $(ACCESS_TOKEN)
 
     - task: swellaby.mirror-git-repository.mirror-git-repository-vsts-task.mirror-git-repository-vsts-task@1
-          displayName: 'notification'
-          inputs:
-            sourceGitRepositoryUri: 'https://community.opengroup.org/osdu/platform/system/notification.git'
-            destinationGitRepositoryUri: '$(NOTIFICATION_REPO)'
-            destinationGitRepositoryPersonalAccessToken: $(ACCESS_TOKEN)
+      displayName: 'notification'
+      inputs:
+        sourceGitRepositoryUri: 'https://community.opengroup.org/osdu/platform/system/notification.git'
+        destinationGitRepositoryUri: '$(NOTIFICATION_REPO)'
+        destinationGitRepositoryPersonalAccessToken: $(ACCESS_TOKEN)
 
     - task: swellaby.mirror-git-repository.mirror-git-repository-vsts-task.mirror-git-repository-vsts-task@1
-          displayName: 'schema-service'
-          inputs:
-            sourceGitRepositoryUri: 'https://community.opengroup.org/osdu/platform/system/schema-service.git'
-            destinationGitRepositoryUri: '$(SCHEMA_REPO)'
-            destinationGitRepositoryPersonalAccessToken: $(ACCESS_TOKEN)
+      displayName: 'schema-service'
+      inputs:
+        sourceGitRepositoryUri: 'https://community.opengroup.org/osdu/platform/system/schema-service.git'
+        destinationGitRepositoryUri: '$(SCHEMA_REPO)'
+        destinationGitRepositoryPersonalAccessToken: $(ACCESS_TOKEN)
+
     - task: swellaby.mirror-git-repository.mirror-git-repository-vsts-task.mirror-git-repository-vsts-task@1
       displayName: 'ingestion-workflow'
       inputs:
         sourceGitRepositoryUri: 'https://community.opengroup.org/osdu/platform/data-flow/ingestion/ingestion-workflow.git'
         destinationGitRepositoryUri: '$(INGESTION_WORKFLOW_REPO)'
         destinationGitRepositoryPersonalAccessToken: $(ACCESS_TOKEN)
+
     - task: swellaby.mirror-git-repository.mirror-git-repository-vsts-task.mirror-git-repository-vsts-task@1
       displayName: 'seismic-store-service'
       inputs:
         sourceGitRepositoryUri: 'https://community.opengroup.org/osdu/platform/domain-data-mgmt-services/seismic/seismic-dms-suite/seismic-store-service.git'
         destinationGitRepositoryUri: '$(SEISMIC_STORE_SERVICE_REPO)'
+        destinationGitRepositoryPersonalAccessToken: $(ACCESS_TOKEN)
+
+    - task: swellaby.mirror-git-repository.mirror-git-repository-vsts-task.mirror-git-repository-vsts-task@1
+      displayName: 'wellbore-domain-services'
+      inputs:
+        sourceGitRepositoryUri: 'https://community.opengroup.org/osdu/platform/domain-data-mgmt-services/wellbore/wellbore-domain-services.git'
+        destinationGitRepositoryUri: '$(WELLBORE_DOMAIN_SERVICSE_REPO)'
+        destinationGitRepositoryPersonalAccessToken: $(ACCESS_TOKEN)
+
+    - task: swellaby.mirror-git-repository.mirror-git-repository-vsts-task.mirror-git-repository-vsts-task@1
+      displayName: 'ingestion-service'
+      inputs:
+        sourceGitRepositoryUri: 'https://community.opengroup.org/osdu/platform/data-flow/ingestion/ingestion-service.git'
+        destinationGitRepositoryUri: '$(INGESTION_SERVICE_REPO)'
         destinationGitRepositoryPersonalAccessToken: $(ACCESS_TOKEN)
 
 

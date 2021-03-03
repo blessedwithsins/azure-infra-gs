@@ -4,7 +4,7 @@ The `osdu` - `central_resources` environment template is intended to provision t
 
 __PreRequisites__
 
-> These are typically performed by the `common_prepare.sh` scripts.
+> If you have run the `common_prepare.sh` scripts then jump down to the section called Manually Provision.
 
 Requires the use of [direnv](https://direnv.net/) for environment variable management.
 
