@@ -467,7 +467,9 @@ resource "azurerm_role_assignment" "redis_cache" {
 # Locks
 #-------------------------------
 resource "azurerm_management_lock" "sa_lock" {
-  name       = "osdu_ds_sa_lock"
+  count = var.feature_flag.sa_lock ? 1 : 0
+
+  name       = "osdu_file_share_lock"
   scope      = module.storage_account.id
   lock_level = "CanNotDelete"
 }
