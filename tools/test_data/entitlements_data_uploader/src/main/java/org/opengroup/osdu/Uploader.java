@@ -17,11 +17,13 @@ public class Uploader {
         String password = System.getProperty("GRAPH_DB_PASSWORD");
         String intTesterUsername = System.getProperty("SERVICE_PRINCIPAL_ID");
         String noDataAccessTester = System.getProperty("NO_DATA_ACCESS_TESTER");
+        String domain = System.getProperty("DOMAIN");
 
         Client client = createClient(dbHost, password);
 
         String[] commands = getGroovyCommands("/bootstrap-data.txt");
         for (String command : commands) {
+            command = configureDomain(command, domain);
             submitCommand(client, command);
         }
 
@@ -29,6 +31,7 @@ public class Uploader {
 
         commands = getGroovyCommands(bootStrapFile);
         for (String command : commands) {
+            command = configureDomain(command, domain);
             command = configureIntTester(command, intTesterUsername);
             command = configureNoDataAccessTester(command, noDataAccessTester);
             submitCommand(client, command);
@@ -43,6 +46,10 @@ public class Uploader {
 
     private static String configureNoDataAccessTester(String command, String noDataAccessTester) {
         return command.replaceAll("NO_DATA_ACCESS_TESTER", noDataAccessTester);
+    }
+
+    private static String configureDomain(String command, String domain) {
+        return command.replaceAll("DOMAIN", domain);
     }
 
     private static Client createClient(String dbHost, String password) {
