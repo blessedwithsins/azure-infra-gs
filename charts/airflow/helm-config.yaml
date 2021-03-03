@@ -129,8 +129,8 @@ airflow:
   ###################################
   airflow:
     image:
-      repository: apache/airflow
-      tag: 1.10.12-python3.6
+      repository: quay.io/astronomer/ap-airflow
+      tag: 1.10.12-2-alpine3.10-onbuild
       pullPolicy: IfNotPresent
       pullSecret: ""
     config:
