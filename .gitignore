@@ -5,7 +5,7 @@
 
 k8-gitops-manifests/
 osdu-charts/
-custom.tfvars
+custom*.tfvars
 dev.tfvars
 
 .envrc*

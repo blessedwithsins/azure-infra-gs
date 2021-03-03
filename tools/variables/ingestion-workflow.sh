@@ -57,10 +57,12 @@ aad_client_id="${ENV_APP_ID}"
 appinsights_key="${ENV_APPINSIGHTS_KEY}"
 cosmosdb_database="${COSMOS_DB_NAME}"
 entitlements_service_api_key="${API_KEY}"
-entitlements_service_endpoint="https://${ENV_HOST}/entitlements/v1/"
+entitlements_service_endpoint="https://${ENV_HOST}/entitlements/v1"
 airflow_url="https://${ENV_HOST}/airflow"
 airflow_username="admin"
-airflow_password="${AIRFLOW_ADMIN_PASSWORD}"
+airflow_password="${ENV_AIRFLOW_PASSWORD}"
+AIRFLOW_STORAGE_ACCOUNT_NAME=${ENV_FILESHARE_STORAGE}
+AIRFLOW_STORAGE_ACCOUNT_KEY=${ENV_FILESHARE_STORAGE_KEY}
 LOG_PREFIX="workflow"
 server_port="8085"
 azure_istioauth_enabled="true"
@@ -128,6 +130,9 @@ export ENV_ELASTIC_HOST=$ENV_ELASTIC_HOST
 export ENV_ELASTIC_PORT=$ENV_ELASTIC_PORT
 export ENV_ELASTIC_USERNAME=$ENV_ELASTIC_USERNAME
 export ENV_ELASTIC_PASSWORD=$ENV_ELASTIC_PASSWORD
+export ENV_AIRFLOW_PASSWORD=$ENV_AIRFLOW_PASSWORD
+export ENV_FILESHARE_STORAGE=$ENV_FILESHARE_STORAGE
+export ENV_FILESHARE_STORAGE_KEY=$ENV_FILESHARE_STORAGE_KEY
 
 # ------------------------------------------------------------------------------------------------------
 # LocalHost Run Settings
@@ -140,10 +145,12 @@ export aad_client_id="${ENV_APP_ID}"
 export appinsights_key="${ENV_APPINSIGHTS_KEY}"
 export cosmosdb_database="${COSMOS_DB_NAME}"
 export entitlements_service_api_key="${API_KEY}"
-export entitlements_service_endpoint="https://${ENV_HOST}/entitlements/v1/"
+export entitlements_service_endpoint="https://${ENV_HOST}/entitlements/v1"
 export airflow_url="https://${ENV_HOST}/airflow"
 export airflow_username="admin"
-export airflow_password="${AIRFLOW_ADMIN_PASSWORD}"
+export airflow_password="${ENV_AIRFLOW_PASSWORD}"
+export AIRFLOW_STORAGE_ACCOUNT_NAME=${ENV_FILESHARE_STORAGE}
+export AIRFLOW_STORAGE_ACCOUNT_KEY=${ENV_FILESHARE_STORAGE_KEY}
 export LOG_PREFIX="workflow"
 export server_port="8085"
 export azure_istioauth_enabled="true"
@@ -173,10 +180,12 @@ aad_client_id: "${ENV_APP_ID}"
 appinsights_key: "${ENV_APPINSIGHTS_KEY}"
 cosmosdb_database: "${COSMOS_DB_NAME}"
 entitlements_service_api_key: "${API_KEY}"
-entitlements_service_endpoint: "https://${ENV_HOST}/entitlements/v1/"
+entitlements_service_endpoint: "https://${ENV_HOST}/entitlements/v1"
 airflow_url: "https://${ENV_HOST}/airflow"
 airflow_username: "admin"
-airflow_password: "${AIRFLOW_ADMIN_PASSWORD}"
+airflow_password: "${ENV_AIRFLOW_PASSWORD}"
+AIRFLOW_STORAGE_ACCOUNT_NAME: "${ENV_FILESHARE_STORAGE}"
+AIRFLOW_STORAGE_ACCOUNT_KEY: "${ENV_FILESHARE_STORAGE_KEY}"
 LOG_PREFIX: "workflow"
 server_port: "8085"
 azure_istioauth_enabled: "true"

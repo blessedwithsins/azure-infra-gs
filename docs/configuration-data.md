@@ -62,3 +62,27 @@ az storage file upload-batch \
   --source ${PROJECT_FOLDER} \
   --pattern ${SOURCE_FOLDER}
 ```
+
+_Ingest Manifest DAGS_
+
+```bash
+FILE_SHARE="airflowdags"
+PROJECT_FOLDER=$(realpath ../ingestion-dags/src)
+
+GROUP=$(az group list --query "[?contains(name, 'cr${UNIQUE}')].name" -otsv)
+ENV_VAULT=$(az keyvault list --resource-group $GROUP --query [].name -otsv)
+
+az storage file upload-batch \
+  --account-name $(az keyvault secret show --id https://${ENV_VAULT}.vault.azure.net/secrets/airflow-storage --query value -otsv) \
+  --account-key $(az keyvault secret show --id https://${ENV_VAULT}.vault.azure.net/secrets/airflow-storage-key --query value -otsv) \
+  --destination $FILE_SHARE \
+  --source ${PROJECT_FOLDER} \
+  --pattern "*.ini"
+
+az storage file upload-batch \
+  --account-name $(az keyvault secret show --id https://${ENV_VAULT}.vault.azure.net/secrets/airflow-storage --query value -otsv) \
+  --account-key $(az keyvault secret show --id https://${ENV_VAULT}.vault.azure.net/secrets/airflow-storage-key --query value -otsv) \
+  --destination $FILE_SHARE \
+  --source ${PROJECT_FOLDER} \
+  --pattern "*.py"
+```

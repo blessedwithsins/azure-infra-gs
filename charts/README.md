@@ -331,6 +331,7 @@ git clone https://community.opengroup.org/osdu/platform/system/schema-service.gi
 git clonehttps://community.opengroup.org/osdu/platform/data-flow/ingestion/ingestion-workflow.git $SRC_DIR/ingestion-workflow
 git clone https://community.opengroup.org/osdu/platform/domain-data-mgmt-services/seismic/seismic-dms-suite/seismic-store-service.git $SRC_DIR/seismic-store-service
 git clone https://community.opengroup.org:osdu/platform/domain-data-mgmt-services/wellbore/wellbore-domain-services.git $SRC_DIR/wellbore-domain-services
+git clone https://community.opengroup.org/osdu/platform/data-flow/ingestion/ingestion-service.git $SRC_DIR/ingestion-service
 ```
 
 __Additional Manual Steps__
@@ -433,7 +434,8 @@ SERVICE_LIST="infra-azure-provisioning \
               register \
               notification \
               schema-service \
-              ingestion-workflow"
+              ingestion-workflow \
+              ingestion-service"
 
 for SERVICE in $SERVICE_LIST;
 do
