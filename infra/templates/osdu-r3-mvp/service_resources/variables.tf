@@ -33,10 +33,12 @@ variable "feature_flag" {
   type = object({
     osdu_namespace = bool
     flux           = bool
+    sa_lock        = bool
   })
   default = {
     osdu_namespace = true
     flux           = true
+    sa_lock        = true
   }
 }
 

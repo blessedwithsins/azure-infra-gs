@@ -44,6 +44,7 @@ This variable group will be used to hold the common values for the services to b
 | NOTIFICATION_BASE_URL                         | `https://<your_fqdn>/api/notification/v1/`  |
 | REGISTER_CUSTOM_PUSH_URL_HMAC                 | `https://<your_fqdn>/api/register/v1/test/challenge/1`|
 | AGENT_IMAGE                                   | `ubuntu-latest`                             | 
+| PROVIDER_NAME                                 | `azure`                                     | 
 
 
 ```bash
@@ -51,6 +52,7 @@ ADMIN_EMAIL="<your_cert_admin>"     # ie: admin@email.com
 DNS_HOST="<your_ingress_hostname>"  # ie: osdu.contoso.com
 SERVICE_CONNECTION_NAME=osdu-mvp-$UNIQUE
 INVALID_TOKEN="<an_invalid_token>"
+PROVIDER_NAME=azure
 
 az pipelines variable-group create \
   --name "Azure - OSDU" \
@@ -89,10 +91,12 @@ az pipelines variable-group create \
   DATA_PARTITION_ID="opendes" \
   TENANT_NAME="opendes" \
   VENDOR="azure" \
+  OSDU_TENANT="opendes" \
   NOTIFICATION_REGISTER_BASE_URL="https://${DNS_HOST}" \
   NOTIFICATION_BASE_URL="https://${DNS_HOST}/api/notification/v1/" \
   REGISTER_CUSTOM_PUSH_URL_HMAC="https://${DNS_HOST}/api/register/v1/test/challenge/1" \
   AGENT_IMAGE="ubuntu-latest" \
+  PROVIDER_NAME="$PROVIDER_NAME" \
   -ojson
 ```
 
@@ -137,7 +141,6 @@ This variable group will be used to hold the specific environment values necessa
 | INTEGRATION_TESTER                            | `$(app-dev-sp-username)`          |
 | MY_TENANT                                     | `opendes`                         |
 | LEGAL_TAG                                     | `opendes-public-usa-dataset-7643990`        |
-| PROVIDER_NAME                                 | `azure`                           |
 | REDIS_PORT                                    | `6380`                            |
 | STORAGE_ACCOUNT                               | `$(opendes-storage)`              |
 | STORAGE_ACCOUNT_KEY                           | `$(opendes-storage-key)`          |
@@ -155,7 +158,6 @@ DATA_PARTITION_NAME=opendes
 LEGAL_TAG=opendes-public-usa-dataset-7643990
 DNS_HOST="<your_ingress_hostname>"  # ie: osdu.contoso.com
 ENVIRONMENT_NAME=$UNIQUE
-PROVIDER_NAME=azure
 REDIS_PORT="6380"
 
 
@@ -179,7 +181,6 @@ az pipelines variable-group create \
   INTEGRATION_TESTER='$(app-dev-sp-username)' \
   MY_TENANT="$DATA_PARTITION_NAME" \
   LEGAL_TAG="$LEGAL_TAG" \
-  PROVIDER_NAME="$PROVIDER_NAME" \
   REDIS_PORT="$REDIS_PORT" \
   STORAGE_ACCOUNT='$('${DATA_PARTITION_NAME}'-storage)' \
   STORAGE_ACCOUNT_KEY='$('${DATA_PARTITION_NAME}'-storage-key)' \
@@ -626,8 +627,9 @@ This variable group is the service specific variables necessary for testing and 
 | PORT                             | `80`                                                                                    |
 | REPLICA_COUNT                    | `1`                                                                                     |
 | serviceUrlSuffix                 | `seistore-svc/api/v3`                                                                   |
-| utest.mount.dir                  | `/service`                                                                              |
-| utest.runtime.image              | `seistore-svc-runtime`                                                                  |
+| hldRegPath                       | `providers/azure/hld-registry`                                                          |
+| utest_mount_dir                  | `/service`                                                                              |
+| utest_runtime_image              | `seistore-svc-runtime`                                                                  |
 
 ```bash
 e2eAdminEmail="<your_cert_admin>"     # ie: admin@email.com
@@ -640,8 +642,9 @@ e2eTenant=opendes
 PORT="80"
 REPLICA_COUNT="1"
 serviceUrlSuffix="seistore-svc/api/v3"
-utest.mount.dir="/service"
-utest.runtime.image=seistore-svc-runtime
+hldRegPath="providers/azure/hld-registry"
+utest_mount_dir="/service"
+utest_runtime_image=seistore-svc-runtime
 
 az pipelines variable-group create \
   --name "Azure Service Release - seismic-store-service" \
@@ -657,8 +660,9 @@ az pipelines variable-group create \
   PORT='${PORT}' \
   REPLICA_COUNT='${REPLICA_COUNT}' \
   serviceUrlSuffix='${serviceUrlSuffix}' \
-  utest.mount.dir='${utest.mount.dir}' \
-  utest.runtime.image=${utest.runtime.image} \
+  hldRegPath='${hldRegPath}' \
+  utest_mount_dir='${utest_mount_dir}' \
+  utest_runtime_image=${utest_runtime_image} \
   -ojson
 ```
 

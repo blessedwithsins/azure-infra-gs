@@ -54,6 +54,14 @@ cosmos_databases = [
     throughput = 12000
   }
 ]
+
+## Currently a strategy is in place for a period of time to not remove old collections no longer in use.
+### Obsolete Tables
+# - Workflow
+# - WorkflowStatus
+# - WorkflowRun
+# - WorkflowTasksSharingInfo
+## See override.tfvars for Greenfield DB setup.
 cosmos_sql_collections = [
   {
     name                  = "LegalTag"
@@ -199,7 +207,13 @@ cosmos_sql_collections = [
     database_name         = "osdu-db"
     partition_key_path    = "/partitionKey"
     partition_key_version = 2
-  }
+  },
+  {
+    name                  = "WorkflowTasksSharingInfoV2"
+    database_name         = "osdu-db"
+    partition_key_path    = "/partitionKey"
+    partition_key_version = 2
+  },
 ]
 
 

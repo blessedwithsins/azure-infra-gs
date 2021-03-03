@@ -7,6 +7,7 @@ __Bug Fixes__
 
 
 __Infra Changes__
+- [Arch 123 - Obsolete Cosmos DB Tables and add new v2 tables](https://community.opengroup.org/osdu/platform/deployment-and-operations/infra-azure-provisioning/-/issues/123)
 - [Issue 127](https://community.opengroup.org/osdu/platform/deployment-and-operations/infra-azure-provisioning/-/issues/127)
 - [Feature 126 - Add support to pass JAVA_OPTS to java command in DockerFile](https://community.opengroup.org/osdu/platform/deployment-and-operations/infra-azure-provisioning/-/issues/126)
 - [Feature 125 - Enable Manifest Ingestion](https://community.opengroup.org/osdu/platform/deployment-and-operations/infra-azure-provisioning/-/issues/125)
