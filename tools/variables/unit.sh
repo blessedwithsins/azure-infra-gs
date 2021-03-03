@@ -59,7 +59,7 @@ if [ ! -d $UNIQUE ]; then mkdir $UNIQUE; fi
 # LocalHost Run Settings
 # ------------------------------------------------------------------------------------------------------
 KEYVAULT_URI="${ENV_KEYVAULT}"
-ENTITLEMENTS_URL="https://${ENV_HOST}/entitlements/v1"
+ENTITLEMENT_URL="https://${ENV_HOST}/entitlements/v1"
 appinsights_key="${ENV_APPINSIGHTS_KEY}"
 osdu_unit_catalog_filename="data/unit_catalog_v2.json"
 
@@ -70,7 +70,7 @@ INTEGRATION_TESTER="${ENV_PRINCIPAL_ID}"
 AZURE_TESTER_SERVICEPRINCIPAL_SECRET="${ENV_PRINCIPAL_SECRET}"
 AZURE_TENANT_ID="${TENANT_ID}"
 AZURE_AD_APP_RESOURCE_ID="${ENV_APP_ID}"
-VIRTUAL_SERVICE_HOST_NAME="${$ENV_HOST}"
+VIRTUAL_SERVICE_HOST_NAME="${ENV_HOST}"
 MY_TENANT="${OSDU_TENANT}"
 TIME_ZONE="UTC+0"
 
@@ -128,7 +128,7 @@ export osdu_unit_catalog_filename="data/unit_catalog_v2.json"
 #export VIRTUAL_SERVICE_HOST_NAME="localhost:8080"
 export VIRTUAL_SERVICE_HOST_NAME="${ENV_HOST}"
 export INTEGRATION_TESTER="${INTEGRATION_TESTER}"
-export AZURE_TESTER_SERVICEPRINCIPAL_SECRET="${TESTER_SERVICEPRINCIPAL_SECRET}"
+export AZURE_TESTER_SERVICEPRINCIPAL_SECRET="${AZURE_TESTER_SERVICEPRINCIPAL_SECRET}"
 export AZURE_TENANT_ID="${AZURE_TENANT_ID}"
 export AZURE_AD_APP_RESOURCE_ID="${AZURE_AD_APP_RESOURCE_ID}"
 export MY_TENANT="${OSDU_TENANT}"

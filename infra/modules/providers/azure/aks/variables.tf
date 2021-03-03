@@ -37,6 +37,11 @@ variable "agent_vm_count" {
   default = "2"
 }
 
+variable "agent_vm_disk" {
+  type    = number
+  default = 30
+}
+
 variable "max_node_count" {
   type    = string
   default = "10"

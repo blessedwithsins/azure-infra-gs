@@ -72,7 +72,17 @@ export COSMOS_ENDPOINT=$(az keyvault secret show --id https://${ENV_VAULT}.vault
 export COSMOS_KEY=$(az keyvault secret show --id https://${ENV_VAULT}.vault.azure.net/secrets/${PARTITION_NAME}-cosmos-primary-key --query value -otsv)
 export SERVICE_PRINCIPAL_ID=$(az keyvault secret show --id https://${ENV_VAULT}.vault.azure.net/secrets/app-dev-sp-username --query value -otsv)
 export SERVICE_PRINCIPAL_OID=$(az keyvault secret show --id https://${ENV_VAULT}.vault.azure.net/secrets/app-dev-sp-id --query value -otsv)
+export GRAPH_DB_PASSWORD=$(az keyvault secret show --id https://${ENV_VAULT}.vault.azure.net/secrets/graph-db-primary-key --query value -otsv)
+export GRAPH_DB_HOST=$(az group list --query "[?contains(name, 'cr${UNIQUE}')].name" -otsv | awk '{ print substr( $0, 1, length($0)-3 ) }')-graph.gremlin.cosmos.azure.com
 
-# Execute the Upload
+# Execute the Upload from the test data folder (script expects file locally)
+cd tools/test_data
 python3 upload-data.py
+```
+__Upload Graph Cosmos DB Test Data__
+
+> NOTE: requires Maven installed locally
+```bash
+cd entitlements_data_uploader
+mvn compile exec:java -DGRAPH_DB_HOST=$GRAPH_DB_HOST -DGRAPH_DB_PASSWORD=$GRAPH_DB_PASSWORD -DSERVICE_PRINCIPAL_ID=$SERVICE_PRINCIPAL_ID -DNO_DATA_ACCESS_TESTER=$NO_DATA_ACCESS_TESTER
 ```

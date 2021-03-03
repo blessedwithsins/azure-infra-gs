@@ -28,6 +28,18 @@ variable "prefix" {
   type        = string
 }
 
+variable "feature_flag" {
+  description = "(Optional) A toggle for incubator features"
+  type = object({
+    kv_lock  = bool
+    acr_lock = bool
+  })
+  default = {
+    kv_lock  = true
+    acr_lock = true
+  }
+}
+
 variable "randomization_level" {
   description = "Number of additional random characters to include in resource names to insulate against unexpected resource name collisions."
   type        = number

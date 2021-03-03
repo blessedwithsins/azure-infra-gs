@@ -4,7 +4,7 @@ The `osdu` - `central_resources` environment template is intended to provision t
 
 __PreRequisites__
 
-> These are typically performed by the `common_prepare.sh` scripts.
+> If you have run the `common_prepare.sh` scripts then jump down to the section called Manually Provision.
 
 Requires the use of [direnv](https://direnv.net/) for environment variable management.
 
@@ -95,14 +95,21 @@ TF_WORKSPACE="cr-${UNIQUE}"
 terraform workspace new $TF_WORKSPACE || terraform workspace select $TF_WORKSPACE
 ```
 
+> Manually create a custom variable file to use for template configuration and edit as appropriate and desired.
+
+```bash
+cp terraform.tfvars custom.tfvars
+```
+
 Execute the following commands to orchestrate a deployment.
+
 
 ```bash
 # See what terraform will try to deploy without actually deploying
-terraform plan
+terraform plan -var-file custom.tfvars
 
 # Execute a deployment
-terraform apply
+terraform apply -var-file custom.tfvars
 ```
 
 Optionally execute the following command to teardown your deployment and delete your resources.

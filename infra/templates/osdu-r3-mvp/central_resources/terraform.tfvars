@@ -19,6 +19,14 @@
    This file holds the Default Variable Configuration
 */
 
+
+/*
+The following items are recommended to override in custom.tfvars
+
+1. Resource Tags
+
+*/
+
 prefix = "osdu-mvp"
 
 resource_tags = {
@@ -39,8 +47,8 @@ cosmos_graph_databases = [
 
 cosmos_graphs = [
   {
-    name               = "users"
+    name               = "Entitlements"
     database_name      = "osdu-graph"
-    partition_key_path = "/oid"
+    partition_key_path = "/dataPartitionId"
   }
 ]

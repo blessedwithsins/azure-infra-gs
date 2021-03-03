@@ -33,10 +33,12 @@ variable "feature_flag" {
   type = object({
     osdu_namespace = bool
     flux           = bool
+    sa_lock        = bool
   })
   default = {
     osdu_namespace = true
     flux           = true
+    sa_lock        = true
   }
 }
 
@@ -214,10 +216,22 @@ variable "aks_agent_vm_count" {
   default     = "3"
 }
 
+variable "aks_agent_vm_maxcount" {
+  description = "The max number of nodes allocated to the AKS cluster"
+  type        = string
+  default     = "10"
+}
+
 variable "aks_agent_vm_size" {
   type        = string
   description = "The size of each VM in the Agent Pool (e.g. Standard_F1). Changing this forces a new resource to be created."
   default     = "Standard_D2s_v3"
+}
+
+variable "aks_agent_vm_disk" {
+  description = "The initial sice of each VM OS Disk."
+  type        = number
+  default     = 30
 }
 
 variable "kubernetes_version" {

@@ -111,6 +111,14 @@ data-partition-id: {{data_partition_id}}
         "encryption-key-identifier": {
             "sensitive": true,
             "value": "encryption-key-identifier"
+        },
+        "sdms-storage-account-name": {
+            "sensitive": true,
+            "value": "sdms-storage"
+        },
+        "sdms-storage-account-key": {
+            "sensitive": true,
+            "value": "sdms-storage-key"
         }
     }
 }

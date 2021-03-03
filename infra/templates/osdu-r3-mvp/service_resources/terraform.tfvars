@@ -19,10 +19,18 @@
    This file holds the Default Variable Configuration
 */
 
-feature_flag = {
-  osdu_namespace = true
-  flux           = true
-}
+/*
+The following items are recommended to override in custom.tfvars
+
+1. Resource Tags
+2. Kubernetes Version  ** Lock your version and manage your upgrades.
+3. Agent VM Size       ** Current Default Recomendation.
+4. Agent VM Count      ** Size as appropriate
+5. Agent VM Disk       ** Size as appropriate
+6. Feature Flags       ** Configure as desired
+
+*/
+
 
 prefix = "osdu-mvp"
 
@@ -31,9 +39,10 @@ resource_tags = {
 }
 
 # Kubernetes Settings
-kubernetes_version = "1.18.8"
+kubernetes_version = "1.18.14"
 aks_agent_vm_size  = "Standard_E4s_v3"
 aks_agent_vm_count = "5"
+aks_agent_vm_disk  = 128
 subnet_aks_prefix  = "10.10.2.0/23"
 
 # Storage Settings
@@ -43,6 +52,14 @@ storage_containers = [
 ]
 storage_shares = [
   "unit",
-  "crs"
+  "crs",
+  "crs-conversion"
 ]
 storage_queues = []
+
+# Feature Toggles
+feature_flag = {
+  osdu_namespace = true
+  flux           = true
+  sa_lock        = true
+}

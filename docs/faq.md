@@ -64,6 +64,9 @@ This key pair can be used to ssh into an AKS node if needed.
 ## What AAD Items are created by the central resource template?
 * osdu-mvp-crxxx-xxxx-app – An AD application that defines the OSDU Environment created. 
 
+## What type of SSL certificate is used by default?
+The current architecture by default uses a certificate manager by [Jet Stack]( https://github.com/jetstack/cert-manager) that automatically provisions certificates into the Application Gateway and currently is configured with 2 Issuers.  “Lets Encrypt Staging” and “Lets Encrypt Production”.  Future tasks will validate a process for a Bring Your Own Certificate.
+
 # Infrastructure Provisioning Walkthroughs
 
 ## Can someone show me how they set up OSDU on Azure?

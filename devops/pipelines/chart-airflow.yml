@@ -48,7 +48,7 @@ stages:
     parameters:
       sourceFolder: "source"
       #multiple file paths to be provided with pipe(|) seperated
-      dockerFilePaths: "airflow-function"
+      dockerFilePaths: "airflow-function|airflow-statsd"
       providers:
         - name: Azure
           environments: ["demo"]

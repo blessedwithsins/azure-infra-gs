@@ -27,4 +27,9 @@ resource_tags = {
   environment = "OSDU Demo"
 }
 
+feature_flag = {
+  acr_lock = false
+  kv_lock  = false
+}
+
 */

@@ -22,8 +22,8 @@
 
 // *** WARNING  ****
 // This template includes locks and won't delete by destroy if locks aren't removed first.
-// Lock: KeyVault
-// Lock: Container Registry
+// Lock: Storage
+// Lock: Graph DB
 // *** WARNING  ****
 
 terraform {
@@ -311,6 +311,7 @@ module "ad_application" {
 
   name                       = local.ad_app_name
   oauth2_allow_implicit_flow = true
+  group_membership_claims    = "None"
 
   reply_urls = [
     "http://localhost:8080",
@@ -347,6 +348,8 @@ resource "azurerm_user_assigned_identity" "osduidentity" {
 
 // Lock the KV
 resource "azurerm_management_lock" "kv_lock" {
+  count = var.feature_flag.kv_lock ? 1 : 0
+
   name       = "osdu_cr_kv_lock"
   scope      = module.keyvault.keyvault_id
   lock_level = "CanNotDelete"
@@ -361,6 +364,8 @@ resource "azurerm_management_lock" "sa_lock" {
 
 // Lock the Container Registry
 resource "azurerm_management_lock" "acr_lock" {
+  count = var.feature_flag.acr_lock ? 1 : 0
+
   name       = "osdu_acr_lock"
   scope      = module.container_registry.container_registry_id
   lock_level = "CanNotDelete"

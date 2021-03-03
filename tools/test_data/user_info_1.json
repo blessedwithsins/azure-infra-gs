@@ -5,6 +5,7 @@
     {
       "name": "common",
       "groups": [
+        "service.storage.creator",
         "service.storage.admin",
         "service.legal.admin",
         "data.datalake.admin",
@@ -32,10 +33,12 @@
     {
       "name": "opendes",
       "groups": [
+        "service.storage.creator",
         "service.storage.admin",
         "service.legal.admin",
         "data.datalake.viewer",
         "data.test1",
+        "data.integration.test",
         "data.datalake.viewer",
         "data.default.viewer",
         "data.default.owner",
@@ -49,6 +52,7 @@
         "service.workflow.creator",
         "service.workflow.viewer",
         "service.workflow.admin",
+        "users.datalake.admins",
         "users.datalake.ops",
         "cron.job",
         "notification.pubsub",

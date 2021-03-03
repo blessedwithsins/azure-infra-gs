@@ -70,7 +70,7 @@ INTEGRATION_TESTER="${ENV_PRINCIPAL_ID}"
 AZURE_TESTER_SERVICEPRINCIPAL_SECRET="${ENV_PRINCIPAL_SECRET}"
 AZURE_TENANT_ID="${TENANT_ID}"
 AZURE_AD_APP_RESOURCE_ID="${ENV_APP_ID}"
-VIRTUAL_SERVICE_HOST_NAME="${$ENV_HOST}"
+VIRTUAL_SERVICE_HOST_NAME="${ENV_HOST}"
 MY_TENANT="${OSDU_TENANT}"
 TIME_ZONE="UTC+0"
 
@@ -118,7 +118,7 @@ export ENV_ELASTIC_PASSWORD=$ENV_ELASTIC_PASSWORD
 # LocalHost Run Settings
 # ------------------------------------------------------------------------------------------------------
 export KEYVAULT_URI="${ENV_KEYVAULT}"
-export ENTITLEMENTS_URL="https://${ENV_HOST}/entitlements/v1"
+export ENTITLEMENT_URL="https://${ENV_HOST}/entitlements/v1"
 export appinsights_key="${ENV_APPINSIGHTS_KEY}"
 export osdu_crs_catalog_filename="data/crs_catalog_v2.json"
 
@@ -128,7 +128,7 @@ export osdu_crs_catalog_filename="data/crs_catalog_v2.json"
 #export VIRTUAL_SERVICE_HOST_NAME="localhost:8080"
 export VIRTUAL_SERVICE_HOST_NAME="${ENV_HOST}"
 export INTEGRATION_TESTER="${INTEGRATION_TESTER}"
-export AZURE_TESTER_SERVICEPRINCIPAL_SECRET="${TESTER_SERVICEPRINCIPAL_SECRET}"
+export AZURE_TESTER_SERVICEPRINCIPAL_SECRET="${AZURE_TESTER_SERVICEPRINCIPAL_SECRET}"
 export AZURE_TENANT_ID="${AZURE_TENANT_ID}"
 export AZURE_AD_APP_RESOURCE_ID="${AZURE_AD_APP_RESOURCE_ID}"
 export MY_TENANT="${OSDU_TENANT}"

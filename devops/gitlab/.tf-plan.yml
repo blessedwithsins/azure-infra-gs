@@ -1,0 +1,4 @@
+.tf-plan:
+    stage: build
+    script:
+      - echo "plan job"

@@ -20,6 +20,7 @@
     "service.workflow.creator",
     "service.workflow.viewer",
     "service.workflow.admin",
+    "users.datalake.admins",
     "users.datalake.ops",
     "cron.job",
     "notification.pubsub",

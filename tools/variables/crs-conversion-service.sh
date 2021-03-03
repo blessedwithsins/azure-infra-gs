@@ -50,7 +50,7 @@ if [ ! -d $UNIQUE ]; then mkdir $UNIQUE; fi
 # LocalHost Run Settings
 # ------------------------------------------------------------------------------------------------------
 ENTITLEMENTS_URL="https://${ENV_HOST}/entitlements/v1"
-SIS_DATA=${SRC_ROOT_DIR}/apachesis_setup/SIS_DATA
+SIS_DATA=${SRC_DIR}/apachesis_setup/SIS_DATA
 azure_istioauth_enabled="true"
 
 # ------------------------------------------------------------------------------------------------------
@@ -58,7 +58,7 @@ azure_istioauth_enabled="true"
 # ------------------------------------------------------------------------------------------------------
 INTEGRATION_TESTER="${ENV_PRINCIPAL_ID}"
 TESTER_SERVICEPRINCIPAL_SECRET="${ENV_PRINCIPAL_SECRET}"
-AZURE_AD_TENANT_ID="${TENANT_ID}"
+AZURE_TENANT_ID="${TENANT_ID}"
 AZURE_AD_APP_RESOURCE_ID="${ENV_APP_ID}"
 BASE_URL=/api/crs/converter/v2
 VIRTUAL_SERVICE_HOST_NAME="localhost:8080"
@@ -114,13 +114,13 @@ export ENV_ELASTIC_HOST=$ENV_ELASTIC_HOST
 export ENV_ELASTIC_PORT=$ENV_ELASTIC_PORT
 export ENV_ELASTIC_USERNAME=$ENV_ELASTIC_USERNAME
 export ENV_ELASTIC_PASSWORD=$ENV_ELASTIC_PASSWORD
-export SRC_ROOT_DIR=$SRC_ROOT_DIR
+
 
 # ------------------------------------------------------------------------------------------------------
 # LocalHost Run Settings
 # ------------------------------------------------------------------------------------------------------
 export ENTITLEMENTS_URL="https://${ENV_HOST}/entitlements/v1"
-export SIS_DATA=${SRC_ROOT_DIR}/apachesis_setup/SIS_DATA
+export SIS_DATA=${SRC_DIR}/apachesis_setup/SIS_DATA
 export azure_istioauth_enabled="true"
 
 # ------------------------------------------------------------------------------------------------------
@@ -128,7 +128,7 @@ export azure_istioauth_enabled="true"
 # ------------------------------------------------------------------------------------------------------
 export INTEGRATION_TESTER="${INTEGRATION_TESTER}"
 export TESTER_SERVICEPRINCIPAL_SECRET="${TESTER_SERVICEPRINCIPAL_SECRET}"
-export AZURE_AD_TENANT_ID="${AZURE_AD_TENANT_ID}"
+export AZURE_TENANT_ID="${AZURE_TENANT_ID}"
 export AZURE_AD_APP_RESOURCE_ID="${AZURE_AD_APP_RESOURCE_ID}"
 export BASE_URL=/api/crs/converter/v2
 export VIRTUAL_SERVICE_HOST_NAME="localhost:8080"
@@ -148,7 +148,7 @@ LOCALRUN
 cat > ${UNIQUE}/${SERVICE}_local_test.yaml <<LOCALTEST
 INTEGRATION_TESTER: "${INTEGRATION_TESTER}"
 TESTER_SERVICEPRINCIPAL_SECRET: "${TESTER_SERVICEPRINCIPAL_SECRET}"
-AZURE_AD_TENANT_ID: "${AZURE_AD_TENANT_ID}"
+AZURE_TENANT_ID: "${AZURE_TENANT_ID}"
 AZURE_AD_APP_RESOURCE_ID: "${AZURE_AD_APP_RESOURCE_ID}"
 BASE_URL: "${BASE_URL}"
 VIRTUAL_SERVICE_HOST_NAME: "${VIRTUAL_SERVICE_HOST_NAME}"
@@ -161,7 +161,7 @@ LOCALTEST
 cat > ${UNIQUE}/${SERVICE}_test.yaml <<DEVTEST
 INTEGRATION_TESTER: "${INTEGRATION_TESTER}"
 TESTER_SERVICEPRINCIPAL_SECRET: "${TESTER_SERVICEPRINCIPAL_SECRET}"
-AZURE_AD_TENANT_ID: "${AZURE_AD_TENANT_ID}"
+AZURE_TENANT_ID: "${AZURE_TENANT_ID}"
 AZURE_AD_APP_RESOURCE_ID: "${AZURE_AD_APP_RESOURCE_ID}"
 BASE_URL: "${BASE_URL}"
 VIRTUAL_SERVICE_HOST_NAME: "${ENV_HOST}"
