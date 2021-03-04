@@ -194,7 +194,7 @@ For more information on Azure identity and authorization, see the official Micro
 
 ## Elastic Search Setup
 
-Infrastructure requires a bring your own Elastic Search Instance of a version of 6.8.x with a valid https endpoint and the access information must now be stored in the Common KeyVault. The recommended method of Elastic Search is to use the [Elastic Cloud Managed Service from the Marketplace](https://azuremarketplace.microsoft.com/en-us/marketplace/apps/elastic.ec-azure?tab=Overview).
+Infrastructure requires a bring your own Elastic Search Instance of a version of 7.x (ie: 7.11.1) with a valid https endpoint and the access information must now be stored in the Common KeyVault. The recommended method of Elastic Search is to use the [Elastic Cloud Managed Service from the Marketplace](https://azuremarketplace.microsoft.com/en-us/marketplace/apps/elastic.ec-azure?tab=Overview).
 
 > Note: Elastic Cloud Managed Service requires a Credit Card to be associated to the subscription for billing purposes.
 

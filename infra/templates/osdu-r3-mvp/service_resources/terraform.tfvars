@@ -61,4 +61,5 @@ storage_queues = []
 feature_flag = {
   osdu_namespace = true
   flux           = true
+  sa_lock        = true
 }
