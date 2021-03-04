@@ -36,7 +36,6 @@ airflow:
       path: "/airflow"
       host: #{DNS_HOST}#
       livenessPath: "/airflow/health"
-      timeoutSeconds: 30
       tls:
         enabled: true
         secretName: osdu-certificate
@@ -86,13 +85,15 @@ airflow:
   ###################################
   web:
     replicas: 1
+    livenessProbe:
+      timeoutSeconds: 60
     resources:
       requests:
-        cpu: "500m"
-        memory: "4Gi"
+        cpu: "1000m"
+        memory: "2Gi"
       limits:
         cpu: "2000m"
-        memory: "4Gi"
+        memory: "2Gi"
 
     podLabels:
       aadpodidbinding: "osdu-identity"
@@ -164,8 +165,8 @@ airflow:
       AIRFLOW__CORE__PLUGINS_FOLDER: "/opt/airflow/plugins"
       AIRFLOW__SCHEDULER__DAG_DIR_LIST_INTERVAL: 60
       AIRFLOW__CORE__LOGGING_LEVEL: DEBUG
-      AIRFLOW__CORE__SQL_ALCHEMY_POOL_SIZE: 20
-      AIRFLOW__CORE__SQL_ALCHEMY_MAX_OVERFLOW: 20
+      AIRFLOW__CORE__SQL_ALCHEMY_POOL_SIZE: 40
+      AIRFLOW__CORE__SQL_ALCHEMY_MAX_OVERFLOW: 40
     extraEnv:
     - name: CLOUD_PROVIDER
       value: "azure"
