@@ -36,6 +36,7 @@ airflow:
       path: "/airflow"
       host: #{DNS_HOST}#
       livenessPath: "/airflow/health"
+      timeoutSeconds: 30
       tls:
         enabled: true
         secretName: osdu-certificate
@@ -84,6 +85,15 @@ airflow:
   # Airflow - WebUI Configs
   ###################################
   web:
+    replicas: 1
+    resources:
+      requests:
+        cpu: "500m"
+        memory: "4Gi"
+      limits:
+        cpu: "2000m"
+        memory: "4Gi"
+
     podLabels:
       aadpodidbinding: "osdu-identity"
     baseUrl: "http://localhost/airflow"
@@ -129,8 +139,8 @@ airflow:
   ###################################
   airflow:
     image:
-      repository: quay.io/astronomer/ap-airflow
-      tag: 1.10.12-2-alpine3.10-onbuild
+      repository: apache/airflow
+      tag: 1.10.12-python3.6
       pullPolicy: IfNotPresent
       pullSecret: ""
     config:
@@ -154,6 +164,8 @@ airflow:
       AIRFLOW__CORE__PLUGINS_FOLDER: "/opt/airflow/plugins"
       AIRFLOW__SCHEDULER__DAG_DIR_LIST_INTERVAL: 60
       AIRFLOW__CORE__LOGGING_LEVEL: DEBUG
+      AIRFLOW__CORE__SQL_ALCHEMY_POOL_SIZE: 20
+      AIRFLOW__CORE__SQL_ALCHEMY_MAX_OVERFLOW: 20
     extraEnv:
     - name: CLOUD_PROVIDER
       value: "azure"
