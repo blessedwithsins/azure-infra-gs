@@ -92,7 +92,7 @@ airflow:
         cpu: "1000m"
         memory: "4Gi"
       limits:
-        cpu: "3500m"
+        cpu: "3800m"
         memory: "4Gi"
 
     podLabels:
@@ -167,8 +167,8 @@ airflow:
       AIRFLOW__CORE__LOGGING_LEVEL: DEBUG
       AIRFLOW__CORE__SQL_ALCHEMY_POOL_SIZE: 40
       AIRFLOW__CORE__SQL_ALCHEMY_MAX_OVERFLOW: 40
-      AIRFLOW__WEBSERVER__WORKERS: 8
-      AIRFLOW__WEBSERVER__WORKER_CLASS: eventlet
+      AIRFLOW__WEBSERVER__WORKERS: 12
+      AIRFLOW__WEBSERVER__WORKER_CLASS: sync
     extraEnv:
     - name: CLOUD_PROVIDER
       value: "azure"
