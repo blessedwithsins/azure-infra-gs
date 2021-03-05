@@ -90,10 +90,10 @@ airflow:
     resources:
       requests:
         cpu: "1000m"
-        memory: "2Gi"
+        memory: "4Gi"
       limits:
-        cpu: "2000m"
-        memory: "2Gi"
+        cpu: "3500m"
+        memory: "4Gi"
 
     podLabels:
       aadpodidbinding: "osdu-identity"
@@ -167,6 +167,8 @@ airflow:
       AIRFLOW__CORE__LOGGING_LEVEL: DEBUG
       AIRFLOW__CORE__SQL_ALCHEMY_POOL_SIZE: 40
       AIRFLOW__CORE__SQL_ALCHEMY_MAX_OVERFLOW: 40
+      AIRFLOW__WEBSERVER__WORKERS: 8
+      AIRFLOW__WEBSERVER__WORKER_CLASS: eventlet
     extraEnv:
     - name: CLOUD_PROVIDER
       value: "azure"
