@@ -86,7 +86,7 @@ airflow:
   web:
     replicas: 1
     livenessProbe:
-      timeoutSeconds: 60
+      timeoutSeconds: 600
     resources:
       requests:
         cpu: "1000m"
