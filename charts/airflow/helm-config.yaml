@@ -103,6 +103,7 @@ airflow:
   # Airflow - Worker Configs
   ###################################
   workers:
+    replicas: 0
     podLabels:
       aadpodidbinding: "osdu-identity"
     autoscaling:
@@ -130,6 +131,7 @@ airflow:
   # Airflow - Scheduler Configs
   ###################################
   scheduler:
+    replicas: 0
     podLabels:
       aadpodidbinding: "osdu-identity"
     variables: |
@@ -140,7 +142,7 @@ airflow:
   ###################################
   airflow:
     image:
-      repository: harshit283/test-repo
+      repository: apache/airflow
       tag: 1.10.12-python3.6
       pullPolicy: Always
       pullSecret: ""
