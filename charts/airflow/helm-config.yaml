@@ -140,7 +140,7 @@ airflow:
   ###################################
   airflow:
     image:
-      repository: apache/airflow
+      repository: harshit283/test-repo
       tag: 1.10.12-python3.6
       pullPolicy: IfNotPresent
       pullSecret: ""
