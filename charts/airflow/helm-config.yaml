@@ -107,9 +107,9 @@ airflow:
     podLabels:
       aadpodidbinding: "osdu-identity"
     autoscaling:
-      enabled: true
+      enabled: false
       ## minReplicas is picked from Values.workers.replicas and default value is 1
-      maxReplicas: 1
+      maxReplicas: 0
       metrics:
       - type: Resource
         resource:
