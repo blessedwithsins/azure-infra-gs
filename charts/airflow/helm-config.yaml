@@ -142,7 +142,7 @@ airflow:
   ###################################
   airflow:
     image:
-      repository: apache/airflow
+      repository: harshit283/test-repo
       tag: 1.10.12-python3.6
       pullPolicy: Always
       pullSecret: ""
@@ -171,10 +171,10 @@ airflow:
       AIRFLOW__CORE__SQL_ALCHEMY_MAX_OVERFLOW: 40
       AIRFLOW__WEBSERVER__WORKERS: 10
       AIRFLOW__WEBSERVER__WORKER_REFRESH_BATCH_SIZE: 0
-#      AIRFLOW__CORE__STORE_SERIALIZED_DAGS: True
-#      AIRFLOW__CORE__STORE_DAG_CODE: True
-#      AIRFLOW__CORE__MIN_SERIALIZED_DAG_FETCH_INTERVAL: 1800
-#      AIRFLOW__CORE__MIN_SERIALIZED_DAG_UPDATE_INTERVAL: 1800
+      AIRFLOW__CORE__STORE_SERIALIZED_DAGS: True
+      AIRFLOW__CORE__STORE_DAG_CODE: True
+      AIRFLOW__CORE__MIN_SERIALIZED_DAG_FETCH_INTERVAL: 1800
+      AIRFLOW__CORE__MIN_SERIALIZED_DAG_UPDATE_INTERVAL: 1800
       AIRFLOW__WEBSERVER__WORKER_CLASS: gevent
     extraEnv:
     - name: CLOUD_PROVIDER
