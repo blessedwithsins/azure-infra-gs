@@ -142,7 +142,7 @@ airflow:
     image:
       repository: harshit283/test-repo
       tag: 1.10.12-python3.6
-      pullPolicy: IfNotPresent
+      pullPolicy: Always
       pullSecret: ""
     config:
       AIRFLOW__SCHEDULER__STATSD_ON: "True"
