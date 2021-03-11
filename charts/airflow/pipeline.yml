@@ -52,6 +52,8 @@ variables:
     value: "airflow"
   - name: chartPath
     value: "charts/airflow"
+  - name: valuesFileByoc
+    value: "charts/airflow/helm-config-byoc-override.yaml"
   - name: valuesFile
     value: "charts/airflow/helm-config.yaml"
   - name: 'MANIFEST_REPO'
@@ -74,6 +76,8 @@ stages:
       valuesFile: ${{ variables.valuesFile }}
       skipDeploy: ${{ variables.SKIP_DEPLOY }}
       skipCheck: true
+      enableKeyvaultCert: $[ variables.ENABLE_KEYVAULT_CERT ]
+      valuesFileByoc: ${{ variables.valuesFileByoc }}
       chartModificationScript: "scripts/add-namespace.py"
       # Add multiple chart folder paths with pipe(|) seperated
       extractedChartFolder: "templates|charts/airflow/templates"
