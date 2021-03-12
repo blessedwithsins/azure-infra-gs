@@ -31,7 +31,8 @@ airflow:
         appgw.ingress.kubernetes.io/request-timeout: "300"
         appgw.ingress.kubernetes.io/connection-draining: "true"
         appgw.ingress.kubernetes.io/connection-draining-timeout: "30"
-        #{CERT_ANNOATION}#
+        #{CERT_ISSUER}#
+        #{CERT_ISSUER_PROTOCOL}#
       path: "/airflow"
       host: #{DNS_HOST}#
       livenessPath: "/airflow/health"
