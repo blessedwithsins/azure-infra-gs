@@ -89,7 +89,7 @@ airflow:
       timeoutSeconds: 60
     resources:
       requests:
-        cpu: "1000m"
+        cpu: "3000m"
         memory: "4Gi"
       limits:
         cpu: "3800m"
