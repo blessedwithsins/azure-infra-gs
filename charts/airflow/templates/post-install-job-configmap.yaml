@@ -12,6 +12,7 @@ data:
     import sys
     from flask_bcrypt import generate_password_hash
     import psycopg2
+    import subprocess
 
     PY3 = sys.version_info[0] == 3
 
@@ -22,11 +23,18 @@ data:
         database_login_pass = os.environ.get('DATABASE_USER_PASS','')
         airflow_admin =os.environ.get('AIRFLOW_ADMIN','')
         airflow_pass =os.environ.get('AIRFLOW_ADMIN_PASS','')
+        airflow_rbac_create_user = os.environ.get('AIRFLOW_RBAC_CREATE_USER',False)
+        airflow_rbac = os.environ.get('AIRFLOW_RBAC',True)
         retry = 6
         retry_window = 10
         if not airflow_admin or not airflow_pass or not server or not database or not database_login_name or not database_login_pass:
             print('missed required environment variables')
             sys.exit(2)
+
+        if is_true(airflow_rbac) and is_true(airflow_rbac_create_user):
+            create_rbac_user(airflow_admin, airflow_pass)
+        else:
+            print('rbac user not created')
 
         while retry>0:
             time.sleep(retry_window)
@@ -58,6 +66,11 @@ data:
             if conn is not None:
                 conn.close()
 
+    def create_rbac_user(airflow_admin,airflow_pass):
+        emailid="admin@admin.com"
+        bashCommand = ("airflow create_user -r Admin -u {} -f {} -l {} -p {} -e {}".format(airflow_admin,airflow_admin,airflow_admin,airflow_pass,emailid))
+        process = subprocess.call(bashCommand, shell=True)
+
     def check(server,database,db_login_name,db_login_pass,check_type="database"):
         conn_string = None
         connection = None
@@ -81,6 +94,9 @@ data:
             object_exists = cur.fetchone()[0]
             connection.close()
         return object_exists     
+
+    def is_true(value)
+        return value == "True"
 
     if __name__ == "__main__":
         main()
