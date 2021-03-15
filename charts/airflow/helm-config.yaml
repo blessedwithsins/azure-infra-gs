@@ -24,7 +24,7 @@ airflow:
   # Kubernetes - Ingress Configs
   ###################################
   ingress:
-    enabled: true
+    enabled: false
     web:
       annotations:
         kubernetes.io/ingress.class: azure/application-gateway
@@ -84,7 +84,7 @@ airflow:
   # Airflow - WebUI Configs
   ###################################
   web:
-    replicas: 10
+    replicas: 1
     livenessProbe:
       timeoutSeconds: 60
     resources:
@@ -154,9 +154,9 @@ airflow:
       AIRFLOW__CORE__DAGS_ARE_PAUSED_AT_CREATION: "False"
       ## Enable for Debug purpose
       AIRFLOW__WEBSERVER__EXPOSE_CONFIG: "False"
-      AIRFLOW__WEBSERVER__AUTHENTICATE: "False"
-      AIRFLOW__WEBSERVER__AUTH_BACKEND: "airflow.contrib.auth.backends.password_auth"
-      AIRFLOW__API__AUTH_BACKEND: "airflow.contrib.auth.backends.password_auth"
+      AIRFLOW__WEBSERVER__AUTHENTICATE: "True"
+      AIRFLOW__WEBSERVER__AUTH_BACKEND: "airflow.api.auth.backend.default"
+      AIRFLOW__API__AUTH_BACKEND: "airflow.api.auth.backend.default"
       AIRFLOW__CORE__REMOTE_LOGGING: "True"
       AIRFLOW__CORE__REMOTE_LOG_CONN_ID: "az_log"
       AIRFLOW__CORE__REMOTE_BASE_LOG_FOLDER: "wasb-airflowlog"
