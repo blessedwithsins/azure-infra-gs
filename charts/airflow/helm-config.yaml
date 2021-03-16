@@ -24,14 +24,14 @@ airflow:
   # Kubernetes - Ingress Configs
   ###################################
   ingress:
-    enabled: false
+    enabled: true
     web:
       annotations:
         kubernetes.io/ingress.class: azure/application-gateway
         appgw.ingress.kubernetes.io/request-timeout: "300"
         appgw.ingress.kubernetes.io/connection-draining: "true"
         appgw.ingress.kubernetes.io/connection-draining-timeout: "30"
-        cert-manager.io/cluster-issuer: letsencrypt
+        cert-manager.io/cluster-issuer: letsencryptl
         cert-manager.io/acme-challenge-type: http01
       path: "/airflow"
       host: #{DNS_HOST}#
@@ -40,7 +40,7 @@ airflow:
         enabled: true
         secretName: osdu-certificate
       precedingPaths:
-        - path: "/airflow/*"
+        - path: "/airflow/health*"
           serviceName: airflow-web
           servicePort: 8080
 
