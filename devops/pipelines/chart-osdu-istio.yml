@@ -52,4 +52,4 @@
         skipCheck: true
         providers:
           - name: Azure
-            environments: ["demo"]
+            environments: ["ingestiontestenv"]

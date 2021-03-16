@@ -52,7 +52,7 @@ stages:
 - template: /devops/infra-prepare-stage.yml
   parameters:
     environments:
-    - name: 'demo'
+    - name: 'ingestiontestenv'
       enablePrIsolation: false
       resourceNameIsolationLevel: 8
 

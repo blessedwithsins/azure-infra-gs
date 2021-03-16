@@ -13,7 +13,7 @@ global:
     resourcegroup: #{base-name-cr}#-rg
     identity: #{base-name-cr}#-osdu-identity
     identity_id: #{osdu-identity-id}#
-    keyvault: #{base-name-cr}#-kv
+    keyvault: #{COMMON_RESOURCES_KEY_VAULT_NAME}#
     appid: #{aad-client-id}#
 
   ################################################################################

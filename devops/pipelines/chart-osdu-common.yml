@@ -51,4 +51,4 @@ stages:
       skipDeploy: ${{ variables.SKIP_DEPLOY }}
       providers:
         - name: Azure
-          environments: ["demo"]
+          environments: ["ingestiontestenv"]
