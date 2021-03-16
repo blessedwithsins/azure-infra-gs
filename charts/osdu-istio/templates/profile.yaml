@@ -32,3 +32,5 @@ spec:
     global:
       proxy:
         logLevel: info
+  meshConfig:
+    accessLogFile: /dev/stdout
