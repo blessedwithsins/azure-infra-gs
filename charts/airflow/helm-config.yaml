@@ -84,7 +84,7 @@ airflow:
   # Airflow - WebUI Configs
   ###################################
   web:
-    replicas: 1
+    replicas: 10
     livenessProbe:
       timeoutSeconds: 60
     resources:
