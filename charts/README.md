@@ -56,11 +56,12 @@ global:
   # Lets Encrypt SSL Server
   #     https://acme-staging-v02.api.letsencrypt.org/directory  --> Staging Server
   #     https://acme-v02.api.letsencrypt.org/directory --> Production Server
-  #
+  # To use your own ssl cert make useOwnCertificate to true --> sslServer will be ignored.
   ingress:
     hostname: $DNS_HOST
     admin: $ADMIN_EMAIL
     sslServer: https://acme-v02.api.letsencrypt.org/directory  # Production
+    useOwnCertificate: false
 
   ################################################################################
   # Specify the istio specific values

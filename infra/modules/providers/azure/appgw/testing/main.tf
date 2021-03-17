@@ -89,6 +89,10 @@ resource "azurerm_key_vault_certificate" "test" {
       validity_in_months = 12
     }
   }
+
+  lifecycle {
+    ignore_changes = all
+  }
 }
 
 

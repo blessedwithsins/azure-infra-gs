@@ -31,13 +31,12 @@ airflow:
         appgw.ingress.kubernetes.io/request-timeout: "300"
         appgw.ingress.kubernetes.io/connection-draining: "true"
         appgw.ingress.kubernetes.io/connection-draining-timeout: "30"
-        cert-manager.io/cluster-issuer: letsencrypt
-        cert-manager.io/acme-challenge-type: http01
+        appgw.ingress.kubernetes.io/appgw-ssl-certificate: "appgw-ssl-cert"
       path: "/airflow"
       host: #{DNS_HOST}#
       livenessPath: "/airflow/health"
       tls:
-        enabled: true
+        enabled: false
         secretName: osdu-certificate
       precedingPaths:
         - path: "/airflow/*"
@@ -99,12 +98,12 @@ airflow:
       ## minReplicas is picked from Values.workers.replicas and default value is 1
       maxReplicas: 3
       metrics:
-      - type: Resource
-        resource:
-          name: memory
-          target:
-            type: Utilization
-            averageUtilization: 60
+        - type: Resource
+          resource:
+            name: memory
+            target:
+              type: Utilization
+              averageUtilization: 60
     resources:
       requests:
         memory: "512Mi"
@@ -155,53 +154,53 @@ airflow:
       AIRFLOW__SCHEDULER__DAG_DIR_LIST_INTERVAL: 60
       AIRFLOW__CORE__LOGGING_LEVEL: DEBUG
     extraEnv:
-    - name: CLOUD_PROVIDER
-      value: "azure"
-    - name: AIRFLOW_VAR_KEYVAULT_URI
-      valueFrom:
-        configMapKeyRef:
-          name: osdu-svc-properties
-          key: ENV_KEYVAULT
-    - name: AIRFLOW__CORE__FERNET_KEY
-      valueFrom:
-        secretKeyRef:
-          name: airflow
-          key: fernet-key
-    - name: AIRFLOW_CONN_AZ_LOG
-      valueFrom:
-        secretKeyRef:
-          name: airflow
-          key: remote-log-connection
-    - name: AIRFLOW_VAR_AZURE_TENANT_ID
-      valueFrom:
-        secretKeyRef:
-          name: active-directory
-          key: tenantid
-    - name: AIRFLOW_VAR_AZURE_CLIENT_ID
-      valueFrom:
-        secretKeyRef:
-          name: active-directory
-          key: principal-clientid
-    - name: AIRFLOW_VAR_AZURE_CLIENT_SECRET
-      valueFrom:
-        secretKeyRef:
-          name: active-directory
-          key: principal-clientpassword
-    - name: AIRFLOW_VAR_AAD_CLIENT_ID
-      valueFrom:
-        secretKeyRef:
-          name: active-directory
-          key: application-appid
-    - name: AIRFLOW_VAR_APPINSIGHTS_KEY
-      valueFrom:
-        secretKeyRef:
-          name: central-logging
-          key: appinsights
+      - name: CLOUD_PROVIDER
+        value: "azure"
+      - name: AIRFLOW_VAR_KEYVAULT_URI
+        valueFrom:
+          configMapKeyRef:
+            name: osdu-svc-properties
+            key: ENV_KEYVAULT
+      - name: AIRFLOW__CORE__FERNET_KEY
+        valueFrom:
+          secretKeyRef:
+            name: airflow
+            key: fernet-key
+      - name: AIRFLOW_CONN_AZ_LOG
+        valueFrom:
+          secretKeyRef:
+            name: airflow
+            key: remote-log-connection
+      - name: AIRFLOW_VAR_AZURE_TENANT_ID
+        valueFrom:
+          secretKeyRef:
+            name: active-directory
+            key: tenantid
+      - name: AIRFLOW_VAR_AZURE_CLIENT_ID
+        valueFrom:
+          secretKeyRef:
+            name: active-directory
+            key: principal-clientid
+      - name: AIRFLOW_VAR_AZURE_CLIENT_SECRET
+        valueFrom:
+          secretKeyRef:
+            name: active-directory
+            key: principal-clientpassword
+      - name: AIRFLOW_VAR_AAD_CLIENT_ID
+        valueFrom:
+          secretKeyRef:
+            name: active-directory
+            key: application-appid
+      - name: AIRFLOW_VAR_APPINSIGHTS_KEY
+        valueFrom:
+          secretKeyRef:
+            name: central-logging
+            key: appinsights
     extraConfigmapMounts:
-        - name: remote-log-config
-          mountPath: /opt/airflow/config
-          configMap: airflow-remote-log-config
-          readOnly: true
+      - name: remote-log-config
+        mountPath: /opt/airflow/config
+        configMap: airflow-remote-log-config
+        readOnly: true
     extraPipPackages: [
         "flask-bcrypt",
         "apache-airflow[statsd]",
@@ -218,16 +217,16 @@ airflow:
         "https://azglobalosdutestlake.blob.core.windows.net/pythonsdk/osdu_api-0.0.4.tar.gz"
     ]
     extraVolumeMounts:
-        - name: azure-keyvault
-          mountPath: "/mnt/azure-keyvault"
-          readOnly: true
-        - name: dags-data
-          mountPath: /opt/airflow/plugins
-          subPath: plugins
+      - name: azure-keyvault
+        mountPath: "/mnt/azure-keyvault"
+        readOnly: true
+      - name: dags-data
+        mountPath: /opt/airflow/plugins
+        subPath: plugins
     extraVolumes:
-        - name: azure-keyvault
-          csi:
-            driver: secrets-store.csi.k8s.io
-            readOnly: true
-            volumeAttributes:
-              secretProviderClass: azure-keyvault
+      - name: azure-keyvault
+        csi:
+          driver: secrets-store.csi.k8s.io
+          readOnly: true
+          volumeAttributes:
+            secretProviderClass: azure-keyvault
