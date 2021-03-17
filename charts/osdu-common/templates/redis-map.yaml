@@ -11,3 +11,4 @@ data:
   storage: "5"
   indexer-service: "6"
   search-service: "7"
+  entitlements: "8"

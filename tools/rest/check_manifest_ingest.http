@@ -1012,7 +1012,6 @@ data-partition-id: {{data_partition_id}}
             ]
           },
           "data": {
-            "ResourceSecurityClassification": "osdu:reference-data--ResourceSecurityClassification:Public:",
             "Source": "NL_TNO",
             "SpatialLocation": {
               "Wgs84Coordinates": {
@@ -1033,31 +1032,26 @@ data-partition-id: {{data_partition_id}}
               }
             },
             "FacilityID": "10110909",
-            "FacilityTypeID": "osdu:reference-data--FacilityType:WELL:",
             "FacilityOperator": [
               {
-                "FacilityOperatorID": "410464",
-                "FacilityOperatorOrganisationID": "osdu:master-data--Organisation:HESS:"
+                "FacilityOperatorID": "410464"
               }
             ],
             "FacilityName": "A05-01",
             "FacilityNameAlias": [
               {
-                "AliasName": "A05-01",
-                "AliasNameTypeID": "osdu:reference-data--AliasNameType:WELL_NAME:"
+                "AliasName": "A05-01"
               }
             ],
             "FacilityEvent": [
               {
-                "FacilityEventTypeID": "osdu:reference-data--FacilityEventType:SPUD_DATE:",
                 "EffectiveDateTime": "1999-06-03T00:00:00"
               }
             ],
             "VerticalMeasurements": [
               {
                 "VerticalMeasurementID": "Kelly Bushing",
-                "VerticalMeasurement": 36.6,
-                "VerticalMeasurementPathID": "osdu:reference-data--VerticalMeasurementPath:DEPTH_DATUM_ELEV:"
+                "VerticalMeasurement": 36.6
               }
             ],
             "NameAliases": [],
@@ -1123,11 +1117,10 @@ data-partition-id: {{data_partition_id}}
             ]
           },
           "data": {
-            "ResourceSecurityClassification": "osdu:reference-data--ResourceSecurityClassification:RESTRICTED:",
             "Name": "69_D_CH_11",
             "Description": "Document",
             "Components": [
-              "osdu:work-product-component--WellboreMarkerSet:feb2:1"
+              "osdu:work-product-component--WellboreMarkerSet:feb2:1:"
             ]
           }
         },
@@ -1152,13 +1145,11 @@ data-partition-id: {{data_partition_id}}
               ]
             },
             "data": {
-              "ResourceSecurityClassification": "osdu:reference-data--ResourceSecurityClassification:RESTRICTED:",
               "Name": "7587.csv",
               "Description": "Wellbore Marker",
               "Datasets": [
-                "osdu:dataset--Generic:feb02:1"
+                "{{data_partition_id}}:dataset--File.Generic:44e3a00738b24c948fc4696bf37999999:"
               ],
-              "WellboreID": "osdu:master-data--Wellbore:7587:",
               "Markers": [
                 {
                   "MarkerName": "North Sea Supergroup",
@@ -1286,11 +1277,9 @@ data-partition-id: {{data_partition_id}}
             },
             "data": {
               "Endian": "BIG",
-              "ResourceSecurityClassification": "osdu:reference-data--ResourceSecurityClassification:RESTRICTED:",
               "DatasetProperties": {
                 "FileSourceInfo": {
-                  "FileSource": "gs://osdu-cicd-epam-file/volve/seismic/st0202/velocities/SeismicOrderSummary+Headers.txt",
-                  "PreloadFilePath": "gs://osdu-cicd-epam-file/volve/seismic/st0202/velocities/SeismicOrderSummary+Headers.txt"
+                  "FileSource": "This would be a valid file source in the future"
                 }
               }
             }

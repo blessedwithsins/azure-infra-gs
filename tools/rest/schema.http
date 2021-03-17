@@ -64,7 +64,7 @@ data-partition-id: {{data_partition_id}}
 # @name createSchema
 POST {{SCHEMA_HOST}}/schema
 Authorization: Bearer {{access_token}}
-Accept: application/json
+Content-Type: application/json
 data-partition-id: {{data_partition_id}}
 
 {
