@@ -114,7 +114,7 @@ airflowLogin:
 #
 customConfig:
   rbac:
-    createUser: true
+    createUser: "True"
 
 ################################################################################
 # Specify the airflow configuration
