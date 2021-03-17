@@ -24,7 +24,7 @@ data:
         airflow_admin =os.environ.get('AIRFLOW_ADMIN','')
         airflow_pass =os.environ.get('AIRFLOW_ADMIN_PASS','')
         airflow_rbac_create_user = os.environ.get('AIRFLOW_RBAC_CREATE_USER',False)
-        airflow_rbac = os.environ.get('AIRFLOW_RBAC',True)
+        airflow_rbac = os.environ.get('AIRFLOW__WEBSERVER__RBAC',True)
         retry = 6
         retry_window = 10
         if not airflow_admin or not airflow_pass or not server or not database or not database_login_name or not database_login_pass:

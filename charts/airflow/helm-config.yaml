@@ -16,6 +16,13 @@ airflowLogin:
   name: admin
 
 ################################################################################
+# Specify any custom configs/environment values
+#
+customConfig:
+  rbac:
+    createUser: true
+
+################################################################################
 # Specify the airflow configuration
 #
 airflow:
@@ -87,9 +94,6 @@ airflow:
     podLabels:
       aadpodidbinding: "osdu-identity"
     baseUrl: "http://localhost/airflow"
-    rbac:
-      enabled: true
-      createUser: true
 
   ###################################
   # Airflow - Worker Configs
