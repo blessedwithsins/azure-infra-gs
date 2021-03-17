@@ -1,260 +1,3 @@
-#################################################################################
-## Specify the azure environment specific values
-##
-#appinsightstatsd:
-#  aadpodidbinding: "osdu-identity"
-#
-#################################################################################
-## Specify any optional override values
-##
-#image:
-#  repository: #{container-registry}#.azurecr.io
-#  branch: #{ENVIRONMENT_NAME}#
-#  tag: #{Build.SourceVersion}#
-#
-#airflowLogin:
-#  name: admin
-#
-#################################################################################
-## Specify the airflow configuration
-##
-#airflow:
-#
-#  ###################################
-#  # Kubernetes - Ingress Configs
-#  ###################################
-#  ingress:
-#    enabled: true
-#    web:
-#      annotations:
-#        kubernetes.io/ingress.class: azure/application-gateway
-#        appgw.ingress.kubernetes.io/request-timeout: "300"
-#        appgw.ingress.kubernetes.io/connection-draining: "true"
-#        appgw.ingress.kubernetes.io/connection-draining-timeout: "30"
-#        cert-manager.io/cluster-issuer: letsencryptl
-#        cert-manager.io/acme-challenge-type: http01
-#      path: "/airflow"
-#      host: #{DNS_HOST}#
-#      livenessPath: "/airflow/health"
-#      tls:
-#        enabled: true
-#        secretName: osdu-certificate
-#      precedingPaths:
-#        - path: "/airflow/*"
-#          serviceName: airflow-web
-#          servicePort: 8080
-#
-#  ###################################
-#  # Database - External Database
-#  ###################################
-#  postgresql:
-#    enabled: false
-#  externalDatabase:
-#    type: postgres
-#    host: #{base-name-sr}#-pg.postgres.database.azure.com     #<-- Azure PostgreSQL Database host
-#    user:  osdu_admin@#{base-name-sr}#-pg                     #<-- Azure PostgreSQL Database username, formatted as {username}@{hostname}
-#    passwordSecret: "postgres"
-#    passwordSecretKey: "postgres-password"
-#    port: 5432
-#    properties: "?sslmode=require"
-#    database: airflow
-#
-#  ###################################
-#  # Database - External Redis
-#  ###################################
-#  redis:
-#    enabled: false
-#  externalRedis:
-#    host: #{base-name-sr}#-cache.redis.cache.windows.net    #<-- Azure Redis Cache host
-#    port: 6380
-#    passwordSecret: "redis"
-#    passwordSecretKey: "redis-password"
-#
-#  ###################################
-#  # Airflow - DAGs Configs
-#  ###################################
-#  dags:
-#    installRequirements: true
-#    persistence:
-#      enabled: true
-#      existingClaim: airflowdagpvc
-#      subPath: "dags"
-#
-#  ###################################
-#  # Airflow - WebUI Configs
-#  ###################################
-#  web:
-#    replicas: 10
-#    livenessProbe:
-#      timeoutSeconds: 60
-#    resources:
-#      requests:
-#        cpu: "1500m"
-#        memory: "3Gi"
-#      limits:
-#        cpu: "3800m"
-#        memory: "3Gi"
-#
-#    podLabels:
-#      aadpodidbinding: "osdu-identity"
-#    baseUrl: "http://localhost/airflow"
-#
-#  ###################################
-#  # Airflow - Worker Configs
-#  ###################################
-#  workers:
-#    replicas: 0
-#    podLabels:
-#      aadpodidbinding: "osdu-identity"
-#    autoscaling:
-#      enabled: false
-#      ## minReplicas is picked from Values.workers.replicas and default value is 1
-#      maxReplicas: 0
-#      metrics:
-#      - type: Resource
-#        resource:
-#          name: memory
-#          target:
-#            type: Utilization
-#            averageUtilization: 60
-#    resources:
-#      requests:
-#        memory: "512Mi"
-#
-#  ###################################
-#  # Airflow - Flower Configs
-#  ###################################
-#  flower:
-#    enabled: false
-#
-#  ###################################
-#  # Airflow - Scheduler Configs
-#  ###################################
-#  scheduler:
-#    replicas: 0
-#    podLabels:
-#      aadpodidbinding: "osdu-identity"
-#    variables: |
-#      {}
-#
-#  ###################################
-#  # Airflow - Common Configs
-#  ###################################
-#  airflow:
-#    image:
-#      repository: harshit283/test-repo
-#      tag: 1.10.12-python3.6
-#      pullPolicy: Always
-#      pullSecret: ""
-#    config:
-#      AIRFLOW__SCHEDULER__STATSD_ON: "True"
-#      AIRFLOW__SCHEDULER__STATSD_HOST: "appinsights-statsd"
-#      AIRFLOW__SCHEDULER__STATSD_PORT: 8125
-#      AIRFLOW__SCHEDULER__STATSD_PREFIX: "osdu_airflow"
-#      AIRFLOW__CORE__DAGS_ARE_PAUSED_AT_CREATION: "False"
-#      ## Enable for Debug purpose
-#      AIRFLOW__WEBSERVER__EXPOSE_CONFIG: "False"
-#      AIRFLOW__WEBSERVER__AUTHENTICATE: "True"
-#      AIRFLOW__WEBSERVER__AUTH_BACKEND: "airflow.api.auth.backend.default"
-#      AIRFLOW__API__AUTH_BACKEND: "airflow.api.auth.backend.default"
-#      AIRFLOW__CORE__REMOTE_LOGGING: "True"
-#      AIRFLOW__CORE__REMOTE_LOG_CONN_ID: "az_log"
-#      AIRFLOW__CORE__REMOTE_BASE_LOG_FOLDER: "wasb-airflowlog"
-#      AIRFLOW__CORE__LOGGING_CONFIG_CLASS: "log_config.DEFAULT_LOGGING_CONFIG"
-#      AIRFLOW__CORE__LOG_FILENAME_TEMPLATE: "{{ run_id }}/{{ ti.dag_id }}/{{ ti.task_id }}/{{ ts }}/{% if 'correlationId' in dag_run.conf %}{{ dag_run.conf['correlationId'] }}{% else %}None{% endif %}/{{ try_number }}.log"
-#      AIRFLOW__CELERY__SSL_ACTIVE: "True"
-#      AIRFLOW__WEBSERVER__ENABLE_PROXY_FIX: "True"
-#      AIRFLOW__CORE__PLUGINS_FOLDER: "/opt/airflow/plugins"
-#      AIRFLOW__SCHEDULER__DAG_DIR_LIST_INTERVAL: 60
-#      AIRFLOW__CORE__LOGGING_LEVEL: DEBUG
-#      AIRFLOW__CORE__SQL_ALCHEMY_POOL_SIZE: 40
-#      AIRFLOW__CORE__SQL_ALCHEMY_MAX_OVERFLOW: 40
-#      AIRFLOW__WEBSERVER__WORKERS: 10
-#      AIRFLOW__WEBSERVER__WORKER_REFRESH_BATCH_SIZE: 0
-#      AIRFLOW__CORE__STORE_SERIALIZED_DAGS: True
-#      AIRFLOW__CORE__STORE_DAG_CODE: True
-#      AIRFLOW__CORE__MIN_SERIALIZED_DAG_FETCH_INTERVAL: 1800
-#      AIRFLOW__CORE__MIN_SERIALIZED_DAG_UPDATE_INTERVAL: 1800
-#      AIRFLOW__WEBSERVER__WORKER_CLASS: gevent
-#    extraEnv:
-#    - name: CLOUD_PROVIDER
-#      value: "azure"
-#    - name: AIRFLOW_VAR_KEYVAULT_URI
-#      valueFrom:
-#        configMapKeyRef:
-#          name: osdu-svc-properties
-#          key: ENV_KEYVAULT
-#    - name: AIRFLOW__CORE__FERNET_KEY
-#      valueFrom:
-#        secretKeyRef:
-#          name: airflow
-#          key: fernet-key
-#    - name: AIRFLOW_CONN_AZ_LOG
-#      valueFrom:
-#        secretKeyRef:
-#          name: airflow
-#          key: remote-log-connection
-#    - name: AIRFLOW_VAR_AZURE_TENANT_ID
-#      valueFrom:
-#        secretKeyRef:
-#          name: active-directory
-#          key: tenantid
-#    - name: AIRFLOW_VAR_AZURE_CLIENT_ID
-#      valueFrom:
-#        secretKeyRef:
-#          name: active-directory
-#          key: principal-clientid
-#    - name: AIRFLOW_VAR_AZURE_CLIENT_SECRET
-#      valueFrom:
-#        secretKeyRef:
-#          name: active-directory
-#          key: principal-clientpassword
-#    - name: AIRFLOW_VAR_AAD_CLIENT_ID
-#      valueFrom:
-#        secretKeyRef:
-#          name: active-directory
-#          key: application-appid
-#    - name: AIRFLOW_VAR_APPINSIGHTS_KEY
-#      valueFrom:
-#        secretKeyRef:
-#          name: central-logging
-#          key: appinsights
-#    extraConfigmapMounts:
-#        - name: remote-log-config
-#          mountPath: /opt/airflow/config
-#          configMap: airflow-remote-log-config
-#          readOnly: true
-#    extraPipPackages: [
-#        "flask-bcrypt",
-#        "apache-airflow[statsd]",
-#        "apache-airflow[kubernetes]",
-#        "apache-airflow-backport-providers-microsoft-azure",
-#        "dataclasses",
-#        "google-cloud-storage",
-#        "python-keycloak",
-#        "msal",
-#        "azure-identity",
-#        "azure-keyvault-secrets",
-#        "azure-storage-blob",
-#        "azure-servicebus",
-#        "https://azglobalosdutestlake.blob.core.windows.net/pythonsdk/osdu_api-0.0.4.tar.gz"
-#    ]
-#    extraVolumeMounts:
-#        - name: azure-keyvault
-#          mountPath: "/mnt/azure-keyvault"
-#          readOnly: true
-#        - name: dags-data
-#          mountPath: /opt/airflow/plugins
-#          subPath: plugins
-#    extraVolumes:
-#        - name: azure-keyvault
-#          csi:
-#            driver: secrets-store.csi.k8s.io
-#            readOnly: true
-#            volumeAttributes:
-#              secretProviderClass: azure-keyvault
-
-
 ################################################################################
 # Specify the azure environment specific values
 #
@@ -341,7 +84,7 @@ airflow:
   # Airflow - WebUI Configs
   ###################################
   web:
-    replicas: 10
+    replicas: 12
     livenessProbe:
       timeoutSeconds: 60
     podLabels:
@@ -402,8 +145,8 @@ airflow:
       ## Enable for Debug purpose
       AIRFLOW__WEBSERVER__EXPOSE_CONFIG: "False"
       AIRFLOW__WEBSERVER__AUTHENTICATE: "True"
-      AIRFLOW__WEBSERVER__AUTH_BACKEND: "airflow.api.auth.backend.default"
-      AIRFLOW__API__AUTH_BACKEND: "airflow.api.auth.backend.default"
+      AIRFLOW__WEBSERVER__AUTH_BACKEND: "airflow.contrib.auth.backends.password_auth"
+      AIRFLOW__API__AUTH_BACKEND: "airflow.contrib.auth.backends.password_auth"
       AIRFLOW__CORE__REMOTE_LOGGING: "True"
       AIRFLOW__CORE__REMOTE_LOG_CONN_ID: "az_log"
       AIRFLOW__CORE__REMOTE_BASE_LOG_FOLDER: "wasb-airflowlog"
@@ -420,8 +163,8 @@ airflow:
       AIRFLOW_VAR_CORE__SERVICE__STORAGE__URL: "http://storage.osdu.svc.cluster.local/api/storage/v2/records"
       AIRFLOW_VAR_CORE__SERVICE__FILE__HOST: "http://file.osdu.svc.cluster.local/api/file/v2"
       AIRFLOW_VAR_CORE__SERVICE__WORKFLOW__HOST: "http://ingestion-workflow.osdu.svc.cluster.local/api/workflow"
-      AIRFLOW__CORE__SQL_ALCHEMY_POOL_SIZE: 200
-      AIRFLOW__CORE__SQL_ALCHEMY_MAX_OVERFLOW: 200
+      AIRFLOW__CORE__SQL_ALCHEMY_POOL_SIZE: 20
+      AIRFLOW__CORE__SQL_ALCHEMY_MAX_OVERFLOW: 20
       AIRFLOW__WEBSERVER__WORKERS: 10
       AIRFLOW__WEBSERVER__WORKER_REFRESH_BATCH_SIZE: 0
       AIRFLOW__CORE__STORE_SERIALIZED_DAGS: True
