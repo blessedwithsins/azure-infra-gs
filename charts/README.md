@@ -109,6 +109,12 @@ image:
 airflowLogin:
   name: admin
 
+################################################################################
+# Specify any custom configs/environment values
+#
+customConfig:
+  rbac:
+    createUser: "True"
 
 ################################################################################
 # Specify the airflow configuration
@@ -241,6 +247,7 @@ airflow:
       AIRFLOW__WEBSERVER__EXPOSE_CONFIG: "False"
       AIRFLOW__WEBSERVER__AUTHENTICATE: "True"
       AIRFLOW__WEBSERVER__AUTH_BACKEND: "airflow.contrib.auth.backends.password_auth"
+      AIRFLOW__WEBSERVER__RBAC: "True"
       AIRFLOW__API__AUTH_BACKEND: "airflow.contrib.auth.backends.password_auth"
       AIRFLOW__CORE__REMOTE_LOGGING: "True"
       AIRFLOW__CORE__REMOTE_LOG_CONN_ID: "az_log"
