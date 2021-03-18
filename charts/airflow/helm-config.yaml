@@ -160,12 +160,11 @@ airflow:
       AIRFLOW_VAR_CORE__SERVICE__STORAGE__URL: "http://storage.osdu.svc.cluster.local/api/storage/v2/records"
       AIRFLOW_VAR_CORE__SERVICE__FILE__HOST: "http://file.osdu.svc.cluster.local/api/file/v2"
       AIRFLOW_VAR_CORE__SERVICE__WORKFLOW__HOST: "http://ingestion-workflow.osdu.svc.cluster.local/api/workflow"
-      AIRFLOW__CELERY__WORKER_CONCURRENCY: 50
+      AIRFLOW__CELERY__WORKER_CONCURRENCY: 25
       AIRFLOW__CORE__PARALLELISM: 100
       AIRFLOW__CORE__DAG_CONCURRENCY: 100
       AIRFLOW__CORE__MAX_ACTIVE_RUNS_PER_DAG: 100
       AIRFLOW__CELERY__SYNC_PARALLELISM: 5
-      AIRFLOW__CELERY__OPERATION_TIMEOUT: 5
     extraEnv:
     - name: CLOUD_PROVIDER
       value: "azure"
