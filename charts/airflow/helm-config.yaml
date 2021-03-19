@@ -43,9 +43,6 @@ airflow:
         - path: "/airflow/admin"
           serviceName: airflow-web
           servicePort: 8080
-        - path: "/airflow/health"
-          serviceName: airflow-web
-          servicePort: 8080
 
   ###################################
   # Database - External Database
