@@ -40,7 +40,10 @@ airflow:
         enabled: true
         secretName: osdu-certificate
       precedingPaths:
-        - path: "/airflow/*"
+        - path: "/airflow/admin"
+          serviceName: airflow-web
+          servicePort: 8080
+        - path: "/airflow/health"
           serviceName: airflow-web
           servicePort: 8080
 
@@ -84,7 +87,7 @@ airflow:
   # Airflow - WebUI Configs
   ###################################
   web:
-    replicas: 12
+    replicas: 1
     livenessProbe:
       timeoutSeconds: 60
     resources:
@@ -139,7 +142,7 @@ airflow:
   ###################################
   airflow:
     image:
-      repository: apache/airflow
+      repository: harshit283/test-repo
       tag: 1.10.12-python3.6
       pullPolicy: IfNotPresent
       pullSecret: ""
@@ -153,7 +156,7 @@ airflow:
       AIRFLOW__WEBSERVER__EXPOSE_CONFIG: "False"
       AIRFLOW__WEBSERVER__AUTHENTICATE: "True"
       AIRFLOW__WEBSERVER__AUTH_BACKEND: "airflow.contrib.auth.backends.password_auth"
-      AIRFLOW__API__AUTH_BACKEND: "airflow.contrib.auth.backends.password_auth"
+      AIRFLOW__API__AUTH_BACKEND: "airflow.api.auth.backend.default"
       AIRFLOW__CORE__REMOTE_LOGGING: "True"
       AIRFLOW__CORE__REMOTE_LOG_CONN_ID: "az_log"
       AIRFLOW__CORE__REMOTE_BASE_LOG_FOLDER: "wasb-airflowlog"
