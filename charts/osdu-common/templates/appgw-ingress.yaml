@@ -80,7 +80,7 @@ spec:
               servicePort: 80
             path: /api/workflow/*
           - backend:
-              serviceName: wellbore-domain-services
+              serviceName: os-wellbore-ddms
               servicePort: 80
             path: /api/os-wellbore-ddms/*
           - backend:

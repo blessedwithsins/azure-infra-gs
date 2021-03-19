@@ -70,3 +70,8 @@ output "principal_objectId" {
   description = "The service principal application object id"
   value       = var.principal_objectId
 }
+
+output "app_insights_name" {
+  description = "The name of the appinsights resource"
+  value       = module.app_insights.app_insights_name
+}
