@@ -38,14 +38,26 @@ steps:
       displayName: 'Helm Values - Build Repo'
       inputs:
         targetFiles: |
+          $(Build.SourcesDirectory)/$(Build.Repository.Name)/${{parameters.valuesFileByoc}} => $(Build.SourcesDirectory)/$(Build.Repository.Name)/${{parameters.chartPath}}/values.yaml
+      condition: and(ne('${{ parameters.enableKeyvaultCert }}', ''), eq(variables['HELM_SOURCE'], ''))
+    - task: qetza.replacetokens.replacetokens-task.replacetokens@3
+      displayName: 'Helm Values - Helm Source Repo'
+      inputs:
+        targetFiles: |
+          $(Build.SourcesDirectory)/$(HELM_SOURCE)/${{parameters.valuesFileByoc}} => $(Build.SourcesDirectory)/$(HELM_SOURCE)/${{parameters.chartPath}}/values.yaml
+      condition: and(ne('${{ parameters.enableKeyvaultCert }}', ''), ne(variables['HELM_SOURCE'], ''))
+    - task: qetza.replacetokens.replacetokens-task.replacetokens@3
+      displayName: 'Helm Values - Build Repo'
+      inputs:
+        targetFiles: |
           $(Build.SourcesDirectory)/$(Build.Repository.Name)/${{parameters.valuesFile}} => $(Build.SourcesDirectory)/$(Build.Repository.Name)/${{parameters.chartPath}}/values.yaml
-      condition: eq(variables['HELM_SOURCE'], '')
+      condition: and(eq('${{ parameters.enableKeyvaultCert }}', ''), eq(variables['HELM_SOURCE'], ''))
     - task: qetza.replacetokens.replacetokens-task.replacetokens@3
       displayName: 'Helm Values - Helm Source Repo'
       inputs:
         targetFiles: |
           $(Build.SourcesDirectory)/$(HELM_SOURCE)/${{parameters.valuesFile}} => $(Build.SourcesDirectory)/$(HELM_SOURCE)/${{parameters.chartPath}}/values.yaml
-      condition: ne(variables['HELM_SOURCE'], '')
+      condition:  and(eq('${{ parameters.enableKeyvaultCert }}', ''), ne(variables['HELM_SOURCE'], ''))
     - template: helm-template.yml
       parameters:
         serviceName: ${{parameters.serviceName}}
