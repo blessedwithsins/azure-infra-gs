@@ -1,0 +1,35 @@
+apiVersion: networking.istio.io/v1alpha3
+kind: EnvoyFilter
+metadata:
+  name: edge-lua-filter
+  namespace: osdu
+spec:
+  workloadLabels:
+    app: airflow-web
+  configPatches:
+    - applyTo: HTTP_FILTER
+      match:
+        context: SIDECAR_INBOUND
+        listener:
+          filterChain:
+            filter:
+              name: envoy.http_connection_manager
+              subFilter:
+                name: envoy.router
+      patch:
+        operation: INSERT_FIRST
+        value:
+          name: envoy.lua.remove-user-appid-header
+          typed_config:
+            "@type": "type.googleapis.com/envoy.config.filter.http.lua.v2.Lua"
+            inlineCode: |
+              function envoy_on_request(request_handle)
+                -- Log information about the request
+                request_handle:logInfo("Intercepting the airflow request in custom envoy filter")
+              end
+
+              function envoy_on_response(response_handle)
+                -- Log response status code
+                request_handle:logInfo("Intercepting the airflow response in custom envoy filter")
+              end
+

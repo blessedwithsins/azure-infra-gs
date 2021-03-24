@@ -40,7 +40,7 @@ airflow:
         enabled: true
         secretName: osdu-certificate
       precedingPaths:
-        - path: "/airflow/admin"
+        - path: "/airflow/admin*"
           serviceName: airflow-web
           servicePort: 8080
 
@@ -89,7 +89,7 @@ airflow:
       timeoutSeconds: 60
     resources:
       requests:
-        cpu: "3000m"
+        cpu: "300m"
         memory: "4Gi"
       limits:
         cpu: "3800m"
