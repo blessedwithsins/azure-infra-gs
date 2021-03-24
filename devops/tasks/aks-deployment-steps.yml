@@ -39,25 +39,25 @@ steps:
       inputs:
         targetFiles: |
           $(Build.SourcesDirectory)/$(Build.Repository.Name)/${{parameters.valuesFileByoc}} => $(Build.SourcesDirectory)/$(Build.Repository.Name)/${{parameters.chartPath}}/values.yaml
-      condition: and(ne( ${{parameters.valuesFileByoc}}, ''), and(ne(variables['ENABLE_KEYVAULT_CERT'], ''), eq(variables['HELM_SOURCE'], '')))
+      condition: and(ne( '${{parameters.valuesFileByoc}}', ''), and(ne(variables['ENABLE_KEYVAULT_CERT'], ''), eq(variables['HELM_SOURCE'], '')))
     - task: qetza.replacetokens.replacetokens-task.replacetokens@3
       displayName: 'Helm Values - Helm Source Repo'
       inputs:
         targetFiles: |
           $(Build.SourcesDirectory)/$(HELM_SOURCE)/${{parameters.valuesFileByoc}} => $(Build.SourcesDirectory)/$(HELM_SOURCE)/${{parameters.chartPath}}/values.yaml
-      condition: and(ne( ${{parameters.valuesFileByoc}}, ''), and(ne(variables['ENABLE_KEYVAULT_CERT'], ''),  ne(variables['HELM_SOURCE'], '')))
+      condition: and(ne( '${{parameters.valuesFileByoc}}', ''), and(ne(variables['ENABLE_KEYVAULT_CERT'], ''),  ne(variables['HELM_SOURCE'], '')))
     - task: qetza.replacetokens.replacetokens-task.replacetokens@3
       displayName: 'Helm Values - Build Repo'
       inputs:
         targetFiles: |
           $(Build.SourcesDirectory)/$(Build.Repository.Name)/${{parameters.valuesFile}} => $(Build.SourcesDirectory)/$(Build.Repository.Name)/${{parameters.chartPath}}/values.yaml
-      condition:  and(eq( ${{parameters.valuesFileByoc}}, ''), eq(variables['HELM_SOURCE'], ''))
+      condition:  and(eq( '${{parameters.valuesFileByoc}}', ''), eq(variables['HELM_SOURCE'], ''))
     - task: qetza.replacetokens.replacetokens-task.replacetokens@3
       displayName: 'Helm Values - Helm Source Repo'
       inputs:
         targetFiles: |
           $(Build.SourcesDirectory)/$(HELM_SOURCE)/${{parameters.valuesFile}} => $(Build.SourcesDirectory)/$(HELM_SOURCE)/${{parameters.chartPath}}/values.yaml
-      condition:  and(eq( ${{parameters.valuesFileByoc}}, '') , ne(variables['HELM_SOURCE'], ''))
+      condition:  and(eq( '${{parameters.valuesFileByoc}}', '') , ne(variables['HELM_SOURCE'], ''))
     - template: helm-template.yml
       parameters:
         serviceName: ${{parameters.serviceName}}
