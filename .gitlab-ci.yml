@@ -13,11 +13,31 @@ image:
     - '/usr/bin/env'
     - 'PATH=/usr/local/sbin:/usr/local/bin:/usr/sbin:/usr/bin:/sbin:/bin'
 
+cache:
+  paths:
+    - .terraform
+
+.service_variables: &service_variables |
+  echo "Downloading pre-req files"
+  echo "${ssh_public_key_file}" > "infra/templates/osdu-r3-mvp/service_resources/ssh_public_key_file.pub"
+  echo "${gitops_ssh_key_file}" > "infra/templates/osdu-r3-mvp/service_resources/gitops_ssh_key_file.pem"
+  export TF_VAR_ssh_public_key_file="ssh_public_key_file.pub"
+  export TF_VAR_gitops_ssh_url=""
+  export TF_VAR_gitops_ssh_key_file="gitops_ssh_key_file.pem"
+
+.install_tf_alpine: &install_tf_alpine |
+  currdir=$(pwd)
+  cd /tmp
+  wget https://releases.hashicorp.com/terraform/${TF_VERSION}/terraform_${TF_VERSION}_linux_amd64.zip
+  unzip terraform_${TF_VERSION}_linux_amd64.zip -d /usr/bin
+  cd $currdir
+  /usr/bin/terraform version
+
 include:
-  - 'devops/gitlab/.tf-plan.yml'
-  - 'devops/gitlab/.go-lint.yml'
-  - 'devops/gitlab/.tf-lint.yml'
-  - 'devops/gitlab/.unit-test.yml'
+  - 'devops/premerge_pipeline/.tf-plan.yml'
+  - 'devops/premerge_pipeline/.go-lint.yml'
+  - 'devops/premerge_pipeline/.tf-lint.yml'
+  - 'devops/premerge_pipeline/.unit-test.yml'
 
 tf-lint:
   extends: .tf-lint
@@ -26,18 +46,34 @@ go-lint:
   extends: .go-lint
 
 cr-unit-test:
+  before_script:
+    - *install_tf_alpine
+  variables:
+    TEST_SUITE_NAME: centralUnitTest
   extends: .unit-test
 
 cr-plan:
   extends: .tf-plan
 
 sr-unit-test:
+  before_script:
+    - *install_tf_alpine
+    - *service_variables
+  variables:
+    TEST_SUITE_NAME: serviceUnitTest
   extends: .unit-test
 
 sr-plan:
   extends: .tf-plan
 
 dr-unit-test:
+  before_script:
+    - *install_tf_alpine
+  variables:
+    TEST_SUITE_NAME: partitionUnitTest
+    TF_VAR_elasticsearch_endpoint: ""
+    TF_VAR_elasticsearch_username: ""
+    TF_VAR_elasticsearch_password: ""
   extends: .unit-test
 
 dr-plan:

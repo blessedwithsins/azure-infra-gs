@@ -1,0 +1,11 @@
+.go-lint:
+  stage: validate
+  image:
+    name: "golang:${GO_VERSION}"
+    entrypoint:
+      - "/usr/bin/env"
+      - "PATH=/go/bin:/usr/local/go/bin/:/usr/local/sbin:/usr/local/bin:/usr/sbin:/usr/bin:/sbin:/bin"
+  script:
+    - FILES_WITH_FMT_ISSUES=$(find . -name "*.go" | grep -v '.terraform' | xargs gofmt -l | wc -l)
+    - FILES_WITH_FMT_ISSUES=$(($FILES_WITH_FMT_ISSUES + 0))
+    - (if [[ $FILES_WITH_FMT_ISSUES == 0 ]]; then echo "✓ Go Lint Success!"; else find . -name "*.go" | grep -v '.terraform' | xargs gofmt -l; exit -1; fi);
