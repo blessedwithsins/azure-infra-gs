@@ -2,11 +2,21 @@
 
 # Current Master
 
+# v0.7 (2021-3-11)
+
+__Service Onboarded__
+- [Issue 81 - Entitlements V2](https://community.opengroup.org/osdu/platform/deployment-and-operations/infra-azure-provisioning/-/issues/81)
+  > Not integrated yet to other services until M5.
+
 __Bug Fixes__
+- [Bug 130 - Variable Script Change Indexer Service - STORAGE_QUERY_RECORD_HOST](https://community.opengroup.org/osdu/platform/deployment-and-operations/infra-azure-provisioning/-/issues/130)
+- [Bug 129 - Envoy Filters Indentation formating](https://community.opengroup.org/osdu/platform/deployment-and-operations/infra-azure-provisioning/-/issues/129)
+- [Bug 124 - Documentation SDMS](https://community.opengroup.org/osdu/platform/deployment-and-operations/infra-azure-provisioning/-/issues/124)
 - [Bug 119 - Add Airflow python package `python-keycloak`](https://community.opengroup.org/osdu/platform/deployment-and-operations/infra-azure-provisioning/-/issues/119)
 
 
 __Infra Changes__
+- [Issue 135 - Airflow Default Variables](https://community.opengroup.org/osdu/platform/deployment-and-operations/infra-azure-provisioning/-/issues/135)
 - [Arch 123 - Obsolete Cosmos DB Tables and add new v2 tables](https://community.opengroup.org/osdu/platform/deployment-and-operations/infra-azure-provisioning/-/issues/123)
 - [Issue 127](https://community.opengroup.org/osdu/platform/deployment-and-operations/infra-azure-provisioning/-/issues/127)
 - [Feature 126 - Add support to pass JAVA_OPTS to java command in DockerFile](https://community.opengroup.org/osdu/platform/deployment-and-operations/infra-azure-provisioning/-/issues/126)

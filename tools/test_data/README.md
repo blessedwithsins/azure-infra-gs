@@ -65,7 +65,7 @@ These files need to be uploaded into the proper Cosmos Collections with the requ
 
 ```bash
 # Retrieve Values from Common Key Vault
-export NO_DATA_ACCESS_TESTER=$(az keyvault secret show --id https://$COMMON_VAULT.vault.azure.net/secrets/osdu-mvp-${UNIQUE}-noaccess-oid --query value -otsv)
+export NO_DATA_ACCESS_TESTER=$(az keyvault secret show --id https://$COMMON_VAULT.vault.azure.net/secrets/osdu-mvp-${UNIQUE}-noaccess-clientid --query value -otsv)
 
 # Retrieve Values from Environment Key Vault
 export COSMOS_ENDPOINT=$(az keyvault secret show --id https://${ENV_VAULT}.vault.azure.net/secrets/${PARTITION_NAME}-cosmos-endpoint --query value -otsv)
@@ -84,5 +84,5 @@ __Upload Graph Cosmos DB Test Data__
 > NOTE: requires Maven installed locally
 ```bash
 cd entitlements_data_uploader
-mvn compile exec:java -DGRAPH_DB_HOST=$GRAPH_DB_HOST -DGRAPH_DB_PASSWORD=$GRAPH_DB_PASSWORD -DSERVICE_PRINCIPAL_ID=$SERVICE_PRINCIPAL_ID -DNO_DATA_ACCESS_TESTER=$NO_DATA_ACCESS_TESTER
+mvn compile exec:java -DGRAPH_DB_HOST=$GRAPH_DB_HOST -DGRAPH_DB_PASSWORD=$GRAPH_DB_PASSWORD -DSERVICE_PRINCIPAL_ID=$SERVICE_PRINCIPAL_ID -DNO_DATA_ACCESS_TESTER=$NO_DATA_ACCESS_TESTER -DDOMAIN=contoso.com
 ```

@@ -74,7 +74,7 @@ spec:
           - backend:
               serviceName: file
               servicePort: 80
-            path: /api/file/v2/*
+            path: /api/file/*
           - backend:
               serviceName: ingestion-workflow
               servicePort: 80
@@ -103,3 +103,7 @@ spec:
               serviceName: ingestion-service
               servicePort: 80
             path: /api/ingestion/*
+          - backend:
+              serviceName: well-delivery
+              servicePort: 80
+            path: /api/well-delivery/*

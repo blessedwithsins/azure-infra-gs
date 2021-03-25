@@ -36,7 +36,7 @@ grant_type=refresh_token
 ###
 @access_token = {{refresh.response.body.access_token}}
 @ENDPOINT = https://{{OSDU_HOST}}
-@SEARCH_HOST = {{ENDPOINT}}/api/search/v2
+@SEARCH_HOST = {{ENDPOINT}}/api/search/v2/query
 @data_partition_id = opendes
 
 
@@ -48,7 +48,7 @@ grant_type=refresh_token
 # -----------------------
 ###
 # @name fulltext_search
-POST {{SEARCH_HOST}}/api/search/v2/query
+POST {{SEARCH_HOST}}
 Authorization: Bearer {{access_token}}
 Content-Type: application/json
 data-partition-id: {{data_partition_id}}
@@ -60,7 +60,7 @@ data-partition-id: {{data_partition_id}}
 
 ###
 # @name fulltext_search_wildcard
-POST {{SEARCH_HOST}}/api/search/v2/query
+POST {{SEARCH_HOST}}
 Authorization: Bearer {{access_token}}
 Content-Type: application/json
 data-partition-id: {{data_partition_id}}
@@ -72,7 +72,7 @@ data-partition-id: {{data_partition_id}}
 
 ###
 # @name fulltext_search_fuzzy
-POST {{SEARCH_HOST}}/api/search/v2/query
+POST {{SEARCH_HOST}}
 Authorization: Bearer {{access_token}}
 Content-Type: application/json
 data-partition-id: {{data_partition_id}}
@@ -85,7 +85,7 @@ data-partition-id: {{data_partition_id}}
 
 ###
 # @name all_resources_by_wellID
-POST {{SEARCH_HOST}}/api/search/v2/query
+POST {{SEARCH_HOST}}
 Authorization: Bearer {{access_token}}
 Content-Type: application/json
 data-partition-id: {{data_partition_id}}
@@ -97,7 +97,7 @@ data-partition-id: {{data_partition_id}}
 
 ###
 # @name all_resources_by_wellId_and_wildcard
-POST {{SEARCH_HOST}}/api/search/v2/query
+POST {{SEARCH_HOST}}
 Authorization: Bearer {{access_token}}
 Content-Type: application/json
 data-partition-id: {{data_partition_id}}
@@ -109,7 +109,7 @@ data-partition-id: {{data_partition_id}}
 
 ###
 # @name wells_by_resourceId_with_OR
-POST {{SEARCH_HOST}}/api/search/v2/query
+POST {{SEARCH_HOST}}
 Authorization: Bearer {{access_token}}
 Content-Type: application/json
 data-partition-id: {{data_partition_id}}
@@ -121,7 +121,7 @@ data-partition-id: {{data_partition_id}}
 
 ###
 # @name wells_by_resourceId_and_countryId
-POST {{SEARCH_HOST}}/api/search/v2/query
+POST {{SEARCH_HOST}}
 Authorization: Bearer {{access_token}}
 Content-Type: application/json
 data-partition-id: {{data_partition_id}}
@@ -133,7 +133,7 @@ data-partition-id: {{data_partition_id}}
 
 ###
 # @name welllog_with_grcurve
-POST {{SEARCH_HOST}}/api/search/v2/query
+POST {{SEARCH_HOST}}
 Authorization: Bearer {{access_token}}
 Content-Type: application/json
 data-partition-id: {{data_partition_id}}
@@ -145,7 +145,7 @@ data-partition-id: {{data_partition_id}}
 
 ###
 # @name markers_and_trajectories_for_wellbore
-POST {{SEARCH_HOST}}/api/search/v2/query
+POST {{SEARCH_HOST}}
 Authorization: Bearer {{access_token}}
 Content-Type: application/json
 data-partition-id: {{data_partition_id}}
@@ -157,7 +157,7 @@ data-partition-id: {{data_partition_id}}
 
 ###
 # @name first_wellbore_page
-POST {{SEARCH_HOST}}/api/search/v2/query
+POST {{SEARCH_HOST}}
 Authorization: Bearer {{access_token}}
 Content-Type: application/json
 data-partition-id: {{data_partition_id}}
@@ -175,7 +175,7 @@ data-partition-id: {{data_partition_id}}
 
 ###
 # @name next_wellbore_page
-POST {{SEARCH_HOST}}/api/search/v2/query
+POST {{SEARCH_HOST}}
 Authorization: Bearer {{access_token}}
 Content-Type: application/json
 data-partition-id: {{data_partition_id}}
@@ -193,7 +193,7 @@ data-partition-id: {{data_partition_id}}
 
 ###
 # @name limit_returned_fields
-POST {{SEARCH_HOST}}/api/search/v2/query
+POST {{SEARCH_HOST}}
 Authorization: Bearer {{access_token}}
 Content-Type: application/json
 data-partition-id: {{data_partition_id}}
@@ -206,7 +206,7 @@ data-partition-id: {{data_partition_id}}
 
 ###
 # @name count_wellbore_for_wellID
-POST {{SEARCH_HOST}}/api/search/v2/query
+POST {{SEARCH_HOST}}
 Authorization: Bearer {{access_token}}
 Content-Type: application/json
 data-partition-id: {{data_partition_id}}
@@ -220,7 +220,7 @@ data-partition-id: {{data_partition_id}}
 
 ###
 # @name group_by_kind
-POST {{SEARCH_HOST}}/api/search/v2/query
+POST {{SEARCH_HOST}}
 Authorization: Bearer {{access_token}}
 Content-Type: application/json
 data-partition-id: {{data_partition_id}}
@@ -233,7 +233,7 @@ data-partition-id: {{data_partition_id}}
 
 ###
 # @name group_by_kind
-POST {{SEARCH_HOST}}/api/search/v2/query
+POST {{SEARCH_HOST}}
 Authorization: Bearer {{access_token}}
 Content-Type: application/json
 data-partition-id: {{data_partition_id}}
@@ -246,7 +246,7 @@ data-partition-id: {{data_partition_id}}
 
 ###
 # @name welllogs_with_depth_larger_then_x
-POST {{SEARCH_HOST}}/api/search/v2/query
+POST {{SEARCH_HOST}}
 Authorization: Bearer {{access_token}}
 Content-Type: application/json
 data-partition-id: {{data_partition_id}}
@@ -259,7 +259,7 @@ data-partition-id: {{data_partition_id}}
 
 ###
 # @name welllogs_with_depth_between_x_and_y
-POST {{SEARCH_HOST}}/api/search/v2/query
+POST {{SEARCH_HOST}}
 Authorization: Bearer {{access_token}}
 Content-Type: application/json
 data-partition-id: {{data_partition_id}}
@@ -275,7 +275,7 @@ data-partition-id: {{data_partition_id}}
 # -----------------------
 ###
 # @name fulltext_search
-POST {{SEARCH_HOST}}/api/search/v2/query
+POST {{SEARCH_HOST}}
 Authorization: Bearer {{access_token}}
 Content-Type: application/json
 data-partition-id: {{data_partition_id}}
@@ -287,7 +287,7 @@ data-partition-id: {{data_partition_id}}
 
 ###
 # @name fulltext_search_wildcard
-POST {{SEARCH_HOST}}/api/search/v2/query
+POST {{SEARCH_HOST}}
 Authorization: Bearer {{access_token}}
 Content-Type: application/json
 data-partition-id: {{data_partition_id}}
@@ -299,7 +299,7 @@ data-partition-id: {{data_partition_id}}
 
 ###
 # @name fulltext_search_fuzzy
-POST {{SEARCH_HOST}}/api/search/v2/query
+POST {{SEARCH_HOST}}
 Authorization: Bearer {{access_token}}
 Content-Type: application/json
 data-partition-id: {{data_partition_id}}
@@ -311,7 +311,7 @@ data-partition-id: {{data_partition_id}}
 
 ###
 # @name resources_by_uwi
-POST {{SEARCH_HOST}}/api/search/v2/query
+POST {{SEARCH_HOST}}
 Authorization: Bearer {{access_token}}
 Content-Type: application/json
 data-partition-id: {{data_partition_id}}
@@ -323,7 +323,7 @@ data-partition-id: {{data_partition_id}}
 
 ###
 # @name resources_by_uwi_wildcard
-POST {{SEARCH_HOST}}/api/search/v2/query
+POST {{SEARCH_HOST}}
 Authorization: Bearer {{access_token}}
 Content-Type: application/json
 data-partition-id: {{data_partition_id}}
@@ -335,7 +335,7 @@ data-partition-id: {{data_partition_id}}
 
 ###
 # @name resources_by_uwi_OR
-POST {{SEARCH_HOST}}/api/search/v2/query
+POST {{SEARCH_HOST}}
 Authorization: Bearer {{access_token}}
 Content-Type: application/json
 data-partition-id: {{data_partition_id}}
@@ -347,7 +347,7 @@ data-partition-id: {{data_partition_id}}
 
 ###
 # @name resources_by_uwi_AND
-POST {{SEARCH_HOST}}/api/search/v2/query
+POST {{SEARCH_HOST}}
 Authorization: Bearer {{access_token}}
 Content-Type: application/json
 data-partition-id: {{data_partition_id}}
@@ -359,7 +359,7 @@ data-partition-id: {{data_partition_id}}
 
 ###
 # @name welllogs_with_gr_and_dt_curves
-POST {{SEARCH_HOST}}/api/search/v2/query
+POST {{SEARCH_HOST}}
 Authorization: Bearer {{access_token}}
 Content-Type: application/json
 data-partition-id: {{data_partition_id}}
@@ -371,7 +371,7 @@ data-partition-id: {{data_partition_id}}
 
 ###
 # @name markers_and_trajectories_by_UWBI
-POST {{SEARCH_HOST}}/api/search/v2/query
+POST {{SEARCH_HOST}}
 Authorization: Bearer {{access_token}}
 Content-Type: application/json
 data-partition-id: {{data_partition_id}}
@@ -383,7 +383,7 @@ data-partition-id: {{data_partition_id}}
 
 ###
 # @name first_wellbore_page
-POST {{SEARCH_HOST}}/api/search/v2/query
+POST {{SEARCH_HOST}}
 Authorization: Bearer {{access_token}}
 Content-Type: application/json
 data-partition-id: {{data_partition_id}}
@@ -401,7 +401,7 @@ data-partition-id: {{data_partition_id}}
 
 ###
 # @name next_wellbore_page
-POST {{SEARCH_HOST}}/api/search/v2/query
+POST {{SEARCH_HOST}}
 Authorization: Bearer {{access_token}}
 Content-Type: application/json
 data-partition-id: {{data_partition_id}}
@@ -419,7 +419,7 @@ data-partition-id: {{data_partition_id}}
 
 ###
 # @name limit_returned_fields
-POST {{SEARCH_HOST}}/api/search/v2/query
+POST {{SEARCH_HOST}}
 Authorization: Bearer {{access_token}}
 Content-Type: application/json
 data-partition-id: {{data_partition_id}}
@@ -432,7 +432,7 @@ data-partition-id: {{data_partition_id}}
 
 ###
 # @name count_wellbores_for_UWI
-POST {{SEARCH_HOST}}/api/search/v2/query
+POST {{SEARCH_HOST}}
 Authorization: Bearer {{access_token}}
 Content-Type: application/json
 data-partition-id: {{data_partition_id}}
@@ -446,7 +446,7 @@ data-partition-id: {{data_partition_id}}
 
 ###
 # @name group_wells_by_Spud_date
-POST {{SEARCH_HOST}}/api/search/v2/query
+POST {{SEARCH_HOST}}
 Authorization: Bearer {{access_token}}
 Content-Type: application/json
 data-partition-id: {{data_partition_id}}
@@ -460,7 +460,7 @@ data-partition-id: {{data_partition_id}}
 
 ###
 # @name wells_in_bounding_box
-POST {{SEARCH_HOST}}/api/search/v2/query
+POST {{SEARCH_HOST}}
 Authorization: Bearer {{access_token}}
 Content-Type: application/json
 data-partition-id: {{data_partition_id}}
@@ -484,7 +484,7 @@ data-partition-id: {{data_partition_id}}
 
 ###
 # @name wells_within_distance
-POST {{SEARCH_HOST}}/api/search/v2/query
+POST {{SEARCH_HOST}}
 Authorization: Bearer {{access_token}}
 Content-Type: application/json
 data-partition-id: {{data_partition_id}}
@@ -505,7 +505,7 @@ data-partition-id: {{data_partition_id}}
 
 ###
 # @name wells_in_polygone
-POST {{SEARCH_HOST}}/api/search/v2/query
+POST {{SEARCH_HOST}}
 Authorization: Bearer {{access_token}}
 Content-Type: application/json
 data-partition-id: {{data_partition_id}}
@@ -545,7 +545,7 @@ data-partition-id: {{data_partition_id}}
 
 ###
 # @name wells_with_Spud_date_between_x_and_y
-POST {{SEARCH_HOST}}/api/search/v2/query
+POST {{SEARCH_HOST}}
 Authorization: Bearer {{access_token}}
 Content-Type: application/json
 data-partition-id: {{data_partition_id}}
@@ -562,7 +562,7 @@ data-partition-id: {{data_partition_id}}
 
 ###
 # @name wells_with_depth_greater_then_x
-POST {{SEARCH_HOST}}/api/search/v2/query
+POST {{SEARCH_HOST}}
 Authorization: Bearer {{access_token}}
 Content-Type: application/json
 data-partition-id: {{data_partition_id}}
@@ -580,7 +580,7 @@ data-partition-id: {{data_partition_id}}
 
 ###
 # @name wells_with_depth_in_range
-POST {{SEARCH_HOST}}/api/search/v2/query
+POST {{SEARCH_HOST}}
 Authorization: Bearer {{access_token}}
 Content-Type: application/json
 data-partition-id: {{data_partition_id}}
@@ -601,7 +601,7 @@ data-partition-id: {{data_partition_id}}
 # -----------------------
 ###
 # @name acquisition_project_by_name
-POST {{SEARCH_HOST}}/api/search/v2/query
+POST {{SEARCH_HOST}}
 Authorization: Bearer {{access_token}}
 Content-Type: application/json
 data-partition-id: {{data_partition_id}}
@@ -613,7 +613,7 @@ data-partition-id: {{data_partition_id}}
 
 ###
 # @name processing_projects_for_aquisition
-POST {{SEARCH_HOST}}/api/search/v2/query
+POST {{SEARCH_HOST}}
 Authorization: Bearer {{access_token}}
 Content-Type: application/json
 data-partition-id: {{data_partition_id}}
@@ -625,7 +625,7 @@ data-partition-id: {{data_partition_id}}
 
 ###
 # @name aquisitions_by_operator
-POST {{SEARCH_HOST}}/api/search/v2/query
+POST {{SEARCH_HOST}}
 Authorization: Bearer {{access_token}}
 Content-Type: application/json
 data-partition-id: {{data_partition_id}}
@@ -637,7 +637,7 @@ data-partition-id: {{data_partition_id}}
 
 ###
 # @name aquisitions_within_dates
-POST {{SEARCH_HOST}}/api/search/v2/query
+POST {{SEARCH_HOST}}
 Authorization: Bearer {{access_token}}
 Content-Type: application/json
 data-partition-id: {{data_partition_id}}
@@ -649,7 +649,7 @@ data-partition-id: {{data_partition_id}}
 
 ###
 # @name aquisitions_with_cable_length_greater_then_x
-POST {{SEARCH_HOST}}/api/search/v2/query
+POST {{SEARCH_HOST}}
 Authorization: Bearer {{access_token}}
 Content-Type: application/json
 data-partition-id: {{data_partition_id}}
@@ -661,7 +661,7 @@ data-partition-id: {{data_partition_id}}
 
 ###
 # @name trace_by_geographic_region
-POST {{SEARCH_HOST}}/api/search/v2/query
+POST {{SEARCH_HOST}}
 Authorization: Bearer {{access_token}}
 Content-Type: application/json
 data-partition-id: {{data_partition_id}}
@@ -701,7 +701,7 @@ data-partition-id: {{data_partition_id}}
 
 ###
 # @name trace_by_domain_type
-POST {{SEARCH_HOST}}/api/search/v2/query
+POST {{SEARCH_HOST}}
 Authorization: Bearer {{access_token}}
 Content-Type: application/json
 data-partition-id: {{data_partition_id}}
@@ -713,7 +713,7 @@ data-partition-id: {{data_partition_id}}
 
 ###
 # @name horizons_by_geo_region
-POST {{SEARCH_HOST}}/api/search/v2/query
+POST {{SEARCH_HOST}}
 Authorization: Bearer {{access_token}}
 Content-Type: application/json
 data-partition-id: {{data_partition_id}}
@@ -753,7 +753,7 @@ data-partition-id: {{data_partition_id}}
 
 ###
 # @name horizon_by_name
-POST {{SEARCH_HOST}}/api/search/v2/query
+POST {{SEARCH_HOST}}
 Authorization: Bearer {{access_token}}
 Content-Type: application/json
 data-partition-id: {{data_partition_id}}
@@ -765,7 +765,7 @@ data-partition-id: {{data_partition_id}}
 
 ###
 # @name horizon_by_age_and_unitname
-POST {{SEARCH_HOST}}/api/search/v2/query
+POST {{SEARCH_HOST}}
 Authorization: Bearer {{access_token}}
 Content-Type: application/json
 data-partition-id: {{data_partition_id}}

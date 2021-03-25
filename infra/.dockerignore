@@ -1,0 +1,10 @@
+# ignore all markdown files (md) beside all README*.md other than README-secret.md
+**/*.md
+
+# ignore all *.class files in all folders, including build root
+**/.terraform
+**/.terraform.lock.hcl
+**/tests
+
+**/custom.tfvars
+**/custom*.tfvars

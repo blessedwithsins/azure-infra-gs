@@ -15,6 +15,11 @@ There are several Azure native technologies which can be leveraged to monitor OS
 - Limited Contextual drill down.
 - Customizable, user created and shared.
 
+### Reference Dashboards
+
+A terraform template exists that can help expediate setting up some dashboards as examples that can be levaraged to easily get started.
+
+Terraform Template Dashboards can be found [here](../infra/monitoring_resources/README.md).
 
 ### Sample Dashboard
 

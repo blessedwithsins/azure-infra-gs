@@ -144,9 +144,9 @@ This variable group will be used to hold the specific environment values necessa
 | REDIS_PORT                                    | `6380`                            |
 | STORAGE_ACCOUNT                               | `$(opendes-storage)`              |
 | STORAGE_ACCOUNT_KEY                           | `$(opendes-storage-key)`          |
-| AZURE_EVENT_SUBSCRIBER_SECRET                 | Subscriber Secret used while performing handshake                      |
-| AZURE_EVENT_SUBSCRIPTION_ID                   | Subscription ID created by Base64 encoding a string formed by concatenating GET /challenge/{} endpoint in register service and Event Grid Topic <br/>  For eg. BASE64(osdu-mvp-dp1demo-esyx-grid-recordstopic + https://{DNS}/api/register/v1/challenge/1           |
-| AZURE_EVENT_TOPIC_NAME                        | Event grid Topic Name eg. `osdu-mvp-dp1demo-esyx-grid-recordstopic`          |
+| AZURE_EVENT_SUBSCRIBER_SECRET                 | Subscriber Secret used while performing handshake, the value to be used can be referenced from [here](https://community.opengroup.org/osdu/platform/system/register/-/blob/master/provider/register-azure/src/main/resources/application.properties#L64)                      |
+| AZURE_EVENT_SUBSCRIPTION_ID                   | Subscription ID created by Base64 encoding a string formed by concatenating (no spaces) GET /test/challenge/{} endpoint in register service and topic name i.e. recordstopic<br/>  For eg. BASE64(recordstopic + https://{DNS}/api/register/v1/test/challenge/1           |
+| AZURE_EVENT_TOPIC_NAME                        | `recordstopic`          |
 | AZURE_DNS_NAME                                | <your_FQDN>                       |
 | AZURE_MAPPINGS_STORAGE_CONTAINER              | `osdu-wks-mappings`               |
 | AZURE_COSMOS_KEY                              | `$(opendes-cosmos-primary-key)`   This variable will not be required after the data partition changes|

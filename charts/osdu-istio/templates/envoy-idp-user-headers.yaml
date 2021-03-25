@@ -1,7 +1,7 @@
 apiVersion: networking.istio.io/v1alpha3
 kind: EnvoyFilter
 metadata:
-  name: header-remove-user-appid-from-default
+  name: header-1-remove-user-appid-from-default
   namespace: osdu
 spec:
   configPatches:
@@ -29,7 +29,7 @@ spec:
 apiVersion: networking.istio.io/v1alpha3
 kind: EnvoyFilter
 metadata:
-  name: header-add-user-from-msft-aad-token
+  name: header-2-add-user-from-msft-aad-token
   namespace: osdu
 spec:
   configPatches:
@@ -69,7 +69,7 @@ spec:
 apiVersion: networking.istio.io/v1alpha3
 kind: EnvoyFilter
 metadata:
-  name: header-add-user-from-msftonline-token
+  name: header-3-add-user-from-msftonline-token
   namespace: osdu
 spec:
   configPatches:

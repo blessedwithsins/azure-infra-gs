@@ -122,7 +122,7 @@ The script `common_prepare.sh` script is a _helper_ script designed to help setu
 # Execute Script
 export UNIQUE=demo
 
-./infra/common_prepare.sh $(az account show --query id -otsv) $UNIQUE
+./infra/scripts/common_prepare.sh $(az account show --query id -otsv) $UNIQUE
 ```
 
 Integration Tests requires 2 Azure AD User Accounts, a tenant user and a guest user to be setup in order to use for integration testing.  This activity needs to be performed by someone who has access as an AD User Admin.

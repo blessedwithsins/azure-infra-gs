@@ -12,18 +12,10 @@
 //  See the License for the specific language governing permissions and
 //  limitations under the License.
 
-output "app_insights_app_id" {
-  description = "The App ID associated with this Application Insights component"
-  value       = azurerm_application_insights.appinsights.app_id
-}
+prefix      = "osdu-mvp"
+tenant_name = "<your_tenant_name>"
 
-output "app_insights_instrumentation_key" {
-  description = "The Instrumentation Key for this Application Insights component."
-  value       = azurerm_application_insights.appinsights.instrumentation_key
-  sensitive   = true
-}
-
-output "app_insights_name" {
-  description = "The name of the appinsights resource"
-  value       = azurerm_application_insights.appinsights.name
+dashboards = {
+  default     = true
+  appinsights = true
 }
