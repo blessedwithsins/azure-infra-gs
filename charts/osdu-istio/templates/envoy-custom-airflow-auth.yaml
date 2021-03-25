@@ -9,7 +9,7 @@ spec:
   configPatches:
     - applyTo: HTTP_FILTER
       match:
-        context: SIDECAR_INBOUND
+        context: ANY
         listener:
           filterChain:
             filter:
@@ -26,10 +26,9 @@ spec:
               function envoy_on_request(request_handle)
                 -- Log information about the request
                 request_handle:logInfo("Intercepting the airflow request in custom envoy filter")
+                request_handle:respond(
+                {[":status"] = "403"},
+                "nope")
               end
 
-              function envoy_on_response(response_handle)
-                -- Log response status code
-                request_handle:logInfo("Intercepting the airflow response in custom envoy filter")
-              end
 
