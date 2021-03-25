@@ -122,7 +122,7 @@ resource "azurerm_key_vault_certificate" "default" {
   }
 
   lifecycle {
-      ignore_changes = all
+    ignore_changes = all
   }
 }
 
