@@ -1,0 +1,8 @@
+parameters:
+  - name: yesNo # name of the parameter; required
+    type: boolean # data type of the parameter; required
+    default: false
+
+steps:
+  - script: echo "komakkar test"
+  - script: echo "komakkar test"
