@@ -53,7 +53,7 @@ variables:
   - name: chartPath
     value: "charts/airflow"
   - name: valuesFileByoc
-    value: "charts/airflow/helm-config-byoc-override.yaml"
+    value: "charts/airflow/helm-config.yaml"
   - name: valuesFile
     value: "charts/airflow/helm-config.yaml"
   - name: 'MANIFEST_REPO'
