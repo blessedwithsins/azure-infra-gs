@@ -57,7 +57,7 @@ steps:
           sed -i "s/$search/$replace/gi" $VALUES_FILE_PATH
           sed -i '/cert-manager.io\/acme-challenge-type: http01/d' $VALUES_FILE_PATH
           sed -i  '/tls/{ N; s/true/false/}' $VALUES_FILE_PATH
-    condition: and('${{ parameters.serviceName }}', 'airflow'), ne(variables['ENABLE_KEYVAULT_CERT'], ''))
+    condition: and(eq('${{ parameters.serviceName }}', 'airflow'), ne(variables['ENABLE_KEYVAULT_CERT'], ''))
   - task: qetza.replacetokens.replacetokens-task.replacetokens@3
     displayName: 'Helm Values - Build Repo'
     inputs:
