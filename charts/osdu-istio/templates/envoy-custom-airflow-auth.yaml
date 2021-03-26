@@ -1,15 +1,20 @@
 apiVersion: networking.istio.io/v1alpha3
 kind: EnvoyFilter
 metadata:
-  name: edge-lua-filter
+  name: basic-auth-for-airflow
   namespace: osdu
 spec:
-  workloadLabels:
-    app: airflow-web
+  selector:
+    matchLabels:
+      release: airflow
+      app: airflow
+      component: web
+      chart: airflow-7.5.0
+      heritage: Helm
   configPatches:
     - applyTo: HTTP_FILTER
       match:
-        context: ANY
+        context: SIDECAR_INBOUND
         listener:
           filterChain:
             filter:
@@ -17,18 +22,71 @@ spec:
               subFilter:
                 name: envoy.router
       patch:
-        operation: INSERT_FIRST
+        operation: INSERT_BEFORE
         value:
-          name: envoy.lua.remove-user-appid-header
+          name: envoy.lua.custom-airflow
           typed_config:
             "@type": "type.googleapis.com/envoy.config.filter.http.lua.v2.Lua"
             inlineCode: |
-              function envoy_on_request(request_handle)
-                -- Log information about the request
-                request_handle:logInfo("Intercepting the airflow request in custom envoy filter")
-                request_handle:respond(
-                {[":status"] = "403"},
-                "nope")
+              local b='ABCDEFGHIJKLMNOPQRSTUVWXYZabcdefghijklmnopqrstuvwxyz0123456789+/'
+              function starts_with(str, start)
+                 return str:sub(1, #start) == start
               end
 
+              function dec(data)
+                  -- You will need this for encoding/decoding
+                  -- local b ='ABCDEFGHIJKLMNOPQRSTUVWXYZabcdefghijklmnopqrstuvwxyz0123456789+/'
+                  print(b)
+                  data = string.gsub(data, '[^'..b..'=]', '')
+                  print(data)
+                  return (data:gsub('.', function(x)
+                      if (x == '=') then return '' end
+                      local r,f='',(b:find(x)-1)
+                      for i=6,1,-1 do r=r..(f%2^i-f%2^(i-1)>0 and '1' or '0') end
+                      return r;
+                  end):gsub('%d%d%d?%d?%d?%d?%d?%d?', function(x)
+                      if (#x ~= 8) then return '' end
+                      local c=0
+                      for i=1,8 do c=c+(x:sub(i,i)=='1' and 2^(8-i) or 0) end
+                      return string.char(c)
+                  end))
+              end
 
+              function split(pString, pPattern)
+                 local Table = {}  -- NOTE: use {n = 0} in Lua-5.0
+                 local fpat = "(.-)" .. pPattern
+                 local last_end = 1
+                 local s, e, cap = pString:find(fpat, 1)
+                 while s do
+                    if s ~= 1 or cap ~= "" then
+                   table.insert(Table,cap)
+                    end
+                    last_end = e+1
+                    s, e, cap = pString:find(fpat, last_end)
+                 end
+                 if last_end <= #pString then
+                    cap = pString:sub(last_end)
+                    table.insert(Table, cap)
+                 end
+                 return Table
+              end
+
+              function envoy_on_request(request_handle)
+                print("TESTING")
+                -- Log information about the request
+                local authHeader = request_handle:headers():get("Authorization")
+                print(authHeader)
+                if starts_with(authHeader, "Basic") then
+                  local encodedCredential = string.sub(authHeader, 7)
+                  print(encodedCredential)
+                  local decodedCredential = dec(encodedCredential)
+                  print(decodedCredential)
+                  local credsList = split(decodedCredential, ":")
+                  local username = credsList[1]
+                  local password = credsList[2]
+                  print(username)
+                  print(password)
+                  request_handle:respond({[":status"] = "403"},"error")
+
+                end
+              end
