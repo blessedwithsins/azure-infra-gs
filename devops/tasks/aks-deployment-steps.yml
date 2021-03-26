@@ -37,10 +37,7 @@ steps:
   - task: Bash@3
     displayName: 'BYOC Replace - Cert Manager Replace'
     env:
-      CHART_PATH: ${{parameters.chartPath}}
-      SERVICE_NAME: ${{parameters.serviceName}}
-      VALUES_FILE_BYOC: ${{parameters.valuesFileByoc}}
-      CHART_FOLDERS: ${{parameters.extractedChartFolder}}
+      VALUES_FILE: ${{parameters.valuesFile}}
     inputs:
       targetType: "inline"
       script: |
@@ -54,13 +51,13 @@ steps:
               HELM_SOURCE_NAME=$(Build.Repository.Name)
           fi
 
-          VALUES_FILE=$(Build.SourcesDirectory)/$HELM_SOURCE_NAME/$VALUES_FILE_BYOC
+          VALUES_FILE_PATH=$(Build.SourcesDirectory)/$HELM_SOURCE_NAME/$VALUES_FILE
           search="cert-manager.io\/cluster-issuer: letsencrypt"
           replace="appgw.ingress.kubernetes.io\/appgw-ssl-certificate: \"appgw-ssl-cert\""
           sed -i "s/$search/$replace/gi" $VALUES_FILE
-          sed -i '/cert-manager.io\/acme-challenge-type: http01/d' $VALUES_FILE
-          sed -i  '/tls/{ N; s/true/false/}' $VALUES_FILE
-    condition: and(ne( '${{parameters.valuesFileByoc}}', ''), ne(variables['ENABLE_KEYVAULT_CERT'], ''))
+          sed -i '/cert-manager.io\/acme-challenge-type: http01/d' $VALUES_FILE_PATH
+          sed -i  '/tls/{ N; s/true/false/}' $VALUES_FILE_PATH
+    condition: and(ne(variables['airflow-pipeline'], ''), ne(variables['ENABLE_KEYVAULT_CERT'], ''))
 
   - task: qetza.replacetokens.replacetokens-task.replacetokens@3
     displayName: 'Helm Values - Build Repo'
