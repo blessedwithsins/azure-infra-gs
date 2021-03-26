@@ -57,9 +57,9 @@ steps:
           VALUES_FILE=$(Build.SourcesDirectory)/$HELM_SOURCE_NAME/$VALUES_FILE_BYOC
           search="cert-manager.io\/cluster-issuer: letsencrypt"
           replace="appgw.ingress.kubernetes.io\/appgw-ssl-certificate: \"appgw-ssl-cert\""
-          sed -i "s/$search/$replace/gi" $VALUES_FILE
-          sed -i '/cert-manager.io\/acme-challenge-type: http01/d' $VALUES_FILE
-          sed -i '/tls/{ N; s/true/false/}' $VALUES_FILE
+          sed  "s/$search/$replace/gi" $VALUES_FILE
+          sed  '/cert-manager.io\/acme-challenge-type: http01/d' $VALUES_FILE
+          sed  '/tls/{ N; s/true/false/}' $VALUES_FILE
     condition: and(ne( '${{parameters.valuesFileByoc}}', ''), ne(variables['ENABLE_KEYVAULT_CERT'], ''))
 
   - task: qetza.replacetokens.replacetokens-task.replacetokens@3
