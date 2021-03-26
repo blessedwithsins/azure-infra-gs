@@ -49,8 +49,6 @@ stages:
                     environment: ${{ environment }}
                     chartPath: ${{ parameters.chartPath }}
                     valuesFile: ${{ parameters.valuesFile }}
-                    valuesFileByoc: ${{ parameters.valuesFileByoc }}
-                    enableKeyvaultCert: ${{ parameters.enableKeyvaultCert }}
                     skipDeploy: ${{ parameters.skipDeploy }}
                     hldRegPath: ${{ parameters.hldRegPath }}
                     checkoutRepo: ${{ parameters.checkoutRepo }}
