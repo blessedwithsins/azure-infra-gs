@@ -56,8 +56,6 @@ variables:
     value: "charts/airflow/helm-config.yaml"
   - name: 'MANIFEST_REPO'
     value: $[ resources.repositories['FluxRepo'].name ]
-  - name: airflow-pipeline
-    value: "true"
 
 stages:
   - template: pipeline-stages/airflow-custom-stages.yml
