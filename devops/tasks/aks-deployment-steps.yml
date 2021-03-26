@@ -35,15 +35,15 @@ steps:
     inputs:
       helmVersionToInstall: 3.3.0
   - task: Bash@3
-      displayName: 'BYOC Replace - Cert Manager Replace'
-      env:
-        CHART_PATH: ${{parameters.chartPath}}
-        SERVICE_NAME: ${{parameters.serviceName}}
-        VALUES_FILE_BYOC: ${{parameters.valuesFileByoc}}
-        CHART_FOLDERS: ${{parameters.extractedChartFolder}}
-      inputs:
-        targetType: "inline"
-        script: |
+    displayName: 'BYOC Replace - Cert Manager Replace'
+    env:
+      CHART_PATH: ${{parameters.chartPath}}
+      SERVICE_NAME: ${{parameters.serviceName}}
+      VALUES_FILE_BYOC: ${{parameters.valuesFileByoc}}
+      CHART_FOLDERS: ${{parameters.extractedChartFolder}}
+    inputs:
+      targetType: "inline"
+      script: |
           #!/usr/bin/env bash
           set -euo pipefail
 
@@ -60,7 +60,7 @@ steps:
           sed -i "s/$search/$replace/gi" $VALUES_FILE
           sed -i '/cert-manager.io\/acme-challenge-type: http01/d' $VALUES_FILE
           sed -i '/tls/{ N; s/true/false/}' $VALUES_FILE
-        condition: and(ne( '${{parameters.valuesFileByoc}}', ''), ne(variables['ENABLE_KEYVAULT_CERT'], ''))
+    condition: and(ne( '${{parameters.valuesFileByoc}}', ''), ne(variables['ENABLE_KEYVAULT_CERT'], ''))
 
   - task: qetza.replacetokens.replacetokens-task.replacetokens@3
     displayName: 'Helm Values - Build Repo'
