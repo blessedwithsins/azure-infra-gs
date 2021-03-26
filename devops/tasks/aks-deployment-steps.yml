@@ -54,7 +54,7 @@ steps:
           VALUES_FILE_PATH=$(Build.SourcesDirectory)/$HELM_SOURCE_NAME/$VALUES_FILE
           search="cert-manager.io\/cluster-issuer: letsencrypt"
           replace="appgw.ingress.kubernetes.io\/appgw-ssl-certificate: \"appgw-ssl-cert\""
-          sed -i "s/$search/$replace/gi" $VALUES_FILE
+          sed -i "s/$search/$replace/gi" $VALUES_FILE_PATH
           sed -i '/cert-manager.io\/acme-challenge-type: http01/d' $VALUES_FILE_PATH
           sed -i  '/tls/{ N; s/true/false/}' $VALUES_FILE_PATH
     condition: and(ne(variables['airflow-pipeline'], ''), ne(variables['ENABLE_KEYVAULT_CERT'], ''))
