@@ -4,13 +4,10 @@ metadata:
   name: basic-auth-for-airflow
   namespace: osdu
 spec:
-  selector:
-    matchLabels:
-      release: airflow
+  workloadSelector:
+    labels:
       app: airflow
-      component: web
-      chart: airflow-7.5.0
-      heritage: Helm
+      # customLabel: airflow-sidecar
   configPatches:
     - applyTo: HTTP_FILTER
       match:
@@ -36,9 +33,7 @@ spec:
               function dec(data)
                   -- You will need this for encoding/decoding
                   -- local b ='ABCDEFGHIJKLMNOPQRSTUVWXYZabcdefghijklmnopqrstuvwxyz0123456789+/'
-                  print(b)
                   data = string.gsub(data, '[^'..b..'=]', '')
-                  print(data)
                   return (data:gsub('.', function(x)
                       if (x == '=') then return '' end
                       local r,f='',(b:find(x)-1)
@@ -72,21 +67,21 @@ spec:
               end
 
               function envoy_on_request(request_handle)
-                print("TESTING")
+                request_handle:logCritical("Custom Envoy")
                 -- Log information about the request
                 local authHeader = request_handle:headers():get("Authorization")
-                print(authHeader)
+                request_handle:logCritical(authHeader)
                 if starts_with(authHeader, "Basic") then
                   local encodedCredential = string.sub(authHeader, 7)
-                  print(encodedCredential)
+                  request_handle:logCritical(encodedCredential)
                   local decodedCredential = dec(encodedCredential)
-                  print(decodedCredential)
+                  request_handle:logCritical(decodedCredential)
                   local credsList = split(decodedCredential, ":")
                   local username = credsList[1]
                   local password = credsList[2]
-                  print(username)
-                  print(password)
+                  request_handle:logCritical(username)
+                  request_handle:logCritical(password)
+                  request_handle:logCritical("Sending 403")
                   request_handle:respond({[":status"] = "403"},"error")
-
                 end
               end

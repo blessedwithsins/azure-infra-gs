@@ -1,3 +1,5 @@
+---
+# Source: osdu-istio/templates/envoy-idp-user-headers.yaml
 apiVersion: networking.istio.io/v1alpha3
 kind: EnvoyFilter
 metadata:
@@ -5,27 +7,29 @@ metadata:
   namespace: osdu
 spec:
   configPatches:
-  - applyTo: HTTP_FILTER
-    match:
-      context: SIDECAR_INBOUND
-      listener:
-        filterChain:
-          filter:
-            name: envoy.http_connection_manager
-            subFilter: 
-              name: envoy.router
-    patch:
-      operation: INSERT_BEFORE
-      value:
-        name: envoy.lua.remove-user-appid-header
-        typed_config:
-          "@type": "type.googleapis.com/envoy.config.filter.http.lua.v2.Lua"
-          inlineCode: |
-            function envoy_on_request(request_handle)
-              request_handle:headers():remove("x-user-id")
-              request_handle:headers():remove("x-app-id")
-            end
+    - applyTo: HTTP_FILTER
+      match:
+        context: SIDECAR_INBOUND
+        listener:
+          filterChain:
+            filter:
+              name: envoy.http_connection_manager
+              subFilter:
+                name: envoy.router
+      patch:
+        operation: INSERT_BEFORE
+        value:
+          name: envoy.lua.remove-user-appid-header
+          typed_config:
+            "@type": "type.googleapis.com/envoy.config.filter.http.lua.v2.Lua"
+            inlineCode: |
+              function envoy_on_request(request_handle)
+                request_handle:logCritical("Remove header")
+                request_handle:headers():remove("x-user-id")
+                request_handle:headers():remove("x-app-id")
+              end
 ---
+# Source: osdu-istio/templates/envoy-idp-user-headers.yaml
 apiVersion: networking.istio.io/v1alpha3
 kind: EnvoyFilter
 metadata:
@@ -33,39 +37,44 @@ metadata:
   namespace: osdu
 spec:
   configPatches:
-  - applyTo: HTTP_FILTER
-    match:
-      context: SIDECAR_INBOUND
-      listener:
-        filterChain:
-          filter:
-            name: envoy.http_connection_manager
-            subFilter: 
-              name: envoy.lua.remove-user-appid-header
-    patch:
-      operation: INSERT_AFTER
-      value:
-        name: envoy.lua.user-from-msft-aad-token
-        typed_config:
-          "@type": "type.googleapis.com/envoy.config.filter.http.lua.v2.Lua"
-          inlineCode: |
-            msft_issuer = "https://sts.windows.net/{{ .Values.global.azure.tenant }}/"
-            function envoy_on_request(request_handle)
-              local jwt_authn = request_handle:streamInfo():dynamicMetadata():get("envoy.filters.http.jwt_authn")
-              if jwt_authn then
-                if jwt_authn[msft_issuer] then
-                  request_handle:headers():add("x-app-id", jwt_authn[msft_issuer]["aud"])
-                  if jwt_authn[msft_issuer]["upn"] then
-                    request_handle:headers():add("x-user-id", jwt_authn[msft_issuer]["upn"])
-                  elseif jwt_authn[msft_issuer]["unique_name"] then
-                    request_handle:headers():add("x-user-id", jwt_authn[msft_issuer]["unique_name"])
-                  elseif jwt_authn[msft_issuer]["appid"] then
-                    request_handle:headers():add("x-user-id", jwt_authn[msft_issuer]["appid"])
+    - applyTo: HTTP_FILTER
+      match:
+        context: SIDECAR_INBOUND
+        listener:
+          filterChain:
+            filter:
+              name: envoy.http_connection_manager
+              subFilter:
+                name: envoy.lua.remove-user-appid-header
+      patch:
+        operation: INSERT_AFTER
+        value:
+          name: envoy.lua.user-from-msft-aad-token
+          typed_config:
+            "@type": "type.googleapis.com/envoy.config.filter.http.lua.v2.Lua"
+            inlineCode: |
+              msft_issuer = "https://sts.windows.net/58975fd3-4977-44d0-bea8-37af0baac100/"
+              function envoy_on_request(request_handle)
+                request_handle:logCritical("STS")
+                local jwt_authn = request_handle:streamInfo():dynamicMetadata():get("envoy.filters.http.jwt_authn")
+                if jwt_authn then
+                  if jwt_authn[msft_issuer] then
+                    request_handle:headers():add("x-app-id", jwt_authn[msft_issuer]["aud"])
+                    if jwt_authn[msft_issuer]["upn"] then
+                      request_handle:logCritical("Login msft upn")
+                      request_handle:headers():add("x-user-id", jwt_authn[msft_issuer]["upn"])
+                    elseif jwt_authn[msft_issuer]["unique_name"] then
+                      request_handle:logCritical("Login msft unique_name")
+                      request_handle:headers():add("x-user-id", jwt_authn[msft_issuer]["unique_name"])
+                    elseif jwt_authn[msft_issuer]["appid"] then
+                      request_handle:logCritical("Login msft appid")
+                      request_handle:headers():add("x-user-id", jwt_authn[msft_issuer]["appid"])
+                    end
                   end
                 end
               end
-            end
 ---
+# Source: osdu-istio/templates/envoy-idp-user-headers.yaml
 apiVersion: networking.istio.io/v1alpha3
 kind: EnvoyFilter
 metadata:
@@ -73,33 +82,36 @@ metadata:
   namespace: osdu
 spec:
   configPatches:
-  - applyTo: HTTP_FILTER
-    match:
-      context: SIDECAR_INBOUND
-      listener:
-        filterChain:
-          filter:
-            name: envoy.http_connection_manager
-            subFilter: 
-              name: envoy.lua.remove-user-appid-header
-    patch:
-      operation: INSERT_AFTER
-      value:
-        name: envoy.lua.user-from-msftonline-token
-        typed_config:
-          "@type": "type.googleapis.com/envoy.config.filter.http.lua.v2.Lua"
-          inlineCode: |
-            msft_issuer = "https://login.microsoftonline.com/{{ .Values.global.azure.tenant }}/v2.0"
-            function envoy_on_request(request_handle)
-              local jwt_authn = request_handle:streamInfo():dynamicMetadata():get("envoy.filters.http.jwt_authn")
-              if jwt_authn then
-                if jwt_authn[msft_issuer] then
-                  request_handle:headers():add("x-app-id", jwt_authn[msft_issuer]["aud"])
-                  if jwt_authn[msft_issuer]["oid"] then
-                    request_handle:headers():add("x-user-id", jwt_authn[msft_issuer]["oid"])
-                  elseif jwt_authn[msft_issuer]["azp"] then
-                    request_handle:headers():add("x-user-id", jwt_authn[msft_issuer]["azp"])
+    - applyTo: HTTP_FILTER
+      match:
+        context: SIDECAR_INBOUND
+        listener:
+          filterChain:
+            filter:
+              name: envoy.http_connection_manager
+              subFilter:
+                name: envoy.lua.remove-user-appid-header
+      patch:
+        operation: INSERT_AFTER
+        value:
+          name: envoy.lua.user-from-msftonline-token
+          typed_config:
+            "@type": "type.googleapis.com/envoy.config.filter.http.lua.v2.Lua"
+            inlineCode: |
+              msft_issuer = "https://login.microsoftonline.com/58975fd3-4977-44d0-bea8-37af0baac100/v2.0"
+              function envoy_on_request(request_handle)
+                request_handle:logCritical("Login msft")
+                local jwt_authn = request_handle:streamInfo():dynamicMetadata():get("envoy.filters.http.jwt_authn")
+                if jwt_authn then
+                  if jwt_authn[msft_issuer] then
+                    request_handle:headers():add("x-app-id", jwt_authn[msft_issuer]["aud"])
+                    if jwt_authn[msft_issuer]["oid"] then
+                      request_handle:logCritical("Login msft oid")
+                      request_handle:headers():add("x-user-id", jwt_authn[msft_issuer]["oid"])
+                    elseif jwt_authn[msft_issuer]["azp"] then
+                      request_handle:logCritical("Login msft azp")
+                      request_handle:headers():add("x-user-id", jwt_authn[msft_issuer]["azp"])
+                    end
                   end
                 end
               end
-            end
