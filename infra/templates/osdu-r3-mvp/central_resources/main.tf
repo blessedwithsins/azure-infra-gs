@@ -135,7 +135,7 @@ resource "azurerm_resource_group" "main" {
 }
 
 resource "azurerm_resource_group" "testrg" {
-  name     = testrg
+  name     = "testrg"
   location = var.resource_group_location
   tags     = var.resource_tags
 
