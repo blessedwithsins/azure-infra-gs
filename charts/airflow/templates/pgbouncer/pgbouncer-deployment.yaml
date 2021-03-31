@@ -1,0 +1,79 @@
+{{- if .Values.pgbouncer.enabled }}
+kind: Deployment
+apiVersion: apps/v1
+metadata:
+  name: airflow-pgbouncer
+  labels:
+    tier: airflow
+    component: pgbouncer
+    release: {{ .Release.Name }}
+spec:
+  replicas: 2
+  strategy:
+    rollingUpdate:
+      maxSurge: 1
+      maxUnavailable: 0
+  selector:
+    matchLabels:
+      tier: airflow
+      component: pgbouncer
+      release: {{ .Release.Name }}
+  template:
+    metadata:
+      labels:
+        tier: airflow
+        component: pgbouncer
+        release: {{ .Release.Name }}
+    spec:
+      restartPolicy: Always
+      containers:
+        - name: pgbouncer
+          image: mcr.microsoft.com/azure-oss-db-tools/pgbouncer-sidecar:pgbouncerv1.13
+          imagePullPolicy: IfNotPresent
+          command:
+            - "/bin/sh"
+          args:
+            - "-c"
+            - >
+              ( echo "cat <<EOF" ; cat /etc/pgbouncer/users.txt.template ; echo EOF ) | sh > /etc/pgbouncer/users.txt \
+                && exec pgbouncer /etc/pgbouncer/pgbouncer.ini
+          ports:
+            - name: pgbouncer
+              containerPort: {{ .Values.pgbouncer.port }}
+          livenessProbe:
+            tcpSocket:
+              port: {{ .Values.pgbouncer.port }}
+          readinessProbe:
+            tcpSocket:
+              port: {{ .Values.pgbouncer.port }}
+          env:
+            - name: AIRFLOW_DATABASE_USERNAME
+              value: {{ .Values.pgbouncer.airflowdb.user }}
+            - name: AIRFLOW_DATABASE_PASSWORD
+              valueFrom:
+                secretKeyRef:
+                  name: {{ .Values.pgbouncer.airflowdb.passwordSecret }}
+                  key: {{ .Values.pgbouncer.airflowdb.passwordSecretKey }}
+          volumeMounts:
+            - name: pgbouncer-config
+              subPath: pgbouncer.ini
+              mountPath: /etc/pgbouncer/pgbouncer.ini
+              readOnly: true
+            - name: pgbouncer-config
+              subPath: users.txt.template
+              mountPath: /etc/pgbouncer/users.txt.template
+              readOnly: true
+          lifecycle:
+            preStop:
+              exec:
+                # Allow existing queries clients to complete within 120 seconds
+                command: ["/bin/sh", "-c", "killall -INT pgbouncer && sleep 120"]
+          securityContext:
+            allowPrivilegeEscalation: false
+            capabilities:
+              drop: ['all']
+      volumes:
+        - name: pgbouncer-config
+          configMap:
+            name: airflow-pgbouncer-config
+{{- end }}

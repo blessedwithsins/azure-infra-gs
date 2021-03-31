@@ -33,16 +33,33 @@ spec:
           readOnly: true
         env:
         - name: DATABASE_USER
+        {{- if .Values.pgbouncer.enabled }}
+          value: {{ .Values.pgbouncer.airflowdb.user }}
+        {{- else }}
           value: {{ .Values.airflow.externalDatabase.user }}
+        {{- end }}
         - name: DATABASE_HOST
+        {{- if .Values.pgbouncer.enabled }}
+          value: {{ .Values.pgbouncer.airflowdb.host }}
+        {{- else }}
           value: {{ .Values.airflow.externalDatabase.host }}
+        {{- end }}
         - name: DATABASE_DB
+        {{- if .Values.pgbouncer.enabled }}
+          value: {{ .Values.pgbouncer.airflowdb.name }}
+        {{- else }}
           value: {{ .Values.airflow.externalDatabase.database }}
+        {{- end }}
         - name: DATABASE_USER_PASS
           valueFrom:
             secretKeyRef:
-              name: postgres
-              key: postgres-password
+            {{- if .Values.pgbouncer.enabled }}
+              name: {{ .Values.pgbouncer.airflowdb.passwordSecret }}
+              key: {{ .Values.pgbouncer.airflowdb.passwordSecretKey }}
+            {{- else }}
+              name: {{ .Values.airflow.externalDatabase.passwordSecret }}
+              key: {{ .Values.airflow.externalDatabase.passwordSecretKey }}
+            {{- end }}
         - name: AIRFLOW_ADMIN
           value: {{ .Values.airflowLogin.name }}
         - name: AIRFLOW_ADMIN_PASS
@@ -50,6 +67,10 @@ spec:
             secretKeyRef:
               name: airflow
               key: admin-password
+        - name: AIRFLOW_RBAC_CREATE_USER
+          value: "{{ .Values.customConfig.rbac.createUser }}"
+        - name: AIRFLOW_RBAC_ENABLED
+          value: "{{ .Values.airflow.airflow.config.AIRFLOW__WEBSERVER__RBAC }}"
       volumes:
       - name: config-volume
         configMap:

@@ -1,44 +1,133 @@
+# This is a GitLab CI configuration to build the project as a docker image
 variables:
-  TF_VERSION: 0.14.4
+  TF_VERSION: 0.14.8
   GO_VERSION: 1.12.14
+
+
+image: docker:19.03
+
+include:
+  - template: Container-Scanning.gitlab-ci.yml
 
 stages:
   - validate
+  - test
   - build
-  - unit-test
+  - scan
+  - push
 
-image:
-  name: hashicorp/terraform:$TF_VERSION
-  entrypoint:
-    - '/usr/bin/env'
-    - 'PATH=/usr/local/sbin:/usr/local/bin:/usr/sbin:/usr/bin:/sbin:/bin'
 
-include:
-  - 'devops/gitlab/.tf-plan.yml'
-  - 'devops/gitlab/.go-lint.yml'
-  - 'devops/gitlab/.tf-lint.yml'
-  - 'devops/gitlab/.unit-test.yml'
+.install_tf_alpine: &install_tf_alpine
+  before_script:
+    - currdir=$(pwd)
+    - apk add unzip
+    - cd /tmp
+    - wget https://releases.hashicorp.com/terraform/${TF_VERSION}/terraform_${TF_VERSION}_linux_amd64.zip
+    - unzip terraform_${TF_VERSION}_linux_amd64.zip -d /usr/bin
+    - cd $currdir
+    - /usr/bin/terraform version
 
-tf-lint:
-  extends: .tf-lint
 
-go-lint:
-  extends: .go-lint
+before_script:
+  - echo -n $CI_JOB_TOKEN | docker login -u $CI_REGISTRY_USER --password-stdin $CI_REGISTRY
 
-cr-unit-test:
-  extends: .unit-test
+tf_lint:
+  stage: validate
+  image:
+    name: community.opengroup.org:5555/osdu/platform/deployment-and-operations/base-containers-azure/alpine-terraform:0.0.2
+    entrypoint:
+      - '/usr/bin/env'
+      - 'PATH=/usr/local/sbin:/usr/local/bin:/usr/sbin:/usr/bin:/sbin:/bin'
+  before_script:
+    - ''
+  script:
+    - terraform fmt -recursive -check
 
-cr-plan:
-  extends: .tf-plan
+go_lint:
+  stage: validate
+  image:
+    name: golang:1.12.14-alpine
+    entrypoint:
+      - "/usr/bin/env"
+      - "PATH=/go/bin:/usr/local/go/bin/:/usr/local/sbin:/usr/local/bin:/usr/sbin:/usr/bin:/sbin:/bin"
+  before_script:
+    - ''
+  script:
+    - FILES_WITH_FMT_ISSUES=$(find . -name "*.go" | grep -v '.terraform' | xargs gofmt -l | wc -l)
+    - FILES_WITH_FMT_ISSUES=$(($FILES_WITH_FMT_ISSUES + 0))
+    - (if [[ $FILES_WITH_FMT_ISSUES == 0 ]]; then echo "✓ Go Lint Success!"; else find . -name "*.go" | grep -v '.terraform' | xargs gofmt -l; exit -1; fi);
 
-sr-unit-test:
-  extends: .unit-test
+unit_test:
+  <<: *install_tf_alpine
+  stage: test
+  image:
+    name: golang:1.12.14-alpine
+    entrypoint:
+      - "/usr/bin/env"
+      - "PATH=/go/bin:/usr/local/go/bin/:/usr/local/sbin:/usr/local/bin:/usr/sbin:/usr/bin:/sbin:/bin"
+  script:
+    - (if [[ "$(go version)" == "go version go${GO_VERSION} linux/amd64" ]]; then echo "✓ Go binary installed!"; else echo "Go binary not installed!"; /bin/false; fi);
+    - (if [[ "$(terraform version | head -n 1)" == "Terraform v${TF_VERSION}" ]]; then echo "✓ Terraform installed!"; else echo "Terraform not installed"; /bin/false; fi);
+    - currdir=$(pwd)
+    - apk add bash ca-certificates git gcc g++ libc-dev git
+    - git clone https://github.com/magefile/mage
+    - cd mage
+    - go run bootstrap.go
+    - cd $currdir
+    - cd infra
+    - echo "UNIT TESTS DISABLED"
+    # - mage test
 
-sr-plan:
-  extends: .tf-plan
 
-dr-unit-test:
-  extends: .unit-test
+# Docker Build, Tag and Push SHA
+Build:
+  stage: build
+  tags: ['docker-runner']
+  script:
+    # fetches the latest image (not failing if image is not found)
+    - docker pull $CI_REGISTRY_IMAGE:latest || true
+    - >
+      docker build
+      --pull
+      --file infra/Dockerfile
+      --build-arg VCS_REF=$CI_COMMIT_SHA
+      --build-arg VCS_URL=$CI_PROJECT_URL
+      --build-arg BUILD_DATE=$CI_PIPELINE_CREATED_AT
+      --cache-from $CI_REGISTRY_IMAGE:latest
+      --tag $CI_REGISTRY_IMAGE:$CI_COMMIT_SHA
+      infra
+    - docker push $CI_REGISTRY_IMAGE:$CI_COMMIT_SHA
 
-dr-plan:
-  extends: .tf-plan
+# Docker Pull SHA, Tag Latest and Push Latest
+Push latest:
+  variables:
+    GIT_STRATEGY: none
+  stage: push
+  tags: ['docker-runner']
+  rules:
+    - if: '$CI_COMMIT_BRANCH == $CI_DEFAULT_BRANCH'
+  script:
+    - docker pull $CI_REGISTRY_IMAGE:$CI_COMMIT_SHA
+    - docker tag $CI_REGISTRY_IMAGE:$CI_COMMIT_SHA $CI_REGISTRY_IMAGE:latest
+    - docker push $CI_REGISTRY_IMAGE:latest
+
+# Docker Pull SHA, Tag and Push Tag
+Push tag:
+  variables:
+    GIT_STRATEGY: none
+  stage: push
+  tags: ['docker-runner']
+  rules:
+    - if: $CI_COMMIT_TAG
+  script:
+    - docker pull $CI_REGISTRY_IMAGE:$CI_COMMIT_SHA
+    - docker tag $CI_REGISTRY_IMAGE:$CI_COMMIT_SHA $CI_REGISTRY_IMAGE:$CI_COMMIT_REF_NAME
+    - docker push $CI_REGISTRY_IMAGE:$CI_COMMIT_REF_NAME
+
+container_scanning:
+  stage: scan
+  before_script:
+    - ''
+  variables:
+    GIT_STRATEGY: fetch
+    DOCKER_IMAGE: $CI_REGISTRY_IMAGE:$CI_COMMIT_SHA
