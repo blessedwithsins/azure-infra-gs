@@ -159,7 +159,7 @@ variable "postgres_password" {
 variable "postgres_sku" {
   description = "Name of the sku"
   type        = string
-  default     = "GP_Gen5_4"
+  default     = "GP_Gen5_8"
 }
 
 variable "postgres_configurations" {
