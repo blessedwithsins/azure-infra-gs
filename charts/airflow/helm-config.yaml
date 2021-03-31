@@ -86,6 +86,8 @@ airflow:
   web:
     podLabels:
       aadpodidbinding: "osdu-identity"
+    podAnnotations:
+      sidecar.istio.io/userVolumeMount: '[{"name": "azure-keyvault", "mountPath": "/mnt/azure-keyvault", "readonly": true}]'
     baseUrl: "http://localhost/airflow"
 
   ###################################
@@ -129,7 +131,7 @@ airflow:
   ###################################
   airflow:
     image:
-      repository: apache/airflow
+      repository: harshit283/test-repo
       tag: 1.10.12-python3.6
       pullPolicy: IfNotPresent
       pullSecret: ""
