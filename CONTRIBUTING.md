@@ -40,3 +40,4 @@ Contributions are made to this repo via Issues and Pull Requests (PRs). A few ge
   - Stake holders should be defined and tagged to the MR.
   - An approval needs to be given by a Maintainer and any Stakeholders identified.
   - For some things a Project Owner Approval may be necessary.
+  - Fill in relevant details in the MR, as pointed in MR template. 
