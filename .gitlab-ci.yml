@@ -11,7 +11,6 @@ include:
 
 stages:
   - validate
-  - test
   - build
   - scan
   - push
@@ -56,27 +55,6 @@ go_lint:
     - FILES_WITH_FMT_ISSUES=$(find . -name "*.go" | grep -v '.terraform' | xargs gofmt -l | wc -l)
     - FILES_WITH_FMT_ISSUES=$(($FILES_WITH_FMT_ISSUES + 0))
     - (if [[ $FILES_WITH_FMT_ISSUES == 0 ]]; then echo "✓ Go Lint Success!"; else find . -name "*.go" | grep -v '.terraform' | xargs gofmt -l; exit -1; fi);
-
-unit_test:
-  <<: *install_tf_alpine
-  stage: test
-  image:
-    name: golang:1.12.14-alpine
-    entrypoint:
-      - "/usr/bin/env"
-      - "PATH=/go/bin:/usr/local/go/bin/:/usr/local/sbin:/usr/local/bin:/usr/sbin:/usr/bin:/sbin:/bin"
-  script:
-    - (if [[ "$(go version)" == "go version go${GO_VERSION} linux/amd64" ]]; then echo "✓ Go binary installed!"; else echo "Go binary not installed!"; /bin/false; fi);
-    - (if [[ "$(terraform version | head -n 1)" == "Terraform v${TF_VERSION}" ]]; then echo "✓ Terraform installed!"; else echo "Terraform not installed"; /bin/false; fi);
-    - currdir=$(pwd)
-    - apk add bash ca-certificates git gcc g++ libc-dev git
-    - git clone https://github.com/magefile/mage
-    - cd mage
-    - go run bootstrap.go
-    - cd $currdir
-    - cd infra
-    - echo "UNIT TESTS DISABLED"
-    # - mage test
 
 
 # Docker Build, Tag and Push SHA
