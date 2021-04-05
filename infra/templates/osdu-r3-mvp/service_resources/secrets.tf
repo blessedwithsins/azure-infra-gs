@@ -120,6 +120,10 @@ resource "azurerm_key_vault_certificate" "default" {
       validity_in_months = 12
     }
   }
+
+  lifecycle {
+    ignore_changes = all
+  }
 }
 
 
