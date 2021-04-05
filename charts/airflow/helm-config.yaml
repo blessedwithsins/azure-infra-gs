@@ -112,10 +112,10 @@ airflow:
       timeoutSeconds: 60
     resources:
       requests:
-        cpu: "1000m"
+        cpu: "3000m"
         memory: "2Gi"
       limits:
-        cpu: "3800m"
+        cpu: "3000m"
         memory: "2Gi"
     podLabels:
       aadpodidbinding: "osdu-identity"
