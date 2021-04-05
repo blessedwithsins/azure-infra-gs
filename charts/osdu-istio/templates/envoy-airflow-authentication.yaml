@@ -83,7 +83,7 @@ spec:
                   local password = credsList[2]
 
                   local airflowUsername = "{{ .Values.global.airflow.username }}"
-                  local airflowPasswordFilepath = "{{ .Values.global.airflow.keyvaultMountPath }}" + "{{ .Values.global.airflow.passwordKey }}"
+                  local airflowPasswordFilepath = "{{ .Values.global.airflow.keyvaultMountPath }}" .. "{{ .Values.global.airflow.passwordKey }}"
                   local airflowPassword = read_file(airflowPasswordFilepath)
 
                   if (username == airflowUsername and password == airflowPassword) then
