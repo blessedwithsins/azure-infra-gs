@@ -289,3 +289,15 @@ variable "ssl_policy_min_protocol_version" {
   type        = string
   default     = "TLSv1_2"
 }
+
+variable "appgw_min_capacity" {
+  description = "Minimum number of instances to run in the App Gateway"
+  type        = number
+  default     = 2
+}
+
+variable "appgw_max_capacity" {
+  description = "Maximum number of instances to run in the App Gateway"
+  type        = number
+  default     = 10
+}

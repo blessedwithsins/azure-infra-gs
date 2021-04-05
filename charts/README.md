@@ -108,6 +108,13 @@ image:
 
 airflowLogin:
   name: admin
+  
+###############################################################################
+# Specify configuration required for authentication of API calls to webserver
+airflowAuthentication:
+  username: admin
+  keyvaultMountPath: /mnt/azure-keyvault/
+  passwordKey: airflow-admin-password
 
 ################################################################################
 # Specify any custom configs/environment values
@@ -189,6 +196,8 @@ airflow:
     port: 6380
     passwordSecret: "redis"
     passwordSecretKey: "redis-password"
+    databaseNumber: 1  #<-- Adding redis database number according to the Redis config map https://community.opengroup.org/osdu/platform/deployment-and-operations/infra-azure-provisioning/-/blob/master/charts/osdu-common/templates/redis-map.yaml#L7
+
 
   ###################################
   # Airflow - DAGs Configs
@@ -204,8 +213,20 @@ airflow:
   # Airflow - WebUI Configs
   ###################################
   web:
+    replicas: 1
+    livenessProbe:
+      timeoutSeconds: 60
+    resources:
+      requests:
+        cpu: "2000m"
+        memory: "2Gi"
+      limits:
+        cpu: "3000m"
+        memory: "2Gi"  
     podLabels:
       aadpodidbinding: "osdu-identity"
+    podAnnotations:
+      sidecar.istio.io/userVolumeMount: '[{"name": "azure-keyvault", "mountPath": "/mnt/azure-keyvault", "readonly": true}]'
     baseUrl: "http://localhost/airflow"
 
   ###################################
@@ -264,7 +285,7 @@ airflow:
       AIRFLOW__WEBSERVER__AUTHENTICATE: "True"
       AIRFLOW__WEBSERVER__AUTH_BACKEND: "airflow.contrib.auth.backends.password_auth"
       AIRFLOW__WEBSERVER__RBAC: "True"
-      AIRFLOW__API__AUTH_BACKEND: "airflow.contrib.auth.backends.password_auth"
+      AIRFLOW__API__AUTH_BACKEND: "airflow.api.auth.backend.default"
       AIRFLOW__CORE__REMOTE_LOGGING: "True"
       AIRFLOW__CORE__REMOTE_LOG_CONN_ID: "az_log"
       AIRFLOW__CORE__REMOTE_BASE_LOG_FOLDER: "wasb-airflowlog"
@@ -281,6 +302,14 @@ airflow:
       AIRFLOW_VAR_CORE__SERVICE__STORAGE__URL: "http://storage.osdu.svc.cluster.local/api/storage/v2/records"
       AIRFLOW_VAR_CORE__SERVICE__FILE__HOST: "http://file.osdu.svc.cluster.local/api/file/v2"
       AIRFLOW_VAR_CORE__SERVICE__WORKFLOW__HOST: "http://ingestion-workflow.osdu.svc.cluster.local/api/workflow"
+      AIRFLOW__WEBSERVER__WORKERS: 15
+      AIRFLOW__WEBSERVER__WORKER_REFRESH_BATCH_SIZE: 0
+      AIRFLOW__CORE__STORE_SERIALIZED_DAGS: True #This flag decides whether to serialise DAGs and persist them in DB
+      AIRFLOW__CORE__STORE_DAG_CODE: True #This flag decides whether to persist DAG files code in DB
+      AIRFLOW__CORE__MIN_SERIALIZED_DAG_FETCH_INTERVAL: 300 #Setting the duration after which serialized Dag in DB should be updated (default 30), this reduces DB write rate
+      AIRFLOW__CORE__MIN_SERIALIZED_DAG_UPDATE_INTERVAL: 300 #Setting the duration after which serialized Dag will be re-fetched from the DB when it’s already loaded in the DagBag in the Webserver (default 10), reduces DB read rate
+      AIRFLOW__WEBSERVER__WORKER_CLASS: gevent    
+      
     extraEnv:
       - name: AIRFLOW__CORE__FERNET_KEY
         valueFrom:
@@ -365,6 +394,7 @@ git clonehttps://community.opengroup.org/osdu/platform/data-flow/ingestion/inges
 git clone https://community.opengroup.org/osdu/platform/domain-data-mgmt-services/seismic/seismic-dms-suite/seismic-store-service.git $SRC_DIR/seismic-store-service
 git clone https://community.opengroup.org:osdu/platform/domain-data-mgmt-services/wellbore/wellbore-domain-services.git $SRC_DIR/wellbore-domain-services
 git clone https://community.opengroup.org/osdu/platform/data-flow/ingestion/ingestion-service.git $SRC_DIR/ingestion-service
+git clone https://community.opengroup.org/osdu/platform/security-and-compliance/policy.git $SRC_DIR/policy
 ```
 
 __Additional Manual Steps__

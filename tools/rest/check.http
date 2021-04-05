@@ -199,10 +199,10 @@ data-partition-id: {{data_partition_id}}
     "kind": "{{kind}}",
     "acl": {
       "viewers": [
-        "data.default.viewer@opendes.contoso.com"
+        "data.default.viewers@opendes.contoso.com"
       ],
       "owners": [
-        "data.default.owner@opendes.contoso.com"
+        "data.default.owners@opendes.contoso.com"
       ]
     },
     "legal": {

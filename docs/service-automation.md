@@ -44,7 +44,8 @@ This variable group will be used to hold the common values for the services to b
 | NOTIFICATION_BASE_URL                         | `https://<your_fqdn>/api/notification/v1/`  |
 | REGISTER_CUSTOM_PUSH_URL_HMAC                 | `https://<your_fqdn>/api/register/v1/test/challenge/1`|
 | AGENT_IMAGE                                   | `ubuntu-latest`                             | 
-| PROVIDER_NAME                                 | `azure`                                     | 
+| PROVIDER_NAME                                 | `azure` 
+| ENABLE_KEYVAULT_CERT                          | `false`              Set this variable to `true` if you want to use your own certificate from Keyvault certificate - appgw-ssl-cert
 
 
 ```bash
@@ -97,6 +98,7 @@ az pipelines variable-group create \
   REGISTER_CUSTOM_PUSH_URL_HMAC="https://${DNS_HOST}/api/register/v1/test/challenge/1" \
   AGENT_IMAGE="ubuntu-latest" \
   PROVIDER_NAME="$PROVIDER_NAME" \
+  ENABLE_KEYVAULT_CERT="false" \
   -ojson
 ```
 
@@ -133,9 +135,11 @@ This variable group will be used to hold the specific environment values necessa
 | CONTAINER_REGISTRY_NAME                       | `$(container_registry)`           |
 | DNS_HOST                                      | <your_FQDN>                       |
 | DOMAIN                                        | `contoso.com`                     |
+| ROOT_DATA_GROUP_QUOTA                         | `5000`                            |
 | ELASTIC_ENDPOINT                              | `$(opendes-elastic-endpoint)`     |
 | ELASTIC_USERNAME                              | `$(opendes-elastic-username)`     |
 | ELASTIC_PASSWORD                              | `$(opendes-elastic-password)`     |
+| ENTV2_REDIS_TTL_SECONDS                       | `1`                               |
 | ENVIRONMENT_NAME                              | <your_environment_name_or_identifier>     |
 | IDENTITY_CLIENT_ID                            | `$(osdu-identity-id)`             |
 | INTEGRATION_TESTER                            | `$(app-dev-sp-username)`          |
@@ -173,9 +177,11 @@ az pipelines variable-group create \
   CONTAINER_REGISTRY_NAME='$(container-registry)' \
   DNS_HOST="$DNS_HOST" \
   DOMAIN="contoso.com" \
+  ROOT_DATA_GROUP_QUOTA="5000" \
   ELASTIC_ENDPOINT='$('${DATA_PARTITION_NAME}'-elastic-endpoint)' \
   ELASTIC_USERNAME='$('${DATA_PARTITION_NAME}'-elastic-username)' \
   ELASTIC_PASSWORD='$('${DATA_PARTITION_NAME}'-elastic-password)' \
+  ENTV2_REDIS_TTL_SECONDS="1" \
   ENVIRONMENT_NAME="$ENVIRONMENT_NAME" \
   IDENTITY_CLIENT_ID='$(identity_id)' \
   INTEGRATION_TESTER='$(app-dev-sp-username)' \
@@ -276,7 +282,7 @@ This variable group is the service specific variables necessary for testing and 
 | Variable | Value |
 |----------|-------|
 | MAVEN_DEPLOY_POM_FILE_PATH     | `drop/provider/entitlements-v2-azure` |
-| MAVEN_INTEGRATION_TEST_OPTIONS | `-DargLine="-DENTITLEMENT_V2_URL=$(ENTITLEMENT_V2_URL) -DAZURE_AD_TENANT_ID=$(AZURE_TENANT_ID) -DINTEGRATION_TESTER=$(INTEGRATION_TESTER) -DAZURE_TESTER_SERVICEPRINCIPAL_SECRET=$(AZURE_TESTER_SERVICEPRINCIPAL_SECRET) -DAZURE_AD_APP_RESOURCE_ID=$(AZURE_AD_APP_RESOURCE_ID) -DNO_DATA_ACCESS_TESTER=$(NO_DATA_ACCESS_TESTER) -DNO_DATA_ACCESS_TESTER_SERVICEPRINCIPAL_SECRET=$(NO_DATA_ACCESS_TESTER_SERVICEPRINCIPAL_SECRET)"`  |
+| MAVEN_INTEGRATION_TEST_OPTIONS | `-DargLine="-DENTITLEMENT_V2_URL=$(ENTITLEMENT_V2_URL) -DAZURE_AD_TENANT_ID=$(AZURE_TENANT_ID) -DINTEGRATION_TESTER=$(INTEGRATION_TESTER) -DAZURE_TESTER_SERVICEPRINCIPAL_SECRET=$(AZURE_TESTER_SERVICEPRINCIPAL_SECRET) -DAZURE_AD_APP_RESOURCE_ID=$(AZURE_AD_APP_RESOURCE_ID)"`  |
 | MAVEN_INTEGRATION_TEST_POM_FILE_PATH | `drop/deploy/testing/entitlements-v2-test-azure/pom.xml` |
 | SERVICE_RESOURCE_NAME | `$(AZURE_ENTITLEMENTS_V2_SERVICE_NAME)` |
 
@@ -286,7 +292,7 @@ az pipelines variable-group create \
   --authorize true \
   --variables \
   MAVEN_DEPLOY_POM_FILE_PATH="drop/provider/entitlements-v2-azure" \
-  MAVEN_INTEGRATION_TEST_OPTIONS='-DargLine="-DENTITLEMENT_V2_URL=$(ENTITLEMENT_V2_URL) -DAZURE_AD_TENANT_ID=$(AZURE_TENANT_ID) -DINTEGRATION_TESTER=$(INTEGRATION_TESTER) -DAZURE_TESTER_SERVICEPRINCIPAL_SECRET=$(AZURE_TESTER_SERVICEPRINCIPAL_SECRET) -DAZURE_AD_APP_RESOURCE_ID=$(AZURE_AD_APP_RESOURCE_ID) -DNO_DATA_ACCESS_TESTER=$(NO_DATA_ACCESS_TESTER) -DNO_DATA_ACCESS_TESTER_SERVICEPRINCIPAL_SECRET=$(NO_DATA_ACCESS_TESTER_SERVICEPRINCIPAL_SECRET)"' \
+  MAVEN_INTEGRATION_TEST_OPTIONS='-DargLine="-DENTITLEMENT_V2_URL=$(ENTITLEMENT_V2_URL) -DAZURE_AD_TENANT_ID=$(AZURE_TENANT_ID) -DINTEGRATION_TESTER=$(INTEGRATION_TESTER) -DAZURE_TESTER_SERVICEPRINCIPAL_SECRET=$(AZURE_TESTER_SERVICEPRINCIPAL_SECRET) -DAZURE_AD_APP_RESOURCE_ID=$(AZURE_AD_APP_RESOURCE_ID)"' \
   MAVEN_INTEGRATION_TEST_POM_FILE_PATH="drop/deploy/testing/entitlements-v2-test-azure/pom.xml" \
   SERVICE_RESOURCE_NAME='$(AZURE_ENTITLEMENTS_V2_SERVICE_NAME)' \
   -ojson
@@ -1097,6 +1103,22 @@ az pipelines create \
 az pipelines create \
   --name 'ingestion-service'  \
   --repository ingestion-service  \
+  --branch master  \
+  --repository-type tfsgit  \
+  --yaml-path /devops/azure/pipeline.yml  \
+  -ojson
+```
+
+21. Add a Pipeline for __policy-service__  to deploy the Policy Service.
+
+    _Repo:_ `policy`
+    _Path:_ `/devops/azure/pipeline.yml`
+    _Validate:_ https://<your_dns_name>/api/ingestion/docs is alive.
+
+```bash
+az pipelines create \
+  --name 'policy-service'  \
+  --repository policy \
   --branch master  \
   --repository-type tfsgit  \
   --yaml-path /devops/azure/pipeline.yml  \
