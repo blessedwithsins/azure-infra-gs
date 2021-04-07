@@ -30,35 +30,35 @@ Create the ADF instance by following instructions [here](https://docs.microsoft.
 ### Create a copy activity
 Go to the `Author & Monitor` section from your data factory instance.
 
-![image.png](images/backup-restore/monitor-selection.png)
+![image.png](docs/images/backup-restore/monitor-selection.png)
 
 Select the `Copy Data` option.
 
-![image.png](images/backup-restore/copy-data.png)
+![image.png](docs/images/backup-restore/copy-data.png)
 
 Provide name and description for your task. Click `Next`
 
-![image.png](images/backup-restore/pipeline-details.png)
+![image.png](docs/images/backup-restore/pipeline-details.png)
 
 ### Create a linked service for source
 
 Select the `+ Create New Connection` to create new connection service.
 
-![image.png](images/backup-restore/create-new-connection.png)
+![image.png](docs/images/backup-restore/create-new-connection.png)
 
 Choose Azure Cosmos DB as source activity.
 
 **NOTE**- please choose MongoDB API or SQL API as required. 
 
-![image.png](images/backup-restore/select-source.png)
+![image.png](docs/images/backup-restore/select-source.png)
 
 Fill out required details. Connection settings of the cosmos databases would be picked up automatically.
 
-![image.png](images/backup-restore/select-source-db.png)
+![image.png](docs/images/backup-restore/select-source-db.png)
 
 Select the containers you want to migrate data from. For your case you want to select all the containers.
 
-![image.png](images/backup-restore/select-containers.png)
+![image.png](docs/images/backup-restore/select-containers.png)
 
 ### Create a linked service for sink
 
@@ -66,23 +66,23 @@ Select the containers you want to migrate data from. For your case you want to s
 
 Choose Azure Cosmos DB  as sink activity. Fill out the necessary details. Click `Create` and then click `Next`
 
-![image.png](images/backup-restore/sink-connection.png)
+![image.png](docs/images/backup-restore/sink-connection.png)
 
 Validate the table mapping. The destination table name would be populated automatically. You can pick the appropriate container from the dropdown if it doesn't populate on it's own.
 
-![image.png](images/backup-restore/table-mapping.png)
+![image.png](docs/images/backup-restore/table-mapping.png)
 
 Configure logging properties. You can optionally create a linked logging service to persist logs in blobs.
 
-![image.png](images/backup-restore/configurelogging.png)
+![image.png](docs/images/backup-restore/configurelogging.png)
 
 Review and run.
 
-![image.png](images/backup-restore/review-and-run.png)
+![image.png](docs/images/backup-restore/review-and-run.png)
 
 You can monitor the pipelines by going to the monitor pivot.
 
-![image.png](images/backup-restore/monitor-pipeline.png)
+![image.png](docs/images/backup-restore/monitor-pipeline.png)
 
 ## Validate the migrated data
 Compare the data in target containers with source containers manually to see if the migrated data is what you expect it to be.
@@ -91,4 +91,4 @@ Compare the data in target containers with source containers manually to see if 
 ## Cleanup the provisioned resources.
 
 Delete the azure data factory that you created in this step to avoid extra cost.
-![image.png](images/backup-restore/delete-ADF.png)
+![image.png](docs/images/backup-restore/delete-ADF.png)
