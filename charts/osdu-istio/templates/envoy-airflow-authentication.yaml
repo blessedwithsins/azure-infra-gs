@@ -28,7 +28,7 @@ spec:
                  return str:sub(1, #start) == start
               end
 
-              function dec(data)
+              function decode(data)
                   -- Base64 decoder method
                   local b ='ABCDEFGHIJKLMNOPQRSTUVWXYZabcdefghijklmnopqrstuvwxyz0123456789+/'
                   data = string.gsub(data, '[^'..b..'=]', '')
@@ -76,7 +76,7 @@ spec:
                 local authHeader = request_handle:headers():get("Authorization")
                 if starts_with(authHeader, "Basic") then
                   local encodedCredential = string.sub(authHeader, 7)
-                  local decodedCredential = dec(encodedCredential)
+                  local decodedCredential = decode(encodedCredential)
                   local credsList = split(decodedCredential, ":")
 
                   local username = credsList[1]
