@@ -64,7 +64,7 @@ airflow:
         enabled: true
         secretName: osdu-certificate
       precedingPaths:
-        - path: "/airflow/admin*" #Allowing path for Admin UI only
+        - path: "/airflow/*"
           serviceName: airflow-web
           servicePort: 8080
 
