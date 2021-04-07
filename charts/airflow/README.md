@@ -62,3 +62,11 @@ curl --location --request GET 'https://<WORKFLOW_HOST>/api/workflow/v1/workflow/
 ```
 
 **NOTE** Workflow service doesn't support multiple data partitions. By default it connects to opendes or any partition specificed through configuration.
+
+## RBAC in Airflow UI, User Roles and Permissions
+
+For more information on How to create users, manage users, creating roles and managing roles please refere the doc [here](https://community.opengroup.org/osdu/platform/deployment-and-operations/infra-azure-provisioning/-/blob/master/docs/airflow-rbac.md)
+
+## Securing Airflow Connections
+
+For information on how Airflow secures the connections and variables refere the doc [here]((https://community.opengroup.org/osdu/platform/deployment-and-operations/infra-azure-provisioning/-/blob/master/docs/airflow-fernet-key.md))

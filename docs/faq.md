@@ -1,4 +1,4 @@
-# Frequently asked questions
+ # Frequently asked questions
 
 This document answers some of the most common questions we have recieved from customers about OSDU on Azure. Please feel free to contribute with any additional information that may be valuable to others.
 
@@ -62,7 +62,7 @@ This key pair can be used to ssh into an AKS node if needed.
 * osdu-mvp-xxx-application – An AD Application for future use.  (Not currently used yet.)
 
 ## What AAD Items are created by the central resource template?
-* osdu-mvp-crxxx-xxxx-app – An AD application that defines the OSDU Environment created. 
+* osdu-mvp-crxxx-xxxx-app – An AD application that defines the OSDU Environment created.
 
 ## What type of SSL certificate is used by default?
 The current architecture by default uses a certificate manager by [Jet Stack]( https://github.com/jetstack/cert-manager) that automatically provisions certificates into the Application Gateway and currently is configured with 2 Issuers.  “Lets Encrypt Staging” and “Lets Encrypt Production”.  Future tasks will validate a process for a Bring Your Own Certificate.
@@ -90,6 +90,12 @@ __[Manual Installation](https://msosdu.azureedge.net/osdu-azure-manual/osdu-azur
 - Upload Integration Test Data
 - Deploy Helm Charts
 - Register a Data Partition
+
+__[Release Management](https://msosdu.azureedge.net/osdu-azure-release/index.html)__
+> Upgrade a Manual Environment with a new Release
+
+- Documentation (Release Management Overview)
+- Upgrade Release M3 -> M4
 
 __[Integration Testing](https://msosdu.azureedge.net/osdu-azure-testing/osdu-azure-testing.html)__
 > Validate an environment using Integration Tests and REST API executions.
@@ -132,6 +138,10 @@ Security Layers of OSDU API’s currently exist for User Authentication and Auth
 ## What mechanisms currently exist to Ingest Data can Azure Data Factory be leveraged for Data Ingestion?
 
 Data Ingestion is currently under development and due to initial OSDU community restraints that exist the workflow integrated to the open source code base leverages Airflow for its workflow engine.
+
+## How do I setup and manage users for Airflow?
+
+Airflow Web authentication is now rbac enabled. To understand user roles, create new users and manage users please refer [here](https://community.opengroup.org/osdu/platform/deployment-and-operations/infra-azure-provisioning/-/blob/master/docs/airflow-rbac-guide.md).
 
 # Infrastructure Upgrade Walkthroughs
 

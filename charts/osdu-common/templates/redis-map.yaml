@@ -12,3 +12,4 @@ data:
   indexer-service: "6"
   search-service: "7"
   entitlements: "8"
+  seismic-dms: "9"

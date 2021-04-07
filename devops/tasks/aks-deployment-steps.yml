@@ -26,39 +26,63 @@ parameters:
   extractedChartFolder: "templates"
 
 steps:
-    - checkout: FluxRepo
-      persistCredentials: true
-    - checkout: ${{ parameters.checkoutRepo }}
-      persistCredentials: true
-    - task: "HelmInstaller@1"
-      displayName: 'Helm Install'
-      inputs:
-        helmVersionToInstall: 3.3.0
-    - task: qetza.replacetokens.replacetokens-task.replacetokens@3
-      displayName: 'Helm Values - Build Repo'
-      inputs:
-        targetFiles: |
-          $(Build.SourcesDirectory)/$(Build.Repository.Name)/${{parameters.valuesFile}} => $(Build.SourcesDirectory)/$(Build.Repository.Name)/${{parameters.chartPath}}/values.yaml
-      condition: eq(variables['HELM_SOURCE'], '')
-    - task: qetza.replacetokens.replacetokens-task.replacetokens@3
-      displayName: 'Helm Values - Helm Source Repo'
-      inputs:
-        targetFiles: |
-          $(Build.SourcesDirectory)/$(HELM_SOURCE)/${{parameters.valuesFile}} => $(Build.SourcesDirectory)/$(HELM_SOURCE)/${{parameters.chartPath}}/values.yaml
-      condition: ne(variables['HELM_SOURCE'], '')
-    - template: helm-template.yml
-      parameters:
-        serviceName: ${{parameters.serviceName}}
-        chartPath: ${{ parameters.chartPath }}
-        valuesFile: ${{ parameters.valuesFile }}
-        generationPath: ${{parameters.generationPath}}
-        chartModificationScript: ${{parameters.chartModificationScript}}
-    - template: gitops.yml
-      parameters:
-        serviceName: ${{parameters.serviceName}}
-        chartPath: ${{ parameters.chartPath }}
-        generationPath: ${{parameters.generationPath}}
-        branchName: ${{parameters.environment}}
-        hldRegPath: ${{parameters.hldRegPath}}
-        skipDeploy: ${{parameters.skipDeploy}}
-        extractedChartFolder: ${{parameters.extractedChartFolder}}
+  - checkout: FluxRepo
+    persistCredentials: true
+  - checkout: ${{ parameters.checkoutRepo }}
+    persistCredentials: true
+  - task: "HelmInstaller@1"
+    displayName: 'Helm Install'
+    inputs:
+      helmVersionToInstall: 3.3.0
+  - task: Bash@3
+    displayName: 'BYOC - Enable Keyvault certificate'
+    env:
+      VALUES_FILE: ${{parameters.valuesFile}}
+    inputs:
+      targetType: "inline"
+      script: |
+          #!/usr/bin/env bash
+          set -euo pipefail
+
+          if [[ "$(HELM_SOURCE)" != "" ]]
+          then
+              HELM_SOURCE_NAME=$(HELM_SOURCE)
+          else
+              HELM_SOURCE_NAME=$(Build.Repository.Name)
+          fi
+
+          VALUES_FILE_PATH=$(Build.SourcesDirectory)/$HELM_SOURCE_NAME/$VALUES_FILE
+          search="cert-manager.io\/cluster-issuer: letsencrypt"
+          replace="appgw.ingress.kubernetes.io\/appgw-ssl-certificate: \"appgw-ssl-cert\""
+          sed -i "s/$search/$replace/gi" $VALUES_FILE_PATH
+          sed -i '/cert-manager.io\/acme-challenge-type: http01/d' $VALUES_FILE_PATH
+          sed -i  '/tls/{ N; s/true/false/}' $VALUES_FILE_PATH
+    condition: and(eq('${{ parameters.serviceName }}', 'airflow'), eq(variables['ENABLE_KEYVAULT_CERT'], true))
+  - task: qetza.replacetokens.replacetokens-task.replacetokens@3
+    displayName: 'Helm Values - Build Repo'
+    inputs:
+      targetFiles: |
+        $(Build.SourcesDirectory)/$(Build.Repository.Name)/${{parameters.valuesFile}} => $(Build.SourcesDirectory)/$(Build.Repository.Name)/${{parameters.chartPath}}/values.yaml
+    condition: eq(variables['HELM_SOURCE'], '')
+  - task: qetza.replacetokens.replacetokens-task.replacetokens@3
+    displayName: 'Helm Values - Helm Source Repo'
+    inputs:
+      targetFiles: |
+        $(Build.SourcesDirectory)/$(HELM_SOURCE)/${{parameters.valuesFile}} => $(Build.SourcesDirectory)/$(HELM_SOURCE)/${{parameters.chartPath}}/values.yaml
+    condition: ne(variables['HELM_SOURCE'], '')
+  - template: helm-template.yml
+    parameters:
+      serviceName: ${{parameters.serviceName}}
+      chartPath: ${{ parameters.chartPath }}
+      valuesFile: ${{ parameters.valuesFile }}
+      generationPath: ${{parameters.generationPath}}
+      chartModificationScript: ${{parameters.chartModificationScript}}
+  - template: gitops.yml
+    parameters:
+      serviceName: ${{parameters.serviceName}}
+      chartPath: ${{ parameters.chartPath }}
+      generationPath: ${{parameters.generationPath}}
+      branchName: ${{parameters.environment}}
+      hldRegPath: ${{parameters.hldRegPath}}
+      skipDeploy: ${{parameters.skipDeploy}}
+      extractedChartFolder: ${{parameters.extractedChartFolder}}

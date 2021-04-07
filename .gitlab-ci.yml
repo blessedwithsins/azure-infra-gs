@@ -67,7 +67,7 @@ unit_test:
       - "PATH=/go/bin:/usr/local/go/bin/:/usr/local/sbin:/usr/local/bin:/usr/sbin:/usr/bin:/sbin:/bin"
   script:
     - (if [[ "$(go version)" == "go version go${GO_VERSION} linux/amd64" ]]; then echo "✓ Go binary installed!"; else echo "Go binary not installed!"; /bin/false; fi);
-    - (if [[ "$(terraform version)" == "Terraform v${TF_VERSION}" ]]; then echo "✓ Terraform installed!"; else echo "Terraform not installed"; /bin/false; fi);
+    - (if [[ "$(terraform version | head -n 1)" == "Terraform v${TF_VERSION}" ]]; then echo "✓ Terraform installed!"; else echo "Terraform not installed"; /bin/false; fi);
     - currdir=$(pwd)
     - apk add bash ca-certificates git gcc g++ libc-dev git
     - git clone https://github.com/magefile/mage

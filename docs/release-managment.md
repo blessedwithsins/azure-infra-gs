@@ -84,6 +84,8 @@ __Process: Project Milestones__
 
 Each month a Project Milestone is initiated that tracks the Issues/Bugs and Merge Requests planned and worked on.
 
+- [Milestone 4](https://community.opengroup.org/osdu/platform/deployment-and-operations/infra-azure-provisioning/-/milestones/7)
+- [Milestone 3](https://community.opengroup.org/osdu/platform/deployment-and-operations/infra-azure-provisioning/-/milestones/6)
 - [January-21  Milestone](https://community.opengroup.org/osdu/platform/deployment-and-operations/infra-azure-provisioning/-/milestones/5)
 - [December-20 Milestone](https://community.opengroup.org/osdu/platform/deployment-and-operations/infra-azure-provisioning/-/milestones/4)
 
@@ -95,9 +97,9 @@ Each month when a Project Milestone closes a release is dropped.  At this time t
 - Retag all community built container images identified to a semver pattern
 - Push all newly tagged images to a Microsoft hosted Azure Container Registry.
 - Update the infrastructure project [CHANGELOG.md](https://community.opengroup.org/osdu/platform/deployment-and-operations/infra-azure-provisioning/-/blob/master/CHANGELOG.md)
-- Drop a [release tag](https://community.opengroup.org/osdu/platform/deployment-and-operations/infra-azure-provisioning/-/tags/azure-0.4.3) to infrastructure project to version infrastructure.
+- Drop a [release tag](https://community.opengroup.org/osdu/platform/deployment-and-operations/infra-azure-provisioning/-/tags/v0.7.0) to infrastructure project to version infrastructure.
 - Update OSDU on Azure helm charts with the release and update [CHANGELOG.md](https://community.opengroup.org/osdu/platform/deployment-and-operations/helm-charts-azure/-/blob/master/CHANGELOG.md)
-- [Document](https://community.opengroup.org/osdu/platform/deployment-and-operations/helm-charts-azure/-/blob/master/README.md#app-version-043-2021-1-25) the OSDU on Azure Helm Chart release and drop a [release tag](https://community.opengroup.org/osdu/platform/deployment-and-operations/helm-charts-azure/-/tags/azure-0.4.3).
+- [Document](https://community.opengroup.org/osdu/platform/deployment-and-operations/helm-charts-azure/) the OSDU on Azure Helm Chart release and drop a [release tag](https://community.opengroup.org/osdu/platform/deployment-and-operations/helm-charts-azure/-/tags/v0.7.0).
 
 
 __Installation: New__
@@ -106,17 +108,17 @@ Installations of OSDU on Azure can be completed end to end for a release and the
 
 > Directions often change and the directions here are to meant to only understand the intent of what a new installation process might look like.
 
-1. Clone the Infrastructure Project and checkout the desired [release tag](https://community.opengroup.org/osdu/platform/deployment-and-operations/infra-azure-provisioning/-/tree/azure-0.4.3)
+1. Clone the Infrastructure Project and checkout the desired [release tag](https://community.opengroup.org/osdu/platform/deployment-and-operations/infra-azure-provisioning/-/tree/v0.7.0)
 
-2. Setup any Prerequisites for OSDU on Azure following the [documented directions](https://community.opengroup.org/osdu/platform/deployment-and-operations/infra-azure-provisioning/-/blob/azure-0.4.3/README.md#prerequisites).
+2. Setup any Prerequisites for OSDU on Azure following the [documented directions](https://community.opengroup.org/osdu/platform/deployment-and-operations/infra-azure-provisioning/-/blob/v0.7.0/README.md#prerequisites).
 
-2. Build the infrastructure following the [documented procedures](https://community.opengroup.org/osdu/platform/deployment-and-operations/infra-azure-provisioning/-/blob/azure-0.4.3/README.md) on the project.
+2. Build the infrastructure following the [documented procedures](https://community.opengroup.org/osdu/platform/deployment-and-operations/infra-azure-provisioning/-/blob/v0.7.0/README.md) on the project.
 
-3. Install the required Istio Helm charts following the [documented procedures](https://community.opengroup.org/osdu/platform/deployment-and-operations/helm-charts-azure/-/blob/azure-0.4.3/osdu-istio/README.md)
+3. Install the required Istio Helm charts following the [documented procedures](https://community.opengroup.org/osdu/platform/deployment-and-operations/helm-charts-azure/-/blob/v0.7.0/osdu-istio/README.md)
 
-4. Install the required Airflow Helm charts following the [documented procedures](https://community.opengroup.org/osdu/platform/deployment-and-operations/helm-charts-azure/-/blob/azure-0.4.3/osdu-airflow/README.md)
+4. Install the required Airflow Helm charts following the [documented procedures](https://community.opengroup.org/osdu/platform/deployment-and-operations/helm-charts-azure/-/blob/v0.7.0/osdu-airflow/README.md)
 
-5. Install the required OSDU on Azure Application Helm charts following the [documented procedures](https://community.opengroup.org/osdu/platform/deployment-and-operations/helm-charts-azure/-/blob/azure-0.4.3/osdu-azure/README.md)
+5. Install the required OSDU on Azure Application Helm charts following the [documented procedures](https://community.opengroup.org/osdu/platform/deployment-and-operations/helm-charts-azure/-/blob/v0.7.0/osdu-azure/README.md)
 
 
 __Installation: Upgrade__
