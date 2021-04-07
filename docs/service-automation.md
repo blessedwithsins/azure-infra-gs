@@ -44,8 +44,7 @@ This variable group will be used to hold the common values for the services to b
 | NOTIFICATION_BASE_URL                         | `https://<your_fqdn>/api/notification/v1/`  |
 | REGISTER_CUSTOM_PUSH_URL_HMAC                 | `https://<your_fqdn>/api/register/v1/test/challenge/1`|
 | AGENT_IMAGE                                   | `ubuntu-latest`                             | 
-| PROVIDER_NAME                                 | `azure` 
-| ENABLE_KEYVAULT_CERT                          | `false`              Set this variable to `true` if you want to use your own certificate from Keyvault certificate - appgw-ssl-cert
+| PROVIDER_NAME                                 | `azure`                                     | 
 
 
 ```bash
@@ -98,7 +97,6 @@ az pipelines variable-group create \
   REGISTER_CUSTOM_PUSH_URL_HMAC="https://${DNS_HOST}/api/register/v1/test/challenge/1" \
   AGENT_IMAGE="ubuntu-latest" \
   PROVIDER_NAME="$PROVIDER_NAME" \
-  ENABLE_KEYVAULT_CERT="false" \
   -ojson
 ```
 
