@@ -35,7 +35,7 @@ steps:
     inputs:
       helmVersionToInstall: 3.3.0
   - task: Bash@3
-    displayName: 'BYOC - Enable Keyvault certificate'
+    displayName: 'BYOC Replace - Cert Manager Replace'
     env:
       VALUES_FILE: ${{parameters.valuesFile}}
     inputs:
