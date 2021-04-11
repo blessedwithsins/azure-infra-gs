@@ -2,6 +2,9 @@
 
 # Current Master
 
+__Infra Changes__
+- [Feature 149 - Make auto-scale parameters of App Gateway configurable](https://community.opengroup.org/osdu/platform/deployment-and-operations/infra-azure-provisioning/-/issues/149)
+
 # v0.7 (2021-3-11)
 
 __Service Onboarded__

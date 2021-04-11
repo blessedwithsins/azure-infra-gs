@@ -65,7 +65,7 @@ curl --location --request GET 'https://<WORKFLOW_HOST>/api/workflow/v1/workflow/
 
 ## RBAC in Airflow UI, User Roles and Permissions
 
-For more information on How to create users, manage users, creating roles and managing roles please refere the doc [here](https://community.opengroup.org/osdu/platform/deployment-and-operations/infra-azure-provisioning/-/blob/master/docs/airflow-rbac.md)
+For more information on How to create users, manage users, creating roles and managing roles please refere the doc [here](https://community.opengroup.org/osdu/platform/deployment-and-operations/infra-azure-provisioning/-/blob/master/docs/airflow-rbac-guide.md)
 
 ## Securing Airflow Connections
 

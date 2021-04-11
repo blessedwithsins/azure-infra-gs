@@ -57,6 +57,18 @@ variable "vnet_subnet_id" {
   type        = string
 }
 
+variable "min_capacity" {
+  description = "Minimum number of instances to run in the App Gateway"
+  type        = number
+  default     = 2
+}
+
+variable "max_capacity" {
+  description = "Maximum number of instances to run in the App Gateway"
+  type        = number
+  default     = 10
+}
+
 variable "keyvault_id" {
   description = "Key Vault ID holding the ssl certificate used for enabling tls termination."
   type        = string
