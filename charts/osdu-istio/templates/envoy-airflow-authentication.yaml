@@ -45,23 +45,14 @@ spec:
                   end))
               end
 
-              function split(pString, pPattern)
-                 local Table = {}  -- NOTE: use {n = 0} in Lua-5.0
-                 local fpat = "(.-)" .. pPattern
-                 local last_end = 1
-                 local s, e, cap = pString:find(fpat, 1)
-                 while s do
-                    if s ~= 1 or cap ~= "" then
-                   table.insert(Table,cap)
-                    end
-                    last_end = e+1
-                    s, e, cap = pString:find(fpat, last_end)
-                 end
-                 if last_end <= #pString then
-                    cap = pString:sub(last_end)
-                    table.insert(Table, cap)
-                 end
-                 return Table
+              function split(inputStr, separator)
+                local Table={}
+                -- string.gmatch method returns an iterator function that, each time it is called, returns the next captures from pattern over the string inputStr
+                -- Here we are using the gmatch function to capture strings which contain at least one character of anything other than the desired separator.
+                for str in string.gmatch(inputStr, "([^"..separator.."]+)") do
+                  table.insert(Table, str)
+                end
+                return Table
               end
 
               function read_file(path)
