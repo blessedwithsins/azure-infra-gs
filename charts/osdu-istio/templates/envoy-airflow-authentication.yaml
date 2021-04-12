@@ -44,9 +44,10 @@ spec:
                       -- the value returned is substituted back into the string
                       return r;
                   end):gsub('%d%d%d?%d?%d?%d?%d?%d?', function(x)
-                      -- We will take the input in binary form and map them to characters
+                      -- Here the input will be received in binary format as per the above pattern
                       if (#x ~= 8) then return '' end
                       local c=0
+                      -- Generating characters from the binary format
                       for i=1,8 do c=c+(x:sub(i,i)=='1' and 2^(8-i) or 0) end
                           return string.char(c)
                   end))
@@ -73,18 +74,24 @@ spec:
 
               function envoy_on_request(request_handle)
                 local authHeader = request_handle:headers():get("Authorization")
+                print(authHeader)
                 if starts_with(authHeader, "Basic") then
                   local encodedCredential = string.sub(authHeader, 7)
+                  print(encodedCredential)
                   local decodedCredential = decode(encodedCredential)
+                  print(authHeader)
                   local credsList = split(decodedCredential, ":")
 
                   local username = credsList[1]
                   local password = credsList[2]
+                  print(username)
+                  print(password)
 
                   local airflowUsername = "{{ .Values.global.airflow.username }}"
                   local airflowPasswordFilepath = "{{ .Values.global.airflow.keyvaultMountPath }}" .. "{{ .Values.global.airflow.passwordKey }}"
                   local airflowPassword = read_file(airflowPasswordFilepath)
-
+                  print(airflowUsername)
+                  print(airflowPassword)
                   if (username == airflowUsername and password == airflowPassword) then
                     request_handle:logInfo("Airflow authentication successful")
                   else
