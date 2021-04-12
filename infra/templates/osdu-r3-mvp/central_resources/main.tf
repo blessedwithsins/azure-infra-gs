@@ -326,6 +326,11 @@ module "ad_application" {
       ]
     }
   ]
+
+  owners = [
+    data.azurerm_client_config.current.object_id,
+    var.principal_objectId
+  ]
 }
 
 

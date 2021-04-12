@@ -26,6 +26,7 @@ resource "azuread_application" "main" {
   public_client              = local.public_client
   oauth2_allow_implicit_flow = var.oauth2_allow_implicit_flow
   group_membership_claims    = var.group_membership_claims
+  owners                     = var.owners
   type                       = local.type
 
   dynamic "required_resource_access" {

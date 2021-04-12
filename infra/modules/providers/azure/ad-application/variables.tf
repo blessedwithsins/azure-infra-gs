@@ -53,6 +53,12 @@ variable "group_membership_claims" {
   description = "Configures the groups claim issued in a user or OAuth 2.0 access token that the app expects."
 }
 
+variable "owners" {
+  type        = list(string)
+  default     = []
+  description = "Azure AD Object IDs that will be granted ownership of the application"
+}
+
 variable "password" {
   type        = string
   default     = ""
