@@ -29,23 +29,31 @@ spec:
               end
 
               function decode(data)
-                  -- Base64 decoder method
-                  local b ='ABCDEFGHIJKLMNOPQRSTUVWXYZabcdefghijklmnopqrstuvwxyz0123456789+/'
-                  data = string.gsub(data, '[^'..b..'=]', '')
+                  -- Useful links http://lua-users.org/wiki/BaseSixtyFour, http://lua-users.org/wiki/StringLibraryTutorial
+                  -- Supported characters for Base64
+                  local base64Characters ='ABCDEFGHIJKLMNOPQRSTUVWXYZabcdefghijklmnopqrstuvwxyz0123456789+/'
+                  -- Removing any characters outside from the ones suported in base 64
+                  data = string.gsub(data, '[^'..base64Characters..'=]', '')
                   return (data:gsub('.', function(x)
+                      -- in gsub method if a pattern is matched (in this case any character) it will be sent as an argument to the function
                       if (x == '=') then return '' end
-                      local r,f='',(b:find(x)-1)
+                      -- finding the position of the character in the base64Characters string which will be used to generate the binary representation of the character 'x'
+                      local r,f='',(base64Characters:find(x)-1)
+                      -- this loop will generate the binary representation and store in variable r
                       for i=6,1,-1 do r=r..(f%2^i-f%2^(i-1)>0 and '1' or '0') end
+                      -- the value returned is substituted back into the string
                       return r;
                   end):gsub('%d%d%d?%d?%d?%d?%d?%d?', function(x)
+                      -- We will take the input in binary form and map them to characters
                       if (#x ~= 8) then return '' end
                       local c=0
                       for i=1,8 do c=c+(x:sub(i,i)=='1' and 2^(8-i) or 0) end
-                      return string.char(c)
+                          return string.char(c)
                   end))
               end
 
               function split(inputStr, separator)
+                -- Useful Links http://lua-users.org/wiki/StringLibraryTutorial
                 local Table={}
                 -- string.gmatch method returns an iterator function that, each time it is called, returns the next captures from pattern over the string inputStr
                 -- Here we are using the gmatch function to capture strings which contain at least one character of anything other than the desired separator.
