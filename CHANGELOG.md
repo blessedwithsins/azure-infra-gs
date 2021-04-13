@@ -2,7 +2,12 @@
 
 # Current Master
 
+# v0.8 (2021-4-9)
+
 __Infra Changes__
+- [Operationalize 104 - Backup and Restore](https://community.opengroup.org/osdu/platform/deployment-and-operations/infra-azure-provisioning/-/issues/104)
+- [Feature 115 - Enable Custom HTTPS Certificates](https://community.opengroup.org/osdu/platform/deployment-and-operations/infra-azure-provisioning/-/issues/115)
+- [Feature 121 - Added Default Dashboard](https://community.opengroup.org/osdu/platform/deployment-and-operations/infra-azure-provisioning/-/issues/121)
 - [Feature 149 - Make auto-scale parameters of App Gateway configurable](https://community.opengroup.org/osdu/platform/deployment-and-operations/infra-azure-provisioning/-/issues/149)
 
 # v0.7 (2021-3-11)
