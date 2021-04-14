@@ -220,11 +220,6 @@ EOF
 cp .envrc .envrc_${UNIQUE}
 ```
 
-## Configure Back Up
-Back is enabled by default. To set the backup policies, utilize the script
-[here](https://community.opengroup.org/osdu/platform/deployment-and-operations/infra-azure-provisioning/-/tree/master/tools).
-The script should be run whenever you bring up a Resource Group in your deployment.
-
 ## Configure Key Access in Manifest Repository
 
 The public key of the `azure-aks-gitops-ssh-key` previously created needs to be added as a deploy key in your Azure DevOPS Project, follow these [steps](https://docs.microsoft.com/en-us/azure/devops/repos/git/use-ssh-keys-to-authenticate?view=azure-devops&tabs=current-page#step-2--add-the-public-key-to-azure-devops-servicestfs) to add your public SSH key to your ADO environment.
@@ -283,6 +278,20 @@ __Automated Pipeline Installation__
 
 1. Setup Service Automation following directions [here](./docs/service-automation.md).
 
+
+__Data Migration for Entitlements from Milestone 4(v0.7.0) or lower, to Milestone 5(v0.8.0) or higher__
+
+Milestone 5(v0.8.0) introduced a breaking changed for Entitlements, which required migration of data using the scipt
+[here](https://community.opengroup.org/osdu/platform/security-and-compliance/entitlements/-/tree/master/data-migration).
+The script should be run whenever you update OSDU installation from less than Milestone 5(v0.8.0) to equivalent or higher.
+
+
 ## Developer Activities
 
 1. To onboard new services follow the process located [here](./docs/service-onboarding.md).
+
+
+## Configure Back Up
+Back is enabled by default. To set the backup policies, utilize the script
+[here](https://community.opengroup.org/osdu/platform/deployment-and-operations/infra-azure-provisioning/-/tree/master/tools).
+The script should be run whenever you bring up a Resource Group in your deployment.
