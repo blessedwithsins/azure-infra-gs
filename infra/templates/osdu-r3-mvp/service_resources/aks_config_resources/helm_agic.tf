@@ -28,8 +28,6 @@ resource "kubernetes_namespace" "agic" {
   metadata {
     name = local.helm_agic_ns
   }
-
-  depends_on = [module.aks]
 }
 
 resource "helm_release" "agic" {
@@ -42,27 +40,27 @@ resource "helm_release" "agic" {
 
   set {
     name  = "appgw.subscriptionId"
-    value = data.azurerm_client_config.current.subscription_id
+    value = var.subscription_id
   }
 
   set {
     name  = "appgw.resourceGroup"
-    value = azurerm_resource_group.main.name
+    value = var.resource_group_name
   }
 
   set {
     name  = "appgw.name"
-    value = module.appgateway.name
+    value = var.appgw_name
   }
 
   set {
     name  = "armAuth.identityResourceID"
-    value = azurerm_user_assigned_identity.agicidentity.id
+    value = var.agic_identity_id
   }
 
   set {
     name  = "armAuth.identityClientID"
-    value = azurerm_user_assigned_identity.agicidentity.client_id
+    value = var.agic_client_id
   }
 
   set {

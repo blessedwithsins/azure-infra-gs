@@ -30,8 +30,6 @@ resource "kubernetes_namespace" "flux" {
   metadata {
     name = local.helm_flux_ns
   }
-
-  depends_on = [module.aks]
 }
 
 resource "kubernetes_secret" "flux_ssh" {

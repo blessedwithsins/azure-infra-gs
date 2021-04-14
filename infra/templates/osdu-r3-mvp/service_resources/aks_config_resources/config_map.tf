@@ -29,8 +29,6 @@ resource "kubernetes_namespace" "osdu" {
       "istio-injection" = "enabled"
     }
   }
-
-  depends_on = [module.aks]
 }
 
 
@@ -43,13 +41,13 @@ resource "kubernetes_config_map" "osduconfigmap" {
   }
 
   data = {
-    ENV_TENANT_ID         = data.azurerm_client_config.current.tenant_id
-    ENV_SUBSCRIPTION_NAME = data.azurerm_subscription.current.display_name
-    ENV_REGISTRY          = data.terraform_remote_state.central_resources.outputs.container_registry_name
-    ENV_KEYVAULT          = format("https://%s.vault.azure.net/", data.terraform_remote_state.central_resources.outputs.keyvault_name)
-    ENV_LOG_WORKSPACE_ID  = data.terraform_remote_state.central_resources.outputs.log_analytics_id
+    ENV_TENANT_ID         = var.tenant_id
+    ENV_SUBSCRIPTION_NAME = var.subscription_name
+    ENV_REGISTRY          = var.container_registry_name
+    ENV_KEYVAULT          = format("https://%s.vault.azure.net/", var.key_vault_name)
+    ENV_LOG_WORKSPACE_ID  = var.log_analytics_id
     ENV_POSTGRES_USERNAME = var.postgres_username
-    ENV_POSTGRES_HOSTNAME = module.postgreSQL.server_fqdn
+    ENV_POSTGRES_HOSTNAME = var.postgres_fqdn
   }
 
   depends_on = [kubernetes_namespace.osdu]

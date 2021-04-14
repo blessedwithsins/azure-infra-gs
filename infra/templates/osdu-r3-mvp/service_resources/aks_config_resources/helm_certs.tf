@@ -30,8 +30,6 @@ resource "kubernetes_namespace" "certs" {
       "cert-manager.io/disable-validation" = "true"
     }
   }
-
-  depends_on = [module.aks]
 }
 
 resource "helm_release" "certmgr" {

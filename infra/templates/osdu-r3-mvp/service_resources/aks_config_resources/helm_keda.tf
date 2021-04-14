@@ -27,8 +27,6 @@ resource "kubernetes_namespace" "keda" {
   metadata {
     name = local.helm_keda_ns
   }
-
-  depends_on = [module.aks]
 }
 
 resource "helm_release" "keda" {

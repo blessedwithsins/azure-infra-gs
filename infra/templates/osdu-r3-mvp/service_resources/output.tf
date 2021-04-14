@@ -58,12 +58,6 @@ output "storage_queues" {
   value       = module.storage_account.queues
 }
 
-// Network Output Items for Integration Tests
-output "appgw_name" {
-  description = "Application gateway's name"
-  value       = module.appgateway.name
-}
-
 output "keyvault_secret_id" {
   description = "The keyvault certificate keyvault resource id used to setup ssl termination on the app gateway."
   value       = azurerm_key_vault_certificate.default.0.secret_id

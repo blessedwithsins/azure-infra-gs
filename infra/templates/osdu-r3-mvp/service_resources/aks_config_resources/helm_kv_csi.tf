@@ -27,8 +27,6 @@ resource "kubernetes_namespace" "kvsecrets" {
   metadata {
     name = local.helm_kv_csi_ns
   }
-
-  depends_on = [module.aks]
 }
 
 resource "helm_release" "kvsecrets" {

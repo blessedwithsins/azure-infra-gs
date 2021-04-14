@@ -17,7 +17,7 @@
 # Pod Identity
 #-------------------------------
 locals {
-  pod_identity_name         = "${local.aks_cluster_name}-pod-identity"
+  pod_identity_name         = "${var.aks_cluster_name}-pod-identity"
   helm_pod_identity_name    = "aad-pod-identity"
   helm_pod_identity_ns      = "podidentity"
   helm_pod_identity_repo    = "https://raw.githubusercontent.com/Azure/aad-pod-identity/master/charts"
@@ -28,8 +28,6 @@ resource "kubernetes_namespace" "pod_identity" {
   metadata {
     name = local.helm_pod_identity_ns
   }
-
-  depends_on = [module.aks]
 }
 
 resource "helm_release" "aad_pod_id" {
@@ -61,12 +59,12 @@ resource "helm_release" "aad_pod_id" {
 
   set {
     name  = "azureIdentities.podidentity.resourceID"
-    value = azurerm_user_assigned_identity.podidentity.id
+    value = var.pod_identity_id
   }
 
   set {
     name  = "azureIdentities.podidentity.clientID"
-    value = azurerm_user_assigned_identity.podidentity.principal_id
+    value = var.pod_principal_id
   }
 
   set {
@@ -79,5 +77,5 @@ resource "helm_release" "aad_pod_id" {
     value = "podidentitybinding"
   }
 
-  depends_on = [kubernetes_namespace.pod_identity, azurerm_user_assigned_identity.podidentity]
+  depends_on = [kubernetes_namespace.pod_identity]
 }
