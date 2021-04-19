@@ -279,6 +279,13 @@ __Automated Pipeline Installation__
 1. Setup Service Automation following directions [here](./docs/service-automation.md).
 
 
+__Data Migration for Entitlements from Milestone 4(v0.7.0) or lower, to Milestone 5(v0.8.0) or higher__
+
+Milestone 5(v0.8.0) introduced a breaking changed for Entitlements, which required migration of data using the scipt
+[here](https://community.opengroup.org/osdu/platform/security-and-compliance/entitlements/-/tree/master/data-migration).
+The script should be run whenever you update OSDU installation from less than Milestone 5(v0.8.0) to equivalent or higher.
+
+
 ## Developer Activities
 
 1. To onboard new services follow the process located [here](./docs/service-onboarding.md).

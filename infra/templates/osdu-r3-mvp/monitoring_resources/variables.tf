@@ -41,12 +41,12 @@ variable "central_resources_workspace_name" {
 }
 
 variable "service_resources_workspace_name" {
-  description = "(Required) The workspace name for the central_resources repository terraform environment / template to reference for this template."
+  description = "(Required) The workspace name for the service_resources repository terraform environment / template to reference for this template."
   type        = string
 }
 
 variable "data_partition_resources_workspace_name" {
-  description = "(Required) The workspace name for the central_resources repository terraform environment / template to reference for this template."
+  description = "(Required) The workspace name for the data_partition_resources repository terraform environment / template to reference for this template."
   type        = string
 }
 
