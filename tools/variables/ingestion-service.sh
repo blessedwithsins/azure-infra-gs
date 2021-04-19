@@ -2,14 +2,14 @@
 #
 #  Purpose: Create the Developer Environment Variables.
 #  Usage:
-#    crs_catalog.sh
+#    ingestion-service.sh
 
 ###############################
 ## ARGUMENT INPUT            ##
 ###############################
-usage() { echo "Usage: DNS_HOST=<your_host> INVALID_JWT=<your_token> crs_catalog.sh " 1>&2; exit 1; }
+usage() { echo "Usage: DNS_HOST=<your_host> INVALID_JWT=<your_token> ingestion-service.sh " 1>&2; exit 1; }
 
-SERVICE="catalog"
+SERVICE="ingestion-service"
 
 if [ -z $UNIQUE ]; then
   tput setaf 1; echo 'ERROR: UNIQUE not provided' ; tput sgr0
@@ -50,17 +50,18 @@ if [ ! -d $UNIQUE ]; then mkdir $UNIQUE; fi
 # LocalHost Run Settings
 # ------------------------------------------------------------------------------------------------------
 ENTITLEMENTS_URL="https://${ENV_HOST}/entitlements/v1"
-client_id="${ENV_PRINCIPAL_ID}"
 azure_istioauth_enabled="true"
 
 # ------------------------------------------------------------------------------------------------------
 # Integration Test Settings
 # ------------------------------------------------------------------------------------------------------
-AZURE_DEPLOY_CLIENT_ID="${ENV_PRINCIPAL_ID}"
-AZURE_DEPLOY_CLIENT_SECRET="${ENV_PRINCIPAL_SECRET}"
-AZURE_DEPLOY_TENANT="${TENANT_ID}"
+INTEGRATION_TESTER="${ENV_PRINCIPAL_ID}"
+TESTER_SERVICEPRINCIPAL_SECRET="${ENV_PRINCIPAL_SECRET}"
+AZURE_TENANT_ID="${TENANT_ID}"
 AZURE_AD_APP_RESOURCE_ID="${ENV_APP_ID}"
-VIRTUAL_SERVICE_HOST_NAME=localhost:8080
+BASE_URL=/api/crs/converter/v2
+VIRTUAL_SERVICE_HOST_NAME="localhost:8080"
+client_id="${ENV_PRINCIPAL_ID}"
 MY_TENANT="${OSDU_TENANT}"
 TIME_ZONE="UTC+0"
 
@@ -119,16 +120,17 @@ export ENV_ELASTIC_PASSWORD=$ENV_ELASTIC_PASSWORD
 # ------------------------------------------------------------------------------------------------------
 export ENTITLEMENTS_URL="https://${ENV_HOST}/entitlements/v1"
 export azure_istioauth_enabled="true"
-export client_id="${ENV_PRINCIPAL_ID}"
 
 # ------------------------------------------------------------------------------------------------------
 # Integration Test Settings
 # ------------------------------------------------------------------------------------------------------
-export AZURE_DEPLOY_CLIENT_ID="${AZURE_DEPLOY_CLIENT_ID}"
-export AZURE_DEPLOY_CLIENT_SECRET="${AZURE_DEPLOY_CLIENT_SECRET}"
-export AZURE_DEPLOY_TENANT="${AZURE_DEPLOY_TENANT}"
+export INTEGRATION_TESTER="${INTEGRATION_TESTER}"
+export TESTER_SERVICEPRINCIPAL_SECRET="${TESTER_SERVICEPRINCIPAL_SECRET}"
+export AZURE_TENANT_ID="${AZURE_TENANT_ID}"
 export AZURE_AD_APP_RESOURCE_ID="${AZURE_AD_APP_RESOURCE_ID}"
-export VIRTUAL_SERVICE_HOST_NAME=localhost:8080
+export BASE_URL=/api/crs/converter/v2
+export VIRTUAL_SERVICE_HOST_NAME="localhost:8080"
+export client_id="${ENV_PRINCIPAL_ID}"
 export MY_TENANT="${OSDU_TENANT}"
 export TIME_ZONE="${TIME_ZONE}"
 LOCALENV
@@ -136,28 +138,31 @@ LOCALENV
 
 cat > ${UNIQUE}/${SERVICE}_local.yaml <<LOCALRUN
 ENTITLEMENTS_URL: "${ENTITLEMENTS_URL}
-export client_id: "${ENV_PRINCIPAL_ID}"
 azure_istioauth_enabled: "${azure_istioauth_enabled}"
 LOCALRUN
 
 
 cat > ${UNIQUE}/${SERVICE}_local_test.yaml <<LOCALTEST
-AZURE_DEPLOY_CLIENT_ID: "${AZURE_DEPLOY_CLIENT_ID}"
-AZURE_DEPLOY_CLIENT_SECRET: "${AZURE_DEPLOY_CLIENT_SECRET}"
-AZURE_DEPLOY_TENANT: "${AZURE_DEPLOY_TENANT}"
+INTEGRATION_TESTER: "${INTEGRATION_TESTER}"
+TESTER_SERVICEPRINCIPAL_SECRET: "${TESTER_SERVICEPRINCIPAL_SECRET}"
+AZURE_TENANT_ID: "${AZURE_TENANT_ID}"
 AZURE_AD_APP_RESOURCE_ID: "${AZURE_AD_APP_RESOURCE_ID}"
-VIRTUAL_SERVICE_HOST_NAME: "localhost:8080"
-MY_TENANT: "${OSDU_TENANT}"
+BASE_URL: "${BASE_URL}"
+VIRTUAL_SERVICE_HOST_NAME: "${VIRTUAL_SERVICE_HOST_NAME}"
+client_id: "${client_id}"
+MY_TENANT: "${MY_TENANT}"
 TIME_ZONE: "${TIME_ZONE}"
 LOCALTEST
 
 
 cat > ${UNIQUE}/${SERVICE}_test.yaml <<DEVTEST
-AZURE_DEPLOY_CLIENT_ID: "${AZURE_DEPLOY_CLIENT_ID}"
-AZURE_DEPLOY_CLIENT_SECRET: "${AZURE_DEPLOY_CLIENT_SECRET}"
-AZURE_DEPLOY_TENANT: "${AZURE_DEPLOY_TENANT}"
+INTEGRATION_TESTER: "${INTEGRATION_TESTER}"
+TESTER_SERVICEPRINCIPAL_SECRET: "${TESTER_SERVICEPRINCIPAL_SECRET}"
+AZURE_TENANT_ID: "${AZURE_TENANT_ID}"
 AZURE_AD_APP_RESOURCE_ID: "${AZURE_AD_APP_RESOURCE_ID}"
+BASE_URL: "${BASE_URL}"
 VIRTUAL_SERVICE_HOST_NAME: "${ENV_HOST}"
-MY_TENANT: "${OSDU_TENANT}"
+client_id: "${client_id}"
+MY_TENANT: "${MY_TENANT}"
 TIME_ZONE: "${TIME_ZONE}"
 DEVTEST

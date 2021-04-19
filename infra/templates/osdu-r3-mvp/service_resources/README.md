@@ -64,14 +64,21 @@ TF_WORKSPACE="sr-${UNIQUE}"
 terraform workspace new $TF_WORKSPACE || terraform workspace select $TF_WORKSPACE
 ```
 
+> Manually create a custom variable file to use for template configuration and edit as appropriate and desired.
+
+```bash
+cp terraform.tfvars custom.tfvars
+```
+
 Execute the following commands to orchestrate a deployment.
+
 
 ```bash
 # See what terraform will try to deploy without actually deploying
-terraform plan
+terraform plan -var-file custom.tfvars
 
 # Execute a deployment
-terraform apply
+terraform apply -var-file custom.tfvars
 ```
 
 Optionally execute the following command to teardown your deployment and delete your resources.

@@ -29,14 +29,16 @@ variable "prefix" {
 }
 
 variable "feature_flag" {
-  description = "(Optional) A toggle for experimental features"
+  description = "(Optional) A toggle for incubator features"
   type = object({
     osdu_namespace = bool
     flux           = bool
+    sa_lock        = bool
   })
   default = {
     osdu_namespace = true
     flux           = true
+    sa_lock        = true
   }
 }
 
@@ -214,10 +216,22 @@ variable "aks_agent_vm_count" {
   default     = "3"
 }
 
+variable "aks_agent_vm_maxcount" {
+  description = "The max number of nodes allocated to the AKS cluster"
+  type        = string
+  default     = "10"
+}
+
 variable "aks_agent_vm_size" {
   type        = string
   description = "The size of each VM in the Agent Pool (e.g. Standard_F1). Changing this forces a new resource to be created."
   default     = "Standard_D2s_v3"
+}
+
+variable "aks_agent_vm_disk" {
+  description = "The initial sice of each VM OS Disk."
+  type        = number
+  default     = 30
 }
 
 variable "kubernetes_version" {
@@ -274,4 +288,16 @@ variable "ssl_policy_min_protocol_version" {
   description = "The minimal TLS version. Possible values are TLSv1_0, TLSv1_1 and TLSv1_2"
   type        = string
   default     = "TLSv1_2"
+}
+
+variable "appgw_min_capacity" {
+  description = "Minimum number of instances to run in the App Gateway"
+  type        = number
+  default     = 2
+}
+
+variable "appgw_max_capacity" {
+  description = "Maximum number of instances to run in the App Gateway"
+  type        = number
+  default     = 10
 }

@@ -23,6 +23,7 @@ parameters:
   testCoreMavenPomFile: ''
   testCoreMavenOptions: ''
   testCoreMavenGoal: 'install'
+  integrationTestMavenGoal: 'package'
   skipDeploy: false
   skipTest: 'false'
   dockerFile: ''
@@ -70,6 +71,7 @@ stages:
                   testCoreMavenPomFile: ${{ parameters.testCoreMavenPomFile }}
                   testCoreMavenGoal: ${{ parameters.testCoreMavenGoal }}
                   testCoreMavenOptions: ${{ parameters.testCoreMavenOptions }}
+                  integrationTestMavenGoal: ${{ parameters.integrationTestMavenGoal }}
                   artifactName: ${{ variables.artifactName }}
                   elasticEndpoint: $(ELASTIC_ENDPOINT)
                   environment: ${{ environment }}

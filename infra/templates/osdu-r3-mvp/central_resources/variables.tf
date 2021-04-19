@@ -28,6 +28,18 @@ variable "prefix" {
   type        = string
 }
 
+variable "feature_flag" {
+  description = "(Optional) A toggle for incubator features"
+  type = object({
+    kv_lock  = bool
+    acr_lock = bool
+  })
+  default = {
+    kv_lock  = true
+    acr_lock = true
+  }
+}
+
 variable "randomization_level" {
   description = "Number of additional random characters to include in resource names to insulate against unexpected resource name collisions."
   type        = number
@@ -81,4 +93,41 @@ variable "storage_replication_type" {
   description = "Defines the type of replication to use for this storage account. Valid options are LRS*, GRS, RAGRS and ZRS."
   type        = string
   default     = "LRS"
+}
+
+variable "cosmosdb_replica_location" {
+  description = "The name of the Azure region to host replicated data. i.e. 'East US' 'East US 2'. More locations can be found at https://azure.microsoft.com/en-us/global-infrastructure/locations/"
+  type        = string
+  default     = null
+}
+
+variable "cosmosdb_consistency_level" {
+  description = "The level of consistency backed by SLAs for Cosmos database. Developers can chose from five well-defined consistency levels on the consistency spectrum."
+  type        = string
+  default     = "Session"
+}
+
+variable "cosmosdb_automatic_failover" {
+  description = "Determines if automatic failover is enabled for CosmosDB."
+  type        = bool
+  default     = true
+}
+
+variable "cosmos_graph_databases" {
+  description = "The list of Cosmos DB Graph Databases."
+  type = list(object({
+    name       = string
+    throughput = number
+  }))
+  default = null
+}
+
+variable "cosmos_graphs" {
+  description = "The list of cosmos graphs to create. Names must be unique per cosmos instance."
+  type = list(object({
+    name               = string
+    database_name      = string
+    partition_key_path = string
+  }))
+  default = []
 }

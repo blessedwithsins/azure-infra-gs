@@ -23,6 +23,7 @@ parameters:
   mavenGoal: 'clean package'
   serviceCoreMavenGoal: 'install'
   serviceCoreMavenOptions: ''
+  sonarServiceConnection: ''
   testingRootFolder: 'testing/integration-tests'
   mavenPomFile: 'pom.xml'
   mavenPublishJUnitResults: false
@@ -63,6 +64,16 @@ stages:
       inputs:
         mavenPomFile: ${{ parameters.mavenPomFile }}
         goals: 'validate'
+
+    - task: SonarQubePrepare@4
+      displayName: 'Prepare analysis on SonarQube'
+      condition: and(succeeded(), ne('${{ parameters.sonarServiceConnection }}', ''))
+      inputs:
+        SonarQube: ${{ parameters.sonarServiceConnection }}
+        scannerMode: Other
+        extraProperties: |
+          sonar.projectKey=${{ parameters.sonarProjectKey }}
+          sonar.coverage.jacoco.xmlReportPaths=${{ parameters.sonarReportPaths }}
 
     - task: Maven@3
       displayName: 'Maven Core Build'

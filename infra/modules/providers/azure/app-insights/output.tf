@@ -1,4 +1,4 @@
-//  Copyright © Microsoft Corporation
+//  Copyright Â© Microsoft Corporation
 //
 //  Licensed under the Apache License, Version 2.0 (the "License");
 //  you may not use this file except in compliance with the License.
@@ -23,3 +23,7 @@ output "app_insights_instrumentation_key" {
   sensitive   = true
 }
 
+output "app_insights_name" {
+  description = "The name of the appinsights resource"
+  value       = azurerm_application_insights.appinsights.name
+}

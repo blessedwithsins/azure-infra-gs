@@ -122,7 +122,7 @@ The script `common_prepare.sh` script is a _helper_ script designed to help setu
 # Execute Script
 export UNIQUE=demo
 
-./infra/common_prepare.sh $(az account show --query id -otsv) $UNIQUE
+./infra/scripts/common_prepare.sh $(az account show --query id -otsv) $UNIQUE
 ```
 
 Integration Tests requires 2 Azure AD User Accounts, a tenant user and a guest user to be setup in order to use for integration testing.  This activity needs to be performed by someone who has access as an AD User Admin.
@@ -179,7 +179,7 @@ __Installed Azure Resources__
 6. An AD application to be leveraged in the future that defines and controls access to the OSDU Environment for AD Identity. _(future)_
 7. An AD application to be used for negative integration testing
 
-> Removal would require deletion of all AD elements `osdu-mvp-{UNIQUE}-*`, unlocking and deleting the resource group then purging the KV.
+> Removal would require deletion of all AD elements `osdu-mvp-{UNIQUE}-*`, unlocking and deleting the resource group.
 
 
 __Azure AD Admin Consent__
@@ -192,10 +192,9 @@ __Azure AD Admin Consent__
 For more information on Azure identity and authorization, see the official Microsoft documentation [here](https://docs.microsoft.com/en-us/azure/active-directory/develop/v2-permissions-and-consent).
 
 
-
 ## Elastic Search Setup
 
-Infrastructure requires a bring your own Elastic Search Instance of a version of 6.8.x with a valid https endpoint and the access information must now be stored in the Common KeyVault. The recommended method of Elastic Search is to use the [Elastic Cloud Managed Service from the Marketplace](https://azuremarketplace.microsoft.com/en-us/marketplace/apps/elastic.ec-azure?tab=Overview).
+Infrastructure requires a bring your own Elastic Search Instance of a version of 7.x (ie: 7.11.1) with a valid https endpoint and the access information must now be stored in the Common KeyVault. The recommended method of Elastic Search is to use the [Elastic Cloud Managed Service from the Marketplace](https://azuremarketplace.microsoft.com/en-us/marketplace/apps/elastic.ec-azure?tab=Overview).
 
 > Note: Elastic Cloud Managed Service requires a Credit Card to be associated to the subscription for billing purposes.
 
@@ -220,7 +219,6 @@ EOF
 
 cp .envrc .envrc_${UNIQUE}
 ```
-
 
 ## Configure Key Access in Manifest Repository
 
@@ -252,13 +250,16 @@ __Manual Installation__
 
 1. Setup DNS to point to the deployed infrastructure following directions [here](./docs/dns-setup.md).
 
-1. Upload the Integration Test Data following directions [here](./tools/test_data/README.md).
+1. Upload the Configuration Data following directions [here](./docs/configuration-data.md).
 
-1. Deploy the application helm charts following the directions [here](./charts/README.md).
+1. Deploy the application helm charts following the directions [here](https://community.opengroup.org/osdu/platform/deployment-and-operations/helm-charts-azure).
+
+1. Upload the Integration Test Data following directions [here](./tools/test_data).
 
 1. Register your partition with the Data Partition API by following the instructions [here](./tools/rest/README.md) to configure your IDE to make authenticated requests to your OSDU instance and send the API request located [here](./tools/rest/partition.http) (createPartition).
 
-1. Setup Environment Variables for IDE Development and Integration Testing following the directions [here](./tools/variables/README.md).
+1. Load Service Data following directions [here](./docs/service-data.md).
+
 
 
 __Automated Pipeline Installation__
@@ -271,10 +272,26 @@ __Automated Pipeline Installation__
 
 1. Setup DNS to point to the deployed infrastructure following directions [here](./docs/dns-setup.md).
 
+1. Upload the Configuration Data following directions [here](./docs/configuration-data.md).
+
 1. Upload the Integration Test Data following directions [here](./tools/test_data).
 
 1. Setup Service Automation following directions [here](./docs/service-automation.md).
 
+
+__Data Migration for Entitlements from Milestone 4(v0.7.0) or lower, to Milestone 5(v0.8.0) or higher__
+
+Milestone 5(v0.8.0) introduced a breaking changed for Entitlements, which required migration of data using the scipt
+[here](https://community.opengroup.org/osdu/platform/security-and-compliance/entitlements/-/tree/master/data-migration).
+The script should be run whenever you update OSDU installation from less than Milestone 5(v0.8.0) to equivalent or higher.
+
+
 ## Developer Activities
 
 1. To onboard new services follow the process located [here](./docs/service-onboarding.md).
+
+
+## Configure Back Up
+Back is enabled by default. To set the backup policies, utilize the script
+[here](https://community.opengroup.org/osdu/platform/deployment-and-operations/infra-azure-provisioning/-/tree/master/tools).
+The script should be run whenever you bring up a Resource Group in your deployment.

@@ -33,6 +33,9 @@ locals {
   sdms_storage_account_name = format("%s-sdms-storage", var.data_partition_name)
   sdms_storage_key_name     = format("%s-key", local.sdms_storage_account_name)
 
+  ingest_storage_account_name = format("%s-ingest-storage", var.data_partition_name)
+  ingest_storage_key_name     = format("%s-key", local.ingest_storage_account_name)
+
   cosmos_connection  = format("%s-cosmos-connection", var.data_partition_name)
   cosmos_endpoint    = format("%s-cosmos-endpoint", var.data_partition_name)
   cosmos_primary_key = format("%s-cosmos-primary-key", var.data_partition_name)
@@ -89,6 +92,18 @@ resource "azurerm_key_vault_secret" "sdms_storage_name" {
 resource "azurerm_key_vault_secret" "sdms_storage_key" {
   name         = local.sdms_storage_key_name
   value        = module.sdms_storage_account.primary_access_key
+  key_vault_id = data.terraform_remote_state.central_resources.outputs.keyvault_id
+}
+
+resource "azurerm_key_vault_secret" "ingest_storage_name" {
+  name         = local.ingest_storage_account_name
+  value        = module.ingest_storage_account.name
+  key_vault_id = data.terraform_remote_state.central_resources.outputs.keyvault_id
+}
+
+resource "azurerm_key_vault_secret" "ingest_storage_key" {
+  name         = local.ingest_storage_key_name
+  value        = module.ingest_storage_account.primary_access_key
   key_vault_id = data.terraform_remote_state.central_resources.outputs.keyvault_id
 }
 

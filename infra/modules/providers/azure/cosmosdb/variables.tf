@@ -47,10 +47,10 @@ variable "consistency_level" {
 variable "sql_collections" {
   description = "The list of cosmos collection names to create. Names must be unique per cosmos instance."
   type = list(object({
-    name               = string
-    database_name      = string
-    partition_key_path = string
-    # throughput         = number
+    name                  = string
+    database_name         = string
+    partition_key_path    = string
+    partition_key_version = number
   }))
   default = []
 }
@@ -60,6 +60,25 @@ variable "databases" {
   type = list(object({
     name       = string
     throughput = number
+  }))
+  default = []
+}
+
+variable "graph_databases" {
+  description = "The list of Cosmos DB Graph Databases."
+  type = list(object({
+    name       = string
+    throughput = number
+  }))
+  default = null
+}
+
+variable "graphs" {
+  description = "The list of cosmos graphs to create. Names must be unique per cosmos instance."
+  type = list(object({
+    name               = string
+    database_name      = string
+    partition_key_path = string
   }))
   default = []
 }

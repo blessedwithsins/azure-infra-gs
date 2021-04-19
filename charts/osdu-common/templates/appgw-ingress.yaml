@@ -8,13 +8,19 @@ metadata:
     appgw.ingress.kubernetes.io/request-timeout: "300"
     appgw.ingress.kubernetes.io/connection-draining: "true"
     appgw.ingress.kubernetes.io/connection-draining-timeout: "30"
+    {{- if .Values.global.ingress.enableKeyvaultCert}}
+    appgw.ingress.kubernetes.io/appgw-ssl-certificate: "appgw-ssl-cert"
+    {{- else }}
     cert-manager.io/cluster-issuer: letsencrypt
     cert-manager.io/acme-challenge-type: http01
+    {{- end }}
 spec:
+  {{- if not .Values.global.ingress.enableKeyvaultCert}}
   tls:
   - hosts:
     - {{ .Values.global.ingress.hostname }}
     secretName: osdu-certificate
+  {{- end }}
   rules:
     - host: {{ .Values.global.ingress.hostname }}
       http:
@@ -74,11 +80,11 @@ spec:
           - backend:
               serviceName: file
               servicePort: 80
-            path: /api/file/v2/*
+            path: /api/file/*
           - backend:
               serviceName: ingestion-workflow
               servicePort: 80
-            path: /api/workflow/v1/*
+            path: /api/workflow/*
           - backend:
               serviceName: os-wellbore-ddms
               servicePort: 80
@@ -87,3 +93,27 @@ spec:
               serviceName: notification
               servicePort: 80
             path: /api/notification/v1/*
+          - backend:
+              serviceName: well-planning
+              servicePort: 80
+            path: /api/well-planning/*
+          - backend:
+              serviceName: entitlements
+              servicePort: 80
+            path: /api/entitlements/v2/*
+          - backend:
+              serviceName: seismic-store-service
+              servicePort: 80
+            path: /seistore-svc/api/v3/*
+          - backend:
+              serviceName: ingestion-service
+              servicePort: 80
+            path: /api/ingestion/*
+          - backend:
+              serviceName: well-delivery
+              servicePort: 80
+            path: /api/well-delivery/*
+          - backend:
+              serviceName: policy-service
+              servicePort: 80
+            path: /api/policy/*

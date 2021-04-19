@@ -79,3 +79,29 @@ variable "resource_tags" {
   type        = map(string)
   default     = {}
 }
+
+variable "retention_days" {
+  description = "Number of days that to keep deleted blobs"
+  type        = number
+  default     = 30
+}
+
+# CORS Rules
+variable "blob_cors_rule" {
+  type = list(
+    object(
+      {
+        # A list of origin domains that will be allowed by CORS.
+        allowed_origins = list(string)
+        # A list of http headers that are allowed to be executed by the origin. Valid options are DELETE, GET, HEAD, MERGE, POST, OPTIONS, PUT or PATCH.
+        allowed_methods = list(string)
+        # A list of headers that are allowed to be a part of the cross-origin request.
+        allowed_headers = list(string)
+        # A list of response headers that are exposed to CORS clients.
+        exposed_headers = list(string)
+        # The number of seconds the client should cache a preflight response.
+        max_age_in_seconds = number
+  }))
+  default     = []
+  description = "List of CORS Rules to be applied on the Blob Service."
+}

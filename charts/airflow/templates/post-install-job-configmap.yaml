@@ -12,6 +12,7 @@ data:
     import sys
     from flask_bcrypt import generate_password_hash
     import psycopg2
+    from werkzeug.security import generate_password_hash as generate_hash
 
     PY3 = sys.version_info[0] == 3
 
@@ -22,12 +23,27 @@ data:
         database_login_pass = os.environ.get('DATABASE_USER_PASS','')
         airflow_admin =os.environ.get('AIRFLOW_ADMIN','')
         airflow_pass =os.environ.get('AIRFLOW_ADMIN_PASS','')
+        airflow_rbac_create_user = os.environ.get('AIRFLOW_RBAC_CREATE_USER','')
+        airflow_rbac_enabled = os.environ.get('AIRFLOW_RBAC_ENABLED','')
         retry = 6
         retry_window = 10
         if not airflow_admin or not airflow_pass or not server or not database or not database_login_name or not database_login_pass:
             print('missed required environment variables')
             sys.exit(2)
 
+        if is_true(airflow_rbac_enabled) and is_true(airflow_rbac_create_user):
+            while retry>0:
+                time.sleep(retry_window)
+                if check(server,database,database_login_name,database_login_pass,"database") and check(server,database,database_login_name,database_login_pass,"ab_user"):
+                    create_rbac_user(server,database,database_login_name,database_login_pass,airflow_admin,airflow_pass)
+                    break
+                else:
+                    retry -= 1
+                    print(f'wait {retry_window}s for retry') 
+        else:
+            print('rbac user not created')
+
+        retry=6
         while retry>0:
             time.sleep(retry_window)
             if check(server,database,database_login_name,database_login_pass,"database") and check(server,database,database_login_name,database_login_pass,"table"):
@@ -58,6 +74,27 @@ data:
             if conn is not None:
                 conn.close()
 
+    def create_rbac_user(server,database,db_login_name,db_login_pass,airflow_admin,airflow_pass):
+        emailid="{}@admin.com".format(airflow_admin)
+        conn_string = "host={0} user={1} dbname={2} password={3} sslmode={4}".format(server, db_login_name, database, db_login_pass, 'require')
+        password_hash = generate_hash(airflow_pass)
+        conn = None
+        try:
+            conn = psycopg2.connect(conn_string)
+            cursor = conn.cursor()
+            cursor.execute("CREATE SEQUENCE IF NOT EXISTS ab_user_id_seq OWNED BY ab_user.id")
+            cursor.execute("insert into ab_user(id,first_name,last_name,username,password,active,email) values(nextval('ab_user_id_seq'::regclass),%s,%s,%s,%s,%s,%s) on CONFLICT(username) DO NOTHING;",(airflow_admin,airflow_admin,airflow_admin,password_hash,True,emailid))
+            cursor.execute("CREATE SEQUENCE IF NOT EXISTS ab_user_role_id_seq OWNED BY ab_user_role.id")
+            cursor.execute("INSERT into ab_user_role(id, user_id, role_id) select nextval('ab_user_role_id_seq'::regclass), u.id, r.id FROM ab_user u,ab_role r where u.username=%s and r.name='Admin' on CONFLICT(user_id,role_id) DO NOTHING",[airflow_admin])
+            conn.commit()
+            cursor.close()
+            print(f'RBAC user {airflow_admin} was created')
+        except (Exception, psycopg2.DatabaseError) as error:
+            print(error)
+        finally:
+            if conn is not None:
+                conn.close()
+
     def check(server,database,db_login_name,db_login_pass,check_type="database"):
         conn_string = None
         connection = None
@@ -66,6 +103,9 @@ data:
         if check_type =="database":
             conn_string = "host={0} user={1} dbname=postgres password={2} sslmode={3}".format(server, db_login_name, db_login_pass, 'require')
             query_string = f"select exists(select * from pg_database where datname='{database}')" 
+        elif check_type =="ab_user":
+            conn_string = "host={0} user={1} dbname={2} password={3} sslmode={4}".format(server, db_login_name, database, db_login_pass, 'require')
+            query_string = "select exists(select * from information_schema.tables where table_name='ab_user')"
         else:
             conn_string = "host={0} user={1} dbname={2} password={3} sslmode={4}".format(server, db_login_name, database, db_login_pass, 'require')
             query_string = "select exists(select * from information_schema.tables where table_name='users')"
@@ -80,7 +120,10 @@ data:
             cur.execute(query_string)
             object_exists = cur.fetchone()[0]
             connection.close()
-        return object_exists     
+        return object_exists
+
+    def is_true(value):
+        return value == "True" or value == True or value == "true"
 
     if __name__ == "__main__":
         main()

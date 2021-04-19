@@ -20,6 +20,12 @@ func All() {
 	mg.Deps(PartitionTests)
 }
 
+func Test() {
+	mg.Deps(CentralUnitTest)
+	mg.Deps(PartitionUnitTest)
+	mg.Deps(ServiceUnitTest)
+}
+
 // Execute Module Tests and fail if a test fails. Only executes tests in 'test' directories.
 func ModuleTests() error {
 	mg.Deps(Clean)

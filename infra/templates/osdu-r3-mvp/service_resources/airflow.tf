@@ -93,6 +93,20 @@ resource "azurerm_storage_share_directory" "operators" {
   depends_on           = [azurerm_storage_share_directory.plugins]
 }
 
+resource "azurerm_storage_share_directory" "hooks" {
+  name                 = "plugins/hooks"
+  share_name           = azurerm_storage_share.airflow_share.name
+  storage_account_name = module.storage_account.name
+  depends_on           = [azurerm_storage_share_directory.plugins]
+}
+
+resource "azurerm_storage_share_directory" "sensors" {
+  name                 = "plugins/sensors"
+  share_name           = azurerm_storage_share.airflow_share.name
+  storage_account_name = module.storage_account.name
+  depends_on           = [azurerm_storage_share_directory.plugins]
+}
+
 // Airflow log container
 resource "azurerm_storage_container" "main" {
   name                  = "airflow-logs"

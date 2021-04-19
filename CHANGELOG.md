@@ -2,9 +2,76 @@
 
 # Current Master
 
+# v0.8 (2021-4-9)
+
+__Infra Changes__
+- [Operationalize 104 - Backup and Restore](https://community.opengroup.org/osdu/platform/deployment-and-operations/infra-azure-provisioning/-/issues/104)
+- [Feature 115 - Enable Custom HTTPS Certificates](https://community.opengroup.org/osdu/platform/deployment-and-operations/infra-azure-provisioning/-/issues/115)
+- [Feature 121 - Added Default Dashboard](https://community.opengroup.org/osdu/platform/deployment-and-operations/infra-azure-provisioning/-/issues/121)
+- [Feature 149 - Make auto-scale parameters of App Gateway configurable](https://community.opengroup.org/osdu/platform/deployment-and-operations/infra-azure-provisioning/-/issues/149)
+
+# v0.7 (2021-3-11)
+
+__Service Onboarded__
+- [Issue 81 - Entitlements V2](https://community.opengroup.org/osdu/platform/deployment-and-operations/infra-azure-provisioning/-/issues/81)
+  > Not integrated yet to other services until M5.
+
+__Bug Fixes__
+- [Bug 130 - Variable Script Change Indexer Service - STORAGE_QUERY_RECORD_HOST](https://community.opengroup.org/osdu/platform/deployment-and-operations/infra-azure-provisioning/-/issues/130)
+- [Bug 129 - Envoy Filters Indentation formating](https://community.opengroup.org/osdu/platform/deployment-and-operations/infra-azure-provisioning/-/issues/129)
+- [Bug 124 - Documentation SDMS](https://community.opengroup.org/osdu/platform/deployment-and-operations/infra-azure-provisioning/-/issues/124)
+- [Bug 119 - Add Airflow python package `python-keycloak`](https://community.opengroup.org/osdu/platform/deployment-and-operations/infra-azure-provisioning/-/issues/119)
+
+
+__Infra Changes__
+- [Issue 135 - Airflow Default Variables](https://community.opengroup.org/osdu/platform/deployment-and-operations/infra-azure-provisioning/-/issues/135)
+- [Arch 123 - Obsolete Cosmos DB Tables and add new v2 tables](https://community.opengroup.org/osdu/platform/deployment-and-operations/infra-azure-provisioning/-/issues/123)
+- [Issue 127](https://community.opengroup.org/osdu/platform/deployment-and-operations/infra-azure-provisioning/-/issues/127)
+- [Feature 126 - Add support to pass JAVA_OPTS to java command in DockerFile](https://community.opengroup.org/osdu/platform/deployment-and-operations/infra-azure-provisioning/-/issues/126)
+- [Feature 125 - Enable Manifest Ingestion](https://community.opengroup.org/osdu/platform/deployment-and-operations/infra-azure-provisioning/-/issues/125)
+
+
+# v0.5 (2021-2-11)
+
+__Service Onboarded__
+- [Issue 60 - Seismic DMS Service](https://community.opengroup.org/osdu/platform/deployment-and-operations/infra-azure-provisioning/-/issues/44)
+- [Issue 111 - CSV DAGS](https://community.opengroup.org/osdu/platform/deployment-and-operations/infra-azure-provisioning/-/issues/111)
+
+__Infra Changes__
+- [Issue 106 - Arch Change - Data Partition - Ingestion Workflow Database and Storage new collections and fileshares](https://community.opengroup.org/osdu/platform/deployment-and-operations/infra-azure-provisioning/-/issues/106)
+
+__Bug Fixes__
+- [Bug 109 - Add Entitlement Role](https://community.opengroup.org/osdu/platform/deployment-and-operations/infra-azure-provisioning/-/issues/109#related-issues)
+- [Bug 108 - Add VM Agent Max Nodes Option](https://community.opengroup.org/osdu/platform/deployment-and-operations/infra-azure-provisioning/-/issues/108)
+- [Bug 103 - Enable opt-in airflow ui ingress](https://community.opengroup.org/osdu/platform/deployment-and-operations/infra-azure-provisioning/-/issues/103)
+- [Bug 102 - Users with a lot of groups receive a 400 Bad Request when making API calls](https://community.opengroup.org/osdu/platform/deployment-and-operations/infra-azure-provisioning/-/issues/102)
+- [Bug 101 - Comsos Graph module always requires a change on tf plan](https://community.opengroup.org/osdu/platform/deployment-and-operations/infra-azure-provisioning/-/issues/101)
+- [Bug 100 - Airflow statsd not building in pipeline](https://community.opengroup.org/osdu/platform/deployment-and-operations/infra-azure-provisioning/-/issues/100)
+- [Bug 99 - AKS and Postgres Diagnostics - All Metrics](https://community.opengroup.org/osdu/platform/deployment-and-operations/infra-azure-provisioning/-/issues/99)
+- [Bug 97 - Rename Cosmos DB collections used by Schema Service](https://community.opengroup.org/osdu/platform/deployment-and-operations/infra-azure-provisioning/-/issues/97)
+
+
+# v0.4.3 (2021-1-25)
+
+__Service Onboarded__
+- [Issue 60 - Schema Service](https://community.opengroup.org/osdu/platform/deployment-and-operations/infra-azure-provisioning/-/issues/60)
+- [Issue 65 - CRS Conversion Service](https://community.opengroup.org/osdu/platform/deployment-and-operations/infra-azure-provisioning/-/issues/65)
+- [Issue 53 - WKS Service](https://community.opengroup.org/osdu/platform/deployment-and-operations/infra-azure-provisioning/-/issues/53)
+- [Issue 43 - Workflow Service](https://community.opengroup.org/osdu/platform/deployment-and-operations/infra-azure-provisioning/-/issues/43)
+
+
 __Infra Changes__
 - [Issue 75 - Upgrade Infrastructure tools and software dependencies](https://community.opengroup.org/osdu/platform/deployment-and-operations/infra-azure-provisioning/-/issues/75)  - _* Manual Intervention Required_
 - [Issue 76 - Add Terraform Service Resource Template Feature Flags](https://community.opengroup.org/osdu/platform/deployment-and-operations/infra-azure-provisioning/-/issues/76)
+- [Issue 80 - Feature Change - Data Partition - Enable CORS configuration for Blob Containers on Storage Accounts](https://community.opengroup.org/osdu/platform/deployment-and-operations/infra-azure-provisioning/-/issues/80)
+- [Issue 77 - Architecture Change - Central Resources - Add Graph Database](https://community.opengroup.org/osdu/platform/deployment-and-operations/infra-azure-provisioning/-/issues/77)
+- [Issue 84 - Architecture Change - Data Partition - Add dedicated Storage Account for use by Ingestion Service](https://community.opengroup.org/osdu/platform/deployment-and-operations/infra-azure-provisioning/-/issues/84/)
+
+__Bug Fixes__
+- [Bug 82 - AKS Template Plan Calculation](https://community.opengroup.org/osdu/platform/deployment-and-operations/infra-azure-provisioning/-/issues/82)
+- [Bug 90 - Indexer Service ADO Pipeline](https://community.opengroup.org/osdu/platform/deployment-and-operations/infra-azure-provisioning/-/issues/90)
+- [Bug 92 - CRS Conversion File Shares](https://community.opengroup.org/osdu/platform/deployment-and-operations/infra-azure-provisioning/-/issues/92)
+- [Bug 94 - AKS Default Node Pool Disk Size](https://community.opengroup.org/osdu/platform/deployment-and-operations/infra-azure-provisioning/-/issues/94)
 
 
 

@@ -19,6 +19,14 @@
    This file holds the Default Variable Configuration
 */
 
+
+/*
+The following items are recommended to override in custom.tfvars
+
+1. Resource Tags
+
+*/
+
 prefix = "osdu-mvp"
 
 resource_tags = {
@@ -27,3 +35,20 @@ resource_tags = {
 
 # Storage Settings
 storage_replication_type = "LRS"
+
+# Database Settings
+cosmosdb_consistency_level = "Session"
+cosmos_graph_databases = [
+  {
+    name       = "osdu-graph"
+    throughput = 4000
+  }
+]
+
+cosmos_graphs = [
+  {
+    name               = "Entitlements"
+    database_name      = "osdu-graph"
+    partition_key_path = "/dataPartitionId"
+  }
+]

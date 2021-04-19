@@ -83,6 +83,20 @@ variable "storage_containers" {
   type        = list(string)
 }
 
+variable "blob_cors_rule" {
+  type = list(
+    object(
+      {
+        allowed_origins    = list(string)
+        allowed_methods    = list(string)
+        allowed_headers    = list(string)
+        exposed_headers    = list(string)
+        max_age_in_seconds = number
+  }))
+  default     = []
+  description = "List of CORS Rules to be applied on the Blob Service."
+}
+
 variable "cosmosdb_replica_location" {
   description = "The name of the Azure region to host replicated data. i.e. 'East US' 'East US 2'. More locations can be found at https://azure.microsoft.com/en-us/global-infrastructure/locations/"
   type        = string
@@ -112,9 +126,10 @@ variable "cosmos_databases" {
 variable "cosmos_sql_collections" {
   description = "The list of cosmos collection names to create. Names must be unique per cosmos instance."
   type = list(object({
-    name               = string
-    database_name      = string
-    partition_key_path = string
+    name                  = string
+    database_name         = string
+    partition_key_path    = string
+    partition_key_version = number
   }))
   default = []
 }

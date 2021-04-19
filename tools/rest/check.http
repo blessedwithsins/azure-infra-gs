@@ -232,6 +232,13 @@ Authorization: Bearer {{access_token}}
 Accept: application/json
 data-partition-id: {{data_partition_id}}
 
+###
+# @name GetRecordByKind
+GET {{STORAGE_HOST}}/query/records?kind={{kind}}
+Authorization: Bearer {{access_token}}
+Accept: application/json
+data-partition-id: {{data_partition_id}}
+
 
 ###
 # @name searchRecord
