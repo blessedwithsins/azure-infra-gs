@@ -118,7 +118,7 @@ airflow:
     podLabels:
       aadpodidbinding: "osdu-identity"
     autoscaling:
-      enabled: true
+      enabled: false
       ## minReplicas is picked from Values.workers.replicas and default value is 1
       maxReplicas: 3
       metrics:
@@ -128,6 +128,9 @@ airflow:
           target:
             type: Utilization
             averageUtilization: 60
+    labels:
+      # DO NOT DELETE THIS LABEL. SET IT TO FALSE WHEN AUTOSCALING IS DISABLED, SET IT TO TRUE WHEN AUTOSCALING IS ENABLED
+      autoscalingEnabled: false
     resources:
       requests:
         memory: "512Mi"

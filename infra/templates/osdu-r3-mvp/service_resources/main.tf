@@ -287,6 +287,8 @@ module "appgateway" {
   ssl_policy_min_protocol_version = var.ssl_policy_min_protocol_version
 
   resource_tags = var.resource_tags
+  min_capacity  = var.appgw_min_capacity
+  max_capacity  = var.appgw_max_capacity
 }
 
 // Give AGIC Identity Access rights to Change the Application Gateway

@@ -28,6 +28,7 @@ global:
     hostname: #{DNS_HOST}#
     admin: #{ADMIN_EMAIL}#
     sslServer: https://acme-v02.api.letsencrypt.org/directory  # Production
+    enableKeyvaultCert: #{ENABLE_KEYVAULT_CERT}#
 
   ################################################################################
   # Specify the istio specific values
