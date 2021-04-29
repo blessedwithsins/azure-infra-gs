@@ -92,6 +92,7 @@ airflow:
     port: 6380
     passwordSecret: "redis"
     passwordSecretKey: "redis-password"
+    databaseNumber: 1
 
   ###################################
   # Airflow - DAGs Configs
