@@ -45,7 +45,7 @@ steps:
           cat $(Build.SourcesDirectory)/$HELM_SOURCE_NAME/${{parameters.chartPath}}/values.yaml
 
           echo "Extracting Manifest"
-          helm template $SERVICE_NAME $CHART_PATH -f $(Build.SourcesDirectory)/$HELM_SOURCE_NAME/${{parameters.chartPath}}/helm-config.yaml --output-dir $CHART_PATH/$GENERATION_PATH
+          helm template $SERVICE_NAME $CHART_PATH -f $(Build.SourcesDirectory)/$HELM_SOURCE_NAME/${{parameters.chartPath}}/values.yaml -f $(Build.SourcesDirectory)/$HELM_SOURCE_NAME/${{parameters.chartPath}}/helm-config.yaml  --namespace "osdu"  --output-dir $CHART_PATH/$GENERATION_PATH
 
           if [[ "${{parameters.chartModificationScript}}" != "" ]]
           then
