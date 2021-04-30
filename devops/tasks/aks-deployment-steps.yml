@@ -28,6 +28,8 @@ parameters:
 steps:
   - checkout: FluxRepo
     persistCredentials: true
+  - checkout: HelmRepo
+    persistCredentials: true
   - checkout: ${{ parameters.checkoutRepo }}
     persistCredentials: true
   - task: "HelmInstaller@1"
@@ -62,13 +64,13 @@ steps:
     displayName: 'Helm Values - Build Repo'
     inputs:
       targetFiles: |
-        $(Build.SourcesDirectory)/$(Build.Repository.Name)/${{parameters.valuesFile}} => $(Build.SourcesDirectory)/$(Build.Repository.Name)/${{parameters.chartPath}}/values.yaml
+        $(Build.SourcesDirectory)/$(Build.Repository.Name)/${{parameters.valuesFile}} => $(Build.SourcesDirectory)/$(Build.Repository.Name)/${{parameters.chartPath}}/helm-config.yaml
     condition: eq(variables['HELM_SOURCE'], '')
   - task: qetza.replacetokens.replacetokens-task.replacetokens@3
     displayName: 'Helm Values - Helm Source Repo'
     inputs:
       targetFiles: |
-        $(Build.SourcesDirectory)/$(HELM_SOURCE)/${{parameters.valuesFile}} => $(Build.SourcesDirectory)/$(HELM_SOURCE)/${{parameters.chartPath}}/values.yaml
+        $(Build.SourcesDirectory)/$(HELM_SOURCE)/${{parameters.valuesFile}} => $(Build.SourcesDirectory)/$(HELM_SOURCE)/${{parameters.chartPath}}/helm-config.yaml
     condition: ne(variables['HELM_SOURCE'], '')
   - template: helm-template.yml
     parameters:
