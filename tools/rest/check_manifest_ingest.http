@@ -41,11 +41,15 @@ grant_type=refresh_token
 @STORAGE_HOST = {{ENDPOINT}}/api/storage/v2
 @SEARCH_HOST = {{ENDPOINT}}/api/search/v2
 @WORKLFOW_HOST = {{ENDPOINT}}/api/workflow/v1
+@FILE_HOST = {{ENDPOINT}}/api/file/v2
+
 @data_partition_id = opendes
+@authority = osdu
 @source = wks
-@kind = {{data_partition_id}}:{{source}}:Manifest:1.0.0
+@kind = {{authority}}:{{source}}:Manifest:1.0.0
 @workflow_name = Osdu_ingest
 @tag = {{data_partition_id}}-public-usa-check-1
+@domain = contoso.com
 
 
 # -----------------------
@@ -111,6 +115,13 @@ Accept: application/json
 data-partition-id: {{data_partition_id}}
 
 
+###
+# @name getSchemaForFile
+GET {{SCHEMA_HOST}}/schema/{{authority}}:{{source}}:dataset--File.Generic:1.0.0
+Authorization: Bearer {{access_token}}
+Accept: application/json
+data-partition-id: {{data_partition_id}}
+
 
 # -----------------------
 # API: workflow
@@ -166,13 +177,13 @@ data-partition-id: {{data_partition_id}}
       "ReferenceData": [
         {
           "id": "{{data_partition_id}}:reference-data--ProcessingParameterType:3D%20Kirchhoff%20Depth%20Migration",
-          "kind": "{{data_partition_id}}:{{source}}:reference-data--ProcessingParameterType:1.0.0",
+          "kind": "{{authority}}:{{source}}:reference-data--ProcessingParameterType:1.0.0",
           "acl": {
             "viewers": [
-              "data.default.viewers@{{data_partition_id}}.contoso.com"
+              "data.default.viewers@{{data_partition_id}}.{{domain}}"
             ],
             "owners": [
-              "data.default.owners@{{data_partition_id}}.contoso.com"
+              "data.default.owners@{{data_partition_id}}.{{domain}}"
             ]
           },
           "legal": {
@@ -229,13 +240,13 @@ data-partition-id: {{data_partition_id}}
       "ReferenceData": [
         {
           "id": "{{data_partition_id}}:reference-data--ProcessingParameterType:3D%20Kirchhoff%20Depth%20Migration",
-          "kind": "{{data_partition_id}}:{{source}}:reference-data--ProcessingParameterType:1.0.0",
+          "kind": "{{authority}}:{{source}}:reference-data--ProcessingParameterType:1.0.0",
           "acl": {
             "viewers": [
-              "data.default.viewers@{{data_partition_id}}.contoso.com"
+              "data.default.viewers@{{data_partition_id}}.{{domain}}"
             ],
             "owners": [
-              "data.default.owners@{{data_partition_id}}.contoso.com"
+              "data.default.owners@{{data_partition_id}}.{{domain}}"
             ]
           },
           "legal": {
@@ -255,13 +266,13 @@ data-partition-id: {{data_partition_id}}
         },
         {
           "id": "{{data_partition_id}}:reference-data--ProcessingParameterType:Angle%20Mute",
-          "kind": "{{data_partition_id}}:{{source}}:reference-data--ProcessingParameterType:1.0.0",
+          "kind": "{{authority}}:{{source}}:reference-data--ProcessingParameterType:1.0.0",
           "acl": {
             "viewers": [
-              "data.default.viewers@{{data_partition_id}}.contoso.com"
+              "data.default.viewers@{{data_partition_id}}.{{domain}}"
             ],
             "owners": [
-              "data.default.owners@{{data_partition_id}}.contoso.com"
+              "data.default.owners@{{data_partition_id}}.{{domain}}"
             ]
           },
           "legal": {
@@ -281,13 +292,13 @@ data-partition-id: {{data_partition_id}}
         },
         {
           "id": "{{data_partition_id}}:reference-data--ProcessingParameterType:Conversion%20To%20PP%20TWT",
-          "kind": "{{data_partition_id}}:{{source}}:reference-data--ProcessingParameterType:1.0.0",
+          "kind": "{{authority}}:{{source}}:reference-data--ProcessingParameterType:1.0.0",
           "acl": {
             "viewers": [
-              "data.default.viewers@{{data_partition_id}}.contoso.com"
+              "data.default.viewers@{{data_partition_id}}.{{domain}}"
             ],
             "owners": [
-              "data.default.owners@{{data_partition_id}}.contoso.com"
+              "data.default.owners@{{data_partition_id}}.{{domain}}"
             ]
           },
           "legal": {
@@ -307,13 +318,13 @@ data-partition-id: {{data_partition_id}}
         },
         {
           "id": "{{data_partition_id}}:reference-data--ProcessingParameterType:Conversion%20To%20PS%20TWT",
-          "kind": "{{data_partition_id}}:{{source}}:reference-data--ProcessingParameterType:1.0.0",
+          "kind": "{{authority}}:{{source}}:reference-data--ProcessingParameterType:1.0.0",
           "acl": {
             "viewers": [
-              "data.default.viewers@{{data_partition_id}}.contoso.com"
+              "data.default.viewers@{{data_partition_id}}.{{domain}}"
             ],
             "owners": [
-              "data.default.owners@{{data_partition_id}}.contoso.com"
+              "data.default.owners@{{data_partition_id}}.{{domain}}"
             ]
           },
           "legal": {
@@ -333,13 +344,13 @@ data-partition-id: {{data_partition_id}}
         },
         {
           "id": "{{data_partition_id}}:reference-data--ProcessingParameterType:Convert%20Back%20To%20Depth",
-          "kind": "{{data_partition_id}}:{{source}}:reference-data--ProcessingParameterType:1.0.0",
+          "kind": "{{authority}}:{{source}}:reference-data--ProcessingParameterType:1.0.0",
           "acl": {
             "viewers": [
-              "data.default.viewers@{{data_partition_id}}.contoso.com"
+              "data.default.viewers@{{data_partition_id}}.{{domain}}"
             ],
             "owners": [
-              "data.default.owners@{{data_partition_id}}.contoso.com"
+              "data.default.owners@{{data_partition_id}}.{{domain}}"
             ]
           },
           "legal": {
@@ -359,13 +370,13 @@ data-partition-id: {{data_partition_id}}
         },
         {
           "id": "{{data_partition_id}}:reference-data--ProcessingParameterType:Deconvolution%20After%20Stack",
-          "kind": "{{data_partition_id}}:{{source}}:reference-data--ProcessingParameterType:1.0.0",
+          "kind": "{{authority}}:{{source}}:reference-data--ProcessingParameterType:1.0.0",
           "acl": {
             "viewers": [
-              "data.default.viewers@{{data_partition_id}}.contoso.com"
+              "data.default.viewers@{{data_partition_id}}.{{domain}}"
             ],
             "owners": [
-              "data.default.owners@{{data_partition_id}}.contoso.com"
+              "data.default.owners@{{data_partition_id}}.{{domain}}"
             ]
           },
           "legal": {
@@ -385,13 +396,13 @@ data-partition-id: {{data_partition_id}}
         },
         {
           "id": "{{data_partition_id}}:reference-data--ProcessingParameterType:Designature-Zerophase",
-          "kind": "{{data_partition_id}}:{{source}}:reference-data--ProcessingParameterType:1.0.0",
+          "kind": "{{authority}}:{{source}}:reference-data--ProcessingParameterType:1.0.0",
           "acl": {
             "viewers": [
-              "data.default.viewers@{{data_partition_id}}.contoso.com"
+              "data.default.viewers@{{data_partition_id}}.{{domain}}"
             ],
             "owners": [
-              "data.default.owners@{{data_partition_id}}.contoso.com"
+              "data.default.owners@{{data_partition_id}}.{{domain}}"
             ]
           },
           "legal": {
@@ -411,13 +422,13 @@ data-partition-id: {{data_partition_id}}
         },
         {
           "id": "{{data_partition_id}}:reference-data--ProcessingParameterType:Exponential%20Gain%20Correction",
-          "kind": "{{data_partition_id}}:{{source}}:reference-data--ProcessingParameterType:1.0.0",
+          "kind": "{{authority}}:{{source}}:reference-data--ProcessingParameterType:1.0.0",
           "acl": {
             "viewers": [
-              "data.default.viewers@{{data_partition_id}}.contoso.com"
+              "data.default.viewers@{{data_partition_id}}.{{domain}}"
             ],
             "owners": [
-              "data.default.owners@{{data_partition_id}}.contoso.com"
+              "data.default.owners@{{data_partition_id}}.{{domain}}"
             ]
           },
           "legal": {
@@ -437,13 +448,13 @@ data-partition-id: {{data_partition_id}}
         },
         {
           "id": "{{data_partition_id}}:reference-data--ProcessingParameterType:Geophone%20Matching%20Correction",
-          "kind": "{{data_partition_id}}:{{source}}:reference-data--ProcessingParameterType:1.0.0",
+          "kind": "{{authority}}:{{source}}:reference-data--ProcessingParameterType:1.0.0",
           "acl": {
             "viewers": [
-              "data.default.viewers@{{data_partition_id}}.contoso.com"
+              "data.default.viewers@{{data_partition_id}}.{{domain}}"
             ],
             "owners": [
-              "data.default.owners@{{data_partition_id}}.contoso.com"
+              "data.default.owners@{{data_partition_id}}.{{domain}}"
             ]
           },
           "legal": {
@@ -463,13 +474,13 @@ data-partition-id: {{data_partition_id}}
         },
         {
           "id": "{{data_partition_id}}:reference-data--ProcessingParameterType:Geophone%20Orientation%20Correction",
-          "kind": "{{data_partition_id}}:{{source}}:reference-data--ProcessingParameterType:1.0.0",
+          "kind": "{{authority}}:{{source}}:reference-data--ProcessingParameterType:1.0.0",
           "acl": {
             "viewers": [
-              "data.default.viewers@{{data_partition_id}}.contoso.com"
+              "data.default.viewers@{{data_partition_id}}.{{domain}}"
             ],
             "owners": [
-              "data.default.owners@{{data_partition_id}}.contoso.com"
+              "data.default.owners@{{data_partition_id}}.{{domain}}"
             ]
           },
           "legal": {
@@ -489,13 +500,13 @@ data-partition-id: {{data_partition_id}}
         },
         {
           "id": "{{data_partition_id}}:reference-data--ProcessingParameterType:H-Mult%20Demultiple",
-          "kind": "{{data_partition_id}}:{{source}}:reference-data--ProcessingParameterType:1.0.0",
+          "kind": "{{authority}}:{{source}}:reference-data--ProcessingParameterType:1.0.0",
           "acl": {
             "viewers": [
-              "data.default.viewers@{{data_partition_id}}.contoso.com"
+              "data.default.viewers@{{data_partition_id}}.{{domain}}"
             ],
             "owners": [
-              "data.default.owners@{{data_partition_id}}.contoso.com"
+              "data.default.owners@{{data_partition_id}}.{{domain}}"
             ]
           },
           "legal": {
@@ -515,13 +526,13 @@ data-partition-id: {{data_partition_id}}
         },
         {
           "id": "{{data_partition_id}}:reference-data--ProcessingParameterType:Interpolation",
-          "kind": "{{data_partition_id}}:{{source}}:reference-data--ProcessingParameterType:1.0.0",
+          "kind": "{{authority}}:{{source}}:reference-data--ProcessingParameterType:1.0.0",
           "acl": {
             "viewers": [
-              "data.default.viewers@{{data_partition_id}}.contoso.com"
+              "data.default.viewers@{{data_partition_id}}.{{domain}}"
             ],
             "owners": [
-              "data.default.owners@{{data_partition_id}}.contoso.com"
+              "data.default.owners@{{data_partition_id}}.{{domain}}"
             ]
           },
           "legal": {
@@ -541,13 +552,13 @@ data-partition-id: {{data_partition_id}}
         },
         {
           "id": "{{data_partition_id}}:reference-data--ProcessingParameterType:Inverse%20Q-Compensation",
-          "kind": "{{data_partition_id}}:{{source}}:reference-data--ProcessingParameterType:1.0.0",
+          "kind": "{{authority}}:{{source}}:reference-data--ProcessingParameterType:1.0.0",
           "acl": {
             "viewers": [
-              "data.default.viewers@{{data_partition_id}}.contoso.com"
+              "data.default.viewers@{{data_partition_id}}.{{domain}}"
             ],
             "owners": [
-              "data.default.owners@{{data_partition_id}}.contoso.com"
+              "data.default.owners@{{data_partition_id}}.{{domain}}"
             ]
           },
           "legal": {
@@ -567,13 +578,13 @@ data-partition-id: {{data_partition_id}}
         },
         {
           "id": "{{data_partition_id}}:reference-data--ProcessingParameterType:Navigation%20Merge",
-          "kind": "{{data_partition_id}}:{{source}}:reference-data--ProcessingParameterType:1.0.0",
+          "kind": "{{authority}}:{{source}}:reference-data--ProcessingParameterType:1.0.0",
           "acl": {
             "viewers": [
-              "data.default.viewers@{{data_partition_id}}.contoso.com"
+              "data.default.viewers@{{data_partition_id}}.{{domain}}"
             ],
             "owners": [
-              "data.default.owners@{{data_partition_id}}.contoso.com"
+              "data.default.owners@{{data_partition_id}}.{{domain}}"
             ]
           },
           "legal": {
@@ -593,13 +604,13 @@ data-partition-id: {{data_partition_id}}
         },
         {
           "id": "{{data_partition_id}}:reference-data--ProcessingParameterType:Noise%20Band%20Editing",
-          "kind": "{{data_partition_id}}:{{source}}:reference-data--ProcessingParameterType:1.0.0",
+          "kind": "{{authority}}:{{source}}:reference-data--ProcessingParameterType:1.0.0",
           "acl": {
             "viewers": [
-              "data.default.viewers@{{data_partition_id}}.contoso.com"
+              "data.default.viewers@{{data_partition_id}}.{{domain}}"
             ],
             "owners": [
-              "data.default.owners@{{data_partition_id}}.contoso.com"
+              "data.default.owners@{{data_partition_id}}.{{domain}}"
             ]
           },
           "legal": {
@@ -619,13 +630,13 @@ data-partition-id: {{data_partition_id}}
         },
         {
           "id": "{{data_partition_id}}:reference-data--ProcessingParameterType:Output%20SEG-Y",
-          "kind": "{{data_partition_id}}:{{source}}:reference-data--ProcessingParameterType:1.0.0",
+          "kind": "{{authority}}:{{source}}:reference-data--ProcessingParameterType:1.0.0",
           "acl": {
             "viewers": [
-              "data.default.viewers@{{data_partition_id}}.contoso.com"
+              "data.default.viewers@{{data_partition_id}}.{{domain}}"
             ],
             "owners": [
-              "data.default.owners@{{data_partition_id}}.contoso.com"
+              "data.default.owners@{{data_partition_id}}.{{domain}}"
             ]
           },
           "legal": {
@@ -645,13 +656,13 @@ data-partition-id: {{data_partition_id}}
         },
         {
           "id": "{{data_partition_id}}:reference-data--ProcessingParameterType:Parabolic%20Radon%20Transform%20Demultiple",
-          "kind": "{{data_partition_id}}:{{source}}:reference-data--ProcessingParameterType:1.0.0",
+          "kind": "{{authority}}:{{source}}:reference-data--ProcessingParameterType:1.0.0",
           "acl": {
             "viewers": [
-              "data.default.viewers@{{data_partition_id}}.contoso.com"
+              "data.default.viewers@{{data_partition_id}}.{{domain}}"
             ],
             "owners": [
-              "data.default.owners@{{data_partition_id}}.contoso.com"
+              "data.default.owners@{{data_partition_id}}.{{domain}}"
             ]
           },
           "legal": {
@@ -671,13 +682,13 @@ data-partition-id: {{data_partition_id}}
         },
         {
           "id": "{{data_partition_id}}:reference-data--ProcessingParameterType:Pre-Radon%20Mild%20Dip%20Filter",
-          "kind": "{{data_partition_id}}:{{source}}:reference-data--ProcessingParameterType:1.0.0",
+          "kind": "{{authority}}:{{source}}:reference-data--ProcessingParameterType:1.0.0",
           "acl": {
             "viewers": [
-              "data.default.viewers@{{data_partition_id}}.contoso.com"
+              "data.default.viewers@{{data_partition_id}}.{{domain}}"
             ],
             "owners": [
-              "data.default.owners@{{data_partition_id}}.contoso.com"
+              "data.default.owners@{{data_partition_id}}.{{domain}}"
             ]
           },
           "legal": {
@@ -697,13 +708,13 @@ data-partition-id: {{data_partition_id}}
         },
         {
           "id": "{{data_partition_id}}:reference-data--ProcessingParameterType:Receiver%20Shear%20Static%20Correction",
-          "kind": "{{data_partition_id}}:{{source}}:reference-data--ProcessingParameterType:1.0.0",
+          "kind": "{{authority}}:{{source}}:reference-data--ProcessingParameterType:1.0.0",
           "acl": {
             "viewers": [
-              "data.default.viewers@{{data_partition_id}}.contoso.com"
+              "data.default.viewers@{{data_partition_id}}.{{domain}}"
             ],
             "owners": [
-              "data.default.owners@{{data_partition_id}}.contoso.com"
+              "data.default.owners@{{data_partition_id}}.{{domain}}"
             ]
           },
           "legal": {
@@ -723,13 +734,13 @@ data-partition-id: {{data_partition_id}}
         },
         {
           "id": "{{data_partition_id}}:reference-data--ProcessingParameterType:Reformat",
-          "kind": "{{data_partition_id}}:{{source}}:reference-data--ProcessingParameterType:1.0.0",
+          "kind": "{{authority}}:{{source}}:reference-data--ProcessingParameterType:1.0.0",
           "acl": {
             "viewers": [
-              "data.default.viewers@{{data_partition_id}}.contoso.com"
+              "data.default.viewers@{{data_partition_id}}.{{domain}}"
             ],
             "owners": [
-              "data.default.owners@{{data_partition_id}}.contoso.com"
+              "data.default.owners@{{data_partition_id}}.{{domain}}"
             ]
           },
           "legal": {
@@ -749,13 +760,13 @@ data-partition-id: {{data_partition_id}}
         },
         {
           "id": "{{data_partition_id}}:reference-data--ProcessingParameterType:Resample",
-          "kind": "{{data_partition_id}}:{{source}}:reference-data--ProcessingParameterType:1.0.0",
+          "kind": "{{authority}}:{{source}}:reference-data--ProcessingParameterType:1.0.0",
           "acl": {
             "viewers": [
-              "data.default.viewers@{{data_partition_id}}.contoso.com"
+              "data.default.viewers@{{data_partition_id}}.{{domain}}"
             ],
             "owners": [
-              "data.default.owners@{{data_partition_id}}.contoso.com"
+              "data.default.owners@{{data_partition_id}}.{{domain}}"
             ]
           },
           "legal": {
@@ -775,13 +786,13 @@ data-partition-id: {{data_partition_id}}
         },
         {
           "id": "{{data_partition_id}}:reference-data--ProcessingParameterType:Rotation%20To%20Radial",
-          "kind": "{{data_partition_id}}:{{source}}:reference-data--ProcessingParameterType:1.0.0",
+          "kind": "{{authority}}:{{source}}:reference-data--ProcessingParameterType:1.0.0",
           "acl": {
             "viewers": [
-              "data.default.viewers@{{data_partition_id}}.contoso.com"
+              "data.default.viewers@{{data_partition_id}}.{{domain}}"
             ],
             "owners": [
-              "data.default.owners@{{data_partition_id}}.contoso.com"
+              "data.default.owners@{{data_partition_id}}.{{domain}}"
             ]
           },
           "legal": {
@@ -801,13 +812,13 @@ data-partition-id: {{data_partition_id}}
         },
         {
           "id": "{{data_partition_id}}:reference-data--ProcessingParameterType:Stack",
-          "kind": "{{data_partition_id}}:{{source}}:reference-data--ProcessingParameterType:1.0.0",
+          "kind": "{{authority}}:{{source}}:reference-data--ProcessingParameterType:1.0.0",
           "acl": {
             "viewers": [
-              "data.default.viewers@{{data_partition_id}}.contoso.com"
+              "data.default.viewers@{{data_partition_id}}.{{domain}}"
             ],
             "owners": [
-              "data.default.owners@{{data_partition_id}}.contoso.com"
+              "data.default.owners@{{data_partition_id}}.{{domain}}"
             ]
           },
           "legal": {
@@ -827,13 +838,13 @@ data-partition-id: {{data_partition_id}}
         },
         {
           "id": "{{data_partition_id}}:reference-data--ProcessingParameterType:Taup%20Deconvolution",
-          "kind": "{{data_partition_id}}:{{source}}:reference-data--ProcessingParameterType:1.0.0",
+          "kind": "{{authority}}:{{source}}:reference-data--ProcessingParameterType:1.0.0",
           "acl": {
             "viewers": [
-              "data.default.viewers@{{data_partition_id}}.contoso.com"
+              "data.default.viewers@{{data_partition_id}}.{{domain}}"
             ],
             "owners": [
-              "data.default.owners@{{data_partition_id}}.contoso.com"
+              "data.default.owners@{{data_partition_id}}.{{domain}}"
             ]
           },
           "legal": {
@@ -853,13 +864,13 @@ data-partition-id: {{data_partition_id}}
         },
         {
           "id": "{{data_partition_id}}:reference-data--ProcessingParameterType:Taup%20Filter",
-          "kind": "{{data_partition_id}}:{{source}}:reference-data--ProcessingParameterType:1.0.0",
+          "kind": "{{authority}}:{{source}}:reference-data--ProcessingParameterType:1.0.0",
           "acl": {
             "viewers": [
-              "data.default.viewers@{{data_partition_id}}.contoso.com"
+              "data.default.viewers@{{data_partition_id}}.{{domain}}"
             ],
             "owners": [
-              "data.default.owners@{{data_partition_id}}.contoso.com"
+              "data.default.owners@{{data_partition_id}}.{{domain}}"
             ]
           },
           "legal": {
@@ -879,13 +890,13 @@ data-partition-id: {{data_partition_id}}
         },
         {
           "id": "{{data_partition_id}}:reference-data--ProcessingParameterType:Tidal%20Statics",
-          "kind": "{{data_partition_id}}:{{source}}:reference-data--ProcessingParameterType:1.0.0",
+          "kind": "{{authority}}:{{source}}:reference-data--ProcessingParameterType:1.0.0",
           "acl": {
             "viewers": [
-              "data.default.viewers@{{data_partition_id}}.contoso.com"
+              "data.default.viewers@{{data_partition_id}}.{{domain}}"
             ],
             "owners": [
-              "data.default.owners@{{data_partition_id}}.contoso.com"
+              "data.default.owners@{{data_partition_id}}.{{domain}}"
             ]
           },
           "legal": {
@@ -905,13 +916,13 @@ data-partition-id: {{data_partition_id}}
         },
         {
           "id": "{{data_partition_id}}:reference-data--ProcessingParameterType:Trace%20Editing",
-          "kind": "{{data_partition_id}}:{{source}}:reference-data--ProcessingParameterType:1.0.0",
+          "kind": "{{authority}}:{{source}}:reference-data--ProcessingParameterType:1.0.0",
           "acl": {
             "viewers": [
-              "data.default.viewers@{{data_partition_id}}.contoso.com"
+              "data.default.viewers@{{data_partition_id}}.{{domain}}"
             ],
             "owners": [
-              "data.default.owners@{{data_partition_id}}.contoso.com"
+              "data.default.owners@{{data_partition_id}}.{{domain}}"
             ]
           },
           "legal": {
@@ -931,13 +942,13 @@ data-partition-id: {{data_partition_id}}
         },
         {
           "id": "{{data_partition_id}}:reference-data--ProcessingParameterType:Velocity%20Analysis%20and%20RMO%20Correction",
-          "kind": "{{data_partition_id}}:{{source}}:reference-data--ProcessingParameterType:1.0.0",
+          "kind": "{{authority}}:{{source}}:reference-data--ProcessingParameterType:1.0.0",
           "acl": {
             "viewers": [
-              "data.default.viewers@{{data_partition_id}}.contoso.com"
+              "data.default.viewers@{{data_partition_id}}.{{domain}}"
             ],
             "owners": [
-              "data.default.owners@{{data_partition_id}}.contoso.com"
+              "data.default.owners@{{data_partition_id}}.{{domain}}"
             ]
           },
           "legal": {
@@ -993,14 +1004,14 @@ data-partition-id: {{data_partition_id}}
       "kind": "{{kind}}",
       "MasterData": [
         {
-          "id": "{{data_partition_id}}:master-data--Well:1111",
-          "kind": "{{data_partition_id}}:{{source}}:master-data--Well:1.0.0",
+          "id": "{{data_partition_id}}:master-data--Well:1000",
+          "kind": "{{authority}}:{{source}}:master-data--Well:1.0.0",
           "acl": {
             "viewers": [
-              "data.default.viewers@{{data_partition_id}}.contoso.com"
+              "data.default.viewers@{{data_partition_id}}.{{domain}}"
             ],
             "owners": [
-              "data.default.owners@{{data_partition_id}}.contoso.com"
+              "data.default.owners@{{data_partition_id}}.{{domain}}"
             ]
           },
           "legal": {
@@ -1079,6 +1090,31 @@ data-partition-id: {{data_partition_id}}
 # -----------------------
 ## WP ingestion
 
+
+# Get a URL to upload a file.
+###
+# @name uploadURL
+GET {{FILE_HOST}}/files/uploadURL
+Authorization: Bearer {{access_token}}
+Accept: application/json
+Content-Type: application/json
+data-partition-id: {{data_partition_id}}
+
+@FILE_ID = {{uploadURL.response.body.FileID}}
+@FILE_URL = {{uploadURL.response.body.Location.SignedURL}}
+@FILE_SOURCE = {{uploadURL.response.body.Location.FileSource}}
+
+
+# Upload the file
+###
+# @name uploadFile
+PUT {{FILE_URL}}
+x-ms-blob-type: BlockBlob
+
+< ./files/7587.csv
+
+
+
 ###
 # @name runWorkflowPreDefinedId
 POST {{WORKLFOW_HOST}}/workflow/{{workflow_name}}/workflowRun
@@ -1098,14 +1134,14 @@ data-partition-id: {{data_partition_id}}
       "MasterData": [],
       "Data": {
         "WorkProduct": {
-          "id": "{{data_partition_id}}:work-product--WorkProduct:feb2-1",
-          "kind": "{{data_partition_id}}:{{source}}:work-product--WorkProduct:1.0.0",
+          "id": "{{data_partition_id}}:work-product--WorkProduct:1000",
+          "kind": "{{authority}}:{{source}}:work-product--WorkProduct:1.0.0",
           "acl": {
             "viewers": [
-              "data.default.viewers@{{data_partition_id}}.contoso.com"
+              "data.default.viewers@{{data_partition_id}}.{{domain}}"
             ],
             "owners": [
-              "data.default.owners@{{data_partition_id}}.contoso.com"
+              "data.default.owners@{{data_partition_id}}.{{domain}}"
             ]
           },
           "legal": {
@@ -1120,20 +1156,20 @@ data-partition-id: {{data_partition_id}}
             "Name": "69_D_CH_11",
             "Description": "Document",
             "Components": [
-              "osdu:work-product-component--WellboreMarkerSet:feb2:1:"
+              "{{data_partition_id}}:work-product-component--WellboreMarkerSet:1000:"
             ]
           }
         },
         "WorkProductComponents": [
           {
-            "id": "{{data_partition_id}}:work-product-component--WellboreMarkerSet:feb2:1",
-            "kind": "{{data_partition_id}}:{{source}}:work-product-component--WellboreMarkerSet:1.0.0",
+            "id": "{{data_partition_id}}:work-product-component--WellboreMarkerSet:1000",
+            "kind": "{{authority}}:{{source}}:work-product-component--WellboreMarkerSet:1.0.0",
             "acl": {
               "viewers": [
-                "data.default.viewers@{{data_partition_id}}.contoso.com"
+                "data.default.viewers@{{data_partition_id}}.{{domain}}"
               ],
               "owners": [
-                "data.default.owners@{{data_partition_id}}.contoso.com"
+                "data.default.owners@{{data_partition_id}}.{{domain}}"
               ]
             },
             "legal": {
@@ -1148,7 +1184,9 @@ data-partition-id: {{data_partition_id}}
               "Name": "7587.csv",
               "Description": "Wellbore Marker",
               "Datasets": [
-                "{{data_partition_id}}:dataset--File.Generic:44e3a00738b24c948fc4696bf37999999:"
+                // DataSets don't work yet causes an error from DAG when Search is called
+                // "{{FILE_META_ID}}"
+                //
               ],
               "Markers": [
                 {
@@ -1256,34 +1294,39 @@ data-partition-id: {{data_partition_id}}
           }
         ],
         "Datasets": [
-          {
-            "id": "{{data_partition_id}}:dataset--File.Generic:44e3a00738b24c948fc4696bf37999999",
-            "kind": "{{data_partition_id}}:{{source}}:dataset--File.Generic:1.0.0",
-            "acl": {
-              "viewers": [
-                "data.default.viewers@{{data_partition_id}}.contoso.com"
-              ],
-              "owners": [
-                "data.default.owners@{{data_partition_id}}.contoso.com"
-              ]
-            },
-            "legal": {
-              "legaltags": [
-                "{{tag}}"
-              ],
-              "otherRelevantDataCountries": [
-                "US"
-              ]
-            },
-            "data": {
-              "Endian": "BIG",
-              "DatasetProperties": {
-                "FileSourceInfo": {
-                  "FileSource": "This would be a valid file source in the future"
-                }
-              }
-            }
-          }
+          //  DataSets don't work yet causes an error from DAG when Search is called
+          //{
+          //  "kind": "{{authority}}:{{source}}:dataset--File.Generic:1.0.0",
+          //  "acl": {
+          //    "viewers": [
+          //      "data.default.viewers@{{data_partition_id}}.{{domain}}"
+          //    ],
+          //    "owners": [
+          //      "data.default.owners@{{data_partition_id}}.{{domain}}"
+          //    ]
+          //  },
+          //  "legal": {
+          //    "legaltags": [
+          //      "{{tag}}"
+          //    ],
+          //    "otherRelevantDataCountries": [
+          //      "US"
+          //    ],
+          //    "status": "compliant"
+          //  },
+          //  "data": {
+          //    "Name": "7587.csv",
+          //    "Endian": "BIG",
+          //    "ResourceSecurityClassification": "{{authority}}:reference-data--ResourceSecurityClassification:RESTRICTED:",
+          //    "SchemaFormatTypeID": "{{authority}}:reference-data--SchemaFormatType:CSV:",
+          //    "DatasetProperties": {
+          //      "FileSourceInfo": {
+          //        "FileSource": "{{FILE_SOURCE}}",
+          //        "Name": "7587.csv"
+          //      }
+          //    }
+          //  }
+          //}
         ]
       }
     }
@@ -1314,7 +1357,7 @@ Content-Type: application/json
 data-partition-id: {{data_partition_id}}
 
 {
-  "kind": "{{data_partition_id}}:{{source}}:work-product-component--WellboreMarkerSet:1.0.0",
+  "kind": "{{authority}}:{{source}}:work-product-component--WellboreMarkerSet:1.0.0",
   "query": "(data.WellboreID: \"osdu:master-data--Wellbore:7587:\")",
   "offset": 0,
   "limit": 1

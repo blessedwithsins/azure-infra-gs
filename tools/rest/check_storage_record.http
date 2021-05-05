@@ -40,7 +40,11 @@ grant_type=refresh_token
 @LEGAL_HOST = {{ENDPOINT}}/api/legal/v1
 @STORAGE_HOST = {{ENDPOINT}}/api/storage/v2
 @SEARCH_HOST = {{ENDPOINT}}/api/search/v2
+
+
+
 @data_partition_id = opendes
+@domain = contoso.com
 @tag =  {{data_partition_id}}-public-usa-check-1
 @kind = {{data_partition_id}}:qatest:dummy:0.0.1
 @index = {{data_partition_id}}-qatest-dummy-0.0.1
@@ -199,10 +203,10 @@ data-partition-id: {{data_partition_id}}
     "kind": "{{kind}}",
     "acl": {
       "viewers": [
-        "data.default.viewers@{{data_partition_id}}.contoso.com"
+        "data.default.viewers@{{data_partition_id}}.{{domain}}"
       ],
       "owners": [
-        "data.default.owners@{{data_partition_id}}.contoso.com"
+        "data.default.owners@{{data_partition_id}}.{{domain}}"
       ]
     },
     "legal": {

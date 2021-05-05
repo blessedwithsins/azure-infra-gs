@@ -38,9 +38,14 @@ grant_type=refresh_token
 @FILE_HOST = {{ENDPOINT}}/api/file/v2
 @LEGAL_HOST = {{ENDPOINT}}/api/legal/v1
 @SCHEMA_HOST = {{ENDPOINT}}/api/schema-service/v1
+
+
 @data_partition_id = opendes
+@authority = osdu
+@source = wks
+@domain = contoso.com
 @tag =  {{data_partition_id}}-public-usa-check-1
-@kind = {{data_partition_id}}:wks:dataset--File.Generic:1.0.0
+@kind = {{authority}}:{{source}}:dataset--File.Generic:1.0.0
 
 
 
@@ -148,10 +153,10 @@ data-partition-id: {{data_partition_id}}
     "kind": "{{kind}}",
     "acl": {
         "viewers": [
-            "data.default.viewers@{{data_partition_id}}.contoso.com"
+            "data.default.viewers@{{data_partition_id}}.{{domain}}"
         ],
         "owners": [
-            "data.default.viewers@{{data_partition_id}}.contoso.com"
+            "data.default.viewers@{{data_partition_id}}.{{domain}}"
         ]
     },
     "legal": {
@@ -165,8 +170,8 @@ data-partition-id: {{data_partition_id}}
     },
     "data": {
         "Endian": "BIG",
-        "ResourceSecurityClassification": "osdu:reference-data--ResourceSecurityClassification:RESTRICTED:",
-        "SchemaFormatTypeID": "osdu:reference-data--SchemaFormatType:LAS2:",
+        "ResourceSecurityClassification": "{{authority}}:reference-data--ResourceSecurityClassification:RESTRICTED:",
+        "SchemaFormatTypeID": "{{authority}}:reference-data--SchemaFormatType:LAS2:",
         "DatasetProperties": {
             "FileSourceInfo": {
                 "FileSource": "{{FILE_SOURCE}}",

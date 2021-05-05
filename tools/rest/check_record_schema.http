@@ -44,8 +44,9 @@ grant_type=refresh_token
 
 
 @data_partition_id = opendes
+@domain = contoso.com
 @tag =  {{data_partition_id}}-public-usa-check-1
-@kind = {{data_partition_id}}:wks:reference-data--ProcessingParameterType:1.0.0
+@kind = osdu:wks:reference-data--ProcessingParameterType:1.0.0
 
 
 # -----------------------
@@ -126,10 +127,10 @@ data-partition-id: {{data_partition_id}}
     "kind": "{{kind}}",
     "acl": {
       "viewers": [
-        "data.default.viewers@{{data_partition_id}}.contoso.com"
+        "data.default.viewers@{{data_partition_id}}.{{domain}}"
       ],
       "owners": [
-        "data.default.owners@{{data_partition_id}}.contoso.com"
+        "data.default.owners@{{data_partition_id}}.{{domain}}"
       ]
     },
     "legal": {
