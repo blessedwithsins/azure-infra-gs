@@ -40,6 +40,16 @@ steps:
         else
             HELM_SOURCE_NAME=$(Build.Repository.Name)
         fi
+
+
+        if [[ "$(CHART_NAME)" != "" ]]
+        then
+            HELM_CHART_NAME=$(CHART_NAME)
+        else
+            HELM_CHART_NAME=$SERVICE_NAME
+        fi
+
+
         GITOPS_MANIFEST_DIRECTORY=$(Build.SourcesDirectory)/$HELM_SOURCE_NAME/$CHART_PATH/$GENERATION_PATH
         cd $(Build.SourcesDirectory)/$(MANIFEST_REPO)
 
@@ -62,7 +72,7 @@ steps:
 
         function git_commit() {
           echo "COPY YAML FILES FROM $GITOPS_MANIFEST_DIRECTORY..."
-          [ -d ./$GENERATION_PATH/$SERVICE_NAME ] && rm -rf ./$GENERATION_PATH/$SERVICE_NAME/*
+          [ -d ./$GENERATION_PATH/$HELM_CHART_NAME ] && rm -rf ./$GENERATION_PATH/$SERVICE_NAME/*
           cp -rf $GITOPS_MANIFEST_DIRECTORY .
 
           echo "SKIP DEPLOY: $SKIP_DEPLOY, HLD-REG: $HLD_REG_PATH"
@@ -78,7 +88,7 @@ steps:
 
               IFS="|"; for folder in $CHART_FOLDERS; do
                 echo "COPYING YAML FILES OF EXTRACTED CHARTS FOLDER $folder"
-                cp -rf $GITOPS_MANIFEST_DIRECTORY/$folder/* ./$HLD_REG_PATH/$SERVICE_NAME
+                cp -rf $GITOPS_MANIFEST_DIRECTORY/$HELM_CHART_NAME/$folder/* ./$HLD_REG_PATH/$SERVICE_NAME
               done
           fi
 
