@@ -78,7 +78,7 @@ steps:
 
               IFS="|"; for folder in $CHART_FOLDERS; do
                 echo "COPYING YAML FILES OF EXTRACTED CHARTS FOLDER $folder"
-                cp -rf $GITOPS_MANIFEST_DIRECTORY/$SERVICE_NAME/$folder/* ./$HLD_REG_PATH/$SERVICE_NAME
+                cp -rf $GITOPS_MANIFEST_DIRECTORY/$folder/* ./$HLD_REG_PATH/$SERVICE_NAME
               done
           fi
 
