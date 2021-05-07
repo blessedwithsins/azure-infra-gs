@@ -41,6 +41,11 @@ steps:
         sudo az aks install-cli
         az aks get-credentials -g $BASE_NAME_SR-rg -n $BASE_NAME_SR-aks
 
+        if [[ "$(SERVICE_PIPELINE_NAME)" != "" ]]
+         then
+          SERVICE_NAME=$(SERVICE_PIPELINE_NAME)
+        fi
+
         echo "Checking Deployment $SERVICE_NAME Available"
         echo "------------------------------------"
         attempt_counter=0

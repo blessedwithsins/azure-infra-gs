@@ -40,9 +40,7 @@ steps:
 
           echo "Helm Source Name: $HELM_SOURCE_NAME"
           cd $(Build.SourcesDirectory)/$HELM_SOURCE_NAME
-          echo "$CHART_PATH"
-          echo "$GENERATION_PATH"
-          echo "$CHART_PATH/$GENERATION_PATH"
+
           mkdir $CHART_PATH/$GENERATION_PATH
           cat $(Build.SourcesDirectory)/$HELM_SOURCE_NAME/${{parameters.chartPath}}/helm-config.yaml
 
