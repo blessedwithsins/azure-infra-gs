@@ -13,7 +13,7 @@ def removeReplicasFromWorkerStatefulSet(manifest):
     # This is done to make sure kubernetes does not reset the pod count when autoscaling is enabled
     # Check the related issue for more information - https://community.opengroup.org/osdu/platform/deployment-and-operations/infra-azure-provisioning/-/issues/88
     if manifest['kind'] == 'StatefulSet' and manifest['metadata']['name'] == 'airflow-worker':
-        if manifest['metadata']['labels']['autoscalingEnabled']:
+        if manifest['metadata']['labels']['autoscalingEnabled'] == "true":
             del manifest['spec']['replicas']
 
 

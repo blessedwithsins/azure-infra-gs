@@ -365,6 +365,7 @@ git clonehttps://community.opengroup.org/osdu/platform/data-flow/ingestion/inges
 git clone https://community.opengroup.org/osdu/platform/domain-data-mgmt-services/seismic/seismic-dms-suite/seismic-store-service.git $SRC_DIR/seismic-store-service
 git clone https://community.opengroup.org:osdu/platform/domain-data-mgmt-services/wellbore/wellbore-domain-services.git $SRC_DIR/wellbore-domain-services
 git clone https://community.opengroup.org/osdu/platform/data-flow/ingestion/ingestion-service.git $SRC_DIR/ingestion-service
+git clone https://community.opengroup.org/osdu/platform/security-and-compliance/policy.git $SRC_DIR/policy
 ```
 
 __Additional Manual Steps__

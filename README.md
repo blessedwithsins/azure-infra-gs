@@ -242,7 +242,7 @@ There are 2 methods that can be chosen to perform installation at this point in 
 2. Pipeline Installation -- Typically used when the need is to only access the Data Platform but allow for automatic upgrades of infrastructure and services.
 
 
-__Manual Installation__
+__Manual Installation (**Preferred**)__
 
 > This typically takes about 2 hours to complete.
 

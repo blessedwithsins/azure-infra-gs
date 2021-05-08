@@ -126,10 +126,10 @@ data-partition-id: {{data_partition_id}}
     "kind": "{{kind}}",
     "acl": {
       "viewers": [
-        "data.default.viewer@{{data_partition_id}}.contoso.com"
+        "data.default.viewers@{{data_partition_id}}.contoso.com"
       ],
       "owners": [
-        "data.default.owner@{{data_partition_id}}.contoso.com"
+        "data.default.owners@{{data_partition_id}}.contoso.com"
       ]
     },
     "legal": {

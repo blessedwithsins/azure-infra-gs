@@ -48,7 +48,7 @@ grant_type=client_credentials
 # This is the identifier for the user you are adding.
 # When using AAD, this is the email for the user if adding an AAD user.
 # When using ADD and a Service principal this is the OID of the Service Principal.
-@member_email = john.doe@email.com
+@member_email = myuser@email.com
 
 
 
@@ -69,7 +69,7 @@ data-partition-id: {{data_partition_id}}
 ###
 # Purpose: Validate the Owner of the Partition.
 # NOTE: The Owner of the partition by default is the service principal.
-# @name myGroups
+# @name rootGroups
 GET {{ENTITLEMENTS_HOST}}/groups
 Authorization: Bearer {{access_token}}
 Accept: application/json
@@ -96,22 +96,6 @@ Content-Type: application/json
 }
 
 
-###
-# Purpose: Grant a User Access for the Partition.
-# @name allowUser
-@user_entitlement = users@{{data_partition_id}}.{{domain}}
-POST {{ENTITLEMENTS_HOST}}/groups/{{user_entitlement}}/members
-Authorization: Bearer {{access_token}}
-Accept: application/json
-data-partition-id: {{data_partition_id}}
-Content-Type: application/json
-
-{
-  "email": "{{member_email}}",
-  "role": "MEMBER"
-}
-
-
 # -----------------------
 # Manage Roles
 # -----------------------
@@ -127,8 +111,8 @@ Content-Type: application/json
 
 
 ###
-# Purpose: Assign the user the Role Of Reader by adding Viewer Entitlements
-# @name assignViewerGroup
+# Purpose: Assign the user to the datalake.viewers Group
+# @name assignMemberToViewersGroup
 @viewer_group = users.datalake.viewers@{{data_partition_id}}.{{domain}}
 POST {{ENTITLEMENTS_HOST}}/groups/{{viewer_group}}/members
 Authorization: Bearer {{access_token}}
@@ -143,8 +127,8 @@ Content-Type: application/json
 
 
 ###
-# Purpose: Assign the user the Role of Contributor by adding Editor Entitlements
-# @name assignEditorGroup
+# Purpose: Assign the user to the datalake.editors Group
+# @name assignMemberToEditorsGroup
 @editor_group = users.datalake.editors@{{data_partition_id}}.{{domain}}
 POST {{ENTITLEMENTS_HOST}}/groups/{{editor_group}}/members
 Authorization: Bearer {{access_token}}
@@ -159,9 +143,9 @@ Content-Type: application/json
 
 
 ###
-# Purpose: Assign the user the Role of Admin by adding Admin Entitlements
+# Purpose: Assign the user to the datalake.admins Group
 # NOTE: This role can not delete for Legal, Schema or Storage
-# @name assignAdminGroup
+# @name assignMemberToAdminGroup
 @admin_group = users.datalake.admins@{{data_partition_id}}.{{domain}}
 POST {{ENTITLEMENTS_HOST}}/groups/{{admin_group}}/members
 Authorization: Bearer {{access_token}}
@@ -176,9 +160,9 @@ Content-Type: application/json
 
 
 ###
-# Purpose: Assign the user the Role of Owner by adding Ops Entitlements
+# Purpose: Assign the user to the datalake.ops Group
 # NOTE: This role can delete data
-# @name assignOpsGroup
+# @name assignMemberToOpsGroup
 @ops_group = users.datalake.ops@{{data_partition_id}}.{{domain}}
 POST {{ENTITLEMENTS_HOST}}/groups/{{ops_group}}/members
 Authorization: Bearer {{access_token}}
@@ -194,7 +178,7 @@ Content-Type: application/json
 
 ###
 # Purpose: List the Users with the Role of Reader
-# @name listUsersViewer
+# @name listMembersInViewersGroup
 GET {{ENTITLEMENTS_HOST}}/groups/{{viewer_group}}/members/
 Authorization: Bearer {{access_token}}
 Accept: application/json
@@ -203,7 +187,7 @@ Content-Type: application/json
 
 ###
 # Purpose: List the Users with the Role of Contributor
-# @name listUsersEditor
+# @name listMembersInEditorsGroup
 GET {{ENTITLEMENTS_HOST}}/groups/{{editor_group}}/members/
 Authorization: Bearer {{access_token}}
 Accept: application/json
@@ -213,7 +197,7 @@ Content-Type: application/json
 
 ###
 # Purpose: List the Users with the Role of Admin
-# @name listUsersAdmin
+# @name listMembersInAdminGroup
 GET {{ENTITLEMENTS_HOST}}/groups/{{admin_group}}/members/
 Authorization: Bearer {{access_token}}
 Accept: application/json
@@ -222,7 +206,7 @@ Content-Type: application/json
 
 ###
 # Purpose: List the Users with the Role of Owner
-# @name listUsersOps
+# @name listMembersInOpsGropu
 GET {{ENTITLEMENTS_HOST}}/groups/{{ops_group}}/members/
 Authorization: Bearer {{access_token}}
 Accept: application/json
@@ -232,7 +216,7 @@ Content-Type: application/json
 
 ###
 # Purpose: Remove the Owner Role from a User
-# @name removeGroupOps
+# @name removeMemberFromOpsGroup
 DELETE {{ENTITLEMENTS_HOST}}/groups/{{ops_group}}/members/{{member_email}}
 Authorization: Bearer {{access_token}}
 Accept: application/json
@@ -242,7 +226,7 @@ Content-Type: application/json
 
 ###
 # Purpose: Remove the Admin Role from a User
-# @name removeGroupAdmin
+# @name removeMemberFromAdminsGroup
 DELETE {{ENTITLEMENTS_HOST}}/groups/{{admin_group}}/members/{{member_email}}
 Authorization: Bearer {{access_token}}
 Accept: application/json
@@ -252,7 +236,7 @@ Content-Type: application/json
 
 ###
 # Purpose: Remove the Contributor Role from a User
-# @name removeGroupEditor
+# @name removeMemberFromEditorsGroup
 DELETE {{ENTITLEMENTS_HOST}}/groups/{{editor_group}}/members/{{member_email}}
 Authorization: Bearer {{access_token}}
 Accept: application/json
@@ -262,7 +246,7 @@ Content-Type: application/json
 
 ###
 # Purpose: Remove the Reader Role from a User
-# @name removeGroupViewer
+# @name removeMemberFromViewersGroup
 DELETE {{ENTITLEMENTS_HOST}}/groups/{{viewer_group}}/members/{{member_email}}
 Authorization: Bearer {{access_token}}
 Accept: application/json

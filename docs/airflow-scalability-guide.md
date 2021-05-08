@@ -161,4 +161,19 @@ web:
 
 ### When do you need to scale the PostgreSQL database used by airflow?
 - If the CPU consumption on Azure PostgreSQL database hits more than 80% when airflow workers are executing tasks
-- If there are errors around acquiring new connections to the Azure PostgreSQL database in PGBouncer logs 
+- If there are errors around acquiring new connections to the Azure PostgreSQL database in PGBouncer logs
+
+### What to do when airflow does not schedule tasks for a DAG?
+- Check whether airflow scheduler pod is running on AKS cluster in the deployed namespace
+  - Get the list of pods using `kubectl get pods -n <namespace_in_which_airflow_is_deployed>`
+  - Search for pod with prefix **airflow-scheduler**
+- If airflow scheduler is running
+  - Check whether the DAG file processor is timing out on scheduler, follow the steps below to check
+    - Find the scheduler pod name using the above step
+    - Exec into the scheduler pod using `kubectl exec -it <scheduler_pod_name> -n <namespace_in_which_airflow_is_deployed> -c scheduler -- /bin/bash`
+    - One Execed into the pod, execute this command `cd logs/dag_processor_manager/`
+    - Check for log line "Processor for <dag_file_name> with PID <pid> started at <start_time> has timed out, killing it" in file **dag_processor_manager.log**
+    - If the above log line is present, the DAG file processor is timing out
+  - If DAG file processor is timing out, we need to increase timeout using airflow configuration, follow the steps below to change the timeout
+    - Add this environment variable in [AIRFLOW__CORE__DAG_FILE_PROCESSOR_TIMEOUT](https://airflow.apache.org/docs/apache-airflow/1.10.12/configurations-ref.html#dag-file-processor-timeout) by following instructions mentioned [here](https://community.opengroup.org/osdu/platform/deployment-and-operations/infra-azure-provisioning/-/blob/update_airflow_scalability_documentation/docs/airflow-scalability-guide.md#how-to-change-airflow-configuration) with a suitable value accordingly.
+    - Redeploy airflow to AKS

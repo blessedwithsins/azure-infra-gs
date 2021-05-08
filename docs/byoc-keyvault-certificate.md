@@ -4,11 +4,10 @@ The feature enables the customers to manage and provision certificates used on t
 
 In this approach, we use certificate uploaded by customer to Keyvault. 
 
-**NOTE: Presently we support BYOC for Automated Pipelines only.** 
-
-## Automated Pipelines - BYOC Guide
 
 ### Upload your own certificate 
+
+##### Using  Azure Portal
 1. Open Azure portal and open keyvault named `osdu-mvp-crxxx-xxxx-kv`.
 
 2. Make sure you have all the permission on **Certificate Management**. Go access policies by selecting on **_Access Policies_** option on left subsection.
@@ -23,7 +22,16 @@ In this approach, we use certificate uploaded by customer to Keyvault.
 
 6. Click `Create` and wait until the certificate gets created in Keyvault.
 
+##### Using Azure Command Line
+Please run the following command after doing az login with your subscription
 
+FILE_PATH=""     # local path to file, must follow the format rules. <br>
+CERT_NAME="appgw-ssl-cert"   #<br>
+VAULT_NAME="osdu-mvp-crxxx-xxxx-kv"  # Modify vault name <br>
+`az keyvault certificate import --file $FILE_PATH --name $CERT_NAME --vault-name $VAULT_NAME`
+
+
+## Automated Pipelines - BYOC Guide
 ### Use uploaded certificate
 
 1. Once upload is complete, Go to Azure Devops Project that you have set up for code mirroring.
@@ -40,3 +48,12 @@ In this approach, we use certificate uploaded by customer to Keyvault.
    and latest commit has flux sync tag.
    
 5. Access OSDU with DNS configured, validate in the browser that certificate used is the one which was uploaded.
+
+## Manual Installation - BYOC Guide
+
+1. Go to [helm-charts-azure](https://community.opengroup.org/osdu/platform/deployment-and-operations/helm-charts-azure)
+2. Modify the value **enableKeyvaultCert** to **true** in helm-configs mentioned in Readme.md and for airflow follow the README.md for airflow
+   to install your uploaded certificate.
+3. Do an installation of charts on Kubenetes environement.
+
+Test the implementation by accessing the DNS_HOST and validating the certificate.
