@@ -27,7 +27,6 @@ steps:
     condition: and(succeeded(), eq('${{ parameters.providerName }}', 'Azure'))
     env:
       JAR_FILE_PATH: ${{ parameters.jarFilePath }}
-      IMAGE: $(CONTAINER_REGISTRY_NAME).azurecr.io/${{ parameters.imageRepoName }}-${{ parameters.environment }}:$(Build.SourceVersion)
       DOCKERFILE: ${{ parameters.dockerFile }}
 
     inputs:
@@ -45,6 +44,15 @@ steps:
             COPY ${JAR_FILE} app.jar
             ENTRYPOINT exec java ${JAVA_OPTS} -jar /app.jar' > Dockerfile
         }
+
+        if [[ "$(SERVICE_PIPELINE_NAME)" != "" ]]
+        then
+            IMAGE = $(CONTAINER_REGISTRY_NAME).azurecr.io/$(SERVICE_PIPELINE_NAME)-${{ parameters.environment }}:$(Build.SourceVersion)
+            REPO  = $(SERVICE_PIPELINE_NAME)
+        else
+            IMAGE = $(CONTAINER_REGISTRY_NAME).azurecr.io/${{ parameters.imageRepoName }}-${{ parameters.environment }}:$(Build.SourceVersion)
+            REPO  = ${{ parameters.imageRepoName }}
+        fi
 
         curl -L https://aka.ms/acr/installaad/bash | /bin/bash
         echo "Logging in to the ACR Registry"
@@ -65,5 +73,5 @@ steps:
         docker build --build-arg JAR_FILE=./$jar_file_name -t $IMAGE .
 
         docker push $IMAGE
-        echo "Show recent tags of repository ${{ parameters.imageRepoName }}"
-        az acr repository show-tags -n $(CONTAINER_REGISTRY_NAME) --repository ${{ parameters.imageRepoName }}-${{ parameters.environment }} --top 10 --orderby time_desc
+        echo "Show recent tags of repository $REPO"
+        az acr repository show-tags -n $(CONTAINER_REGISTRY_NAME) --repository $REPO-${{ parameters.environment }} --top 10 --orderby time_desc
