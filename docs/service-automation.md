@@ -139,6 +139,7 @@ This variable group will be used to hold the specific environment values necessa
 | ELASTIC_ENDPOINT                              | `$(opendes-elastic-endpoint)`     |
 | ELASTIC_USERNAME                              | `$(opendes-elastic-username)`     |
 | ELASTIC_PASSWORD                              | `$(opendes-elastic-password)`     |
+| ENTV2_REDIS_TTL_SECONDS                       | `1`                               |
 | ENVIRONMENT_NAME                              | <your_environment_name_or_identifier>     |
 | IDENTITY_CLIENT_ID                            | `$(osdu-identity-id)`             |
 | INTEGRATION_TESTER                            | `$(app-dev-sp-username)`          |
@@ -180,6 +181,7 @@ az pipelines variable-group create \
   ELASTIC_ENDPOINT='$('${DATA_PARTITION_NAME}'-elastic-endpoint)' \
   ELASTIC_USERNAME='$('${DATA_PARTITION_NAME}'-elastic-username)' \
   ELASTIC_PASSWORD='$('${DATA_PARTITION_NAME}'-elastic-password)' \
+  ENTV2_REDIS_TTL_SECONDS="1" \
   ENVIRONMENT_NAME="$ENVIRONMENT_NAME" \
   IDENTITY_CLIENT_ID='$(identity_id)' \
   INTEGRATION_TESTER='$(app-dev-sp-username)' \
@@ -1101,6 +1103,22 @@ az pipelines create \
 az pipelines create \
   --name 'ingestion-service'  \
   --repository ingestion-service  \
+  --branch master  \
+  --repository-type tfsgit  \
+  --yaml-path /devops/azure/pipeline.yml  \
+  -ojson
+```
+
+21. Add a Pipeline for __policy-service__  to deploy the Policy Service.
+
+    _Repo:_ `policy`
+    _Path:_ `/devops/azure/pipeline.yml`
+    _Validate:_ https://<your_dns_name>/api/ingestion/docs is alive.
+
+```bash
+az pipelines create \
+  --name 'policy-service'  \
+  --repository policy \
   --branch master  \
   --repository-type tfsgit  \
   --yaml-path /devops/azure/pipeline.yml  \

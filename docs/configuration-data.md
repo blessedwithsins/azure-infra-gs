@@ -1,3 +1,19 @@
+# Pre-requisite
+
+__Repository__
+
+Clone the following repository and have them in the same file structure level as infra repository
+
+```bash
+https://community.opengroup.org/osdu/platform/system/reference/unit-service
+https://community.opengroup.org/osdu/platform/system/reference/crs-conversion-service
+https://community.opengroup.org/osdu/platform/system/reference/crs-catalog-service
+https://community.opengroup.org/osdu/platform/system/schema-service
+```
+![File Structure](./images/directory-structure.png "File Structure")
+
+Change directory to `infra-azure-provisioning`
+
 # Configuration Data Upload Instructions
 
 __CLI Login__

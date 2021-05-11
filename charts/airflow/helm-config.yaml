@@ -129,8 +129,8 @@ airflow:
             type: Utilization
             averageUtilization: 60
     labels:
-      # DO NOT DELETE THIS LABEL. SET IT TO FALSE WHEN AUTOSCALING IS DISABLED, SET IT TO TRUE WHEN AUTOSCALING IS ENABLED
-      autoscalingEnabled: false
+      # DO NOT DELETE THIS LABEL. SET IT TO "false" WHEN AUTOSCALING IS DISABLED, SET IT TO "true" WHEN AUTOSCALING IS ENABLED
+      autoscalingEnabled: "false"
     resources:
       requests:
         memory: "512Mi"

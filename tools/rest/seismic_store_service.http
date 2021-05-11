@@ -1,13 +1,21 @@
 # -------HTTP REST CLIENT -------
 # https://marketplace.visualstudio.com/items?itemName=humao.rest-client
 
-## This script will register an opendes paritition to the Seismic Store Service.
+## This will register a partition with Seismic Store Service.
 
-@login_base = login.microsoftonline.com/{{TENANT_ID}}
-@oauth_token_host = {{login_base}}/oauth2/v2.0/token
+
 
 # -----------------------
-# OAUTH  authorization_code
+# OAUTH (Variables)
+# -----------------------
+###
+@login_base = login.microsoftonline.com/{{TENANT_ID}}
+@oauth_token_host = {{login_base}}/oauth2/v2.0/token
+@scopes = {{CLIENT_ID}}/.default openid profile offline_access
+
+
+# -----------------------
+# OAUTH  client_credentials
 # -----------------------
 ###
 # @name login
@@ -28,21 +36,40 @@ grant_type=client_credentials
 # -----------------------
 ###
 @access_token = {{login.response.body.access_token}}
-
 @ENDPOINT = https://{{OSDU_HOST}}
-@SEISMIC_STORE_SVC_HOST = {{ENDPOINT}}/seistore-svc/api/v3
-
+@SDMS_HOST = {{ENDPOINT}}/seistore-svc/api/v3
 @data_partition_id = opendes
-@esd = opendes.contoso.com
-@default_acls = users.datalake.admins@opendes.contoso.com
+@domain = contoso.com
+
+
+
+# ---------------------------------
+# Inititalize Seismic for a Partition
+# ---------------------------------
 
 ###
-# @name tenant
-POST {{SEISMIC_STORE_SVC_HOST}}/tenant/{{data_partition_id}}
+# Purpose: Initialize a Partition.
+# NOTE: This API can ONLY be called by the application service principal.
+# @name tenantInit
+POST {{SDMS_HOST}}/tenant/{{data_partition_id}}
 Authorization: Bearer {{access_token}}
 Content-Type: application/json
+
 {
-    gcpid: {{data_partition_id}},
-	esd: {{esd}},
-	default_acls: {{default_acls}}
+  "esd": "{{data_partition_id}}.{{domain}}",
+  "gcpid": "{{data_partition_id}}",
+	"default_acls": "users.datalake.admins@{{data_partition_id}}.{{domain}}"
 }
+
+
+# -----------------------
+# Delete Tenant
+# -----------------------
+
+###
+# Purpose: Delete Tenant
+# @name deleteTenant
+DELETE {{SDMS_HOST}}/tenant/{{data_partition_id}}
+Authorization: Bearer {{access_token}}
+Accept: application/json
+Content-Type: application/json
