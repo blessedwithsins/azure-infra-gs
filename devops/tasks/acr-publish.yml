@@ -47,11 +47,11 @@ steps:
 
         if [[ "$(SERVICE_PIPELINE_NAME)" != "" ]]
         then
-            IMAGE = $(CONTAINER_REGISTRY_NAME).azurecr.io/$(SERVICE_PIPELINE_NAME)-${{ parameters.environment }}:$(Build.SourceVersion)
-            REPO  = $(SERVICE_PIPELINE_NAME)
+            IMAGE = "$(CONTAINER_REGISTRY_NAME).azurecr.io/$(SERVICE_PIPELINE_NAME)-${{ parameters.environment }}:$(Build.SourceVersion)"
+            REPO  = "$(SERVICE_PIPELINE_NAME)"
         else
-            IMAGE = $(CONTAINER_REGISTRY_NAME).azurecr.io/${{ parameters.imageRepoName }}-${{ parameters.environment }}:$(Build.SourceVersion)
-            REPO  = ${{ parameters.imageRepoName }}
+            IMAGE = "$(CONTAINER_REGISTRY_NAME).azurecr.io/${{ parameters.imageRepoName }}-${{ parameters.environment }}:$(Build.SourceVersion)"
+            REPO  = "${{ parameters.imageRepoName }}"
         fi
 
         curl -L https://aka.ms/acr/installaad/bash | /bin/bash
