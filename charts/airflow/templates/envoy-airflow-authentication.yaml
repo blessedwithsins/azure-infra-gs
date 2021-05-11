@@ -82,8 +82,8 @@ spec:
                   local username = credsList[1]
                   local password = credsList[2]
 
-                  local airflowUsername = "{{ .Values.global.airflow.username }}"
-                  local airflowPasswordFilepath = "{{ .Values.global.airflow.keyvaultMountPath }}" .. "{{ .Values.global.airflow.passwordKey }}"
+                  local airflowUsername = "{{ .Values.airflowAuthentication.username }}"
+                  local airflowPasswordFilepath = "{{ .Values.airflowAuthentication.keyvaultMountPath }}" .. "{{ .Values.airflowAuthentication.passwordKey }}"
                   local airflowPassword = read_file(airflowPasswordFilepath)
                   if (username == airflowUsername and password == airflowPassword) then
                     request_handle:logInfo("Airflow authentication successful")
