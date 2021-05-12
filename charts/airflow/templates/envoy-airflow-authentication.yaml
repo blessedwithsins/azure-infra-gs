@@ -72,27 +72,49 @@ spec:
                 return content
               end
 
-              function envoy_on_request(request_handle)
-                local authHeader = request_handle:headers():get("Authorization")
-                if starts_with(authHeader, "Basic") then
-                  local encodedCredential = string.sub(authHeader, 7)
-                  local decodedCredential = decode(encodedCredential)
-                  local credsList = split(decodedCredential, ":")
+              function authenticationFailure(request_handle)
+                request_handle:logErr("Airflow authentication failed")
+                request_handle:respond({[":status"] = "401"}, "Airflow authentication failed")
+              end
 
-                  local username = credsList[1]
-                  local password = credsList[2]
+              function authenticationSuccess(request_handle)
+                request_handle:logInfo("Airflow authentication successful")
+              end
 
-                  local airflowUsername = "{{ .Values.airflowAuthentication.username }}"
-                  local airflowPasswordFilepath = "{{ .Values.airflowAuthentication.keyvaultMountPath }}" .. "{{ .Values.airflowAuthentication.passwordKey }}"
-                  local airflowPassword = read_file(airflowPasswordFilepath)
-                  if (username == airflowUsername and password == airflowPassword) then
-                    request_handle:logInfo("Airflow authentication successful")
+              function authenticateRequest(request_handle)
+
+                local path = request_handle:headers():get(":path")
+
+                if (starts_with(path, "/airflow/api/experimental")) then
+
+                  local authHeader = request_handle:headers():get("Authorization")
+                  if starts_with(authHeader, "Basic") then
+                    local encodedCredential = string.sub(authHeader, 7)
+                    local decodedCredential = decode(encodedCredential)
+                    local credsList = split(decodedCredential, ":")
+
+                    local username = credsList[1]
+                    local password = credsList[2]
+
+                    local airflowUsername = "{{ .Values.airflowAuthentication.username }}"
+                    local airflowPasswordFilepath = "{{ .Values.airflowAuthentication.keyvaultMountPath }}" .. "{{ .Values.airflowAuthentication.passwordKey }}"
+
+                    local airflowPassword = read_file(airflowPasswordFilepath)
+                    if (username == airflowUsername and password == airflowPassword) then
+                      authenticationSuccess(request_handle)
+                    else
+                      authenticationFailure(request_handle)
+                    end
                   else
-                    request_handle:logErr("Airflow authentication failed: Invalid username/password")
-                    request_handle:respond({[":status"] = "401"}, "Airflow authentication failed: Invalid username/password")
+                      authenticationFailure(request_handle)
                   end
-                else
-                    request_handle:logErr("Airflow authentication failed: Only Basic authentication is supported")
-                    request_handle:respond({[":status"] = "401"}, "Airflow authentication failed: Only Basic authentication is supported")
                 end
+              end
+
+              function envoy_on_request(request_handle)
+                local status, result = pcall(authenticateRequest, request_handle)
+                if (not status) then
+                  authenticationFailure(request_handle)
+                end
+
               end
