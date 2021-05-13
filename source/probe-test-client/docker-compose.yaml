@@ -1,0 +1,16 @@
+version: '3'
+services:
+  azureprobetestclient:
+    build:
+      context: .
+      dockerfile: Dockerfile
+    image: msosdu.azurecr.io/azure-probe-test-client:$VERSION
+    environment:
+      TERM: xterm
+      TENANT_ID: $TENANT_ID
+      PRINCIPAL_ID: $PRINCIPAL_ID
+      PRINCIPAL_SECRET: $PRINCIPAL_SECRET
+      CLIENT_ID: $CLIENT_ID
+      OSDU_HOST: $OSDU_HOST
+      APPINSIGHTS_INSTRUMENTATIONKEY: $APPINSIGHTS_INSTRUMENTATIONKEY
+      VERSION: $VERSION

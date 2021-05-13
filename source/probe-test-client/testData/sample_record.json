@@ -1,0 +1,27 @@
+[
+    {
+      "kind": "opendes:smoketest:dummydata:0.0.1",
+      "acl": {
+        "viewers": [
+          "data.default.viewer@opendes.contoso.com"
+        ],
+        "owners": [
+          "data.default.owner@opendes.contoso.com"
+        ]
+      },
+      "legal": {
+        "legaltags": [
+            "opendes-probetest-tag"
+        ],
+        "otherRelevantDataCountries": [
+          "US"
+        ],
+        "status": "compliant"
+      },
+      "data": {
+        "Field": "MyField",
+        "Basin": "MyBasin",
+        "Country": "MyCountry"
+      }
+    }
+]

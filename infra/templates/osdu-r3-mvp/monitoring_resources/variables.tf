@@ -75,3 +75,57 @@ variable "tenant_name" {
   description = "(Required) The Azure AD tenant name."
   type        = string
 }
+
+variable "action-groups" {
+  type = map(object({
+    name       = string,
+    short-name = string,
+    # List of 0 or more email notification receivers
+    email-receiver = list(object({
+      name                = string,
+      email-address       = string,
+      common-alert-schema = bool
+    })),
+    # List of 0 or more SMS notification receivers
+    sms-receiver = list(object({
+      name         = string,
+      country-code = string,
+      phone        = string
+    }))
+  }))
+}
+
+variable "log-alerts" {
+  type = map(object({
+    service-name    = string,
+    alert-rule-name = string,
+    description     = string,
+    # Metric Type: Alert can be based on metric measurement or based on number of results. 'metric-type' will be true if Alert is based on metric measurement.
+    metric-type = bool,
+    # Enabled: Alert can be enabled or disabled here. To delete alert altogether, remove the particular key-value pair corresponding to the alert from the collection.
+    enabled = string,
+    # Severity: 0 - critical, 1 - Error, 2 - Warning, 3 - Informational, 4 - Verbose
+    severity = number,
+    # Frequency: How often the query should be run
+    frequency = number,
+    # Time window for which data needs to be fetched for query
+    time-window = number,
+    # action-group-name: The names in this list must be consistent with names provided in action group map above.
+    action-group-name = list(string),
+    # query: The log query.
+    query = string,
+    # Threshold value for the log result
+    trigger-threshold = number,
+    # Operator used to compare the result value against the threshold.
+    trigger-operator = string,
+
+    # Type is `any` for the below keys as they need to be null if alert is based on number of results.
+    metric-trigger-operator = any,
+    # metric-trigger-threshold: Number of violations to trigger alert.
+    metric-trigger-threshold = any,
+    # Metric trigger type: 'Consecutive' or 'Total' breaches of threshold.
+    metric-trigger-type = any,
+    # Metric trigger column: column name on which aggregation is done
+    metric-trigger-column = any
+  }))
+}
