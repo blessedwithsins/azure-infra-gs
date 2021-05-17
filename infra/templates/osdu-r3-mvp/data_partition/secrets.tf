@@ -25,7 +25,8 @@
 # Private Variables
 #-------------------------------
 locals {
-  partition_id = format("%s-id", var.data_partition_name)
+  #partition_id = format("%s-id", var.data_partition_name)
+  partition_id = "${var.data_partition_name}-id"
 
   storage_account_name = format("%s-storage", var.data_partition_name)
   storage_key_name     = format("%s-key", local.storage_account_name)
