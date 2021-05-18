@@ -63,6 +63,7 @@ variable "resource_group_location" {
 variable "data_partition_name" {
   description = "The OSDU data Partition Name."
   type        = string
+  default     = "opendes"
 }
 
 variable "log_retention_days" {
