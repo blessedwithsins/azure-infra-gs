@@ -1,6 +1,6 @@
 # Monitoring Resources Configuration
 
-This template provides an option of how dashboards can be deployed for OSDU.
+This template provides an option of how dashboards and alerts can be deployed for OSDU.
 
 __Prerequisites__
 
@@ -50,6 +50,8 @@ In the custom.tfvars file manually configure your specific settings
 
 - tenant_name -- This needs to be set and refers to the <tenant_name>.onmicrosoft.com from Azure AD
 - dashboards -- Enable or disable dashboards as desired
+- action-groups -- A collection of action groups in the form of key-value pairs
+- log-alerts -- A collection of alerts in the form of key-value pairs
 
 
 ```bash

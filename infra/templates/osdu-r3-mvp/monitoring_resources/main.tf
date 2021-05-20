@@ -53,6 +53,12 @@ locals {
 
   resource_group_name = format("%s-%s-%s-rg", var.prefix, local.workspace, random_string.workspace_scope.result)
   template_path       = "./dashboard_templates"
+
+  central_group_prefix   = trim(data.terraform_remote_state.central_resources.outputs.central_resource_group_name, "-rg")
+  partition_group_prefix = trim(data.terraform_remote_state.partition_resources.outputs.data_partition_group_name, "-rg")
+  service_group_prefix   = trim(data.terraform_remote_state.service_resources.outputs.services_resource_group_name, "-rg")
+
+  action-group-id-prefix = "/subscriptions/${data.azurerm_client_config.current.subscription_id}/resourceGroups/${azurerm_resource_group.main.name}/providers/microsoft.insights/actiongroups/"
 }
 
 #-------------------------------
@@ -132,9 +138,9 @@ resource "azurerm_dashboard" "default_dashboard" {
   dashboard_properties = templatefile("${local.template_path}/default.tpl", {
     tenantName           = var.tenant_name
     subscriptionId       = data.azurerm_client_config.current.subscription_id
-    centralGroupPrefix   = trim(data.terraform_remote_state.central_resources.outputs.central_resource_group_name, "-rg")
-    partitionGroupPrefix = trim(data.terraform_remote_state.partition_resources.outputs.data_partition_group_name, "-rg")
-    serviceGroupPrefix   = trim(data.terraform_remote_state.service_resources.outputs.services_resource_group_name, "-rg")
+    centralGroupPrefix   = local.central_group_prefix
+    partitionGroupPrefix = local.partition_group_prefix
+    serviceGroupPrefix   = local.service_group_prefix
     partitionStorage     = data.terraform_remote_state.partition_resources.outputs.storage_account
   })
 }
@@ -150,6 +156,74 @@ resource "azurerm_dashboard" "appinsights_dashboard" {
 
   dashboard_properties = templatefile("${local.template_path}/appinsights.tpl", {
     subscriptionId     = data.azurerm_client_config.current.subscription_id
-    centralGroupPrefix = trim(data.terraform_remote_state.central_resources.outputs.central_resource_group_name, "-rg")
+    centralGroupPrefix = local.central_group_prefix
   })
+}
+
+#-------------------------------
+# Action Groups
+#-------------------------------
+resource "azurerm_monitor_action_group" "action-groups" {
+  for_each            = var.action-groups
+  name                = "${local.base_name}-${each.value.name}"
+  resource_group_name = azurerm_resource_group.main.name
+  short_name          = each.value.short-name
+
+  # There can be 0 or more email receivers
+  dynamic "email_receiver" {
+    for_each = each.value.email-receiver
+    content {
+      name                    = email_receiver.value.name
+      email_address           = email_receiver.value.email-address
+      use_common_alert_schema = false
+    }
+  }
+
+  # There can be 0 or more sms receivers
+  dynamic "sms_receiver" {
+    for_each = each.value.sms-receiver
+    content {
+      name         = sms_receiver.value.name
+      country_code = sms_receiver.value.country-code
+      phone_number = sms_receiver.value.phone
+    }
+  }
+}
+
+#-------------------------------
+# Custom Log Search Type Alerts
+#-------------------------------
+resource "azurerm_monitor_scheduled_query_rules_alert" "alerts" {
+  for_each            = var.log-alerts
+  name                = "${each.value.alert-rule-name}-${local.base_name}"
+  location            = azurerm_resource_group.main.location
+  resource_group_name = azurerm_resource_group.main.name
+
+  action {
+    action_group = [for name in each.value.action-group-name :
+      format("%s${local.base_name}-%s", local.action-group-id-prefix, name)
+    ]
+  }
+
+  data_source_id = "/subscriptions/${data.azurerm_client_config.current.subscription_id}/resourceGroups/${local.central_group_prefix}-rg/providers/Microsoft.Insights/components/${local.central_group_prefix}-ai"
+  description    = each.value.description
+  enabled        = each.value.enabled
+  query          = each.value.query
+  severity       = each.value.severity
+  frequency      = each.value.frequency
+  time_window    = each.value.time-window
+  trigger {
+    operator  = each.value.trigger-operator
+    threshold = each.value.trigger-threshold
+    dynamic "metric_trigger" {
+      # create this block only if alert is of `metric` type
+      for_each = each.value.metric-type ? [1] : []
+      content {
+        operator            = each.value.metric-trigger-operator
+        threshold           = each.value.metric-trigger-threshold
+        metric_trigger_type = each.value.metric-trigger-type
+        metric_column       = each.value.metric-trigger-column
+      }
+    }
+  }
 }
