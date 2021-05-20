@@ -63,3 +63,43 @@ feature_flag = {
   flux           = true
   sa_lock        = true
 }
+
+
+# cosmos DB SQL collections
+cosmos_sql_collections = [
+  {
+    name                  = "Authority"
+    database_name         = "osdu-db"
+    partition_key_path    = "/id"
+    partition_key_version = null
+
+  },
+  {
+    name                  = "EntityType"
+    database_name         = "osdu-db"
+    partition_key_path    = "/id"
+    partition_key_version = null
+  },
+  {
+    name                  = "SchemaInfo"
+    database_name         = "osdu-db"
+    partition_key_path    = "/partitionId"
+    partition_key_version = null
+  },
+  {
+    name                  = "Source"
+    database_name         = "osdu-db"
+    partition_key_path    = "/id"
+    partition_key_version = null
+  },
+]
+
+# Database Settings
+cosmosdb_consistency_level = "Session"
+cosmos_databases = [
+  {
+    name       = "osdu-db"
+    throughput = 12000
+  }
+]
+
