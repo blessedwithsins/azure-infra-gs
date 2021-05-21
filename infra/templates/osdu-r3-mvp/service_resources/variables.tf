@@ -328,7 +328,6 @@ variable "cosmos_databases" {
   default = []
 }
 
-
 variable "cosmos_sql_collections" {
   description = "The list of cosmos collection names to create. Names must be unique per cosmos instance."
   type = list(object({

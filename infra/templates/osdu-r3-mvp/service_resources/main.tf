@@ -126,7 +126,7 @@ locals {
   aks_identity_name = format("%s-pod-identity", local.aks_cluster_name)
   aks_dns_prefix    = local.base_name_60
 
-  cosmosdb_name     = "${local.base_name}-db"
+  cosmosdb_name     = "${local.base_name}-shared-db"
 
   role = "Contributor"
   rbac_principals = [
@@ -469,17 +469,6 @@ resource "azurerm_role_assignment" "redis_cache" {
 
 
 #-------------------------------
-# Locks
-#-------------------------------
-resource "azurerm_management_lock" "sa_lock" {
-  count = var.feature_flag.sa_lock ? 1 : 0
-
-  name       = "osdu_file_share_lock"
-  scope      = module.storage_account.id
-  lock_level = "CanNotDelete"
-}
-
-#-------------------------------
 # CosmosDB
 #-------------------------------
 module "cosmosdb_account" {
@@ -504,5 +493,25 @@ resource "azurerm_role_assignment" "cosmos_access" {
   principal_id         = local.rbac_principals[count.index]
   scope                = module.cosmosdb_account.account_id
 }
+
+#-------------------------------
+# Locks
+#-------------------------------
+resource "azurerm_management_lock" "sa_lock" {
+  count = var.feature_flag.sa_lock ? 1 : 0
+
+  name       = "osdu_file_share_lock"
+  scope      = module.storage_account.id
+  lock_level = "CanNotDelete"
+}
+
+# Cosmos db lock
+resource "azurerm_management_lock" "db_lock" {
+  name       = "osdu_shared_db_lock"
+  scope      = module.cosmosdb_account.properties.cosmosdb.id
+  lock_level = "CanNotDelete"
+}
+
+
 
 

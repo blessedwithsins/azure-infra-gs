@@ -69,26 +69,26 @@ feature_flag = {
 cosmos_sql_collections = [
   {
     name                  = "Authority"
-    database_name         = "osdu-db"
+    database_name         = "osdu-shared-db"
     partition_key_path    = "/id"
     partition_key_version = null
 
   },
   {
     name                  = "EntityType"
-    database_name         = "osdu-db"
+    database_name         = "osdu-shared-db"
     partition_key_path    = "/id"
     partition_key_version = null
   },
   {
     name                  = "SchemaInfo"
-    database_name         = "osdu-db"
+    database_name         = "osdu-shared-db"
     partition_key_path    = "/partitionId"
     partition_key_version = null
   },
   {
     name                  = "Source"
-    database_name         = "osdu-db"
+    database_name         = "osdu-shared-db"
     partition_key_path    = "/id"
     partition_key_version = null
   },
@@ -98,7 +98,7 @@ cosmos_sql_collections = [
 cosmosdb_consistency_level = "Session"
 cosmos_databases = [
   {
-    name       = "osdu-db"
+    name       = "osdu-shared-db"
     throughput = 12000
   }
 ]
