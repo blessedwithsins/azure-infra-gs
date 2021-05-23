@@ -212,6 +212,7 @@ airflow:
       AIRFLOW__CORE__MIN_SERIALIZED_DAG_FETCH_INTERVAL: 300 #Setting the duration after which serialized Dag in DB should be updated (default 30), this reduces DB write rate
       AIRFLOW__CORE__MIN_SERIALIZED_DAG_UPDATE_INTERVAL: 300 #Setting the duration after which serialized Dag will be re-fetched from the DB when it’s already loaded in the DagBag in the Webserver (default 10), reduces DB read rate
       AIRFLOW__WEBSERVER__WORKER_CLASS: gevent
+      AIRFLOW_VAR_CORE__SERVICE__SEARCH_WITH_CURSOR__URL: "http://search-service.osdu.svc.cluster.local/api/search/v2/query_with_cursor"
     extraEnv:
     - name: CLOUD_PROVIDER
       value: "azure"
@@ -274,6 +275,7 @@ airflow:
         "azure-storage-blob",
         "azure-servicebus==7.0.1",
         "toposort==1.6",
+        "strict-rfc3339==0.7",
         "https://azglobalosdutestlake.blob.core.windows.net/pythonsdk/osdu_api-0.0.4.tar.gz"
     ]
     extraVolumeMounts:
