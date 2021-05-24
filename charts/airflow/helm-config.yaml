@@ -188,6 +188,7 @@ airflow:
       AIRFLOW_VAR_CORE__SERVICE__STORAGE__URL: "http://storage.osdu.svc.cluster.local/api/storage/v2/records"
       AIRFLOW_VAR_CORE__SERVICE__FILE__HOST: "http://file.osdu.svc.cluster.local/api/file/v2"
       AIRFLOW_VAR_CORE__SERVICE__WORKFLOW__HOST: "http://ingestion-workflow.osdu.svc.cluster.local/api/workflow"
+      AIRFLOW_VAR_CORE__SERVICE__SEARCH_WITH_CURSOR__URL: "http://search-service.osdu.svc.cluster.local/api/search/v2/query_with_cursor"
     extraEnv:
     - name: CLOUD_PROVIDER
       value: "azure"
@@ -250,6 +251,7 @@ airflow:
         "azure-storage-blob",
         "azure-servicebus==7.0.1",
         "toposort==1.6",
+        "strict-rfc3339==0.7",
         "https://azglobalosdutestlake.blob.core.windows.net/pythonsdk/osdu_api-0.0.4.tar.gz"
     ]
     extraVolumeMounts:
