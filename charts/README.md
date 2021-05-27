@@ -306,8 +306,8 @@ airflow:
       AIRFLOW__WEBSERVER__WORKER_REFRESH_BATCH_SIZE: 0
       AIRFLOW__CORE__STORE_SERIALIZED_DAGS: True #This flag decides whether to serialise DAGs and persist them in DB
       AIRFLOW__CORE__STORE_DAG_CODE: True #This flag decides whether to persist DAG files code in DB
-      AIRFLOW__CORE__MIN_SERIALIZED_DAG_FETCH_INTERVAL: 300 #Setting the duration after which serialized Dag in DB should be updated (default 30), this reduces DB write rate
-      AIRFLOW__CORE__MIN_SERIALIZED_DAG_UPDATE_INTERVAL: 300 #Setting the duration after which serialized Dag will be re-fetched from the DB when it’s already loaded in the DagBag in the Webserver (default 10), reduces DB read rate
+      AIRFLOW__CORE__MIN_SERIALIZED_DAG_FETCH_INTERVAL: 300 #Setting the duration after which serialized Dag will be re-fetched from the DB when it’s already loaded in the DagBag in the Webserver (default 10), reduces DB read rate
+      AIRFLOW__CORE__MIN_SERIALIZED_DAG_UPDATE_INTERVAL: 300 #Setting the duration after which serialized Dag in DB should be updated (default 30), this reduces DB write rate
       AIRFLOW__WEBSERVER__WORKER_CLASS: gevent    
       AIRFLOW_VAR_CORE__SERVICE__SEARCH_WITH_CURSOR__URL: "http://search-service.osdu.svc.cluster.local/api/search/v2/query_with_cursor"
     extraEnv:
