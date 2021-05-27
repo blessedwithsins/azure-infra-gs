@@ -94,10 +94,12 @@ locals {
   cosmosdb_name       = "${local.base_name}-db"
   sb_namespace        = "${local.base_name_21}-bus"
 
-  eg_sbtopic_subscriber     = "servicebusrecordstopic"
-  eventgrid_name            = "${local.base_name_21}-grid"
-  eventgrid_records_topic   = format("%s-recordstopic", local.eventgrid_name)
-  eventgrid_legaltags_topic = format("%s-legaltagschangedtopic", local.eventgrid_name)
+  eg_sbtopic_subscriber               = "servicebusrecordstopic"
+  eg_sbtopic_schema_subscriber        = "servicebusschemachangedtopic"
+  eventgrid_name                      = "${local.base_name_21}-grid"
+  eventgrid_records_topic             = format("%s-recordstopic", local.eventgrid_name)
+  eventgrid_schema_notification_topic = format("%s-schemachangedtopic", local.eventgrid_name)
+  eventgrid_legaltags_topic           = format("%s-legaltagschangedtopic", local.eventgrid_name)
 
   rbac_principals = [
     data.terraform_remote_state.central_resources.outputs.osdu_identity_principal_id,
@@ -311,6 +313,9 @@ module "event_grid" {
     },
     {
       name = local.eventgrid_legaltags_topic
+    },
+    {
+      name = local.eventgrid_schema_notification_topic
     }
   ]
 
@@ -345,6 +350,22 @@ resource "azurerm_eventgrid_event_subscription" "service_bus_topic_subscriber" {
   service_bus_topic_endpoint_id = lookup(module.service_bus.topicsmap, "recordstopiceg")
 }
 
+// Add EventGrid EventSubscription Contributor access to Principal For Schema
+resource "azurerm_role_assignment" "event_grid_topics_role_schema" {
+  count = length(local.rbac_principals)
+
+  role_definition_name = "EventGrid EventSubscription Contributor"
+  principal_id         = local.rbac_principals[count.index]
+  scope                = lookup(module.event_grid.topics, local.eventgrid_schema_notification_topic)
+}
+
+// Add a Service Bus Topic subscriber that act as EventHandler for schemachangedtopic
+resource "azurerm_eventgrid_event_subscription" "service_bus_topic_subscriber_schema" {
+  name                          = local.eg_sbtopic_schema_subscriber
+  scope                         = lookup(module.event_grid.topics, local.eventgrid_schema_notification_topic)
+  depends_on                    = [module.service_bus.id]
+  service_bus_topic_endpoint_id = lookup(module.service_bus.topicsmap, "schemachangedtopiceg")
+}
 
 #-------------------------------
 # Locks
