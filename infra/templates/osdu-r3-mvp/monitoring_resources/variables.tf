@@ -129,3 +129,31 @@ variable "log-alerts" {
     metric-trigger-column = any
   }))
 }
+
+variable "metric-alerts" {
+  type = map(object({
+    name        = string,
+    description = string,
+    enabled     = string,
+    # Severity: 0 - critical, 1 - Error, 2 - Warning, 3 - Informational, 4 - Verbose
+    severity = number,
+    # Frequency: The evaluation frequency of this Metric Alert, represented in ISO 8601 duration format
+    frequency = string,
+    # The period of time that is used to monitor alert activity, represented in ISO 8601 duration format
+    window-size = string,
+    # Action group names in the form of a map
+    action-groups = map(string),
+    # Resolve the alert when the condition is not met anymore. Defaults to true.
+    auto-mitigate = bool,
+    # One of the metric namespaces to be monitored
+    criteria-metric-namespace = string,
+    # One of the metric names to be monitored
+    criteria-metric-name = string,
+    # The statistic that runs over the metric values. Possible values are Average, Count, Minimum, Maximum and Total
+    criteria-aggregation = string,
+    # The criteria operator. Possible values are Equals, NotEquals, GreaterThan, GreaterThanOrEqual, LessThan and LessThanOrEqual
+    criteria-operator = string,
+    # The criteria threshold value that activates the alert
+    criteria-threshold = number
+  }))
+}
