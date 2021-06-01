@@ -189,6 +189,8 @@ airflow:
     port: 6380
     passwordSecret: "redis"
     passwordSecretKey: "redis-password"
+    databaseNumber: 1  #<-- Adding redis database number according to the Redis config map https://community.opengroup.org/osdu/platform/deployment-and-operations/infra-azure-provisioning/-/blob/master/charts/osdu-common/templates/redis-map.yaml#L7
+
 
   ###################################
   # Airflow - DAGs Configs
@@ -281,6 +283,7 @@ airflow:
       AIRFLOW_VAR_CORE__SERVICE__STORAGE__URL: "http://storage.osdu.svc.cluster.local/api/storage/v2/records"
       AIRFLOW_VAR_CORE__SERVICE__FILE__HOST: "http://file.osdu.svc.cluster.local/api/file/v2"
       AIRFLOW_VAR_CORE__SERVICE__WORKFLOW__HOST: "http://ingestion-workflow.osdu.svc.cluster.local/api/workflow"
+      AIRFLOW_VAR_CORE__SERVICE__SEARCH_WITH_CURSOR__URL: "http://search-service.osdu.svc.cluster.local/api/search/v2/query_with_cursor"
     extraEnv:
       - name: AIRFLOW__CORE__FERNET_KEY
         valueFrom:
@@ -318,6 +321,7 @@ airflow:
         "azure-storage-blob",
         "azure-servicebus==7.0.1",
         "toposort==1.6",
+        "strict-rfc3339==0.7",
         "https://azglobalosdutestlake.blob.core.windows.net/pythonsdk/osdu_api-0.0.4.tar.gz"
     ]
     extraVolumeMounts:
@@ -365,6 +369,7 @@ git clonehttps://community.opengroup.org/osdu/platform/data-flow/ingestion/inges
 git clone https://community.opengroup.org/osdu/platform/domain-data-mgmt-services/seismic/seismic-dms-suite/seismic-store-service.git $SRC_DIR/seismic-store-service
 git clone https://community.opengroup.org:osdu/platform/domain-data-mgmt-services/wellbore/wellbore-domain-services.git $SRC_DIR/wellbore-domain-services
 git clone https://community.opengroup.org/osdu/platform/data-flow/ingestion/ingestion-service.git $SRC_DIR/ingestion-service
+git clone https://community.opengroup.org/osdu/platform/security-and-compliance/policy.git $SRC_DIR/policy
 ```
 
 __Additional Manual Steps__

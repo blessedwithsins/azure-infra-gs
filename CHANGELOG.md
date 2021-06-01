@@ -2,6 +2,9 @@
 
 # Current Master
 
+__Infra Changes__
+- [Feature 159 - Added default JVM Parameters](https://community.opengroup.org/osdu/platform/deployment-and-operations/infra-azure-provisioning/-/issues/159)
+
 # v0.8 (2021-4-9)
 
 __Infra Changes__

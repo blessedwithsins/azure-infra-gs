@@ -28,7 +28,8 @@ var subscription = os.Getenv("ARM_SUBSCRIPTION_ID")
 
 func checkMinCapactiy(t *testing.T, appGatewayProperties *network.ApplicationGatewayPropertiesFormat) {
 	minCapacity := appGatewayProperties.AutoscaleConfiguration.MinCapacity
-	require.Equal(t, int32(2), *minCapacity)
+	// There should be a minimum of 2 instances. If client decides to change the number of min instances, the value will be greater than 2
+	require.LessOrEqual(t, int32(2), *minCapacity)
 }
 
 func checkOWASPRuleset(t *testing.T, appGatewayProperties *network.ApplicationGatewayPropertiesFormat) {
