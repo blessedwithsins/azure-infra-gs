@@ -127,6 +127,14 @@ data-partition-id: {{data_partition_id}}
         "sdms-storage-account-key": {
             "sensitive": true,
             "value": "sdms-storage-key"
+        },
+        "eventgrid-schemanotificationtopic": {
+            "sensitive": true,
+            "value": "eventgrid-schemachangedtopic"
+        },
+         "eventgrid-schemanotificationtopic-accesskey": {
+            "sensitive": true,
+            "value": "eventgrid-schemachangedtopic-accesskey"
         }
     }
 }

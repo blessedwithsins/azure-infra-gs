@@ -290,5 +290,29 @@ sb_topics = [
         forward_to         = ""
       }
     ]
+  },
+  {
+    name                = "schemachangedtopic"
+    enable_partitioning = true
+    subscriptions = [
+      {
+        name               = "schemachangedtopicsubscription"
+        max_delivery_count = 5
+        lock_duration      = "PT5M"
+        forward_to         = ""
+      }
+    ]
+  },
+  {
+    name                = "schemachangedtopiceg"
+    enable_partitioning = true
+    subscriptions = [
+      {
+        name               = "eg_sb_schemasubscription"
+        max_delivery_count = 5
+        lock_duration      = "PT5M"
+        forward_to         = ""
+      }
+    ]
   }
 ]

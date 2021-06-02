@@ -273,11 +273,6 @@ module "log_analytics" {
       solution_name = "KeyVaultAnalytics",
       publisher     = "Microsoft",
       product       = "OMSGallery/KeyVaultAnalytics",
-    },
-    {
-      solution_name = "AzureAppGatewayAnalytics",
-      publisher     = "Microsoft",
-      product       = "OMSGallery/AzureAppGatewayAnalytics",
     }
   ]
 

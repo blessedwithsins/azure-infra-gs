@@ -143,6 +143,11 @@ Data Ingestion is currently under development and due to initial OSDU community 
 
 Airflow Web authentication is now rbac enabled. To understand user roles, create new users and manage users please refer [here](https://community.opengroup.org/osdu/platform/deployment-and-operations/infra-azure-provisioning/-/blob/master/docs/airflow-rbac-guide.md).
 
+## How to create a User in Entitlements V2
+Users in Entitlements V2 can be created and managed using this Rest Client [here](https://community.opengroup.org/osdu/platform/deployment-and-operations/infra-azure-provisioning/-/blob/master/tools/rest/entitlement_manage.http)
+
+Also refer this documentation [here](https://community.opengroup.org/osdu/platform/deployment-and-operations/infra-azure-provisioning/-/blob/master/docs/osdu-entitlement-roles.md) to understand the heirarchy of groups and which permissions can be enabled by adding specific groups
+
 # Infrastructure Upgrade Walkthroughs
 
 This section will outline the process for upgrading infrastructure whenever we have a breaking change in our infrastructure templates.
