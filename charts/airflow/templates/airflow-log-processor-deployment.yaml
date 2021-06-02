@@ -43,7 +43,7 @@ spec:
                 key: storage-connection
         
 ---
-apiVersion: keda.k8s.io/v1alpha1
+apiVersion: keda.sh/v1alpha1
 kind: TriggerAuthentication
 metadata:
   name: azure-queue-auth
@@ -53,14 +53,14 @@ spec:
     provider: azure
 
 ---
-apiVersion: keda.k8s.io/v1alpha1
+apiVersion: keda.sh/v1alpha1
 kind: ScaledObject
 metadata:
   name: azure-queue-scaledobject
   namespace: osdu
 spec:
   scaleTargetRef:
-    deploymentName: azurequeue-function
+    name: azurequeue-function
   triggers:
   - type: azure-queue
     metadata:
