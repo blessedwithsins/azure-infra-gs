@@ -116,8 +116,8 @@ locals {
   ]
 
   rbac_contributor_scopes = concat(
-  [module.container_registry.container_registry_id],
-  [module.keyvault.keyvault_id]
+    [module.container_registry.container_registry_id],
+    [module.keyvault.keyvault_id]
   )
 }
 
