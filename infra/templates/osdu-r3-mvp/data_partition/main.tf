@@ -95,13 +95,14 @@ locals {
   role                    = "Contributor"
   redis_cache_name        = "${local.base_name}-cache"
 
-  vnet_name           = "${local.base_name_60}-vnet"
-  fe_subnet_name      = "${local.base_name_21}-fe-subnet"
-  aks_subnet_name     = "${local.base_name_21}-aks-subnet"
-  be_subnet_name      = "${local.base_name_21}-be-subnet"
-  aks_cluster_name    = "${local.base_name_60}-aks"
-  aks_identity_name   = format("%s-pod-identity", local.aks_cluster_name)
-  aks_dns_prefix      = local.base_name_60
+  vnet_name         = "${local.base_name_60}-vnet"
+  fe_subnet_name    = "${local.base_name_21}-fe-subnet"
+  aks_subnet_name   = "${local.base_name_21}-aks-subnet"
+  be_subnet_name    = "${local.base_name_21}-be-subnet"
+  aks_cluster_name  = "${local.base_name_60}-aks"
+  aks_identity_name = format("%s-pod-identity", local.aks_cluster_name)
+  aks_dns_prefix    = local.base_name_60
+  logs_name         = "${local.base_name}-logs"
 
   config_storage_name = "${replace(local.base_name_21, "-", "")}config"
   storage_name        = "${replace(local.base_name_21, "-", "")}data"
@@ -599,6 +600,30 @@ resource "azurerm_role_assignment" "redis_cache" {
   scope                = module.redis_cache.id
 }
 
+#-------------------------------
+# Log Analytics
+#-------------------------------
+module "log_analytics" {
+  source = "../../../modules/providers/azure/log-analytics"
+
+  name                = local.logs_name
+  resource_group_name = azurerm_resource_group.main.name
+
+  solutions = [
+    {
+      solution_name = "ContainerInsights",
+      publisher     = "Microsoft",
+      product       = "OMSGallery/ContainerInsights",
+    },
+    {
+      solution_name = "KeyVaultAnalytics",
+      publisher     = "Microsoft",
+      product       = "OMSGallery/KeyVaultAnalytics",
+    }
+  ]
+
+  resource_tags = var.resource_tags
+}
 
 #-------------------------------
 # Deployment Resources
@@ -628,19 +653,19 @@ module "deployment_resources" {
   aks_subnet_name = local.aks_subnet_name
 
   # ----- AKS Settings -------
-  aks_cluster_name      = local.aks_cluster_name
-  aks_dns_prefix        = local.aks_dns_prefix
-  aks_agent_vm_count    = var.aks_agent_vm_count
-  aks_agent_vm_size     = var.aks_agent_vm_size
-  aks_agent_vm_disk     = var.aks_agent_vm_disk
-  aks_agent_vm_maxcount = var.aks_agent_vm_maxcount
-  ssh_public_key_file   = var.ssh_public_key_file
-  kubernetes_version    = var.kubernetes_version
-  log_retention_days            = var.log_retention_days
-  log_analytics_id              = data.terraform_remote_state.central_resources.outputs.log_analytics_id
-  container_registry_id_central = data.terraform_remote_state.central_resources.outputs.container_registry_id
+  aks_cluster_name                     = local.aks_cluster_name
+  aks_dns_prefix                       = local.aks_dns_prefix
+  aks_agent_vm_count                   = var.aks_agent_vm_count
+  aks_agent_vm_size                    = var.aks_agent_vm_size
+  aks_agent_vm_disk                    = var.aks_agent_vm_disk
+  aks_agent_vm_maxcount                = var.aks_agent_vm_maxcount
+  ssh_public_key_file                  = var.ssh_public_key_file
+  kubernetes_version                   = var.kubernetes_version
+  log_retention_days                   = var.log_retention_days
+  log_analytics_id                     = module.log_analytics.id
+  container_registry_id_central        = data.terraform_remote_state.central_resources.outputs.container_registry_id
   container_registry_id_data_partition = module.container_registry.container_registry_id
-  osdu_identity_id              = data.terraform_remote_state.central_resources.outputs.osdu_identity_id
+  osdu_identity_id                     = data.terraform_remote_state.central_resources.outputs.osdu_identity_id
 }
 
 #-------------------------------
@@ -656,7 +681,7 @@ module "aks_config_resources" {
 
   providers = { kubernetes = kubernetes, helm = helm }
 
-  log_analytics_id    = data.terraform_remote_state.central_resources.outputs.log_analytics_id
+  log_analytics_id    = module.log_analytics.id
   resource_group_name = azurerm_resource_group.main.name
 
   pod_identity_id  = module.deployment_resources.pod_identity_id

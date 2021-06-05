@@ -1,5 +1,5 @@
 locals {
-  aks_identity_name   = format("%s-pod-identity", var.aks_cluster_name)
+  aks_identity_name = format("%s-pod-identity", var.aks_cluster_name)
 }
 #-------------------------------
 # User Assigned Identities
@@ -29,7 +29,7 @@ module "network" {
       "Microsoft.AzureCosmosDB",
       "Microsoft.KeyVault",
       "Microsoft.ServiceBus",
-      "Microsoft.EventHub"]
+    "Microsoft.EventHub"]
   }
 
   resource_tags = var.resource_tags
