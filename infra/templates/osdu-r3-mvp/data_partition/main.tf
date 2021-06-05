@@ -95,6 +95,14 @@ locals {
   role                    = "Contributor"
   redis_cache_name        = "${local.base_name}-cache"
 
+  vnet_name           = "${local.base_name_60}-vnet"
+  fe_subnet_name      = "${local.base_name_21}-fe-subnet"
+  aks_subnet_name     = "${local.base_name_21}-aks-subnet"
+  be_subnet_name      = "${local.base_name_21}-be-subnet"
+  aks_cluster_name    = "${local.base_name_60}-aks"
+  aks_identity_name   = format("%s-pod-identity", local.aks_cluster_name)
+  aks_dns_prefix      = local.base_name_60
+
   config_storage_name = "${replace(local.base_name_21, "-", "")}config"
   storage_name        = "${replace(local.base_name_21, "-", "")}data"
   sdms_storage_name   = "${replace(local.base_name_21, "-", "")}sdms"
@@ -610,4 +618,86 @@ resource "azurerm_role_assignment" "redis_cache" {
   role_definition_name = local.role
   principal_id         = local.rbac_principals[count.index]
   scope                = module.redis_cache.id
+}
+
+
+#-------------------------------
+# Deployment Resources
+#-------------------------------
+module "deployment_resources" {
+  source = "./deployment_resources"
+
+  providers = {
+    kubernetes = kubernetes
+    helm       = helm
+  }
+
+  resource_group_name     = azurerm_resource_group.main.name
+  resource_tags           = var.resource_tags
+  resource_group_id       = azurerm_resource_group.main.id
+  resource_group_location = var.resource_group_location
+
+  # ----- VNET Settings -----
+  vnet_name = local.vnet_name
+
+  address_space     = var.address_space
+  subnet_aks_prefix = var.subnet_aks_prefix
+  subnet_be_prefix  = var.subnet_be_prefix
+  subnet_fe_prefix  = var.subnet_fe_prefix
+
+  fe_subnet_name  = local.fe_subnet_name
+  aks_subnet_name = local.aks_subnet_name
+
+  # ----- AKS Settings -------
+  aks_cluster_name      = local.aks_cluster_name
+  aks_dns_prefix        = local.aks_dns_prefix
+  aks_agent_vm_count    = var.aks_agent_vm_count
+  aks_agent_vm_size     = var.aks_agent_vm_size
+  aks_agent_vm_disk     = var.aks_agent_vm_disk
+  aks_agent_vm_maxcount = var.aks_agent_vm_maxcount
+  ssh_public_key_file   = var.ssh_public_key_file
+  kubernetes_version    = var.kubernetes_version
+  log_retention_days            = var.log_retention_days
+  log_analytics_id              = data.terraform_remote_state.central_resources.outputs.log_analytics_id
+  container_registry_id_central = data.terraform_remote_state.central_resources.outputs.container_registry_id
+  container_registry_id_data_partition = module.container_registry.container_registry_id
+  osdu_identity_id              = data.terraform_remote_state.central_resources.outputs.osdu_identity_id
+}
+
+#-------------------------------
+# AKS Configuration Resources
+#-------------------------------
+module "aks_config_resources" {
+  source = "./aks_config_resources"
+
+  # Do not configure AKS and Helm until resources are fully created
+  # https://github.com/hashicorp/terraform-provider-kubernetes/blob/6852542fca3894ef4dff397c5b7e7b0c4f32bbac/_examples/aks/README.md
+  # https://github.com/hashicorp/terraform-provider-helm/issues/647
+  depends_on = [module.deployment_resources]
+
+  providers = { kubernetes = kubernetes, helm = helm }
+
+  log_analytics_id    = data.terraform_remote_state.central_resources.outputs.log_analytics_id
+  resource_group_name = azurerm_resource_group.main.name
+
+  pod_identity_id  = module.deployment_resources.pod_identity_id
+  pod_principal_id = module.deployment_resources.pod_principal_id
+
+  aks_cluster_name = local.aks_cluster_name
+
+  # ----- AKS Config Map Settings -------
+  container_registry_name = module.container_registry.container_registry_name
+  feature_flag            = var.feature_flag
+  key_vault_name          = module.keyvault.keyvault_id
+  postgres_fqdn           = module.postgreSQL.server_fqdn
+  postgres_username       = var.postgres_username
+  subscription_name       = data.azurerm_subscription.current.display_name
+  tenant_id               = data.azurerm_client_config.current.tenant_id
+
+  subscription_id = data.azurerm_client_config.current.subscription_id
+
+  gitops_branch       = var.gitops_branch
+  gitops_path         = var.gitops_path
+  gitops_ssh_key_file = var.gitops_ssh_key_file
+  gitops_ssh_url      = var.gitops_ssh_url
 }
