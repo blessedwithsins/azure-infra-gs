@@ -109,10 +109,10 @@ locals {
   eventgrid_schema_notification_topic = format("%s-schemachangedtopic", local.eventgrid_name)
   eventgrid_legaltags_topic           = format("%s-legaltagschangedtopic", local.eventgrid_name)
 
-  // validate whether these are same central resources
   rbac_principals = [
     data.terraform_remote_state.central_resources.outputs.osdu_identity_principal_id,
-    data.terraform_remote_state.central_resources.outputs.principal_objectId
+    data.terraform_remote_state.central_resources.outputs.principal_objectId,
+    azurerm_user_assigned_identity.osduidentity.principal_id,
   ]
 
   rbac_contributor_scopes = concat(
@@ -472,8 +472,7 @@ module "keyvault_policy" {
   vault_id  = module.keyvault.keyvault_id
   tenant_id = data.azurerm_client_config.current.tenant_id
   object_ids = [
-    azurerm_user_assigned_identity.osduidentity.principal_id,
-    module.service_principal.id
+    azurerm_user_assigned_identity.osduidentity.principal_id
   ]
   key_permissions         = ["get", "encrypt", "decrypt"]
   certificate_permissions = ["get"]
@@ -498,26 +497,6 @@ resource "azurerm_user_assigned_identity" "osduidentity" {
   location            = azurerm_resource_group.main.location
 
   tags = var.resource_tags
-}
-
-#-------------------------------
-# AD Principal and Applications
-#-------------------------------
-module "service_principal" {
-  source = "../../../modules/providers/azure/service-principal"
-
-  name   = var.principal_name
-  scopes = local.rbac_contributor_scopes
-  role   = "Contributor"
-
-  create_for_rbac = false
-  object_id       = var.principal_objectId
-
-  principal = {
-    name     = var.principal_name
-    appId    = var.principal_appId
-    password = var.principal_password
-  }
 }
 
 #-------------------------------
