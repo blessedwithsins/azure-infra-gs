@@ -51,3 +51,8 @@ variable "key_vault_name" {
   description = ""
   type        = string
 }
+
+variable "log_analytics_id" {
+  description = ""
+  type        = string
+}

@@ -46,7 +46,7 @@ resource "kubernetes_config_map" "osduconfigmap" {
     ENV_SUBSCRIPTION_NAME = var.subscription_name
     ENV_REGISTRY          = var.container_registry_name
     ENV_KEYVAULT          = format("https://%s.vault.azure.net/", var.key_vault_name)
-    ENV_LOG_WORKSPACE_ID  = data.terraform_remote_state.central_resources.outputs.log_analytics_id
+    ENV_LOG_WORKSPACE_ID  = var.log_analytics_id
     ENV_POSTGRES_USERNAME = var.postgres_username
     ENV_POSTGRES_HOSTNAME = var.postgres_fqdn
   }

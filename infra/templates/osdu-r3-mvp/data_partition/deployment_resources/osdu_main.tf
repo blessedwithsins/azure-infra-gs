@@ -90,7 +90,7 @@ resource "azurerm_role_assignment" "acr_reader" {
 }
 
 // Give AKS Access to Pull from Data partition ACR
-resource "azurerm_role_assignment" "acr_reader" {
+resource "azurerm_role_assignment" "acr_reader_dp" {
   principal_id         = module.aks.kubelet_object_id
   scope                = var.container_registry_id_data_partition
   role_definition_name = "AcrPull"

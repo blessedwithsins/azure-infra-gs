@@ -56,6 +56,14 @@ terraform {
       source  = "hashicorp/null"
       version = "=3.0.0"
     }
+    kubernetes = {
+      source  = "hashicorp/kubernetes"
+      version = "~> 1.13.3"
+    }
+    helm = {
+      source  = "hashicorp/helm"
+      version = "=2.0.1"
+    }
   }
 }
 
@@ -64,6 +72,29 @@ terraform {
 #-------------------------------
 provider "azurerm" {
   features {}
+}
+
+// Hook-up kubectl Provider for Terraform
+provider "kubernetes" {
+  load_config_file       = false
+  host                   = module.deployment_resources.kube_config_block.0.host
+  username               = module.deployment_resources.kube_config_block.0.username
+  password               = module.deployment_resources.kube_config_block.0.password
+  client_certificate     = base64decode(module.deployment_resources.kube_config_block.0.client_certificate)
+  client_key             = base64decode(module.deployment_resources.kube_config_block.0.client_key)
+  cluster_ca_certificate = base64decode(module.deployment_resources.kube_config_block.0.cluster_ca_certificate)
+}
+
+// Hook-up helm Provider for Terraform
+provider "helm" {
+  kubernetes {
+    host                   = module.deployment_resources.kube_config_block.0.host
+    username               = module.deployment_resources.kube_config_block.0.username
+    password               = module.deployment_resources.kube_config_block.0.password
+    client_certificate     = base64decode(module.deployment_resources.kube_config_block.0.client_certificate)
+    client_key             = base64decode(module.deployment_resources.kube_config_block.0.client_key)
+    cluster_ca_certificate = base64decode(module.deployment_resources.kube_config_block.0.cluster_ca_certificate)
+  }
 }
 
 
@@ -99,7 +130,7 @@ locals {
   fe_subnet_name    = "${local.base_name_21}-fe-subnet"
   aks_subnet_name   = "${local.base_name_21}-aks-subnet"
   be_subnet_name    = "${local.base_name_21}-be-subnet"
-  aks_cluster_name  = "${local.base_name_60}-aks"
+  aks_cluster_name  = "${local.base_name_21}-aks"
   aks_identity_name = format("%s-pod-identity", local.aks_cluster_name)
   aks_dns_prefix    = local.base_name_60
   logs_name         = "${local.base_name}-logs"
@@ -631,11 +662,6 @@ module "log_analytics" {
 module "deployment_resources" {
   source = "./deployment_resources"
 
-  providers = {
-    kubernetes = kubernetes
-    helm       = helm
-  }
-
   resource_group_name     = azurerm_resource_group.main.name
   resource_tags           = var.resource_tags
   resource_group_id       = azurerm_resource_group.main.id
@@ -662,10 +688,10 @@ module "deployment_resources" {
   ssh_public_key_file                  = var.ssh_public_key_file
   kubernetes_version                   = var.kubernetes_version
   log_retention_days                   = var.log_retention_days
-  log_analytics_id                     = module.log_analytics.id
+  log_analytics_id                     = data.terraform_remote_state.central_resources.outputs.log_analytics_id
   container_registry_id_central        = data.terraform_remote_state.central_resources.outputs.container_registry_id
   container_registry_id_data_partition = module.container_registry.container_registry_id
-  osdu_identity_id                     = data.terraform_remote_state.central_resources.outputs.osdu_identity_id
+  osdu_identity_id                     = azurerm_user_assigned_identity.osduidentity.id
 }
 
 #-------------------------------
@@ -679,10 +705,7 @@ module "aks_config_resources" {
   # https://github.com/hashicorp/terraform-provider-helm/issues/647
   depends_on = [module.deployment_resources]
 
-  providers = { kubernetes = kubernetes, helm = helm }
-
-  log_analytics_id    = module.log_analytics.id
-  resource_group_name = azurerm_resource_group.main.name
+  log_analytics_id = data.terraform_remote_state.central_resources.outputs.log_analytics_id
 
   pod_identity_id  = module.deployment_resources.pod_identity_id
   pod_principal_id = module.deployment_resources.pod_principal_id
@@ -698,10 +721,4 @@ module "aks_config_resources" {
   subscription_name       = data.azurerm_subscription.current.display_name
   tenant_id               = data.azurerm_client_config.current.tenant_id
 
-  subscription_id = data.azurerm_client_config.current.subscription_id
-
-  gitops_branch       = var.gitops_branch
-  gitops_path         = var.gitops_path
-  gitops_ssh_key_file = var.gitops_ssh_key_file
-  gitops_ssh_url      = var.gitops_ssh_url
 }
