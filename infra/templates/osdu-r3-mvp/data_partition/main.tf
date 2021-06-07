@@ -151,8 +151,11 @@ locals {
 
   rbac_principals = [
     data.terraform_remote_state.central_resources.outputs.osdu_identity_principal_id,
-    data.terraform_remote_state.central_resources.outputs.principal_objectId,
-    azurerm_user_assigned_identity.osduidentity.principal_id,
+    data.terraform_remote_state.central_resources.outputs.principal_objectId
+  ]
+
+  rbac_principals_airflow = [
+    azurerm_user_assigned_identity.osduidentity.principal_id
   ]
 
   rbac_contributor_scopes = concat(
@@ -317,28 +320,28 @@ module "config_storage_account" {
 
 // Add Contributor Role Access
 resource "azurerm_role_assignment" "config_storage_access" {
-  count = length(local.rbac_principals)
+  count = length(local.rbac_principals_airflow)
 
   role_definition_name = local.role
-  principal_id         = local.rbac_principals[count.index]
+  principal_id         = local.rbac_principals_airflow[count.index]
   scope                = module.config_storage_account.id
 }
 
 // Add Storage Queue Data Reader Role Access
 resource "azurerm_role_assignment" "queue_reader" {
-  count = length(local.rbac_principals)
+  count = length(local.rbac_principals_airflow)
 
   role_definition_name = "Storage Queue Data Reader"
-  principal_id         = local.rbac_principals[count.index]
+  principal_id         = local.rbac_principals_airflow[count.index]
   scope                = module.config_storage_account.id
 }
 
 // Add Storage Queue Data Message Processor Role Access
 resource "azurerm_role_assignment" "airflow_log_queue_processor_roles" {
-  count = length(local.rbac_principals)
+  count = length(local.rbac_principals_airflow)
 
   role_definition_name = "Storage Queue Data Message Processor"
-  principal_id         = local.rbac_principals[count.index]
+  principal_id         = local.rbac_principals_airflow[count.index]
   scope                = module.config_storage_account.id
 }
 
@@ -520,10 +523,10 @@ module "keyvault_policy" {
 }
 
 resource "azurerm_role_assignment" "kv_roles" {
-  count = length(local.rbac_principals)
+  count = length(local.rbac_principals_airflow)
 
   role_definition_name = "Reader"
-  principal_id         = local.rbac_principals[count.index]
+  principal_id         = local.rbac_principals_airflow[count.index]
   scope                = module.keyvault.keyvault_id
 }
 
@@ -599,10 +602,10 @@ module "postgreSQL" {
 
 // Add Contributor Role Access
 resource "azurerm_role_assignment" "postgres_access" {
-  count = length(local.rbac_principals)
+  count = length(local.rbac_principals_airflow)
 
   role_definition_name = local.role
-  principal_id         = local.rbac_principals[count.index]
+  principal_id         = local.rbac_principals_airflow[count.index]
   scope                = module.postgreSQL.server_id
 }
 
@@ -624,10 +627,10 @@ module "redis_cache" {
 
 // Add Contributor Role Access
 resource "azurerm_role_assignment" "redis_cache" {
-  count = length(local.rbac_principals)
+  count = length(local.rbac_principals_airflow)
 
   role_definition_name = local.role
-  principal_id         = local.rbac_principals[count.index]
+  principal_id         = local.rbac_principals_airflow[count.index]
   scope                = module.redis_cache.id
 }
 
