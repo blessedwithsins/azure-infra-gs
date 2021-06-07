@@ -1,17 +1,3 @@
-locals {
-  aks_identity_name = format("%s-pod-identity", var.aks_cluster_name)
-}
-#-------------------------------
-# User Assigned Identities
-#-------------------------------
-
-// Create an Identity for Pod Identity
-resource "azurerm_user_assigned_identity" "podidentity" {
-  name                = local.aks_identity_name
-  resource_group_name = var.resource_group_name
-  location            = var.resource_group_location
-}
-
 #-------------------------------
 # Network
 #-------------------------------
@@ -94,13 +80,6 @@ resource "azurerm_role_assignment" "acr_reader_dp" {
   principal_id         = module.aks.kubelet_object_id
   scope                = var.container_registry_id_data_partition
   role_definition_name = "AcrPull"
-}
-
-// Give AKS Access Rights to operate the Pod Identity
-resource "azurerm_role_assignment" "mi_operator" {
-  principal_id         = module.aks.kubelet_object_id
-  scope                = azurerm_user_assigned_identity.podidentity.id
-  role_definition_name = "Managed Identity Operator"
 }
 
 // Give AKS Access Rights to operate the OSDU Identity

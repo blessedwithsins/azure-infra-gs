@@ -691,7 +691,7 @@ module "deployment_resources" {
   ssh_public_key_file                  = var.ssh_public_key_file
   kubernetes_version                   = var.kubernetes_version
   log_retention_days                   = var.log_retention_days
-  log_analytics_id                     = data.terraform_remote_state.central_resources.outputs.log_analytics_id
+  log_analytics_id                     = module.log_analytics.id
   container_registry_id_central        = data.terraform_remote_state.central_resources.outputs.container_registry_id
   container_registry_id_data_partition = module.container_registry.container_registry_id
   osdu_identity_id                     = azurerm_user_assigned_identity.osduidentity.id
@@ -708,10 +708,10 @@ module "aks_config_resources" {
   # https://github.com/hashicorp/terraform-provider-helm/issues/647
   depends_on = [module.deployment_resources]
 
-  log_analytics_id = data.terraform_remote_state.central_resources.outputs.log_analytics_id
+  log_analytics_id = module.log_analytics.id
 
-  pod_identity_id  = module.deployment_resources.pod_identity_id
-  pod_principal_id = module.deployment_resources.pod_principal_id
+  pod_identity_id  = azurerm_user_assigned_identity.osduidentity.id
+  pod_principal_id = azurerm_user_assigned_identity.osduidentity.principal_id
 
   aks_cluster_name = local.aks_cluster_name
 
