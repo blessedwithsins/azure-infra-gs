@@ -280,7 +280,7 @@ module "config_storage_account" {
 
 // Add Contributor Role Access
 resource "azurerm_role_assignment" "config_storage_access" {
-  count = length(local.rbac_principals)
+  count = length(local.rbac_principals_airflow)
 
   role_definition_name = local.role
   principal_id         = local.rbac_principals_airflow[count.index]
@@ -289,7 +289,7 @@ resource "azurerm_role_assignment" "config_storage_access" {
 
 // Add Storage Queue Data Reader Role Access
 resource "azurerm_role_assignment" "queue_reader" {
-  count = length(local.rbac_principals)
+  count = length(local.rbac_principals_airflow)
 
   role_definition_name = "Storage Queue Data Reader"
   principal_id         = local.rbac_principals_airflow[count.index]
@@ -298,7 +298,7 @@ resource "azurerm_role_assignment" "queue_reader" {
 
 // Add Storage Queue Data Message Processor Role Access
 resource "azurerm_role_assignment" "airflow_log_queue_processor_roles" {
-  count = length(local.rbac_principals)
+  count = length(local.rbac_principals_airflow)
 
   role_definition_name = "Storage Queue Data Message Processor"
   principal_id         = local.rbac_principals_airflow[count.index]
@@ -483,7 +483,7 @@ module "keyvault_policy" {
 }
 
 resource "azurerm_role_assignment" "kv_roles" {
-  count = length(local.rbac_principals)
+  count = length(local.rbac_principals_airflow)
 
   role_definition_name = "Reader"
   principal_id         = local.rbac_principals_airflow[count.index]
@@ -562,7 +562,7 @@ module "postgreSQL" {
 
 // Add Contributor Role Access
 resource "azurerm_role_assignment" "postgres_access" {
-  count = length(local.rbac_principals)
+  count = length(local.rbac_principals_airflow)
 
   role_definition_name = local.role
   principal_id         = local.rbac_principals_airflow[count.index]
@@ -587,7 +587,7 @@ module "redis_cache" {
 
 // Add Contributor Role Access
 resource "azurerm_role_assignment" "redis_cache" {
-  count = length(local.rbac_principals)
+  count = length(local.rbac_principals_airflow)
 
   role_definition_name = local.role
   principal_id         = local.rbac_principals_airflow[count.index]
