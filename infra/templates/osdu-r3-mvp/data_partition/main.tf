@@ -88,6 +88,14 @@ locals {
   resource_group_name = format("%s-%s-%s-rg", var.prefix, local.workspace, random_string.workspace_scope.result)
   retention_policy    = var.log_retention_days == 0 ? false : true
 
+  kv_name                 = "${local.base_name_21}-kv"
+  osdupod_identity_name   = "${local.base_name}-osdu-identity"
+  container_registry_name = "${replace(local.base_name_21, "-", "")}cr"
+  postgresql_name         = "${local.base_name}-pg"
+  role                    = "Contributor"
+  redis_cache_name        = "${local.base_name}-cache"
+
+  config_storage_name = "${replace(local.base_name_21, "-", "")}config"
   storage_name        = "${replace(local.base_name_21, "-", "")}data"
   sdms_storage_name   = "${replace(local.base_name_21, "-", "")}sdms"
   ingest_storage_name = "${replace(local.base_name_21, "-", "")}ingest"
@@ -105,6 +113,15 @@ locals {
     data.terraform_remote_state.central_resources.outputs.osdu_identity_principal_id,
     data.terraform_remote_state.central_resources.outputs.principal_objectId
   ]
+
+  rbac_principals_airflow = [
+    azurerm_user_assigned_identity.osduidentity.principal_id
+  ]
+
+  rbac_contributor_scopes = concat(
+    [module.container_registry.container_registry_id],
+    [module.keyvault.keyvault_id]
+  )
 }
 
 
@@ -244,6 +261,48 @@ resource "azurerm_role_assignment" "ingest_storage_data_contributor" {
   role_definition_name = "Storage Blob Data Contributor"
   principal_id         = local.rbac_principals[count.index]
   scope                = module.ingest_storage_account.id
+}
+
+// Config Storage account
+module "config_storage_account" {
+  source = "../../../modules/providers/azure/storage-account"
+
+  name                = local.config_storage_name
+  resource_group_name = azurerm_resource_group.main.name
+  container_names     = []
+  share_names         = []
+  queue_names         = []
+  kind                = "StorageV2"
+  replication_type    = var.storage_replication_type
+
+  resource_tags = var.resource_tags
+}
+
+// Add Contributor Role Access
+resource "azurerm_role_assignment" "config_storage_access" {
+  count = length(local.rbac_principals_airflow)
+
+  role_definition_name = local.role
+  principal_id         = local.rbac_principals_airflow[count.index]
+  scope                = module.config_storage_account.id
+}
+
+// Add Storage Queue Data Reader Role Access
+resource "azurerm_role_assignment" "queue_reader" {
+  count = length(local.rbac_principals_airflow)
+
+  role_definition_name = "Storage Queue Data Reader"
+  principal_id         = local.rbac_principals_airflow[count.index]
+  scope                = module.config_storage_account.id
+}
+
+// Add Storage Queue Data Message Processor Role Access
+resource "azurerm_role_assignment" "airflow_log_queue_processor_roles" {
+  count = length(local.rbac_principals_airflow)
+
+  role_definition_name = "Storage Queue Data Message Processor"
+  principal_id         = local.rbac_principals_airflow[count.index]
+  scope                = module.config_storage_account.id
 }
 
 
@@ -392,4 +451,145 @@ resource "azurerm_management_lock" "ingest_sa_lock" {
   name       = "osdu_ingest_sa_lock"
   scope      = module.ingest_storage_account.id
   lock_level = "CanNotDelete"
+}
+
+
+#-------------------------------
+# Key Vault for Airflow
+#-------------------------------
+module "keyvault" {
+  source = "../../../modules/providers/azure/keyvault"
+
+  keyvault_name       = local.kv_name
+  resource_group_name = azurerm_resource_group.main.name
+  secrets = {
+    app-dev-sp-tenant-id = data.azurerm_client_config.current.tenant_id
+  }
+
+  resource_tags = var.resource_tags
+}
+
+module "keyvault_policy" {
+  source = "../../../modules/providers/azure/keyvault-policy"
+
+  vault_id  = module.keyvault.keyvault_id
+  tenant_id = data.azurerm_client_config.current.tenant_id
+  object_ids = [
+    azurerm_user_assigned_identity.osduidentity.principal_id
+  ]
+  key_permissions         = ["get", "encrypt", "decrypt"]
+  certificate_permissions = ["get"]
+  secret_permissions      = ["get"]
+}
+
+resource "azurerm_role_assignment" "kv_roles" {
+  count = length(local.rbac_principals_airflow)
+
+  role_definition_name = "Reader"
+  principal_id         = local.rbac_principals_airflow[count.index]
+  scope                = module.keyvault.keyvault_id
+}
+
+#-------------------------------
+# OSDU Identity
+#-------------------------------
+// Identity for OSDU Pod Identity
+resource "azurerm_user_assigned_identity" "osduidentity" {
+  name                = local.osdupod_identity_name
+  resource_group_name = azurerm_resource_group.main.name
+  location            = azurerm_resource_group.main.location
+
+  tags = var.resource_tags
+}
+
+#-------------------------------
+# Container Registry
+#-------------------------------
+module "container_registry" {
+  source = "../../../modules/providers/azure/container-registry"
+
+  container_registry_name = local.container_registry_name
+  resource_group_name     = azurerm_resource_group.main.name
+
+  container_registry_sku           = var.container_registry_sku
+  container_registry_admin_enabled = false
+
+  resource_tags = var.resource_tags
+}
+
+
+#-------------------------------
+# PostgreSQL
+#-------------------------------
+resource "random_password" "postgres" {
+  count = var.postgres_password == "" ? 1 : 0
+
+  length           = 8
+  special          = true
+  override_special = "_%@"
+  min_upper        = 1
+  min_lower        = 1
+  min_numeric      = 1
+  min_special      = 1
+}
+
+module "postgreSQL" {
+  source = "../../../modules/providers/azure/postgreSQL"
+
+  resource_group_name       = azurerm_resource_group.main.name
+  name                      = local.postgresql_name
+  databases                 = var.postgres_databases
+  admin_user                = var.postgres_username
+  admin_password            = local.postgres_password
+  sku                       = var.postgres_sku
+  postgresql_configurations = var.postgres_configurations
+
+  storage_mb                   = 5120
+  server_version               = "10.0"
+  backup_retention_days        = 7
+  geo_redundant_backup_enabled = true
+  auto_grow_enabled            = true
+  ssl_enforcement_enabled      = true
+
+  public_network_access = true
+  firewall_rules = [{
+    start_ip = "0.0.0.0"
+    end_ip   = "0.0.0.0"
+  }]
+
+  resource_tags = var.resource_tags
+}
+
+// Add Contributor Role Access
+resource "azurerm_role_assignment" "postgres_access" {
+  count = length(local.rbac_principals_airflow)
+
+  role_definition_name = local.role
+  principal_id         = local.rbac_principals_airflow[count.index]
+  scope                = module.postgreSQL.server_id
+}
+
+#-------------------------------
+# Azure Redis Cache
+#-------------------------------
+module "redis_cache" {
+  source = "../../../modules/providers/azure/redis-cache"
+
+  name                = local.redis_cache_name
+  resource_group_name = azurerm_resource_group.main.name
+  capacity            = var.redis_capacity
+
+  memory_features     = var.redis_config_memory
+  premium_tier_config = var.redis_config_schedule
+
+  resource_tags = var.resource_tags
+}
+
+// Add Contributor Role Access
+resource "azurerm_role_assignment" "redis_cache" {
+  count = length(local.rbac_principals_airflow)
+
+  role_definition_name = local.role
+  principal_id         = local.rbac_principals_airflow[count.index]
+  scope                = module.redis_cache.id
 }

@@ -36,6 +36,10 @@ locals {
   ingest_storage_account_name = format("%s-ingest-storage", var.data_partition_name)
   ingest_storage_key_name     = format("%s-key", local.ingest_storage_account_name)
 
+  config_storage_account_name    = "airflow-storage"
+  config_storage_key_name        = "${local.config_storage_account_name}-key"
+  config_storage_connection_name = "${local.config_storage_account_name}-connection"
+
   cosmos_connection  = format("%s-cosmos-connection", var.data_partition_name)
   cosmos_endpoint    = format("%s-cosmos-endpoint", var.data_partition_name)
   cosmos_primary_key = format("%s-cosmos-primary-key", var.data_partition_name)
@@ -71,7 +75,6 @@ resource "azurerm_key_vault_secret" "partition_id" {
   value        = var.data_partition_name
   key_vault_id = data.terraform_remote_state.central_resources.outputs.keyvault_id
 }
-
 
 
 #-------------------------------
@@ -113,6 +116,24 @@ resource "azurerm_key_vault_secret" "ingest_storage_key" {
   key_vault_id = data.terraform_remote_state.central_resources.outputs.keyvault_id
 }
 
+
+resource "azurerm_key_vault_secret" "config_storage_name" {
+  name         = local.config_storage_account_name
+  value        = module.config_storage_account.name
+  key_vault_id = module.keyvault.keyvault_id
+}
+
+resource "azurerm_key_vault_secret" "config_storage_key" {
+  name         = local.config_storage_key_name
+  value        = module.config_storage_account.primary_access_key
+  key_vault_id = module.keyvault.keyvault_id
+}
+
+resource "azurerm_key_vault_secret" "config_storage_connection" {
+  name         = local.config_storage_connection_name
+  value        = format("DefaultEndpointsProtocol=https;AccountName=%s;AccountKey=%s;EndpointSuffix=core.windows.net", module.config_storage_account.name, module.config_storage_account.primary_access_key)
+  key_vault_id = module.keyvault.keyvault_id
+}
 
 
 #-------------------------------
@@ -238,4 +259,39 @@ resource "azurerm_key_vault_secret" "elastic_password" {
   name         = local.elastic_password
   value        = var.elasticsearch_password
   key_vault_id = data.terraform_remote_state.central_resources.outputs.keyvault_id
+}
+
+#-------------------------------
+# PostgreSQL
+#-------------------------------
+
+locals {
+  postgres_password_name = "postgres-password"
+  postgres_password      = coalesce(var.postgres_password, random_password.postgres[0].result)
+}
+
+resource "azurerm_key_vault_secret" "postgres_password" {
+  name         = local.postgres_password_name
+  value        = local.postgres_password
+  key_vault_id = module.keyvault.keyvault_id
+}
+
+#-------------------------------
+# Azure Redis Cache
+#-------------------------------
+locals {
+  redis_hostname      = "redis-hostname"
+  redis_password_name = "redis-password"
+}
+
+resource "azurerm_key_vault_secret" "redis_host" {
+  name         = local.redis_hostname
+  value        = module.redis_cache.hostname
+  key_vault_id = module.keyvault.keyvault_id
+}
+
+resource "azurerm_key_vault_secret" "redis_password" {
+  name         = local.redis_password_name
+  value        = module.redis_cache.primary_access_key
+  key_vault_id = module.keyvault.keyvault_id
 }
