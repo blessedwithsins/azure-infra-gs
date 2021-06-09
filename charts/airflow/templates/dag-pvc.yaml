@@ -1,9 +1,16 @@
+{{- $isEnabled := .Values.airflow.isDataPartitionDeployment | default false -}}
 apiVersion: v1
 kind: PersistentVolume
 metadata:
+  {{ if $isEnabled }}
+  name: {{ .Release.Namespace }}-airflowdagpv
+  labels:
+    usage: {{ .Release.Namespace }}-airflow-dag
+  {{ else }}
   name: airflowdagpv
   labels:
     usage: airflow-dag
+  {{ end }}
 spec:
   capacity:
     storage: 5Gi
@@ -38,4 +45,8 @@ spec:
       storage: 5Gi
   selector:
     matchLabels:
+      {{ if $isEnabled }}
+      usage: {{ .Release.Namespace }}-airflow-dag
+      {{ else }}
       usage: airflow-dag
+      {{ end }}

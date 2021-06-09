@@ -3,7 +3,6 @@ apiVersion: apps/v1
 kind: Deployment
 metadata:
   name: airflow-log-processor
-  namespace: osdu
   labels:
     app: airflow-log-processor
 spec:
@@ -49,7 +48,6 @@ apiVersion: keda.sh/v1alpha1
 kind: TriggerAuthentication
 metadata:
   name: azure-queue-auth
-  namespace: osdu
 spec:
   podIdentity:
     provider: azure
@@ -58,7 +56,6 @@ apiVersion: keda.k8s.io/v1alpha1
 kind: TriggerAuthentication
 metadata:
   name: azure-queue-auth
-  namespace: osdu
 spec:
   podIdentity:
     provider: azure
@@ -70,10 +67,9 @@ apiVersion: keda.sh/v1alpha1
 kind: ScaledObject
 metadata:
   name: azure-queue-scaledobject
-  namespace: osdu
 spec:
   scaleTargetRef:
-    name: azurequeue-function
+    name: airflow-log-processor
   triggers:
   - type: azure-queue
     metadata:
@@ -88,10 +84,9 @@ apiVersion: keda.k8s.io/v1alpha1
 kind: ScaledObject
 metadata:
   name: azure-queue-scaledobject
-  namespace: osdu
 spec:
   scaleTargetRef:
-    deploymentName: azurequeue-function
+    deploymentName: airflow-log-processor
   triggers:
   - type: azure-queue
     metadata:

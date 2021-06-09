@@ -70,6 +70,15 @@ airflow:
   
   isDataPartitionDeployment: true
 
+  ##################################
+  # Kubernetes Pod Operator config
+  ##################################
+  kubernetesPodOperator:
+    namespace: airflow
+  
+  serviceAccount:
+    name: airflow
+
   ###################################
   # Kubernetes - Ingress Configs
   ###################################
@@ -96,7 +105,7 @@ airflow:
     enabled: false
   externalDatabase:
     type: postgres
-    host: airflow-pgbouncer.osdu.svc.cluster.local           #<-- Azure PostgreSQL Database host or pgbouncer host (if pgbouncer is enabled)
+    host: airflow-pgbouncer                                  #<-- Azure PostgreSQL Database host or pgbouncer host (if pgbouncer is enabled)
     user: osdu_admin@#{base-name-dp}#-pg                     #<-- Azure PostgreSQL Database username, formatted as {username}@{hostname}
     passwordSecret: "postgres"
     passwordSecretKey: "postgres-password"
@@ -214,10 +223,7 @@ airflow:
     - name: CLOUD_PROVIDER
       value: "azure"
     - name: AIRFLOW_VAR_KEYVAULT_URI
-      valueFrom:
-        configMapKeyRef:
-          name: osdu-svc-properties
-          key: ENV_KEYVAULT
+      value: "https://#{base-name-dp}#-kv.vault.azure.net/"
     - name: AIRFLOW__CORE__FERNET_KEY
       valueFrom:
         secretKeyRef:

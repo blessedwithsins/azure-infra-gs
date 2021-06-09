@@ -61,6 +61,15 @@ pgbouncer:
 #
 airflow:
 
+  ##################################
+  # Kubernetes Pod Operator config
+  ##################################
+  kubernetesPodOperator:
+    namespace: airflow
+  
+  serviceAccount:
+    name: airflow
+
   ###################################
   # Kubernetes - Ingress Configs
   ###################################
