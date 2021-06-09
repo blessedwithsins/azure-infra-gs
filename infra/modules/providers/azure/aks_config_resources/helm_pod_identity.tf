@@ -43,40 +43,40 @@ resource "helm_release" "aad_pod_id" {
   #   value = "podidentity"
   # }
 
-//  set {
-//    name  = "azureIdentities.podidentity.enabled"
-//    value = true
-//  }
-//
-//  set {
-//    name  = "azureIdentities.podidentity.namespace"
-//    value = kubernetes_namespace.pod_identity.metadata.0.name
-//  }
-//
-//  set {
-//    name  = "azureIdentities.podidentity.type"
-//    value = 0
-//  }
-//
-//  set {
-//    name  = "azureIdentities.podidentity.resourceID"
-//    value = var.pod_identity_id
-//  }
-//
-//  set {
-//    name  = "azureIdentities.podidentity.clientID"
-//    value = var.pod_principal_id
-//  }
-//
-//  set {
-//    name  = "azureIdentities.podidentity.binding.selector"
-//    value = "podidentity"
-//  }
-//
-//  set {
-//    name  = "azureIdentities.podidentity.binding.name"
-//    value = "podidentitybinding"
-//  }
+  //  set {
+  //    name  = "azureIdentities.podidentity.enabled"
+  //    value = true
+  //  }
+  //
+  //  set {
+  //    name  = "azureIdentities.podidentity.namespace"
+  //    value = kubernetes_namespace.pod_identity.metadata.0.name
+  //  }
+  //
+  //  set {
+  //    name  = "azureIdentities.podidentity.type"
+  //    value = 0
+  //  }
+  //
+  //  set {
+  //    name  = "azureIdentities.podidentity.resourceID"
+  //    value = var.pod_identity_id
+  //  }
+  //
+  //  set {
+  //    name  = "azureIdentities.podidentity.clientID"
+  //    value = var.pod_principal_id
+  //  }
+  //
+  //  set {
+  //    name  = "azureIdentities.podidentity.binding.selector"
+  //    value = "podidentity"
+  //  }
+  //
+  //  set {
+  //    name  = "azureIdentities.podidentity.binding.name"
+  //    value = "podidentitybinding"
+  //  }
 
   depends_on = [kubernetes_namespace.pod_identity]
 }
