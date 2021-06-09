@@ -260,7 +260,25 @@ sb_topics = [
         forward_to         = ""
       },
       {
-        name               = "wkssubscription"
+        name               = "komakkar1"
+        max_delivery_count = 5
+        lock_duration      = "PT5M"
+        forward_to         = ""
+      },
+      {
+        name               = "komakkar2"
+        max_delivery_count = 5
+        lock_duration      = "PT5M"
+        forward_to         = ""
+      },
+      {
+        name               = "komakkar3"
+        max_delivery_count = 5
+        lock_duration      = "PT5M"
+        forward_to         = ""
+      },
+      {
+        name               = "komakkar4"
         max_delivery_count = 5
         lock_duration      = "PT5M"
         forward_to         = ""
