@@ -135,7 +135,6 @@ locals {
   aks_dns_prefix    = local.base_name_60
   logs_name         = "${local.base_name}-logs"
 
-  config_storage_name = "${replace(local.base_name_21, "-", "")}config"
   storage_name        = "${replace(local.base_name_21, "-", "")}data"
   sdms_storage_name   = "${replace(local.base_name_21, "-", "")}sdms"
   ingest_storage_name = "${replace(local.base_name_21, "-", "")}ingest"
@@ -303,28 +302,13 @@ resource "azurerm_role_assignment" "ingest_storage_data_contributor" {
   scope                = module.ingest_storage_account.id
 }
 
-// Config Storage account
-module "config_storage_account" {
-  source = "../../../modules/providers/azure/storage-account"
-
-  name                = local.config_storage_name
-  resource_group_name = azurerm_resource_group.main.name
-  container_names     = []
-  share_names         = []
-  queue_names         = []
-  kind                = "StorageV2"
-  replication_type    = var.storage_replication_type
-
-  resource_tags = var.resource_tags
-}
-
 // Add Contributor Role Access
-resource "azurerm_role_assignment" "config_storage_access" {
+resource "azurerm_role_assignment" "storage_access_airflow" {
   count = length(local.rbac_principals_airflow)
 
   role_definition_name = local.role
   principal_id         = local.rbac_principals_airflow[count.index]
-  scope                = module.config_storage_account.id
+  scope                = module.storage_account.id
 }
 
 // Add Storage Queue Data Reader Role Access
@@ -333,7 +317,7 @@ resource "azurerm_role_assignment" "queue_reader" {
 
   role_definition_name = "Storage Queue Data Reader"
   principal_id         = local.rbac_principals_airflow[count.index]
-  scope                = module.config_storage_account.id
+  scope                = module.storage_account.id
 }
 
 // Add Storage Queue Data Message Processor Role Access
@@ -342,7 +326,7 @@ resource "azurerm_role_assignment" "airflow_log_queue_processor_roles" {
 
   role_definition_name = "Storage Queue Data Message Processor"
   principal_id         = local.rbac_principals_airflow[count.index]
-  scope                = module.config_storage_account.id
+  scope                = module.storage_account.id
 }
 
 
@@ -642,20 +626,6 @@ module "log_analytics" {
 
   name                = local.logs_name
   resource_group_name = azurerm_resource_group.main.name
-
-  solutions = [
-    {
-      solution_name = "ContainerInsights",
-      publisher     = "Microsoft",
-      product       = "OMSGallery/ContainerInsights",
-    },
-    {
-      solution_name = "KeyVaultAnalytics",
-      publisher     = "Microsoft",
-      product       = "OMSGallery/KeyVaultAnalytics",
-    }
-  ]
-
   resource_tags = var.resource_tags
 }
 
@@ -663,7 +633,7 @@ module "log_analytics" {
 # Deployment Resources
 #-------------------------------
 module "deployment_resources" {
-  source = "./deployment_resources"
+  source = "../../../modules/providers/azure/aks_deployment_resources"
 
   resource_group_name     = azurerm_resource_group.main.name
   resource_tags           = var.resource_tags
@@ -701,7 +671,7 @@ module "deployment_resources" {
 # AKS Configuration Resources
 #-------------------------------
 module "aks_config_resources" {
-  source = "./aks_config_resources"
+  source = "../../../modules/providers/azure/aks_config_resources"
 
   # Do not configure AKS and Helm until resources are fully created
   # https://github.com/hashicorp/terraform-provider-kubernetes/blob/6852542fca3894ef4dff397c5b7e7b0c4f32bbac/_examples/aks/README.md

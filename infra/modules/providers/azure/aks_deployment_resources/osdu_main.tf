@@ -2,7 +2,7 @@
 # Network
 #-------------------------------
 module "network" {
-  source = "../../../../modules/providers/azure/network"
+  source = "../network"
 
   name                = var.vnet_name
   resource_group_name = var.resource_group_name
@@ -26,7 +26,7 @@ module "network" {
 # Azure AKS
 #-------------------------------
 module "aks" {
-  source = "../../../../modules/providers/azure/aks"
+  source = "../aks"
 
   name                = var.aks_cluster_name
   resource_group_name = var.resource_group_name

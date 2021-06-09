@@ -35,6 +35,7 @@ locals {
 
   ingest_storage_account_name = format("%s-ingest-storage", var.data_partition_name)
   ingest_storage_key_name     = format("%s-key", local.ingest_storage_account_name)
+  ingest_storage_connection_name = format("%s-connection", local.ingest_storage_account_name)
 
   config_storage_account_name    = "airflow-storage"
   config_storage_key_name        = "${local.config_storage_account_name}-key"
@@ -46,6 +47,12 @@ locals {
 
   sb_namespace_name = format("%s-sb-namespace", var.data_partition_name)
   sb_connection     = format("%s-sb-connection", var.data_partition_name)
+
+  redis_hostname      = "redis-hostname"
+  redis_password_name = "redis-password"
+
+  logs_id_name  = "log-workspace-id"
+  logs_key_name = "log-workspace-key"
 
   eventgrid_domain_name                        = format("%s-eventgrid", var.data_partition_name)
   eventgrid_domain_key_name                    = format("%s-key", local.eventgrid_domain_name)
@@ -116,22 +123,39 @@ resource "azurerm_key_vault_secret" "ingest_storage_key" {
   key_vault_id = data.terraform_remote_state.central_resources.outputs.keyvault_id
 }
 
+resource "azurerm_key_vault_secret" "ingest_storage_key_dp" {
+  name         = local.ingest_storage_key_name
+  value        = module.ingest_storage_account.primary_access_key
+  key_vault_id = module.keyvault.keyvault_id
+}
+
+resource "azurerm_key_vault_secret" "ingest_storage_name_dp" {
+  name         = local.ingest_storage_account_name
+  value        = module.ingest_storage_account.name
+  key_vault_id = module.keyvault.keyvault_id
+}
+
+resource "azurerm_key_vault_secret" "ingest_storage_connection_dp" {
+  name         = local.ingest_storage_connection_name
+  value        = format("DefaultEndpointsProtocol=https;AccountName=%s;AccountKey=%s;EndpointSuffix=core.windows.net", module.ingest_storage_account.name, module.ingest_storage_account.primary_access_key)
+  key_vault_id = module.keyvault.keyvault_id
+}
 
 resource "azurerm_key_vault_secret" "config_storage_name" {
   name         = local.config_storage_account_name
-  value        = module.config_storage_account.name
+  value        = module.storage_account.name
   key_vault_id = module.keyvault.keyvault_id
 }
 
 resource "azurerm_key_vault_secret" "config_storage_key" {
   name         = local.config_storage_key_name
-  value        = module.config_storage_account.primary_access_key
+  value        = module.storage_account.primary_access_key
   key_vault_id = module.keyvault.keyvault_id
 }
 
 resource "azurerm_key_vault_secret" "config_storage_connection" {
   name         = local.config_storage_connection_name
-  value        = format("DefaultEndpointsProtocol=https;AccountName=%s;AccountKey=%s;EndpointSuffix=core.windows.net", module.config_storage_account.name, module.config_storage_account.primary_access_key)
+  value        = format("DefaultEndpointsProtocol=https;AccountName=%s;AccountKey=%s;EndpointSuffix=core.windows.net", module.storage_account.name, module.storage_account.primary_access_key)
   key_vault_id = module.keyvault.keyvault_id
 }
 
@@ -276,14 +300,6 @@ resource "azurerm_key_vault_secret" "postgres_password" {
   key_vault_id = module.keyvault.keyvault_id
 }
 
-#-------------------------------
-# Azure Redis Cache
-#-------------------------------
-locals {
-  redis_hostname      = "redis-hostname"
-  redis_password_name = "redis-password"
-}
-
 resource "azurerm_key_vault_secret" "redis_host" {
   name         = local.redis_hostname
   value        = module.redis_cache.hostname
@@ -293,5 +309,50 @@ resource "azurerm_key_vault_secret" "redis_host" {
 resource "azurerm_key_vault_secret" "redis_password" {
   name         = local.redis_password_name
   value        = module.redis_cache.primary_access_key
+  key_vault_id = module.keyvault.keyvault_id
+}
+
+#-------------------------------
+# Misc
+#-------------------------------
+resource "azurerm_key_vault_secret" "base_name_dp" {
+  name         = "base-name-dp"
+  value        = local.base_name_60
+  key_vault_id = module.keyvault.keyvault_id
+}
+
+resource "azurerm_key_vault_secret" "tenant_id" {
+  name         = format("%s-tenant-id", var.data_partition_name)
+  value        = data.azurerm_client_config.current.tenant_id
+  key_vault_id = module.keyvault.keyvault_id
+}
+
+resource "azurerm_key_vault_secret" "subscription_id" {
+  name         = format("%s-subscription-id", var.data_partition_name)
+  value        = data.azurerm_client_config.current.subscription_id
+  key_vault_id = module.keyvault.keyvault_id
+}
+
+#-------------------------------
+# OSDU Identity
+#-------------------------------
+resource "azurerm_key_vault_secret" "identity_id" {
+  name         = "management-identity-id"
+  value        = azurerm_user_assigned_identity.osduidentity.client_id
+  key_vault_id = module.keyvault.keyvault_id
+}
+
+#-------------------------------
+# Log Analytics
+#-------------------------------
+resource "azurerm_key_vault_secret" "workspace_id" {
+  name         = local.logs_id_name
+  value        = module.log_analytics.log_workspace_id
+  key_vault_id = module.keyvault.keyvault_id
+}
+
+resource "azurerm_key_vault_secret" "workspace_key" {
+  name         = local.logs_key_name
+  value        = module.log_analytics.log_workspace_key
   key_vault_id = module.keyvault.keyvault_id
 }

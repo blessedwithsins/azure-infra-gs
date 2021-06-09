@@ -320,7 +320,8 @@ sb_topics = [
 # Kubernetes Settings
 kubernetes_version = "1.18.17"
 aks_agent_vm_size  = "Standard_E4s_v3"
-aks_agent_vm_count = "5"
+aks_agent_vm_count = "3"
+aks_agent_vm_maxcount = "10"
 aks_agent_vm_disk  = 128
 subnet_aks_prefix  = "10.10.0.0/20"
 subnet_fe_prefix   = "10.10.16.0/24"
