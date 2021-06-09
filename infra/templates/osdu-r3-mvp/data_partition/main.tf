@@ -626,7 +626,7 @@ module "log_analytics" {
 
   name                = local.logs_name
   resource_group_name = azurerm_resource_group.main.name
-  resource_tags = var.resource_tags
+  resource_tags       = var.resource_tags
 }
 
 #-------------------------------

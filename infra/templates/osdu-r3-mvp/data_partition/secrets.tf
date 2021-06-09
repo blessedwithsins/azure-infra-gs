@@ -33,8 +33,8 @@ locals {
   sdms_storage_account_name = format("%s-sdms-storage", var.data_partition_name)
   sdms_storage_key_name     = format("%s-key", local.sdms_storage_account_name)
 
-  ingest_storage_account_name = format("%s-ingest-storage", var.data_partition_name)
-  ingest_storage_key_name     = format("%s-key", local.ingest_storage_account_name)
+  ingest_storage_account_name    = format("%s-ingest-storage", var.data_partition_name)
+  ingest_storage_key_name        = format("%s-key", local.ingest_storage_account_name)
   ingest_storage_connection_name = format("%s-connection", local.ingest_storage_account_name)
 
   config_storage_account_name    = "airflow-storage"
