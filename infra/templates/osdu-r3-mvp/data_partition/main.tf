@@ -409,19 +409,19 @@ module "airflow_infrastructure" {
   source = "./airflow_infrastructure"
 
   storage_account_name = module.storage_account.name
-  storage_account_id = module.storage_account.id
-  resource_group_name = azurerm_resource_group.main.name
-  resource_group_id = azurerm_resource_group.main.id
-  storage_account_key = module.storage_account.primary_access_key
+  storage_account_id   = module.storage_account.id
+  resource_group_name  = azurerm_resource_group.main.name
+  resource_group_id    = azurerm_resource_group.main.id
+  storage_account_key  = module.storage_account.primary_access_key
 
   central_resources_workspace_name = var.central_resources_workspace_name
-  base_name = local.base_name
-  base_name_21 = local.base_name_21
-  base_name_60 = local.base_name_60
-  ingest_storage_account_key = module.ingest_storage_account.primary_access_key
-  ingest_storage_account_name = module.ingest_storage_account.name
-  remote_state_account = var.remote_state_account
-  remote_state_container = var.remote_state_container
-  resource_group_location = var.resource_group_location
-  ssh_public_key_file = var.ssh_public_key_file
+  base_name                        = local.base_name
+  base_name_21                     = local.base_name_21
+  base_name_60                     = local.base_name_60
+  ingest_storage_account_key       = module.ingest_storage_account.primary_access_key
+  ingest_storage_account_name      = module.ingest_storage_account.name
+  remote_state_account             = var.remote_state_account
+  remote_state_container           = var.remote_state_container
+  resource_group_location          = var.resource_group_location
+  ssh_public_key_file              = var.ssh_public_key_file
 }

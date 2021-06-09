@@ -26,24 +26,24 @@ provider "helm" {
 #-------------------------------
 
 locals {
-  base_name = var.base_name
-  base_name_21 = var.base_name_21
-  base_name_60 = var.base_name_60
-  resource_group_name = var.resource_group_name
+  base_name               = var.base_name
+  base_name_21            = var.base_name_21
+  base_name_60            = var.base_name_60
+  resource_group_name     = var.resource_group_name
   postgresql_name         = "${local.base_name}-pg"
-  role = "Contributor"
-  keyvault_name       = "${local.base_name_21}-kv"
+  role                    = "Contributor"
+  keyvault_name           = "${local.base_name_21}-kv"
   osdupod_identity_name   = "${local.base_name}-osdu-identity"
   container_registry_name = "${replace(local.base_name_21, "-", "")}cr"
   redis_cache_name        = "${local.base_name}-cache"
-  logs_name         = "${local.base_name}-logs"
-  vnet_name         = "${local.base_name_60}-vnet"
-  fe_subnet_name    = "${local.base_name_21}-fe-subnet"
-  aks_subnet_name   = "${local.base_name_21}-aks-subnet"
-  aks_cluster_name  = "${local.base_name_21}-aks"
-  aks_identity_name = format("%s-pod-identity", local.aks_cluster_name)
-  aks_dns_prefix    = local.base_name_60
-  retention_policy    = var.log_retention_days == 0 ? false : true
+  logs_name               = "${local.base_name}-logs"
+  vnet_name               = "${local.base_name_60}-vnet"
+  fe_subnet_name          = "${local.base_name_21}-fe-subnet"
+  aks_subnet_name         = "${local.base_name_21}-aks-subnet"
+  aks_cluster_name        = "${local.base_name_21}-aks"
+  aks_identity_name       = format("%s-pod-identity", local.aks_cluster_name)
+  aks_dns_prefix          = local.base_name_60
+  retention_policy        = var.log_retention_days == 0 ? false : true
   rbac_principals_airflow = [
     azurerm_user_assigned_identity.osduidentity.principal_id
   ]
