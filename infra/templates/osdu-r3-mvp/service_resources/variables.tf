@@ -264,13 +264,13 @@ variable "gitops_ssh_key_file" {
 variable "gitops_branch" {
   type        = string
   description = "(Optional) The branch for flux to watch"
-  default     = "osdu-mvp-idc-env"
+  default     = "master"
 }
 
 variable "gitops_path" {
   type        = string
   description = "(Optional) The path for flux to watch"
-  default     = "src/k8-gitops-manifests/providers/azure/hld-registry"
+  default     = "providers/azure/hld-registry"
 }
 
 variable "ssl_policy_type" {
