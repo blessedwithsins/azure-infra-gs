@@ -129,7 +129,6 @@ locals {
   vnet_name         = "${local.base_name_60}-vnet"
   fe_subnet_name    = "${local.base_name_21}-fe-subnet"
   aks_subnet_name   = "${local.base_name_21}-aks-subnet"
-  be_subnet_name    = "${local.base_name_21}-be-subnet"
   aks_cluster_name  = "${local.base_name_21}-aks"
   aks_identity_name = format("%s-pod-identity", local.aks_cluster_name)
   aks_dns_prefix    = local.base_name_60
@@ -645,7 +644,6 @@ module "deployment_resources" {
 
   address_space     = var.address_space
   subnet_aks_prefix = var.subnet_aks_prefix
-  subnet_be_prefix  = var.subnet_be_prefix
   subnet_fe_prefix  = var.subnet_fe_prefix
 
   fe_subnet_name  = local.fe_subnet_name

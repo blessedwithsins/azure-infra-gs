@@ -48,11 +48,6 @@ variable "subnet_aks_prefix" {
   type        = string
 }
 
-variable "subnet_be_prefix" {
-  description = "The address prefix to use for the backend subnet."
-  type        = string
-}
-
 variable "aks_cluster_name" {
   description = "The address space that is used by the virtual network."
   type        = string

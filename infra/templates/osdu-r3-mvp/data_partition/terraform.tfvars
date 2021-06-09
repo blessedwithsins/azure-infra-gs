@@ -325,4 +325,3 @@ aks_agent_vm_maxcount = "10"
 aks_agent_vm_disk     = 128
 subnet_aks_prefix     = "10.10.0.0/20"
 subnet_fe_prefix      = "10.10.16.0/24"
-subnet_be_prefix      = "10.10.17.0/24"

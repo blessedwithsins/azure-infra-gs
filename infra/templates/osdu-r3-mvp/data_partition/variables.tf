@@ -333,12 +333,6 @@ variable "subnet_aks_prefix" {
   default     = "10.10.2.0/24"
 }
 
-variable "subnet_be_prefix" {
-  description = "The address prefix to use for the backend subnet."
-  type        = string
-  default     = "10.10.3.0/28"
-}
-
 variable "feature_flag" {
   description = "(Optional) A toggle for incubator features"
   type = object({
