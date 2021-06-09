@@ -219,7 +219,7 @@ variable "aks_agent_vm_count" {
 variable "aks_agent_vm_maxcount" {
   description = "The max number of nodes allocated to the AKS cluster"
   type        = string
-  default     = "30"
+  default     = "10"
 }
 
 variable "aks_agent_vm_size" {
