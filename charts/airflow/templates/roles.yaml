@@ -55,4 +55,9 @@ roleRef:
 subjects:
   - kind: ServiceAccount
     name: {{ .Values.airflow.serviceAccount.name }}
-    namespace: {{ .Release.Namespace | default "osdu" }}
+    {{- $isEnabled := .Values.airflow.isDataPartitionDeployment | default false -}}
+    {{ if $isEnabled }}
+    namespace: {{ .Release.Namespace}}
+    {{ else }}
+    namespace: osdu
+    {{ end }}
