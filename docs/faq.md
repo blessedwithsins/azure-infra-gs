@@ -152,6 +152,20 @@ Also refer this documentation [here](https://community.opengroup.org/osdu/platfo
 
 This section will outline the process for upgrading infrastructure whenever we have a breaking change in our infrastructure templates.
 
+# Known Issues and mitigation
+1. Deploying the "App Gateway Solution" fails with "Enabling solution of type AzureAppGatewayAnalytics is not allowed" error.
+
+      Error: Error creating/updating Log Analytics Solution "AzureAppGatewayAnalytics(osdu-mvp)" (Workspace "/subscriptions/xxx/resourceGroups/osdu-mvp/providers/Microsoft.OperationalInsights/workspaces/osdu-mvp" / Resource Group "osdu-mvp"): operationsmanagement.SolutionsClient#CreateOrUpdate: Failure sending request: StatusCode=400 -- Original Error: Code="InvalidOperationArgument" Message="Enabling solution of type AzureAppGatewayAnalytics is not allowed"
+
+        on ../../../modules/providers/azure/log-analytics/main.tf line 36, in resource "azurerm_log_analytics_solution" "main":
+        36: resource "azurerm_log_analytics_solution" "main" {
+
+
+      Releasing state lock. This may take a few moments...
+      ##[error]Script failed with error: Error: The process '/bin/bash' failed with exit code
+
+    For release **0.8.0 and below** the cherry-pick the changes in the [MR](https://community.opengroup.org/osdu/platform/deployment-and-operations/infra-azure-provisioning/-/merge_requests/310) to fix the issue.
+    
 ## Release 0.5.0 Upgrade (January 2021)
 These steps outline the process of upgrading infrastructure to version 0.5.0.
 1.	Disable any infrastructure pipelines.

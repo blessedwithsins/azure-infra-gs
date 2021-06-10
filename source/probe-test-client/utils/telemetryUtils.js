@@ -6,7 +6,7 @@ const testUtils = require("../utils/testUtils");
 let appInsights = require("applicationinsights");
 
 // Configure AI
-let version = '0.1.3';
+let version = '0.1.4';
 if (process.env.VERSION !== undefined) {
   version = process.env.VERSION;
 }
