@@ -631,7 +631,7 @@ module "log_analytics" {
 #-------------------------------
 # Deployment Resources
 #-------------------------------
-module "deployment_resources" {
+module "aks_deployment_resources" {
   source = "../../../modules/providers/azure/aks_deployment_resources"
 
   resource_group_name     = azurerm_resource_group.main.name

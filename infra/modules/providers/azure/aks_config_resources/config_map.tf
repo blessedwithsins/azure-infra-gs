@@ -31,25 +31,3 @@ resource "kubernetes_namespace" "osdu" {
   }
 
 }
-
-
-resource "kubernetes_config_map" "osduconfigmap" {
-  count = var.feature_flag.osdu_namespace ? 1 : 0
-
-  metadata {
-    name      = "osdu-svc-properties"
-    namespace = local.osdu_ns
-  }
-
-  data = {
-    ENV_TENANT_ID         = var.tenant_id
-    ENV_SUBSCRIPTION_NAME = var.subscription_name
-    ENV_REGISTRY          = var.container_registry_name
-    ENV_KEYVAULT          = format("https://%s.vault.azure.net/", var.key_vault_name)
-    ENV_LOG_WORKSPACE_ID  = var.log_analytics_id
-    ENV_POSTGRES_USERNAME = var.postgres_username
-    ENV_POSTGRES_HOSTNAME = var.postgres_fqdn
-  }
-
-  depends_on = [kubernetes_namespace.osdu]
-}
