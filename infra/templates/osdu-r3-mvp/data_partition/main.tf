@@ -56,6 +56,14 @@ terraform {
       source  = "hashicorp/null"
       version = "=3.0.0"
     }
+    kubernetes = {
+      source  = "hashicorp/kubernetes"
+      version = "~> 1.13.3"
+    }
+    helm = {
+      source  = "hashicorp/helm"
+      version = "=2.0.1"
+    }
   }
 }
 
@@ -64,6 +72,29 @@ terraform {
 #-------------------------------
 provider "azurerm" {
   features {}
+}
+
+// Hook-up kubectl Provider for Terraform
+provider "kubernetes" {
+  load_config_file       = false
+  host                   = module.aks_deployment_resources.kube_config_block.0.host
+  username               = module.aks_deployment_resources.kube_config_block.0.username
+  password               = module.aks_deployment_resources.kube_config_block.0.password
+  client_certificate     = base64decode(module.aks_deployment_resources.kube_config_block.0.client_certificate)
+  client_key             = base64decode(module.aks_deployment_resources.kube_config_block.0.client_key)
+  cluster_ca_certificate = base64decode(module.aks_deployment_resources.kube_config_block.0.cluster_ca_certificate)
+}
+
+// Hook-up helm Provider for Terraform
+provider "helm" {
+  kubernetes {
+    host                   = module.aks_deployment_resources.kube_config_block.0.host
+    username               = module.aks_deployment_resources.kube_config_block.0.username
+    password               = module.aks_deployment_resources.kube_config_block.0.password
+    client_certificate     = base64decode(module.aks_deployment_resources.kube_config_block.0.client_certificate)
+    client_key             = base64decode(module.aks_deployment_resources.kube_config_block.0.client_key)
+    cluster_ca_certificate = base64decode(module.aks_deployment_resources.kube_config_block.0.cluster_ca_certificate)
+  }
 }
 
 
@@ -95,7 +126,14 @@ locals {
   role                    = "Contributor"
   redis_cache_name        = "${local.base_name}-cache"
 
-  config_storage_name = "${replace(local.base_name_21, "-", "")}config"
+  vnet_name         = "${local.base_name_60}-vnet"
+  fe_subnet_name    = "${local.base_name_21}-fe-subnet"
+  aks_subnet_name   = "${local.base_name_21}-aks-subnet"
+  aks_cluster_name  = "${local.base_name_21}-aks"
+  aks_identity_name = format("%s-pod-identity", local.aks_cluster_name)
+  aks_dns_prefix    = local.base_name_60
+  logs_name         = "${local.base_name}-logs"
+
   storage_name        = "${replace(local.base_name_21, "-", "")}data"
   sdms_storage_name   = "${replace(local.base_name_21, "-", "")}sdms"
   ingest_storage_name = "${replace(local.base_name_21, "-", "")}ingest"
@@ -263,28 +301,13 @@ resource "azurerm_role_assignment" "ingest_storage_data_contributor" {
   scope                = module.ingest_storage_account.id
 }
 
-// Config Storage account
-module "config_storage_account" {
-  source = "../../../modules/providers/azure/storage-account"
-
-  name                = local.config_storage_name
-  resource_group_name = azurerm_resource_group.main.name
-  container_names     = []
-  share_names         = []
-  queue_names         = []
-  kind                = "StorageV2"
-  replication_type    = var.storage_replication_type
-
-  resource_tags = var.resource_tags
-}
-
 // Add Contributor Role Access
-resource "azurerm_role_assignment" "config_storage_access" {
+resource "azurerm_role_assignment" "storage_access_airflow" {
   count = length(local.rbac_principals_airflow)
 
   role_definition_name = local.role
   principal_id         = local.rbac_principals_airflow[count.index]
-  scope                = module.config_storage_account.id
+  scope                = module.storage_account.id
 }
 
 // Add Storage Queue Data Reader Role Access
@@ -293,7 +316,7 @@ resource "azurerm_role_assignment" "queue_reader" {
 
   role_definition_name = "Storage Queue Data Reader"
   principal_id         = local.rbac_principals_airflow[count.index]
-  scope                = module.config_storage_account.id
+  scope                = module.storage_account.id
 }
 
 // Add Storage Queue Data Message Processor Role Access
@@ -302,7 +325,7 @@ resource "azurerm_role_assignment" "airflow_log_queue_processor_roles" {
 
   role_definition_name = "Storage Queue Data Message Processor"
   principal_id         = local.rbac_principals_airflow[count.index]
-  scope                = module.config_storage_account.id
+  scope                = module.storage_account.id
 }
 
 
@@ -592,4 +615,81 @@ resource "azurerm_role_assignment" "redis_cache" {
   role_definition_name = local.role
   principal_id         = local.rbac_principals_airflow[count.index]
   scope                = module.redis_cache.id
+}
+
+#-------------------------------
+# Log Analytics
+#-------------------------------
+module "log_analytics" {
+  source = "../../../modules/providers/azure/log-analytics"
+
+  name                = local.logs_name
+  resource_group_name = azurerm_resource_group.main.name
+  resource_tags       = var.resource_tags
+}
+
+#-------------------------------
+# Deployment Resources
+#-------------------------------
+module "aks_deployment_resources" {
+  source = "../../../modules/providers/azure/aks_deployment_resources"
+
+  resource_group_name     = azurerm_resource_group.main.name
+  resource_tags           = var.resource_tags
+  resource_group_id       = azurerm_resource_group.main.id
+  resource_group_location = var.resource_group_location
+
+  # ----- VNET Settings -----
+  vnet_name = local.vnet_name
+
+  address_space     = var.address_space
+  subnet_aks_prefix = var.subnet_aks_prefix
+  subnet_fe_prefix  = var.subnet_fe_prefix
+
+  fe_subnet_name  = local.fe_subnet_name
+  aks_subnet_name = local.aks_subnet_name
+
+  # ----- AKS Settings -------
+  aks_cluster_name                     = local.aks_cluster_name
+  aks_dns_prefix                       = local.aks_dns_prefix
+  aks_agent_vm_count                   = var.aks_agent_vm_count
+  aks_agent_vm_size                    = var.aks_agent_vm_size
+  aks_agent_vm_disk                    = var.aks_agent_vm_disk
+  aks_agent_vm_maxcount                = var.aks_agent_vm_maxcount
+  ssh_public_key_file                  = var.ssh_public_key_file
+  kubernetes_version                   = var.kubernetes_version
+  log_retention_days                   = var.log_retention_days
+  log_analytics_id                     = data.terraform_remote_state.central_resources.outputs.log_analytics_id
+  container_registry_id_central        = data.terraform_remote_state.central_resources.outputs.container_registry_id
+  container_registry_id_data_partition = module.container_registry.container_registry_id
+  osdu_identity_id                     = azurerm_user_assigned_identity.osduidentity.id
+}
+
+#-------------------------------
+# AKS Configuration Resources
+#-------------------------------
+module "aks_config_resources" {
+  source = "../../../modules/providers/azure/aks_config_resources"
+
+  # Do not configure AKS and Helm until resources are fully created
+  # https://github.com/hashicorp/terraform-provider-kubernetes/blob/6852542fca3894ef4dff397c5b7e7b0c4f32bbac/_examples/aks/README.md
+  # https://github.com/hashicorp/terraform-provider-helm/issues/647
+  depends_on = [module.aks_deployment_resources]
+
+  log_analytics_id = data.terraform_remote_state.central_resources.outputs.log_analytics_id
+
+  pod_identity_id  = azurerm_user_assigned_identity.osduidentity.id
+  pod_principal_id = azurerm_user_assigned_identity.osduidentity.principal_id
+
+  aks_cluster_name = local.aks_cluster_name
+
+  # ----- AKS Config Map Settings -------
+  container_registry_name = module.container_registry.container_registry_name
+  feature_flag            = var.feature_flag
+  key_vault_name          = module.keyvault.keyvault_id
+  postgres_fqdn           = module.postgreSQL.server_fqdn
+  postgres_username       = var.postgres_username
+  subscription_name       = data.azurerm_subscription.current.display_name
+  tenant_id               = data.azurerm_client_config.current.tenant_id
+
 }

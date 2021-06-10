@@ -280,3 +280,69 @@ variable "redis_capacity" {
   type        = number
   default     = 1
 }
+
+variable "aks_agent_vm_count" {
+  description = "The initial number of agent pools / nodes allocated to the AKS cluster"
+  type        = string
+  default     = "3"
+}
+
+variable "aks_agent_vm_maxcount" {
+  description = "The max number of nodes allocated to the AKS cluster"
+  type        = string
+  default     = "10"
+}
+
+variable "aks_agent_vm_size" {
+  type        = string
+  description = "The size of each VM in the Agent Pool (e.g. Standard_F1). Changing this forces a new resource to be created."
+  default     = "Standard_D2s_v3"
+}
+
+variable "aks_agent_vm_disk" {
+  description = "The initial sice of each VM OS Disk."
+  type        = number
+  default     = 30
+}
+
+variable "kubernetes_version" {
+  type    = string
+  default = "1.17.11"
+}
+
+variable "ssh_public_key_file" {
+  type        = string
+  description = "(Required) The SSH public key used to setup log-in credentials on the nodes in the AKS cluster."
+}
+
+variable "address_space" {
+  description = "The address space that is used by the virtual network."
+  type        = string
+  default     = "10.10.0.0/16"
+}
+
+variable "subnet_fe_prefix" {
+  description = "The address prefix to use for the frontend subnet."
+  type        = string
+  default     = "10.10.1.0/26"
+}
+
+variable "subnet_aks_prefix" {
+  description = "The address prefix to use for the aks subnet."
+  type        = string
+  default     = "10.10.2.0/24"
+}
+
+variable "feature_flag" {
+  description = "(Optional) A toggle for incubator features"
+  type = object({
+    osdu_namespace = bool
+    flux           = bool
+    sa_lock        = bool
+  })
+  default = {
+    osdu_namespace = true
+    flux           = true
+    sa_lock        = true
+  }
+}

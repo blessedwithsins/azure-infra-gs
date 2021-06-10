@@ -48,7 +48,7 @@ resource "azurerm_key_vault_secret" "airflow_admin_password" {
 // Add the Airflow Log Connection to the Vault
 resource "azurerm_key_vault_secret" "airflow_remote_log_connection" {
   name         = "airflow-remote-log-connection"
-  value        = format("wasb://%s:%s@", module.config_storage_account.name, urlencode(module.config_storage_account.primary_access_key))
+  value        = format("wasb://%s:%s@", module.storage_account.name, urlencode(module.storage_account.primary_access_key))
   key_vault_id = module.keyvault.keyvault_id
 }
 
@@ -56,63 +56,63 @@ resource "azurerm_key_vault_secret" "airflow_remote_log_connection" {
 // Create Fileshare and folder structure
 resource "azurerm_storage_share" "airflow_share" {
   name                 = "airflowdags"
-  storage_account_name = module.config_storage_account.name
+  storage_account_name = module.storage_account.name
   quota                = 50
 }
 
 resource "azurerm_storage_share_directory" "dags" {
   name                 = "dags"
   share_name           = azurerm_storage_share.airflow_share.name
-  storage_account_name = module.config_storage_account.name
+  storage_account_name = module.storage_account.name
 }
 
 resource "azurerm_storage_share_directory" "plugins" {
   name                 = "plugins"
   share_name           = azurerm_storage_share.airflow_share.name
-  storage_account_name = module.config_storage_account.name
+  storage_account_name = module.storage_account.name
 }
 
 resource "azurerm_storage_share_directory" "operators" {
   name                 = "plugins/operators"
   share_name           = azurerm_storage_share.airflow_share.name
-  storage_account_name = module.config_storage_account.name
+  storage_account_name = module.storage_account.name
   depends_on           = [azurerm_storage_share_directory.plugins]
 }
 
 resource "azurerm_storage_share_directory" "hooks" {
   name                 = "plugins/hooks"
   share_name           = azurerm_storage_share.airflow_share.name
-  storage_account_name = module.config_storage_account.name
+  storage_account_name = module.storage_account.name
   depends_on           = [azurerm_storage_share_directory.plugins]
 }
 
 resource "azurerm_storage_share_directory" "sensors" {
   name                 = "plugins/sensors"
   share_name           = azurerm_storage_share.airflow_share.name
-  storage_account_name = module.config_storage_account.name
+  storage_account_name = module.storage_account.name
   depends_on           = [azurerm_storage_share_directory.plugins]
 }
 
 // Airflow log container
 resource "azurerm_storage_container" "main" {
   name                  = "airflow-logs"
-  storage_account_name  = module.config_storage_account.name
+  storage_account_name  = module.storage_account.name
   container_access_type = "private"
 }
 
 // Airflow queue for blob create event
 resource "azurerm_storage_queue" "main" {
   name                 = local.airflow_log_queue_name
-  storage_account_name = module.config_storage_account.name
+  storage_account_name = module.storage_account.name
 }
 
 // Add the Subscription to the Queue
 resource "azurerm_eventgrid_event_subscription" "airflow_log_event_subscription" {
   name  = "airflowlogeventsubscription"
-  scope = module.config_storage_account.id
+  scope = module.storage_account.id
 
   storage_queue_endpoint {
-    storage_account_id = module.config_storage_account.id
+    storage_account_id = module.storage_account.id
     queue_name         = local.airflow_log_queue_name
   }
 
