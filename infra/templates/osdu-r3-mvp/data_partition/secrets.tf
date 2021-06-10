@@ -36,10 +36,6 @@ locals {
   ingest_storage_account_name = format("%s-ingest-storage", var.data_partition_name)
   ingest_storage_key_name     = format("%s-key", local.ingest_storage_account_name)
 
-  config_storage_account_name    = "airflow-storage"
-  config_storage_key_name        = "${local.config_storage_account_name}-key"
-  config_storage_connection_name = "${local.config_storage_account_name}-connection"
-
   cosmos_connection  = format("%s-cosmos-connection", var.data_partition_name)
   cosmos_endpoint    = format("%s-cosmos-endpoint", var.data_partition_name)
   cosmos_primary_key = format("%s-cosmos-primary-key", var.data_partition_name)
