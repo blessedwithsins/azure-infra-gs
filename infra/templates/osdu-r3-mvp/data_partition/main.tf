@@ -77,23 +77,23 @@ provider "azurerm" {
 // Hook-up kubectl Provider for Terraform
 provider "kubernetes" {
   load_config_file       = false
-  host                   = module.deployment_resources.kube_config_block.0.host
-  username               = module.deployment_resources.kube_config_block.0.username
-  password               = module.deployment_resources.kube_config_block.0.password
-  client_certificate     = base64decode(module.deployment_resources.kube_config_block.0.client_certificate)
-  client_key             = base64decode(module.deployment_resources.kube_config_block.0.client_key)
-  cluster_ca_certificate = base64decode(module.deployment_resources.kube_config_block.0.cluster_ca_certificate)
+  host                   = module.aks_deployment_resources.kube_config_block.0.host
+  username               = module.aks_deployment_resources.kube_config_block.0.username
+  password               = module.aks_deployment_resources.kube_config_block.0.password
+  client_certificate     = base64decode(module.aks_deployment_resources.kube_config_block.0.client_certificate)
+  client_key             = base64decode(module.aks_deployment_resources.kube_config_block.0.client_key)
+  cluster_ca_certificate = base64decode(module.aks_deployment_resources.kube_config_block.0.cluster_ca_certificate)
 }
 
 // Hook-up helm Provider for Terraform
 provider "helm" {
   kubernetes {
-    host                   = module.deployment_resources.kube_config_block.0.host
-    username               = module.deployment_resources.kube_config_block.0.username
-    password               = module.deployment_resources.kube_config_block.0.password
-    client_certificate     = base64decode(module.deployment_resources.kube_config_block.0.client_certificate)
-    client_key             = base64decode(module.deployment_resources.kube_config_block.0.client_key)
-    cluster_ca_certificate = base64decode(module.deployment_resources.kube_config_block.0.cluster_ca_certificate)
+    host                   = module.aks_deployment_resources.kube_config_block.0.host
+    username               = module.aks_deployment_resources.kube_config_block.0.username
+    password               = module.aks_deployment_resources.kube_config_block.0.password
+    client_certificate     = base64decode(module.aks_deployment_resources.kube_config_block.0.client_certificate)
+    client_key             = base64decode(module.aks_deployment_resources.kube_config_block.0.client_key)
+    cluster_ca_certificate = base64decode(module.aks_deployment_resources.kube_config_block.0.cluster_ca_certificate)
   }
 }
 
@@ -674,7 +674,7 @@ module "aks_config_resources" {
   # Do not configure AKS and Helm until resources are fully created
   # https://github.com/hashicorp/terraform-provider-kubernetes/blob/6852542fca3894ef4dff397c5b7e7b0c4f32bbac/_examples/aks/README.md
   # https://github.com/hashicorp/terraform-provider-helm/issues/647
-  depends_on = [module.deployment_resources]
+  depends_on = [module.aks_deployment_resources]
 
   log_analytics_id = data.terraform_remote_state.central_resources.outputs.log_analytics_id
 

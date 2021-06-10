@@ -35,7 +35,6 @@ locals {
 
   ingest_storage_account_name    = format("%s-ingest-storage", var.data_partition_name)
   ingest_storage_key_name        = format("%s-key", local.ingest_storage_account_name)
-  ingest_storage_connection_name = format("%s-connection", local.ingest_storage_account_name)
 
   config_storage_account_name    = "airflow-storage"
   config_storage_key_name        = "${local.config_storage_account_name}-key"
@@ -121,24 +120,6 @@ resource "azurerm_key_vault_secret" "ingest_storage_key" {
   name         = local.ingest_storage_key_name
   value        = module.ingest_storage_account.primary_access_key
   key_vault_id = data.terraform_remote_state.central_resources.outputs.keyvault_id
-}
-
-resource "azurerm_key_vault_secret" "ingest_storage_key_dp" {
-  name         = local.ingest_storage_key_name
-  value        = module.ingest_storage_account.primary_access_key
-  key_vault_id = module.keyvault.keyvault_id
-}
-
-resource "azurerm_key_vault_secret" "ingest_storage_name_dp" {
-  name         = local.ingest_storage_account_name
-  value        = module.ingest_storage_account.name
-  key_vault_id = module.keyvault.keyvault_id
-}
-
-resource "azurerm_key_vault_secret" "ingest_storage_connection_dp" {
-  name         = local.ingest_storage_connection_name
-  value        = format("DefaultEndpointsProtocol=https;AccountName=%s;AccountKey=%s;EndpointSuffix=core.windows.net", module.ingest_storage_account.name, module.ingest_storage_account.primary_access_key)
-  key_vault_id = module.keyvault.keyvault_id
 }
 
 resource "azurerm_key_vault_secret" "config_storage_name" {
@@ -322,13 +303,13 @@ resource "azurerm_key_vault_secret" "base_name_dp" {
 }
 
 resource "azurerm_key_vault_secret" "tenant_id" {
-  name         = format("%s-tenant-id", var.data_partition_name)
+  name         = format("%s-tenant-id", "data-partition")
   value        = data.azurerm_client_config.current.tenant_id
   key_vault_id = module.keyvault.keyvault_id
 }
 
 resource "azurerm_key_vault_secret" "subscription_id" {
-  name         = format("%s-subscription-id", var.data_partition_name)
+  name         = format("%s-subscription-id", "data-partition")
   value        = data.azurerm_client_config.current.subscription_id
   key_vault_id = module.keyvault.keyvault_id
 }
