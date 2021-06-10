@@ -75,13 +75,13 @@ resource "azurerm_key_vault_secret" "base_name_dp" {
 }
 
 resource "azurerm_key_vault_secret" "tenant_id" {
-  name         = format("%s-tenant-id", var.data_partition_name)
+  name         = format("%s-tenant-id", "data-partition")
   value        = data.azurerm_client_config.current.tenant_id
   key_vault_id = module.keyvault.keyvault_id
 }
 
 resource "azurerm_key_vault_secret" "subscription_id" {
-  name         = format("%s-subscription-id", var.data_partition_name)
+  name         = format("%s-subscription-id", "data-partition")
   value        = data.azurerm_client_config.current.subscription_id
   key_vault_id = module.keyvault.keyvault_id
 }
