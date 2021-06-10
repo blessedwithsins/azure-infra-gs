@@ -12,9 +12,7 @@ module "network" {
   subnet_service_endpoints = {
     (var.aks_subnet_name) = ["Microsoft.Storage",
       "Microsoft.Sql",
-      "Microsoft.AzureCosmosDB",
       "Microsoft.KeyVault",
-      "Microsoft.ServiceBus",
     "Microsoft.EventHub"]
   }
 

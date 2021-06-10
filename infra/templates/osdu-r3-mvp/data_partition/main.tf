@@ -12,7 +12,6 @@
 //  See the License for the specific language governing permissions and
 //  limitations under the License.
 
-
 /*
 .Synopsis
    Terraform Main Control
@@ -72,6 +71,29 @@ terraform {
 #-------------------------------
 provider "azurerm" {
   features {}
+}
+
+// Hook-up kubectl Provider for Terraform
+provider "kubernetes" {
+  load_config_file       = false
+  host                   = module.airflow.kube_config_block.0.host
+  username               = module.airflow.kube_config_block.0.username
+  password               = module.airflow.kube_config_block.0.password
+  client_certificate     = base64decode(module.airflow.kube_config_block.0.client_certificate)
+  client_key             = base64decode(module.airflow.kube_config_block.0.client_key)
+  cluster_ca_certificate = base64decode(module.airflow.kube_config_block.0.cluster_ca_certificate)
+}
+
+// Hook-up helm Provider for Terraform
+provider "helm" {
+  kubernetes {
+    host                   = module.airflow.kube_config_block.0.host
+    username               = module.airflow.kube_config_block.0.username
+    password               = module.airflow.kube_config_block.0.password
+    client_certificate     = base64decode(module.airflow.kube_config_block.0.client_certificate)
+    client_key             = base64decode(module.airflow.kube_config_block.0.client_key)
+    cluster_ca_certificate = base64decode(module.airflow.kube_config_block.0.cluster_ca_certificate)
+  }
 }
 
 #-------------------------------
@@ -401,12 +423,9 @@ resource "azurerm_management_lock" "ingest_sa_lock" {
   lock_level = "CanNotDelete"
 }
 
-#-------------------------------
-# Airflow Infrastructure
-#-------------------------------
 
-module "airflow_infrastructure" {
-  source = "./airflow_infrastructure"
+module "airflow" {
+  source = "airflow"
 
   storage_account_name = module.storage_account.name
   storage_account_id   = module.storage_account.id

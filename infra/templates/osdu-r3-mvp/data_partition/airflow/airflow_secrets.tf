@@ -2,13 +2,8 @@
 # Private Variables
 #-------------------------------
 locals {
-
   storage_account_name = format("%s-storage", var.data_partition_name)
   storage_key_name     = format("%s-key", local.storage_account_name)
-
-  ingest_storage_account_name    = format("%s-ingest-storage", var.data_partition_name)
-  ingest_storage_key_name        = format("%s-key", local.ingest_storage_account_name)
-  ingest_storage_connection_name = format("%s-connection", local.ingest_storage_account_name)
 
   config_storage_account_name    = "airflow-storage"
   config_storage_key_name        = "${local.config_storage_account_name}-key"
@@ -112,24 +107,6 @@ resource "azurerm_key_vault_secret" "workspace_id" {
 resource "azurerm_key_vault_secret" "workspace_key" {
   name         = local.logs_key_name
   value        = module.log_analytics.log_workspace_key
-  key_vault_id = module.keyvault.keyvault_id
-}
-
-resource "azurerm_key_vault_secret" "ingest_storage_key_dp" {
-  name         = local.ingest_storage_key_name
-  value        = var.ingest_storage_account_key
-  key_vault_id = module.keyvault.keyvault_id
-}
-
-resource "azurerm_key_vault_secret" "ingest_storage_name_dp" {
-  name         = local.ingest_storage_account_name
-  value        = var.ingest_storage_account_name
-  key_vault_id = module.keyvault.keyvault_id
-}
-
-resource "azurerm_key_vault_secret" "ingest_storage_connection_dp" {
-  name         = local.ingest_storage_connection_name
-  value        = format("DefaultEndpointsProtocol=https;AccountName=%s;AccountKey=%s;EndpointSuffix=core.windows.net", var.ingest_storage_account_name, var.ingest_storage_account_key)
   key_vault_id = module.keyvault.keyvault_id
 }
 
