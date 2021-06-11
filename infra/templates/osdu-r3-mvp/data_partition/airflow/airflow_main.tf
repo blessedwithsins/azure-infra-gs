@@ -1,26 +1,3 @@
-// Hook-up kubectl Provider for Terraform
-provider "kubernetes" {
-  load_config_file       = false
-  host                   = module.aks_deployment_resources.kube_config_block.0.host
-  username               = module.aks_deployment_resources.kube_config_block.0.username
-  password               = module.aks_deployment_resources.kube_config_block.0.password
-  client_certificate     = base64decode(module.aks_deployment_resources.kube_config_block.0.client_certificate)
-  client_key             = base64decode(module.aks_deployment_resources.kube_config_block.0.client_key)
-  cluster_ca_certificate = base64decode(module.aks_deployment_resources.kube_config_block.0.cluster_ca_certificate)
-}
-
-// Hook-up helm Provider for Terraform
-provider "helm" {
-  kubernetes {
-    host                   = module.aks_deployment_resources.kube_config_block.0.host
-    username               = module.aks_deployment_resources.kube_config_block.0.username
-    password               = module.aks_deployment_resources.kube_config_block.0.password
-    client_certificate     = base64decode(module.aks_deployment_resources.kube_config_block.0.client_certificate)
-    client_key             = base64decode(module.aks_deployment_resources.kube_config_block.0.client_key)
-    cluster_ca_certificate = base64decode(module.aks_deployment_resources.kube_config_block.0.cluster_ca_certificate)
-  }
-}
-
 #-------------------------------
 # Private Variables
 #-------------------------------
@@ -354,6 +331,7 @@ module "log_analytics" {
 # Deployment Resources
 #-------------------------------
 module "aks_deployment_resources" {
+  count = var.check ? 1: 0
   source = "../../../../modules/providers/azure/aks_deployment_resources"
 
   resource_group_name     = local.resource_group_name
