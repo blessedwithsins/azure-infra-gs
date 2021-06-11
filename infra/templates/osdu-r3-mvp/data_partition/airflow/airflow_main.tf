@@ -331,7 +331,7 @@ module "log_analytics" {
 # Deployment Resources
 #-------------------------------
 module "aks_deployment_resources" {
-  count = var.check ? 1: 0
+  count  = var.check ? 1 : 0
   source = "../../../../modules/providers/azure/aks_deployment_resources"
 
   resource_group_name     = local.resource_group_name
