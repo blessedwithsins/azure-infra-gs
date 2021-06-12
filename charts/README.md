@@ -251,8 +251,8 @@ airflow:
   ###################################
   airflow:
     image:
-      repository: apache/airflow
-      tag: 1.10.12-python3.6
+      repository: community.opengroup.org:5555/osdu/platform/deployment-and-operations/base-containers-azure/airflow-docker-image/master
+      tag: v0.9
       pullPolicy: IfNotPresent
       pullSecret: ""
     config:
