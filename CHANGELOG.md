@@ -2,8 +2,20 @@
 
 # Current Master
 
+# v0.9 (2021-6-7)
+
+__Service Onboarded__
+- [Issue 95 - Policy Service](https://community.opengroup.org/osdu/platform/deployment-and-operations/infra-azure-provisioning/-/issues/95)
+
+__Feature Changes__
+- [Feature 142 - Added support for array of object search](https://community.opengroup.org/osdu/platform/system/search-service/-/merge_requests/142)
+- [Feature 121 - Added support for nested search](https://community.opengroup.org/osdu/platform/system/search-service/-/merge_requests/121)
+
 __Infra Changes__
+- [Feature 277 - Alerts framework for Monitoring](https://community.opengroup.org/osdu/platform/deployment-and-operations/infra-azure-provisioning/-/merge_requests/277)
+- [Feature 169 - Container hardening for Java based services](https://community.opengroup.org/osdu/platform/deployment-and-operations/infra-azure-provisioning/-/issues/169)
 - [Feature 159 - Added default JVM Parameters](https://community.opengroup.org/osdu/platform/deployment-and-operations/infra-azure-provisioning/-/issues/159)
+
 
 # v0.8 (2021-4-9)
 
