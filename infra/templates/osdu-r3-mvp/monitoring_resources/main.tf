@@ -227,3 +227,36 @@ resource "azurerm_monitor_scheduled_query_rules_alert" "alerts" {
     }
   }
 }
+
+#-------------------------------
+# Metric Type Alerts
+#-------------------------------
+resource "azurerm_monitor_metric_alert" "example" {
+  for_each            = var.metric-alerts
+  name                = "${each.value.name}-${local.base_name}"
+  resource_group_name = azurerm_resource_group.main.name
+  # A set of strings of resource IDs at which the metric criteria should be applied
+  scopes        = ["/subscriptions/${data.azurerm_client_config.current.subscription_id}/resourceGroups/${local.central_group_prefix}-rg/providers/Microsoft.Insights/components/${local.central_group_prefix}-ai"]
+  description   = each.value.description
+  enabled       = each.value.enabled
+  severity      = each.value.severity
+  frequency     = each.value.frequency
+  window_size   = each.value.window-size
+  auto_mitigate = each.value.auto-mitigate
+
+  criteria {
+    metric_namespace = each.value.criteria-metric-namespace
+    metric_name      = each.value.criteria-metric-name
+    aggregation      = each.value.criteria-aggregation
+    operator         = each.value.criteria-operator
+    threshold        = each.value.criteria-threshold
+  }
+
+  # Add multiple action blocks if multiple action groups are to be associated
+  dynamic "action" {
+    for_each = each.value.action-groups
+    content {
+      action_group_id = format("%s${local.base_name}-%s", local.action-group-id-prefix, action.value)
+    }
+  }
+}

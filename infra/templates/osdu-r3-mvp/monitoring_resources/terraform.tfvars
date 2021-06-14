@@ -100,3 +100,25 @@ log-alerts = {
     metric-trigger-column    = null
   }
 }
+
+# Sample Metric Type Alert data
+metric-alerts = {
+  osdu-airflow-collect-dags = {
+    name        = "OSDU_AirflowCollectDags",
+    description = "Airflow Alert for average time taken to collect dags",
+    enabled     = "true",
+    severity    = 3,
+    frequency   = "PT15M",
+    window-size = "PT15M",
+    action-groups = {
+      1 = "DevActionGroup",
+      2 = "ProdActionGroup"
+    },
+    auto-mitigate             = true,
+    criteria-metric-namespace = "azure.applicationinsights",
+    criteria-metric-name      = "osdu_airflow.collect_dags",
+    criteria-aggregation      = "Average",
+    criteria-operator         = "GreaterThan",
+    criteria-threshold        = 50
+  }
+}

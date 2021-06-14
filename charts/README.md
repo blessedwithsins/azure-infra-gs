@@ -251,8 +251,8 @@ airflow:
   ###################################
   airflow:
     image:
-      repository: apache/airflow
-      tag: 1.10.12-python3.6
+      repository: community.opengroup.org:5555/osdu/platform/deployment-and-operations/base-containers-azure/airflow-docker-image/master
+      tag: v0.9
       pullPolicy: IfNotPresent
       pullSecret: ""
     config:
@@ -283,6 +283,7 @@ airflow:
       AIRFLOW_VAR_CORE__SERVICE__STORAGE__URL: "http://storage.osdu.svc.cluster.local/api/storage/v2/records"
       AIRFLOW_VAR_CORE__SERVICE__FILE__HOST: "http://file.osdu.svc.cluster.local/api/file/v2"
       AIRFLOW_VAR_CORE__SERVICE__WORKFLOW__HOST: "http://ingestion-workflow.osdu.svc.cluster.local/api/workflow"
+      AIRFLOW_VAR_CORE__SERVICE__SEARCH_WITH_CURSOR__URL: "http://search-service.osdu.svc.cluster.local/api/search/v2/query_with_cursor"
     extraEnv:
       - name: AIRFLOW__CORE__FERNET_KEY
         valueFrom:
@@ -320,6 +321,7 @@ airflow:
         "azure-storage-blob",
         "azure-servicebus==7.0.1",
         "toposort==1.6",
+        "strict-rfc3339==0.7",
         "https://azglobalosdutestlake.blob.core.windows.net/pythonsdk/osdu_api-0.0.4.tar.gz"
     ]
     extraVolumeMounts:
