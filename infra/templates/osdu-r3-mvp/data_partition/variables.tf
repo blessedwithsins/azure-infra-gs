@@ -186,3 +186,9 @@ variable "ssh_public_key_file" {
   type        = string
   description = "(Required) The SSH public key used to setup log-in credentials on the nodes in the AKS cluster."
 }
+
+variable "deploy_airflow" {
+  type        = bool
+  default = true
+  description = "(Required) The SSH public key used to setup log-in credentials on the nodes in the AKS cluster."
+}

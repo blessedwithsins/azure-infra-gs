@@ -75,6 +75,7 @@ provider "azurerm" {
 
 // Hook-up kubectl Provider for Terraform
 provider "kubernetes" {
+  alias = "kubernetes-copy"
   load_config_file       = false
   host                   = module.airflow.kube_config_block.0.host
   username               = module.airflow.kube_config_block.0.username
@@ -86,6 +87,7 @@ provider "kubernetes" {
 
 // Hook-up helm Provider for Terraform
 provider "helm" {
+  alias = "helm-copy"
   kubernetes {
     host                   = module.airflow.kube_config_block.0.host
     username               = module.airflow.kube_config_block.0.username
@@ -426,6 +428,7 @@ resource "azurerm_management_lock" "ingest_sa_lock" {
 
 module "airflow" {
   source = "./airflow"
+  count = var.deploy_airflow ? 1: 0
 
   storage_account_name = module.storage_account.name
   storage_account_id   = module.storage_account.id
