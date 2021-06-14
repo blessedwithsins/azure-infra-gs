@@ -52,7 +52,7 @@ ENV_VAULT=$(az keyvault list --resource-group $GROUP --query [].name -otsv)
 
 cat > .env << EOF
 CSV_PARSER_IMAGE=${ACR_REGISTRY}/csv-parser:${TAG}
-SHARED_TENANT=$DATA_PARTITION
+DATA_PARTITION=$DATA_PARTITION
 AZURE_TENANT_ID=$ARM_TENANT_ID
 AZURE_DNS_NAME=$DNS_HOST
 AZURE_AD_APP_RESOURCE_ID=$(az keyvault secret show --id https://${ENV_VAULT}.vault.azure.net/secrets/aad-client-id --query value -otsv)
