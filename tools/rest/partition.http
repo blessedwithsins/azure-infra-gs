@@ -95,6 +95,14 @@ data-partition-id: {{data_partition_id}}
             "sensitive": true,
             "value": "storage"
         },
+        "ingest-storage-account-name": {
+            "sensitive": true,
+            "value": "ingest-storage"
+        },
+        "ingest-storage-account-key": {
+            "sensitive": true,
+            "value": "ingest-storage-key"
+        },
         "eventgrid-recordstopic": {
             "sensitive": true,
             "value": "eventgrid-recordstopic"
