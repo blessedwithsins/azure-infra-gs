@@ -187,8 +187,18 @@ variable "ssh_public_key_file" {
   description = "(Required) The SSH public key used to setup log-in credentials on the nodes in the AKS cluster."
 }
 
-variable "deploy_airflow" {
-  type        = bool
-  default     = true
-  description = "(Required) The SSH public key used to setup log-in credentials on the nodes in the AKS cluster."
+variable "feature_flag" {
+  description = "(Optional) A toggle for incubator features"
+  type = object({
+    osdu_namespace = bool
+    flux           = bool
+    sa_lock        = bool
+    deploy_airflow = bool
+  })
+  default = {
+    osdu_namespace = true
+    flux           = true
+    sa_lock        = true
+    deploy_airflow = false
+  }
 }

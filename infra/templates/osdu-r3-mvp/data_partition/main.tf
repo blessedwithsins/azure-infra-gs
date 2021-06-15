@@ -74,8 +74,15 @@ provider "azurerm" {
 }
 
 // Hook-up kubectl Provider for Terraform
+
 provider "kubernetes" {
-  alias                  = "kubernetes-copy"
+/*
+   Adding an alias for a provider makes it optional, without explicitly adding an alias for this provider
+   terraform plan will fail as this provider is using an output (kube_config_block) from airflow module
+   which is only available after terraform apply
+*/
+
+  alias                  = "kubernetes"
   load_config_file       = false
   host                   = module.airflow.kube_config_block.0.host
   username               = module.airflow.kube_config_block.0.username
@@ -87,7 +94,13 @@ provider "kubernetes" {
 
 // Hook-up helm Provider for Terraform
 provider "helm" {
-  alias = "helm-copy"
+  /*
+   Adding an alias for a provider makes it optional, without explicitly adding an alias for this provider
+   terraform plan will fail as this provider is using output (kube_config_block) from airflow module
+   which is only available after terraform apply
+*/
+
+  alias = "helm"
   kubernetes {
     host                   = module.airflow.kube_config_block.0.host
     username               = module.airflow.kube_config_block.0.username
@@ -428,7 +441,7 @@ resource "azurerm_management_lock" "ingest_sa_lock" {
 
 module "airflow" {
   source = "./airflow"
-  count  = var.deploy_airflow ? 1 : 0
+  count  = var.feature_flag.deploy_airflow ? 1 : 0
 
   storage_account_name = module.storage_account.name
   storage_account_id   = module.storage_account.id
@@ -446,4 +459,5 @@ module "airflow" {
   remote_state_container           = var.remote_state_container
   resource_group_location          = var.resource_group_location
   ssh_public_key_file              = var.ssh_public_key_file
+  feature_flag                     = var.feature_flag
 }
