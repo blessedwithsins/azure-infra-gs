@@ -50,6 +50,7 @@ airflow:
   ingress:
     enabled: true
     web:
+      replicas: 5
       annotations:
         kubernetes.io/ingress.class: azure/application-gateway
         appgw.ingress.kubernetes.io/request-timeout: "300"
@@ -123,6 +124,7 @@ airflow:
   # Airflow - Worker Configs
   ###################################
   workers:
+    replicas: 10
     resources:
       requests:
         cpu: "1200m"
