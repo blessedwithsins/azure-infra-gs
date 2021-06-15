@@ -76,7 +76,7 @@ provider "azurerm" {
 // Hook-up kubectl Provider for Terraform
 
 provider "kubernetes" {
-/*
+  /*
    Adding an alias for a provider makes it optional, without explicitly adding an alias for this provider
    terraform plan will fail as this provider is using an output (kube_config_block) from airflow module
    which is only available after terraform apply
