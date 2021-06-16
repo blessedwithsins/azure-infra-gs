@@ -37,6 +37,8 @@ locals {
   storage_account_name    = "airflow-storage"
   storage_key_name        = "${local.storage_account_name}-key"
   storage_connection_name = "${local.storage_account_name}-connection"
+  system_storage_account_name = format("%s-storage", local.partition_id)
+  system_storage_key_name     = format("%s-key", local.storage_account_name)
 }
 
 resource "azurerm_key_vault_secret" "storage_name" {
@@ -57,7 +59,17 @@ resource "azurerm_key_vault_secret" "storage_connection" {
   key_vault_id = data.terraform_remote_state.central_resources.outputs.keyvault_id
 }
 
+resource "azurerm_key_vault_secret" "ingest_storage_name" {
+  name         = local.system_storage_account_name
+  value        = module.system_storage_account.name
+  key_vault_id = data.terraform_remote_state.central_resources.outputs.keyvault_id
+}
 
+resource "azurerm_key_vault_secret" "ingest_storage_key" {
+  name         = local.system_storage_key_name
+  value        = module.system_storage_account.primary_access_key
+  key_vault_id = data.terraform_remote_state.central_resources.outputs.keyvault_id
+}
 
 #-------------------------------
 # Network

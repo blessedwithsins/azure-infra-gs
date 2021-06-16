@@ -91,6 +91,25 @@ variable "storage_containers" {
   type        = list(string)
 }
 
+variable "system_storage_containers" {
+  description = "The list of storage containers names to create under system storage account. Names must be unique per storage account."
+  type        = list(string)
+}
+
+variable "blob_cors_rule" {
+  type = list(
+  object(
+  {
+    allowed_origins    = list(string)
+    allowed_methods    = list(string)
+    allowed_headers    = list(string)
+    exposed_headers    = list(string)
+    max_age_in_seconds = number
+  }))
+  default     = []
+  description = "List of CORS Rules to be applied on the Blob Service."
+}
+
 variable "storage_shares" {
   description = "The list of storage share names to create. Names must be unique per storage account."
   type        = list(string)

@@ -74,4 +74,14 @@ cosmos_sql_collections = [
   },
 ]
 
+blob_cors_rule = [
+  {
+    allowed_headers = ["*"]
+    allowed_origins = ["https://osdu-demo.contoso.org"]
+    allowed_methods = ["GET","HEAD","POST","PUT","DELETE"]
+    exposed_headers = ["*"]
+    max_age_in_seconds = 3600
+  }
+]
+
 */

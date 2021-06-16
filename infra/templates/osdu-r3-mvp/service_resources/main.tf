@@ -110,6 +110,7 @@ locals {
   retention_policy    = var.log_retention_days == 0 ? false : true
 
   storage_name = "${replace(local.base_name_21, "-", "")}config"
+  system_storage_name = "${replace(local.base_name_21, "-", "")}data"
 
   redis_cache_name = "${local.base_name}-cache"
   postgresql_name  = "${local.base_name}-pg"
@@ -248,6 +249,37 @@ resource "azurerm_role_assignment" "airflow_log_queue_processor_roles" {
   scope                = module.storage_account.id
 }
 
+module "system_storage_account" {
+  source = "../../../modules/providers/azure/storage-account"
+
+  name                = local.system_storage_name
+  resource_group_name = azurerm_resource_group.main.name
+  container_names     = var.system_storage_containers
+  kind                = "StorageV2"
+  replication_type    = var.storage_replication_type
+
+  resource_tags = var.resource_tags
+  blob_cors_rule = var.blob_cors_rule
+}
+
+// Add Contributor Role Access
+resource "azurerm_role_assignment" "system_storage_access" {
+  count = length(local.rbac_principals)
+
+  role_definition_name = local.role
+  principal_id         = local.rbac_principals[count.index]
+  scope                = module.system_storage_account.id
+}
+
+// Add Data Contributor Role to Principal
+resource "azurerm_role_assignment" "system_storage_data_contributor" {
+  count      = length(local.rbac_principals)
+  depends_on = [azurerm_role_assignment.system_storage_access]
+
+  role_definition_name = "Storage Blob Data Contributor"
+  principal_id         = local.rbac_principals[count.index]
+  scope                = module.system_storage_account.id
+}
 
 
 #-------------------------------

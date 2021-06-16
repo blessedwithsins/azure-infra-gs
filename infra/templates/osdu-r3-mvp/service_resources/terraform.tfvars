@@ -50,6 +50,11 @@ storage_replication_type = "LRS"
 storage_containers = [
   "azure-webjobs-hosts"
 ]
+
+system_storage_containers = [
+  "azure-webjobs-hosts"
+]
+
 storage_shares = [
   "unit",
   "crs",
