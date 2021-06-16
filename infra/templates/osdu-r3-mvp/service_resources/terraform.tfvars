@@ -52,7 +52,7 @@ storage_containers = [
 ]
 
 system_storage_containers = [
-  "azure-webjobs-hosts"
+  "opendes"
 ]
 
 storage_shares = [
