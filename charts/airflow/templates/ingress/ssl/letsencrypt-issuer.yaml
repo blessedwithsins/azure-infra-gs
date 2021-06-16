@@ -1,0 +1,18 @@
+{{- $isEnabled := .Values.airflow.isDataPartitionDeployment | default false -}}
+{{ if and $isEnabled (not .Values.airflow.ingress.web.tls.BYOCEnabled) }}
+apiVersion: cert-manager.io/v1
+kind: Issuer
+metadata:
+  name: letsencrypt-prod
+  namespace: istio-system
+spec:
+  acme:
+    email: admin@email.com
+    privateKeySecretRef:
+      name: letsencrypt-prod
+    server: https://acme-v02.api.letsencrypt.org/directory
+    solvers:
+    - http01:
+        ingress:
+          class: istio
+{{ end }}

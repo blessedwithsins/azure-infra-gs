@@ -1,0 +1,31 @@
+{{- $isEnabled := .Values.airflow.isDataPartitionDeployment | default false -}}
+{{ if and $isEnabled .Values.airflow.ingress.web.tls.BYOCEnabled }}
+apiVersion: secrets-store.csi.x-k8s.io/v1alpha1
+kind: SecretProviderClass
+metadata:
+  name: airflow-tls
+  namespace: istio-system
+spec:
+  provider: azure
+  secretObjects:
+  - secretName: {{ .Values.airflow.ingress.web.tls.secretName }}
+    type: kubernetes.io/tls
+    data: 
+    - objectName: istio-ssl-certificate
+      key: tls.key
+    - objectName: istio-ssl-certificate
+      key: tls.crt
+  parameters:
+    usePodIdentity: "true"
+    useVMManagedIdentity: "false"
+    userAssignedIdentityID: ""
+    resourceGroup: "{{ .Values.azure.resourcegroup }}"
+    keyvaultName: "{{ .Values.azure.keyvault }}"
+    subscriptionId: "{{ .Values.azure.subscription }}"
+    tenantId: "{{ .Values.azure.tenant }}"
+    objects: |
+      array:
+        - |
+          objectName: istio-ssl-certificate
+          objectType: secret
+{{ end }}
