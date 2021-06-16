@@ -92,6 +92,12 @@ cosmos_sql_collections = [
     partition_key_path    = "/id"
     partition_key_version = null
   },
+  {
+    name                  = "WorkflowRunV2"
+    database_name         = "osdu-system-db"
+    partition_key_path    = "/partitionKey"
+    partition_key_version = 2
+  },
 ]
 
 # Database Settings
