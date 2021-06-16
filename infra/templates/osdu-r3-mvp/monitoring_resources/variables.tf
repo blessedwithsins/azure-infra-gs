@@ -22,10 +22,16 @@ variable "dashboards" {
   type = object({
     default     = bool
     appinsights = bool
+    airflow_infra   = bool
+    airflow_service = bool
+    airflow_dags    = bool
   })
   default = {
     default     = true
     appinsights = true
+    airflow_infra   = true
+    airflow_service = true
+    airflow_dags    = true
   }
 }
 
