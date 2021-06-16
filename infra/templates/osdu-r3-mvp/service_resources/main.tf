@@ -109,7 +109,7 @@ locals {
   resource_group_name = format("%s-%s-%s-rg", var.prefix, local.workspace, random_string.workspace_scope.result)
   retention_policy    = var.log_retention_days == 0 ? false : true
 
-  storage_name = "${replace(local.base_name_21, "-", "")}config"
+  storage_name        = "${replace(local.base_name_21, "-", "")}config"
   system_storage_name = "${replace(local.base_name_21, "-", "")}data"
 
   redis_cache_name = "${local.base_name}-cache"
@@ -258,7 +258,7 @@ module "system_storage_account" {
   kind                = "StorageV2"
   replication_type    = var.storage_replication_type
 
-  resource_tags = var.resource_tags
+  resource_tags  = var.resource_tags
   blob_cors_rule = var.blob_cors_rule
 }
 

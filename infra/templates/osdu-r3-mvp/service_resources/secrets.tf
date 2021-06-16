@@ -34,9 +34,9 @@ resource "azurerm_key_vault_secret" "base_name_sr" {
 # Storage
 #-------------------------------
 locals {
-  storage_account_name    = "airflow-storage"
-  storage_key_name        = "${local.storage_account_name}-key"
-  storage_connection_name = "${local.storage_account_name}-connection"
+  storage_account_name        = "airflow-storage"
+  storage_key_name            = "${local.storage_account_name}-key"
+  storage_connection_name     = "${local.storage_account_name}-connection"
   system_storage_account_name = format("%s-storage", local.partition_id)
   system_storage_key_name     = format("%s-key", local.storage_account_name)
 }
