@@ -83,7 +83,7 @@ locals {
   retention_policy    = var.log_retention_days == 0 ? false : true
 
   kv_name                 = "${local.base_name_21}-kv"
-  kv_name_dp              =  length(local.base_name_21) < 19 ? "${local.base_name_21}-kvdp" : "${substr(local.base_name_21, 0, 19)}-kvdp"
+  kv_name_dp              = length(local.base_name_21) < 19 ? "${local.base_name_21}-kvdp" : "${substr(local.base_name_21, 0, 19)}-kvdp"
   storage_name            = "${replace(local.base_name_21, "-", "")}tbl"
   graphdb_name            = "${local.base_name}-graph"
   container_registry_name = "${replace(local.base_name_21, "-", "")}cr"
