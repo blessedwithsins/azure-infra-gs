@@ -83,6 +83,7 @@ locals {
   retention_policy    = var.log_retention_days == 0 ? false : true
 
   kv_name                 = "${local.base_name_21}-kv"
+  kv_name_dp              =  length(local.base_name_21) < 19 ? "${local.base_name_21}-kvdp" : "${substr(local.base_name_21, 0, 19)}-kvdp"
   storage_name            = "${replace(local.base_name_21, "-", "")}tbl"
   graphdb_name            = "${local.base_name}-graph"
   container_registry_name = "${replace(local.base_name_21, "-", "")}cr"
@@ -100,6 +101,12 @@ locals {
     azurerm_user_assigned_identity.osduidentity.principal_id,
     module.service_principal.id
   ]
+
+  rbac_principals_dp = [
+    azurerm_user_assigned_identity.osduidentity.principal_id,
+    module.service_principal.id
+  ]
+
 }
 
 
@@ -146,6 +153,19 @@ module "keyvault" {
   secrets = {
     app-dev-sp-tenant-id = data.azurerm_client_config.current.tenant_id
   }
+
+  resource_tags = var.resource_tags
+}
+
+#-------------------------------
+# Key Vault for Storing App insights Instrumentation Key
+# required by Data Partition resource
+#-------------------------------
+module "keyvaultdp" {
+  source = "../../../modules/providers/azure/keyvault"
+
+  keyvault_name       = local.kv_name_dp
+  resource_group_name = azurerm_resource_group.main.name
 
   resource_tags = var.resource_tags
 }

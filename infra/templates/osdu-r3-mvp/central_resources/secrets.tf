@@ -116,7 +116,11 @@ resource "azurerm_key_vault_secret" "insights" {
   key_vault_id = module.keyvault.keyvault_id
 }
 
-
+resource "azurerm_key_vault_secret" "insights_dp" {
+  name         = "appinsights-key"
+  value        = module.app_insights.app_insights_instrumentation_key
+  key_vault_id = module.keyvaultdp.keyvault_id
+}
 
 #-------------------------------
 # Log Analytics
