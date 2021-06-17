@@ -24,10 +24,13 @@ parameters:
   checkoutRepo: self
   chartModificationScript: ""
   extractedChartFolder: "templates"
+  installThroughHelm: false
+  baseNameRG: ""
 
 steps:
   - checkout: FluxRepo
     persistCredentials: true
+    condition: eq(${{ parameters.installThroughHelm }}, false)
   - checkout: ${{ parameters.checkoutRepo }}
     persistCredentials: true
   - task: "HelmInstaller@1"
@@ -77,6 +80,7 @@ steps:
       valuesFile: ${{ parameters.valuesFile }}
       generationPath: ${{parameters.generationPath}}
       chartModificationScript: ${{parameters.chartModificationScript}}
+    condition: eq(${{ parameters.installThroughHelm }}, false)
   - template: gitops.yml
     parameters:
       serviceName: ${{parameters.serviceName}}
@@ -86,3 +90,11 @@ steps:
       hldRegPath: ${{parameters.hldRegPath}}
       skipDeploy: ${{parameters.skipDeploy}}
       extractedChartFolder: ${{parameters.extractedChartFolder}}
+    condition: eq(${{ parameters.installThroughHelm }}, false)
+  - template: helm-install.yml
+    parameters:
+      serviceName: ${{parameters.serviceName}}
+      chartPath: ${{ parameters.chartPath }}
+      valuesFile: ${{ parameters.valuesFile }}
+      baseNameRG: ${{ parameters.baseNameRG }}
+    condition: eq(${{ parameters.installThroughHelm }}, true)

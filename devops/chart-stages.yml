@@ -20,11 +20,13 @@ parameters:
   hldRegPath: "providers/azure/hld-registry"
   checkoutRepo: self
   extractedChartFolder: "templates"
+  installThroughHelm: false
+  baseNameRG: $(base-name-sr)
 
 stages:
   - ${{ each provider in parameters.providers }}:
     - ${{ each environment in provider.environments }}:
-      - stage: 'Deploy_${{ provider.name }}_${{ environment }}'
+      - stage: 'Deploy_${{ provider.name }}_${{ environment }}_${{ parameters.serviceName }}'
 
         variables:
           - group: '${{ provider.name }} Target Env Secrets - ${{ environment }}'
@@ -54,6 +56,8 @@ stages:
                     checkoutRepo: ${{ parameters.checkoutRepo }}
                     chartModificationScript: ${{ parameters.chartModificationScript }}
                     extractedChartFolder: ${{ parameters.extractedChartFolder }}
+                    installThroughHelm: ${{ parameters.installThroughHelm }}
+                    baseNameRG: ${{ parameters.baseNameRG }}
 
                 - template: tasks/flux-chart-wait.yml
                   parameters:
