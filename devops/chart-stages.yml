@@ -21,7 +21,8 @@ parameters:
   checkoutRepo: self
   extractedChartFolder: "templates"
   installThroughHelm: false
-  baseNameRG: $(base-name-sr)
+  isDPDeployment: false
+  DPName: ""
 
 stages:
   - ${{ each provider in parameters.providers }}:
@@ -31,6 +32,9 @@ stages:
         variables:
           - group: '${{ provider.name }} Target Env Secrets - ${{ environment }}'
           - group: '${{ provider.name }} Target Env - ${{ environment }}'
+          - ${{ if eq(parameters.isDPDeployment, 'true') }}:
+            - group: '${{ provider.name }} Target Env Data Partition ${{ provider.DPName }} - ${{ environment }}'
+            - group: '${{ provider.name }} Target Env Data Partition ${{ provider.DPName }} Secrets - ${{ environment }}'
 
 
         jobs:
@@ -57,7 +61,8 @@ stages:
                     chartModificationScript: ${{ parameters.chartModificationScript }}
                     extractedChartFolder: ${{ parameters.extractedChartFolder }}
                     installThroughHelm: ${{ parameters.installThroughHelm }}
-                    baseNameRG: ${{ parameters.baseNameRG }}
+                    ${{ if eq(parameters.isDPDeployment, 'true') }}:
+                      baseNameRG: $(base-name-dp)
 
                 - template: tasks/flux-chart-wait.yml
                   parameters:

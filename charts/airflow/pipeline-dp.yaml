@@ -75,7 +75,8 @@ stages:
       skipDeploy: ${{ variables.SKIP_DEPLOY }}
       skipCheck: true
       installThroughHelm: true
-      baseNameRG: $(base-name-dp)
+      isDPDeployment: true
+      DPName: "dp2"
       providers:
         - name: Azure
           environments: ["dev", "glab"]
@@ -88,7 +89,8 @@ stages:
       skipDeploy: ${{ variables.SKIP_DEPLOY }}
       skipCheck: true
       installThroughHelm: true
-      baseNameRG: $(base-name-dp)
+      isDPDeployment: true
+      DPName: "dp2"
       providers:
         - name: Azure
           environments: ["dev", "glab"]

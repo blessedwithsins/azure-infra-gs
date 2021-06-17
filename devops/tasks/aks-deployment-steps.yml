@@ -25,7 +25,7 @@ parameters:
   chartModificationScript: ""
   extractedChartFolder: "templates"
   installThroughHelm: false
-  baseNameRG: ""
+  baseNameRG: $(base-name-sr)
 
 steps:
   - ${{ if eq(parameters.installThroughHelm, 'false') }}:
