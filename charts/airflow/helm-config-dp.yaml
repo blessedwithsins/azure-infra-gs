@@ -2,12 +2,12 @@
 # Specify the azure environment specific values
 #
 azure:
-  tenant: #{dp-tenant-id}#
-  subscription: #{dp-subscription-id}#
-  resourcegroup: #{base-name-dp}#
-  identity: #{base-name-dp}#
-  identity_id: #{osdu-identity-id-dp}#
-  keyvault: #{ENV_DP_VAULT}#
+  tenant: #{data-partition-tenant-id}#
+  subscription: #{data-partition-subscription-id}#
+  resourcegroup: #{base-name-dp}#-rg
+  identity: #{base-name-dp}#-osdu-identity
+  identity_id: #{management-identity-id}#
+  keyvault: #{base-name-dp}#-kv
 
 
 
