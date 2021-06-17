@@ -28,13 +28,13 @@ parameters:
   baseNameRG: ""
 
 steps:
-  - checkout: FluxRepo
-    persistCredentials: true
-    condition: eq(${{ parameters.installThroughHelm }}, false)
+  - ${{ if eq(parameters.installThroughHelm, 'false') }}:
+    - checkout: FluxRepo
+      persistCredentials: true
   - checkout: ${{ parameters.checkoutRepo }}
     persistCredentials: true
   - task: "HelmInstaller@1"
-    displayName: 'Helm Install'
+    displayName: 'Download Helm'
     inputs:
       helmVersionToInstall: 3.3.0
   - task: Bash@3
@@ -73,28 +73,27 @@ steps:
       targetFiles: |
         $(Build.SourcesDirectory)/$(HELM_SOURCE)/${{parameters.valuesFile}} => $(Build.SourcesDirectory)/$(HELM_SOURCE)/${{parameters.chartPath}}/values.yaml
     condition: ne(variables['HELM_SOURCE'], '')
-- ${{ if eq(parameters.installThroughHelm, false) }}:
-  - template: helm-template.yml
-    parameters:
-      serviceName: ${{parameters.serviceName}}
-      chartPath: ${{ parameters.chartPath }}
-      valuesFile: ${{ parameters.valuesFile }}
-      generationPath: ${{parameters.generationPath}}
-      chartModificationScript: ${{parameters.chartModificationScript}}
-- ${{ if eq(parameters.installThroughHelm, false) }}:
-  - template: gitops.yml
-    parameters:
-      serviceName: ${{parameters.serviceName}}
-      chartPath: ${{ parameters.chartPath }}
-      generationPath: ${{parameters.generationPath}}
-      branchName: ${{parameters.environment}}
-      hldRegPath: ${{parameters.hldRegPath}}
-      skipDeploy: ${{parameters.skipDeploy}}
-      extractedChartFolder: ${{parameters.extractedChartFolder}}
-- ${{ if eq(parameters.installThroughHelm, true) }}:
-  - template: helm-install.yml
-    parameters:
-      serviceName: ${{parameters.serviceName}}
-      chartPath: ${{ parameters.chartPath }}
-      valuesFile: ${{ parameters.valuesFile }}
-      baseNameRG: ${{ parameters.baseNameRG }}
+  - ${{ if eq(parameters.installThroughHelm, 'false') }}:
+    - template: helm-template.yml
+      parameters:
+        serviceName: ${{parameters.serviceName}}
+        chartPath: ${{ parameters.chartPath }}
+        valuesFile: ${{ parameters.valuesFile }}
+        generationPath: ${{parameters.generationPath}}
+        chartModificationScript: ${{parameters.chartModificationScript}}
+    - template: gitops.yml
+      parameters:
+        serviceName: ${{parameters.serviceName}}
+        chartPath: ${{ parameters.chartPath }}
+        generationPath: ${{parameters.generationPath}}
+        branchName: ${{parameters.environment}}
+        hldRegPath: ${{parameters.hldRegPath}}
+        skipDeploy: ${{parameters.skipDeploy}}
+        extractedChartFolder: ${{parameters.extractedChartFolder}}
+  - ${{ if eq(parameters.installThroughHelm, 'true') }}:
+    - template: helm-install.yml
+      parameters:
+        serviceName: ${{parameters.serviceName}}
+        chartPath: ${{ parameters.chartPath }}
+        valuesFile: ${{ parameters.valuesFile }}
+        baseNameRG: ${{ parameters.baseNameRG }}
