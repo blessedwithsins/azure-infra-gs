@@ -73,6 +73,7 @@ steps:
       targetFiles: |
         $(Build.SourcesDirectory)/$(HELM_SOURCE)/${{parameters.valuesFile}} => $(Build.SourcesDirectory)/$(HELM_SOURCE)/${{parameters.chartPath}}/values.yaml
     condition: ne(variables['HELM_SOURCE'], '')
+- ${{ if eq(parameters.installThroughHelm, false) }}:
   - template: helm-template.yml
     parameters:
       serviceName: ${{parameters.serviceName}}
@@ -80,7 +81,7 @@ steps:
       valuesFile: ${{ parameters.valuesFile }}
       generationPath: ${{parameters.generationPath}}
       chartModificationScript: ${{parameters.chartModificationScript}}
-    condition: eq(${{ parameters.installThroughHelm }}, false)
+- ${{ if eq(parameters.installThroughHelm, false) }}:
   - template: gitops.yml
     parameters:
       serviceName: ${{parameters.serviceName}}
@@ -90,11 +91,10 @@ steps:
       hldRegPath: ${{parameters.hldRegPath}}
       skipDeploy: ${{parameters.skipDeploy}}
       extractedChartFolder: ${{parameters.extractedChartFolder}}
-    condition: eq(${{ parameters.installThroughHelm }}, false)
+- ${{ if eq(parameters.installThroughHelm, true) }}:
   - template: helm-install.yml
     parameters:
       serviceName: ${{parameters.serviceName}}
       chartPath: ${{ parameters.chartPath }}
       valuesFile: ${{ parameters.valuesFile }}
       baseNameRG: ${{ parameters.baseNameRG }}
-    condition: eq(${{ parameters.installThroughHelm }}, true)
