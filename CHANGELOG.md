@@ -8,7 +8,7 @@ __Service Onboarded__
 - [Issue 95 - Policy Service](https://community.opengroup.org/osdu/platform/deployment-and-operations/infra-azure-provisioning/-/issues/95)
 
 __Feature Changes__
-- [Feature 142 - Added support for array of object search](https://community.opengroup.org/osdu/platform/system/search-service/-/merge_requests/142)
+- [Feature 142 - Added support for array of object search](https://community.opengroup.org/osdu/platform/system/indexer-service/-/merge_requests/142)
 - [Feature 121 - Added support for nested search](https://community.opengroup.org/osdu/platform/system/search-service/-/merge_requests/121)
 
 __Infra Changes__

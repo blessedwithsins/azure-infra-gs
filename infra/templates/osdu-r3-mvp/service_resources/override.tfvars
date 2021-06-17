@@ -83,5 +83,4 @@ blob_cors_rule = [
     max_age_in_seconds = 3600
   }
 ]
-
 */

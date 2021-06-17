@@ -96,6 +96,7 @@ locals {
 
   eg_sbtopic_subscriber               = "servicebusrecordstopic"
   eg_sbtopic_schema_subscriber        = "servicebusschemachangedtopic"
+  eg_sbtopic_legaltags_subscriber     = "servicebuslegaltagschangedtopic"
   eventgrid_name                      = "${local.base_name_21}-grid"
   eventgrid_records_topic             = format("%s-recordstopic", local.eventgrid_name)
   eventgrid_schema_notification_topic = format("%s-schemachangedtopic", local.eventgrid_name)
@@ -348,6 +349,14 @@ resource "azurerm_eventgrid_event_subscription" "service_bus_topic_subscriber" {
   depends_on = [module.service_bus.id]
 
   service_bus_topic_endpoint_id = lookup(module.service_bus.topicsmap, "recordstopiceg")
+}
+
+// Add a Service Bus Topic subscriber that act as EventHandler for legaltagschangedtopic
+resource "azurerm_eventgrid_event_subscription" "service_bus_topic_subscriber_legaltags" {
+  name                          = local.eg_sbtopic_legaltags_subscriber
+  scope                         = lookup(module.event_grid.topics, local.eventgrid_legaltags_topic)
+  depends_on                    = [module.service_bus.id]
+  service_bus_topic_endpoint_id = lookup(module.service_bus.topicsmap, "legaltagschangedtopiceg")
 }
 
 // Add EventGrid EventSubscription Contributor access to Principal For Schema
