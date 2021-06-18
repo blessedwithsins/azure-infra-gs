@@ -23,6 +23,7 @@ parameters:
   installThroughHelm: false
   isDPDeployment: false
   DPName: ""
+  namespace: ""
   addDPNameToService: false
 
 stages:
@@ -67,6 +68,7 @@ stages:
                     installThroughHelm: ${{ parameters.installThroughHelm }}
                     ${{ if eq(parameters.isDPDeployment, 'true') }}:
                       baseNameRG: $(base-name-dp)
+                    namespace: ${{ parameters.namespace }}
 
                 - template: tasks/flux-chart-wait.yml
                   parameters:
