@@ -53,7 +53,7 @@ steps:
 
         echo "Installing through helm"
         
-        if [[ "$(NAMESPACE)" != "" ]]
+        if [[ "$NAMESPACE" != "" ]]
         then
             helm upgrade $SERVICE_NAME $CHART_PATH -f $(Agent.BuildDirectory)/$HELM_SOURCE_NAME/${{parameters.chartPath}}/values.yaml --namespace $NAMESPACE --install --create-namespace --wait --timeout 10m0s
         else

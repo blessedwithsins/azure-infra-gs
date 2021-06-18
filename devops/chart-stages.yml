@@ -50,7 +50,10 @@ stages:
 
                 - template: tasks/aks-deployment-steps.yml
                   parameters:
-                    serviceName: ${{ parameters.serviceName }}
+                    ${{ if eq(parameters.isDPDeployment, 'true') }}:
+                      serviceName: "${{ parameters.DPName }}-${{ parameters.serviceName }}"
+                    ${{ if eq(parameters.isDPDeployment, 'false') }}:
+                      serviceName: ${{ parameters.serviceName }}
                     providerName: ${{ provider.name }}
                     environment: ${{ environment }}
                     chartPath: ${{ parameters.chartPath }}
