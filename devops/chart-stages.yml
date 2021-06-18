@@ -23,6 +23,7 @@ parameters:
   installThroughHelm: false
   isDPDeployment: false
   DPName: ""
+  addDPNameToService: false
 
 stages:
   - ${{ each provider in parameters.providers }}:
@@ -50,9 +51,9 @@ stages:
 
                 - template: tasks/aks-deployment-steps.yml
                   parameters:
-                    ${{ if eq(parameters.isDPDeployment, 'true') }}:
+                    ${{ if and(eq(parameters.isDPDeployment, 'true'), eq(parameters.addDPNameToService, 'true')) }}:
                       serviceName: "${{ parameters.DPName }}-${{ parameters.serviceName }}"
-                    ${{ if eq(parameters.isDPDeployment, 'false') }}:
+                    ${{ if or(eq(parameters.isDPDeployment, 'false'), eq(parameters.addDPNameToService, 'false')) }}:
                       serviceName: ${{ parameters.serviceName }}
                     providerName: ${{ provider.name }}
                     environment: ${{ environment }}

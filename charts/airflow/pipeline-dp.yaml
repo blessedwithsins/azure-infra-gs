@@ -77,6 +77,7 @@ stages:
       installThroughHelm: true
       isDPDeployment: true
       DPName: "dp2"
+      addDPNameToService: false
       providers:
         - name: Azure
           environments: ["dev", "glab"]
@@ -92,6 +93,7 @@ stages:
       namespace: osdu
       isDPDeployment: true
       DPName: "dp2"
+      addDPNameToService: true
       providers:
         - name: Azure
           environments: ["dev", "glab"]
