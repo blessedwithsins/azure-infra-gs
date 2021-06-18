@@ -33,8 +33,8 @@ stages:
           - group: '${{ provider.name }} Target Env Secrets - ${{ environment }}'
           - group: '${{ provider.name }} Target Env - ${{ environment }}'
           - ${{ if eq(parameters.isDPDeployment, 'true') }}:
-            - group: '${{ provider.name }} Target Env Data Partition ${{ provider.DPName }} - ${{ environment }}'
-            - group: '${{ provider.name }} Target Env Data Partition ${{ provider.DPName }} Secrets - ${{ environment }}'
+            - group: '${{ provider.name }} Target Env Data Partition ${{ parameters.DPName }} - ${{ environment }}'
+            - group: '${{ provider.name }} Target Env Data Partition ${{ parameters.DPName }} Secrets - ${{ environment }}'
 
 
         jobs:

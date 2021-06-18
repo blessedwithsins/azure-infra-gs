@@ -89,6 +89,7 @@ stages:
       skipDeploy: ${{ variables.SKIP_DEPLOY }}
       skipCheck: true
       installThroughHelm: true
+      namespace: osdu
       isDPDeployment: true
       DPName: "dp2"
       providers:

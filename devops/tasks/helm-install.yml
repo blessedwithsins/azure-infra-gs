@@ -21,6 +21,7 @@ steps:
       BASE_NAME_RG: ${{parameters.baseNameRG}}
       VALUES_FILE: ${{parameters.valuesFile}}
       CHART_PATH: ${{parameters.chartPath}}
+      NAMESPACE: ${{parameters.namespace}}
     inputs:
       azureSubscription: '$(SERVICE_CONNECTION_NAME)'
       addSpnToEnvironment: true
@@ -32,7 +33,8 @@ steps:
         echo "Logging in to AKS"
         echo "------------------------------------"
         sudo az aks install-cli
-        az aks get-credentials -g $BASE_NAME_RG-rg -n $BASE_NAME_RG-aks
+        AKS_NAME=$(az aks list --resource-group $BASE_NAME_RG-rg --query '[].{name:name}' -otsv)
+        az aks get-credentials -g $BASE_NAME_RG-rg -n $AKS_NAME
 
         echo "Helm Source: $(HELM_SOURCE)"
         echo "Build Trigger Repo Name: $(Build.Repository.Name)"
@@ -45,9 +47,15 @@ steps:
         fi
 
         echo "Helm Source Name: $HELM_SOURCE_NAME"
-        cd $(Build.SourcesDirectory)/$HELM_SOURCE_NAME
+        cd $(Agent.BuildDirectory)/$HELM_SOURCE_NAME
 
-        cat $(Build.SourcesDirectory)/$HELM_SOURCE_NAME/${{parameters.chartPath}}/values.yaml
+        cat $(Agent.BuildDirectory)/$HELM_SOURCE_NAME/${{parameters.chartPath}}/values.yaml
 
         echo "Installing through helm"
-        helm upgrade $SERVICE_NAME $CHART_PATH -f $(Build.SourcesDirectory)/$HELM_SOURCE_NAME/${{parameters.chartPath}}/values.yaml --install --wait --timeout 10m0s
+        
+        if [[ "$(NAMESPACE)" != "" ]]
+        then
+            helm upgrade $SERVICE_NAME $CHART_PATH -f $(Agent.BuildDirectory)/$HELM_SOURCE_NAME/${{parameters.chartPath}}/values.yaml --namespace $NAMESPACE --install --create-namespace --wait --timeout 10m0s
+        else
+            helm upgrade $SERVICE_NAME $CHART_PATH -f $(Agent.BuildDirectory)/$HELM_SOURCE_NAME/${{parameters.chartPath}}/values.yaml --install --create-namespace --wait --timeout 10m0s
+        fi
