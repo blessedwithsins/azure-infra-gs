@@ -75,7 +75,7 @@
 							},
 							{
 								"name": "Query",
-								"value": "customMetrics\n| where name has \"dag_processing.last_runtime\" \n| parse kind=regex name with @\"([0-9a-zA-Z_])*\\.\" dataPartitionId @\"\\.dag_processing\\.last_runtime\\.([0-9a-zA-Z_])*\"\n| parse kind=regex name with @\"([0-9a-zA-Z_\\.])*\\.dag_processing\\.last_runtime\\.\" dagName\n| summarize DagProcessingTime = max(value) by bin(timestamp, 1m), MetricName = \"dag_processing.last_runtime\", dataPartitionId, dagName\n| render timechart \n",
+								"value": "customMetrics\n| where name has \"dag_processing.last_runtime\" \n| parse kind=regex name with @\"([0-9a-zA-Z_])*\\.\" dataPartitionId @\"\\.dag_processing\\.last_runtime\\.([0-9a-zA-Z_])*\"\n| parse kind=regex name with @\"([0-9a-zA-Z_\\.])*\\.dag_processing\\.last_runtime\\.\" dagName\n| summarize DagProcessingTime = max(value) by bin(timestamp, 10m), MetricName = \"dag_processing.last_runtime\", dataPartitionId, dagName\n| render timechart \n",
 								"isOptional": true
 							},
 							{
@@ -138,7 +138,7 @@
 						"type": "Extension/Microsoft_OperationsManagementSuite_Workspace/PartType/LogsDashboardPart",
 						"settings": {
 							"content": {
-								"Query": "customMetrics\n| where name has \"dag_processing.last_runtime\" \n| parse kind=regex name with @\"([0-9a-zA-Z_])*\\.\" partitionId @\"\\.dag_processing\\.last_runtime\\.([0-9a-zA-Z_])*\"\n| extend dataPartitionId = case(partitionId == \"\", \"sr\",\n                       partitionId)\n| parse kind=regex name with @\"([0-9a-zA-Z_\\.])*\\.dag_processing\\.last_runtime\\.\" dagName\n| summarize DagProcessingTime = max(value) by bin(timestamp, 1m), MetricName = \"dag_processing.last_runtime\", dataPartitionId, dagName\n| render timechart \n\n",
+								"Query": "customMetrics\n| where name has \"dag_processing.last_runtime\" \n| parse kind=regex name with @\"([0-9a-zA-Z_])*\\.\" partitionId @\"\\.dag_processing\\.last_runtime\\.([0-9a-zA-Z_])*\"\n| extend dataPartitionId = case(partitionId == \"\", \"sr\",\n                       partitionId)\n| parse kind=regex name with @\"([0-9a-zA-Z_\\.])*\\.dag_processing\\.last_runtime\\.\" dagName\n| summarize DagProcessingTime = max(value) by bin(timestamp, 10m), MetricName = \"dag_processing.last_runtime\", dataPartitionId, dagName\n| render timechart \n\n",
 								"PartTitle": "Time taken for processing Dag File"
 							}
 						},
@@ -199,7 +199,7 @@
 							},
 							{
 								"name": "Query",
-								"value": "customMetrics\n| where name has \"dagrun.duration.success\" or name has \"dagrun.duration.failed\"\n| parse kind=regex name with @\"([0-9a-zA-Z_])*\\.\" dataPartitionId @\"\\.dagrun\\.duration\\.([0-9a-zA-Z_\\.])*\"\n| parse kind=regex name with @\"([0-9a-zA-Z_])*\\.dagrun\\.duration\\.([0-9a-zA-Z_])*\\.\" dagName\n| extend duration = value/1000\n| summarize DagrunTime = max(duration) by bin(timestamp, 1m), MetricName = \"dagrun.duration\", dataPartitionId, dagName\n| render timechart \n\n",
+								"value": "customMetrics\n| where name has \"dagrun.duration.success\" or name has \"dagrun.duration.failed\"\n| parse kind=regex name with @\"([0-9a-zA-Z_])*\\.\" dataPartitionId @\"\\.dagrun\\.duration\\.([0-9a-zA-Z_\\.])*\"\n| parse kind=regex name with @\"([0-9a-zA-Z_])*\\.dagrun\\.duration\\.([0-9a-zA-Z_])*\\.\" dagName\n| extend duration = value/1000\n| summarize DagrunTime = max(duration) by bin(timestamp, 10m), MetricName = \"dagrun.duration\", dataPartitionId, dagName\n| render timechart \n\n",
 								"isOptional": true
 							},
 							{
@@ -262,7 +262,7 @@
 						"type": "Extension/Microsoft_OperationsManagementSuite_Workspace/PartType/LogsDashboardPart",
 						"settings": {
 							"content": {
-								"Query": "customMetrics\n| where name has \"dagrun.duration.success\" or name has \"dagrun.duration.failed\"\n| parse kind=regex name with @\"([0-9a-zA-Z_])*\\.\" partitionId @\"\\.dagrun\\.duration\\.([0-9a-zA-Z_\\.])*\"\n| extend dataPartitionId = case(partitionId == \"\", \"sr\",\n                       partitionId)\n| parse kind=regex name with @\"([0-9a-zA-Z_])*\\.dagrun\\.duration\\.([0-9a-zA-Z_])*\\.\" dagName\n| extend duration = value/1000\n| summarize DagrunTime = max(duration) by bin(timestamp, 1m), MetricName = \"dagrun.duration\", dataPartitionId, dagName\n| render timechart \n\n",
+								"Query": "customMetrics\n| where name has \"dagrun.duration.success\" or name has \"dagrun.duration.failed\"\n| parse kind=regex name with @\"([0-9a-zA-Z_])*\\.\" partitionId @\"\\.dagrun\\.duration\\.([0-9a-zA-Z_\\.])*\"\n| extend dataPartitionId = case(partitionId == \"\", \"sr\",\n                       partitionId)\n| parse kind=regex name with @\"([0-9a-zA-Z_])*\\.dagrun\\.duration\\.([0-9a-zA-Z_])*\\.\" dagName\n| extend duration = value/1000\n| summarize DagrunTime = max(duration) by bin(timestamp, 10m), MetricName = \"dagrun.duration\", dataPartitionId, dagName\n| render timechart \n\n",
 								"ControlType": "FrameControlChart",
 								"PartTitle": "Dagrun Duration"
 							}
@@ -324,7 +324,7 @@
 							},
 							{
 								"name": "Query",
-								"value": "customMetrics\n| where name matches regex @\"dag\\.([0-9a-zA-Z_])*\\.([0-9a-zA-Z_])*\\.duration\\z\" \n| parse kind=regex name with @\"([0-9a-zA-Z_])*\\.\" dataPartitionId @\"\\.dag\\.([0-9a-zA-Z_\\.])*\\.duration\"\n| parse kind=regex name with @\"([0-9a-zA-Z_])*\\.dag\\.\" dagIdTaskId @\"\\.duration\"\n| extend duration = value/1000, dagName = split(dagIdTaskId,\".\")[0]\n| summarize TaskRunDuration = max(duration) by bin(timestamp, 1m), MetricName = \"TaskRun Duration\", tostring(dagName), dataPartitionId\n| render timechart \n\n",
+								"value": "customMetrics\n| where name matches regex @\"dag\\.([0-9a-zA-Z_])*\\.([0-9a-zA-Z_])*\\.duration\\z\" \n| parse kind=regex name with @\"([0-9a-zA-Z_])*\\.\" dataPartitionId @\"\\.dag\\.([0-9a-zA-Z_\\.])*\\.duration\"\n| parse kind=regex name with @\"([0-9a-zA-Z_])*\\.dag\\.\" dagIdTaskId @\"\\.duration\"\n| extend duration = value/1000, dagName = split(dagIdTaskId,\".\")[0]\n| summarize TaskRunDuration = max(duration) by bin(timestamp, 10m), MetricName = \"TaskRun Duration\", tostring(dagName), dataPartitionId\n| render timechart \n\n",
 								"isOptional": true
 							},
 							{
@@ -387,7 +387,7 @@
 						"type": "Extension/Microsoft_OperationsManagementSuite_Workspace/PartType/LogsDashboardPart",
 						"settings": {
 							"content": {
-								"Query": "customMetrics\n| where name matches regex @\"dag\\.([0-9a-zA-Z_])*\\.([0-9a-zA-Z_])*\\.duration\\z\" \n| parse kind=regex name with @\"([0-9a-zA-Z_])*\\.\" partitionId @\"\\.dag\\.([0-9a-zA-Z_\\.])*\\.duration\"\n| extend dataPartitionId = case(partitionId == \"\", \"sr\",\n                       partitionId)\n| parse kind=regex name with @\"([0-9a-zA-Z_])*\\.dag\\.\" dagIdTaskId @\"\\.duration\"\n| extend duration = value/1000, dagName = split(dagIdTaskId,\".\")[0], taskId = split(dagIdTaskId,\".\")[1]\n| summarize TaskRunDuration = max(duration) by bin(timestamp, 1m), MetricName = \"TaskRun Duration\", tostring(dagName), dataPartitionId, tostring(taskId)\n| render timechart \n\n",
+								"Query": "customMetrics\n| where name matches regex @\"dag\\.([0-9a-zA-Z_])*\\.([0-9a-zA-Z_])*\\.duration\\z\" \n| parse kind=regex name with @\"([0-9a-zA-Z_])*\\.\" partitionId @\"\\.dag\\.([0-9a-zA-Z_\\.])*\\.duration\"\n| extend dataPartitionId = case(partitionId == \"\", \"sr\",\n                       partitionId)\n| parse kind=regex name with @\"([0-9a-zA-Z_])*\\.dag\\.\" dagIdTaskId @\"\\.duration\"\n| extend duration = value/1000, dagName = split(dagIdTaskId,\".\")[0], taskId = split(dagIdTaskId,\".\")[1]\n| summarize TaskRunDuration = max(duration) by bin(timestamp, 10m), MetricName = \"TaskRun Duration\", tostring(dagName), dataPartitionId, tostring(taskId)\n| render timechart \n\n",
 								"ControlType": "FrameControlChart",
 								"PartTitle": "TaskRun Duration"
 							}

@@ -154,8 +154,8 @@ resource "azurerm_dashboard" "airflow_infra_dashboard" {
   tags                = var.resource_tags
 
   dashboard_properties = templatefile("${local.template_path}/airflow-infra.tpl", {
-    subscriptionId       = data.azurerm_client_config.current.subscription_id
-    centralGroupPrefix   = local.central_group_prefix
+    subscriptionId     = data.azurerm_client_config.current.subscription_id
+    centralGroupPrefix = local.central_group_prefix
   })
 }
 
@@ -168,8 +168,8 @@ resource "azurerm_dashboard" "airflow_service_dashboard" {
   tags                = var.resource_tags
 
   dashboard_properties = templatefile("${local.template_path}/airflow-service.tpl", {
-    subscriptionId       = data.azurerm_client_config.current.subscription_id
-    centralGroupPrefix   = local.central_group_prefix
+    subscriptionId     = data.azurerm_client_config.current.subscription_id
+    centralGroupPrefix = local.central_group_prefix
   })
 }
 
@@ -182,8 +182,8 @@ resource "azurerm_dashboard" "airflow_dags_dashboard" {
   tags                = var.resource_tags
 
   dashboard_properties = templatefile("${local.template_path}/airflow-dags.tpl", {
-    subscriptionId       = data.azurerm_client_config.current.subscription_id
-    centralGroupPrefix   = local.central_group_prefix
+    subscriptionId     = data.azurerm_client_config.current.subscription_id
+    centralGroupPrefix = local.central_group_prefix
   })
 }
 

@@ -16,8 +16,8 @@ prefix      = "osdu-mvp"
 tenant_name = "azureglobal1"
 
 dashboards = {
-  default     = true
-  appinsights = true
+  default         = true
+  appinsights     = true
   airflow_infra   = true
   airflow_service = true
   airflow_dags    = true
