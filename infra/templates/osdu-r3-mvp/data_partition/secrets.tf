@@ -56,6 +56,11 @@ locals {
   eventgrid_schema_notification_topic_endpoint = format("https://%s.%s-1.eventgrid.azure.net/api/events", local.eventgrid_schema_notification_topic, var.resource_group_location)
   encryption_key_identifier_name               = format("%s-encryption-key-identifier", var.data_partition_name)
   event_grid_resourcegroup_name                = format("%s-eventgrid-resourcegroup", var.data_partition_name)
+  eventgrid_gsm_topic_key_name                 = format("%s-eventgrid-statuschangedtopic-accesskey", var.data_partition_name)
+  eventgrid_gsm_topic_name                     = format("%s-statuschangedtopic", local.eventgrid_domain_name)
+  eventgrid_gsm_topic_endpoint                 = format("https://%s.%s-1.eventgrid.azure.net/api/events", local.eventgrid_gsm_topic, var.resource_group_location)
+
+
 
   elastic_endpoint = format("%s-elastic-endpoint", var.data_partition_name)
   elastic_username = format("%s-elastic-username", var.data_partition_name)
@@ -216,6 +221,18 @@ resource "azurerm_key_vault_secret" "schemanotificationtopic_name" {
 resource "azurerm_key_vault_secret" "eventgrid_legaltagschangedtopic_key" {
   name         = local.eventgrid_legaltagschangedtopic_key_name
   value        = lookup(module.event_grid.topic_accesskey_map, local.eventgrid_legaltags_topic)
+  key_vault_id = data.terraform_remote_state.central_resources.outputs.keyvault_id
+}
+
+resource "azurerm_key_vault_secret" "eventgrid_gsm_topic_key" {
+  name         = local.eventgrid_gsm_topic_key_name
+  value        = lookup(module.event_grid.topic_accesskey_map, local.eventgrid_gsm_topic)
+  key_vault_id = data.terraform_remote_state.central_resources.outputs.keyvault_id
+}
+
+resource "azurerm_key_vault_secret" "gsmtopic_name" {
+  name         = local.eventgrid_gsm_topic_name
+  value        = local.eventgrid_gsm_topic_endpoint
   key_vault_id = data.terraform_remote_state.central_resources.outputs.keyvault_id
 }
 

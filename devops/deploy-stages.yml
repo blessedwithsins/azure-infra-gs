@@ -30,6 +30,7 @@ parameters:
   checkoutRepo: self
   testAzureMavenCacheOption: '-Dmaven.repo.local=$(Pipeline.Workspace)/.m2/repository'
   cacheVersion: 'test-dependency-cache-v0.1'
+  mavenPublishJUnitResults: true
 
 stages:
 
@@ -87,3 +88,4 @@ stages:
                   checkoutRepo: ${{ parameters.checkoutRepo }}
                   testAzureMavenCacheOption: ${{ parameters.testAzureMavenCacheOption }}
                   cacheVersion: ${{ parameters.cacheVersion }}
+                  mavenPublishJUnitResults: ${{ parameters.mavenPublishJUnitResults }}
