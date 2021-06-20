@@ -182,6 +182,16 @@ data "terraform_remote_state" "central_resources" {
   }
 }
 
+data "terraform_remote_state" "service_resources" {
+  backend = "azurerm"
+
+  config = {
+    storage_account_name = var.remote_state_account
+    container_name       = var.remote_state_container
+    key                  = format("terraform.tfstateenv:%s", var.service_resources_workspace_name)
+  }
+}
+
 resource "random_string" "workspace_scope" {
   keepers = {
     # Generate a new id each time we switch to a new workspace or app id
@@ -696,6 +706,7 @@ module "aks_deployment_resources" {
   container_registry_id_central        = data.terraform_remote_state.central_resources.outputs.container_registry_id
   container_registry_id_data_partition = module.container_registry.container_registry_id
   osdu_identity_id                     = azurerm_user_assigned_identity.osduidentity.id
+  sr_aks_egress_ip_address             = data.terraform_remote_state.service_resources.outputs.aks_egress_ip_address
 }
 
 #-------------------------------

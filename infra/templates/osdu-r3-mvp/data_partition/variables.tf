@@ -49,6 +49,11 @@ variable "central_resources_workspace_name" {
   type        = string
 }
 
+variable "service_resources_workspace_name" {
+  description = "(Required) The workspace name for the service_resources repository terraform environment / template to reference for this template."
+  type        = string
+}
+
 variable "resource_tags" {
   description = "Map of tags to apply to this template."
   type        = map(string)

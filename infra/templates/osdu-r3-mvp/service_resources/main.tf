@@ -156,6 +156,11 @@ data "terraform_remote_state" "central_resources" {
   }
 }
 
+data "azurerm_public_ip" "aks_egress_ip" {
+  name                = split("/", module.aks.aks_egress_ip_id)[8]
+  resource_group_name = module.aks.node_resource_group
+}
+
 resource "random_string" "workspace_scope" {
   keepers = {
     # Generate a new id each time we switch to a new workspace or app id
