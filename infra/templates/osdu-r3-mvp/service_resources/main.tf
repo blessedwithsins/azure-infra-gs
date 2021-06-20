@@ -126,6 +126,8 @@ locals {
   aks_identity_name = format("%s-pod-identity", local.aks_cluster_name)
   aks_dns_prefix    = local.base_name_60
 
+  cosmosdb_name = "${local.base_name}-system-db"
+
   role = "Contributor"
   rbac_principals = [
     // OSDU Identity
@@ -467,6 +469,32 @@ resource "azurerm_role_assignment" "redis_cache" {
 
 
 #-------------------------------
+# CosmosDB
+#-------------------------------
+module "cosmosdb_account" {
+  source = "../../../modules/providers/azure/cosmosdb"
+
+  name                     = local.cosmosdb_name
+  resource_group_name      = azurerm_resource_group.main.name
+  primary_replica_location = var.cosmosdb_replica_location
+  automatic_failover       = var.cosmosdb_automatic_failover
+  consistency_level        = var.cosmosdb_consistency_level
+  databases                = var.cosmos_databases
+  sql_collections          = var.cosmos_sql_collections
+
+  resource_tags = var.resource_tags
+}
+
+// Add Access Control to Principal
+resource "azurerm_role_assignment" "cosmos_access" {
+  count = length(local.rbac_principals)
+
+  role_definition_name = "Contributor"
+  principal_id         = local.rbac_principals[count.index]
+  scope                = module.cosmosdb_account.account_id
+}
+
+#-------------------------------
 # Locks
 #-------------------------------
 resource "azurerm_management_lock" "sa_lock" {
@@ -476,3 +504,14 @@ resource "azurerm_management_lock" "sa_lock" {
   scope      = module.storage_account.id
   lock_level = "CanNotDelete"
 }
+
+# Cosmos db lock
+resource "azurerm_management_lock" "db_lock" {
+  name       = "osdu_system_db_lock"
+  scope      = module.cosmosdb_account.properties.cosmosdb.id
+  lock_level = "CanNotDelete"
+}
+
+
+
+
