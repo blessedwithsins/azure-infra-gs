@@ -62,6 +62,11 @@ variable "central_resources_workspace_name" {
   type        = string
 }
 
+//variable "service_resources_workspace_name" {
+//  description = "(Required) The workspace name for the service_resources repository terraform environment / template to reference for this template."
+//  type        = string
+//}
+
 variable "container_registry_sku" {
   description = "(Optional) The SKU name of the the container registry. Possible values are Basic, Standard and Premium."
   type        = string

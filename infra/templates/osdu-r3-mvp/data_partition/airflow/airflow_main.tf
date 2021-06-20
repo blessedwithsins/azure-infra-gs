@@ -43,6 +43,16 @@ data "terraform_remote_state" "central_resources" {
   }
 }
 
+//data "terraform_remote_state" "service_resources" {
+//  backend = "azurerm"
+//
+//  config = {
+//    storage_account_name = var.remote_state_account
+//    container_name       = var.remote_state_container
+//    key                  = format("terraform.tfstateenv:%s", var.service_resources_workspace_name)
+//  }
+//}
+
 #-------------------------------
 # Airflow
 #-------------------------------
@@ -384,33 +394,34 @@ module "aks_deployment_resources" {
   container_registry_id_central        = data.terraform_remote_state.central_resources.outputs.container_registry_id
   container_registry_id_data_partition = module.container_registry.container_registry_id
   osdu_identity_id                     = azurerm_user_assigned_identity.osduidentity.id
+  aks_egress_ip                        = ""
 }
 
 #-------------------------------
 # AKS Configuration Resources
 #-------------------------------
-module "aks_config_resources" {
-  source = "../../../../modules/providers/azure/aks_config_resources"
-
-  # Do not configure AKS and Helm until resources are fully created
-  # https://github.com/hashicorp/terraform-provider-kubernetes/blob/6852542fca3894ef4dff397c5b7e7b0c4f32bbac/_examples/aks/README.md
-  # https://github.com/hashicorp/terraform-provider-helm/issues/647
-  depends_on = [module.aks_deployment_resources]
-
-  log_analytics_id = data.terraform_remote_state.central_resources.outputs.log_analytics_id
-
-  pod_identity_id  = azurerm_user_assigned_identity.osduidentity.id
-  pod_principal_id = azurerm_user_assigned_identity.osduidentity.principal_id
-
-  aks_cluster_name = local.aks_cluster_name
-
-  # ----- AKS Config Map Settings -------
-  container_registry_name = module.container_registry.container_registry_name
-  feature_flag            = var.feature_flag
-  key_vault_name          = module.keyvault.keyvault_id
-  postgres_fqdn           = module.postgreSQL.server_fqdn
-  postgres_username       = var.postgres_username
-  subscription_name       = data.azurerm_subscription.current.display_name
-  tenant_id               = data.azurerm_client_config.current.tenant_id
-
-}
+//module "aks_config_resources" {
+//  source = "../../../../modules/providers/azure/aks_config_resources"
+//
+//  # Do not configure AKS and Helm until resources are fully created
+//  # https://github.com/hashicorp/terraform-provider-kubernetes/blob/6852542fca3894ef4dff397c5b7e7b0c4f32bbac/_examples/aks/README.md
+//  # https://github.com/hashicorp/terraform-provider-helm/issues/647
+//  depends_on = [module.aks_deployment_resources]
+//
+//  log_analytics_id = data.terraform_remote_state.central_resources.outputs.log_analytics_id
+//
+//  pod_identity_id  = azurerm_user_assigned_identity.osduidentity.id
+//  pod_principal_id = azurerm_user_assigned_identity.osduidentity.principal_id
+//
+//  aks_cluster_name = local.aks_cluster_name
+//
+//  # ----- AKS Config Map Settings -------
+//  container_registry_name = module.container_registry.container_registry_name
+//  feature_flag            = var.feature_flag
+//  key_vault_name          = module.keyvault.keyvault_id
+//  postgres_fqdn           = module.postgreSQL.server_fqdn
+//  postgres_username       = var.postgres_username
+//  subscription_name       = data.azurerm_subscription.current.display_name
+//  tenant_id               = data.azurerm_client_config.current.tenant_id
+//
+//}

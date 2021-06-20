@@ -102,11 +102,6 @@ locals {
     module.service_principal.id
   ]
 
-  rbac_principals_dp = [
-    azurerm_user_assigned_identity.osduidentity.principal_id,
-    module.service_principal.id
-  ]
-
 }
 
 

@@ -29,7 +29,7 @@ locals {
 #-------------------------------
 resource "azurerm_monitor_diagnostic_setting" "vnet_diagnostics" {
   name                       = "vnet_diagnostics"
-  target_resource_id         = module.network.id
+  target_resource_id         = azurerm_virtual_network.main.id
   log_analytics_workspace_id = var.log_analytics_id
 
   log {

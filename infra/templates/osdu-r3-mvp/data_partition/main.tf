@@ -75,41 +75,27 @@ provider "azurerm" {
 
 // Hook-up kubectl Provider for Terraform
 
-provider "kubernetes" {
-  /*
-   Adding an alias for a provider makes it optional, without explicitly adding an alias for this provider
-   terraform plan will fail as this provider is using an output (kube_config_block) from airflow module
-   which is only available after terraform apply
-*/
-
-  alias                  = "kubernetes"
-  load_config_file       = false
-  host                   = module.airflow.kube_config_block.0.host
-  username               = module.airflow.kube_config_block.0.username
-  password               = module.airflow.kube_config_block.0.password
-  client_certificate     = base64decode(module.airflow.kube_config_block.0.client_certificate)
-  client_key             = base64decode(module.airflow.kube_config_block.0.client_key)
-  cluster_ca_certificate = base64decode(module.airflow.kube_config_block.0.cluster_ca_certificate)
-}
-
-// Hook-up helm Provider for Terraform
-provider "helm" {
-  /*
-   Adding an alias for a provider makes it optional, without explicitly adding an alias for this provider
-   terraform plan will fail as this provider is using output (kube_config_block) from airflow module
-   which is only available after terraform apply
-*/
-
-  alias = "helm"
-  kubernetes {
-    host                   = module.airflow.kube_config_block.0.host
-    username               = module.airflow.kube_config_block.0.username
-    password               = module.airflow.kube_config_block.0.password
-    client_certificate     = base64decode(module.airflow.kube_config_block.0.client_certificate)
-    client_key             = base64decode(module.airflow.kube_config_block.0.client_key)
-    cluster_ca_certificate = base64decode(module.airflow.kube_config_block.0.cluster_ca_certificate)
-  }
-}
+//provider "kubernetes" {
+//  load_config_file       = false
+//  host                   = module.airflow.kube_config_block.0.host
+//  username               = module.airflow.kube_config_block.0.username
+//  password               = module.airflow.kube_config_block.0.password
+//  client_certificate     = base64decode(module.airflow.kube_config_block.0.client_certificate)
+//  client_key             = base64decode(module.airflow.kube_config_block.0.client_key)
+//  cluster_ca_certificate = base64decode(module.airflow.kube_config_block.0.cluster_ca_certificate)
+//}
+//
+//// Hook-up helm Provider for Terraform
+//provider "helm" {
+//  kubernetes {
+//    host                   = module.airflow.kube_config_block.0.host
+//    username               = module.airflow.kube_config_block.0.username
+//    password               = module.airflow.kube_config_block.0.password
+//    client_certificate     = base64decode(module.airflow.kube_config_block.0.client_certificate)
+//    client_key             = base64decode(module.airflow.kube_config_block.0.client_key)
+//    cluster_ca_certificate = base64decode(module.airflow.kube_config_block.0.cluster_ca_certificate)
+//  }
+//}
 
 #-------------------------------
 # Private Variables
@@ -441,7 +427,7 @@ resource "azurerm_management_lock" "ingest_sa_lock" {
 
 module "airflow" {
   source = "./airflow"
-  count  = var.feature_flag.deploy_airflow ? 1 : 0
+//  count  = var.feature_flag.deploy_airflow ? 1 : 0
 
   storage_account_name = module.storage_account.name
   storage_account_id   = module.storage_account.id

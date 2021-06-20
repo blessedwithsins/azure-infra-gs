@@ -1,26 +1,4 @@
 #-------------------------------
-# Network
-#-------------------------------
-module "network" {
-  source = "../network"
-
-  name                = var.vnet_name
-  resource_group_name = var.resource_group_name
-  address_space       = var.address_space
-  subnet_prefixes     = [var.subnet_fe_prefix, var.subnet_aks_prefix]
-  subnet_names        = [var.fe_subnet_name, var.aks_subnet_name]
-  subnet_service_endpoints = {
-    (var.aks_subnet_name) = ["Microsoft.Storage",
-      "Microsoft.Sql",
-      "Microsoft.KeyVault",
-    "Microsoft.EventHub"]
-  }
-
-  resource_tags = var.resource_tags
-}
-
-
-#-------------------------------
 # Azure AKS
 #-------------------------------
 module "aks" {
@@ -34,7 +12,7 @@ module "aks" {
   agent_vm_size      = var.aks_agent_vm_size
   agent_vm_disk      = var.aks_agent_vm_disk
   max_node_count     = var.aks_agent_vm_maxcount
-  vnet_subnet_id     = module.network.subnets.1
+  vnet_subnet_id     = azurerm_subnet.aks_subnet.id
   ssh_public_key     = file(var.ssh_public_key_file)
   kubernetes_version = var.kubernetes_version
   log_analytics_id   = var.log_analytics_id

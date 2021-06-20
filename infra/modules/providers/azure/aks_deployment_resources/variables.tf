@@ -112,3 +112,14 @@ variable "osdu_identity_id" {
   type        = string
 }
 
+# If no values specified, this defaults to Azure DNS
+variable "dns_servers" {
+  description = "The DNS servers to be used with vNet."
+  default     = []
+}
+
+variable "aks_egress_ip" {
+  type = string
+  default = ""
+}
+
