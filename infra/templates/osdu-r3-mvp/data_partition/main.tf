@@ -709,8 +709,6 @@ module "aks_config_resources" {
   # https://github.com/hashicorp/terraform-provider-helm/issues/647
   depends_on = [module.aks_deployment_resources]
 
-  log_analytics_id = data.terraform_remote_state.central_resources.outputs.log_analytics_id
-
   pod_identity_id  = azurerm_user_assigned_identity.osduidentity.id
   pod_principal_id = azurerm_user_assigned_identity.osduidentity.principal_id
 
