@@ -39,7 +39,7 @@ resource_tags = {
 }
 
 # Kubernetes Settings
-kubernetes_version = "1.18.14"
+kubernetes_version = "1.18.17"
 aks_agent_vm_size  = "Standard_E4s_v3"
 aks_agent_vm_count = "5"
 aks_agent_vm_disk  = 128
@@ -63,3 +63,49 @@ feature_flag = {
   flux           = true
   sa_lock        = true
 }
+
+
+# cosmos DB SQL collections
+cosmos_sql_collections = [
+  {
+    name                  = "Authority"
+    database_name         = "osdu-system-db"
+    partition_key_path    = "/id"
+    partition_key_version = null
+
+  },
+  {
+    name                  = "EntityType"
+    database_name         = "osdu-system-db"
+    partition_key_path    = "/id"
+    partition_key_version = null
+  },
+  {
+    name                  = "SchemaInfo"
+    database_name         = "osdu-system-db"
+    partition_key_path    = "/partitionId"
+    partition_key_version = null
+  },
+  {
+    name                  = "Source"
+    database_name         = "osdu-system-db"
+    partition_key_path    = "/id"
+    partition_key_version = null
+  },
+  {
+    name                  = "WorkflowV2"
+    database_name         = "osdu-system-db"
+    partition_key_path    = "/partitionKey"
+    partition_key_version = 2
+  },
+]
+
+# Database Settings
+cosmosdb_consistency_level = "Session"
+cosmos_databases = [
+  {
+    name       = "osdu-system-db"
+    throughput = 12000
+  }
+]
+
