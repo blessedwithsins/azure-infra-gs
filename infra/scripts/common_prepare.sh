@@ -548,6 +548,8 @@ export TF_VAR_resource_group_location="${AZURE_LOCATION}"
 export TF_VAR_cosmosdb_replica_location="${AZURE_PAIR_LOCATION}"
 
 export TF_VAR_central_resources_workspace_name="cr-${UNIQUE}"
+export TF_VAR_service_resources_workspace_name="sr-${UNIQUE}"
+export TF_VAR_data_partition_resources_workspace_name="dp1-${UNIQUE}"
 
 export TF_VAR_principal_appId="$(az keyvault secret show --id https://$AZURE_VAULT.vault.azure.net/secrets/${ADO_PROJECT}-${UNIQUE}-principal-id --query value -otsv)"
 export TF_VAR_principal_name="${ADO_PROJECT}-${UNIQUE}-principal"
