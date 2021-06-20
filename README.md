@@ -285,6 +285,8 @@ Milestone 5(v0.8.0) introduced a breaking changed for Entitlements, which requir
 [here](https://community.opengroup.org/osdu/platform/security-and-compliance/entitlements/-/tree/master/data-migration).
 The script should be run whenever you update OSDU installation from less than Milestone 5(v0.8.0) to equivalent or higher.
 
+## How to enable Policy based authorization (optional)
+Follow the steps in the [link](https://community.opengroup.org/osdu/platform/system/search-service/-/blob/master/docs/tutorial/PolicyService-Integration.md) to enbale policy based authoorization.
 
 ## Developer Activities
 

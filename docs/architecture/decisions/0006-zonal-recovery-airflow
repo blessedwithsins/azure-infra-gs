@@ -1,0 +1,19 @@
+# 6. Changes for supporting Zonal recovery in Airflow
+
+Date: 2021-06-18
+
+## Status
+
+Proposed
+
+## Context
+
+
+
+## Decision
+
+We will add alert rules as part of the monitoring resources.
+
+
+## Consequences
+

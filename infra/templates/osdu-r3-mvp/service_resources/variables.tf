@@ -301,3 +301,40 @@ variable "appgw_max_capacity" {
   type        = number
   default     = 10
 }
+
+variable "cosmosdb_replica_location" {
+  description = "The name of the Azure region to host replicated data. i.e. 'East US' 'East US 2'. More locations can be found at https://azure.microsoft.com/en-us/global-infrastructure/locations/"
+  type        = string
+}
+
+variable "cosmosdb_consistency_level" {
+  description = "The level of consistency backed by SLAs for Cosmos database. Developers can chose from five well-defined consistency levels on the consistency spectrum."
+  type        = string
+  default     = "Session"
+}
+
+variable "cosmosdb_automatic_failover" {
+  description = "Determines if automatic failover is enabled for CosmosDB."
+  type        = bool
+  default     = true
+}
+
+variable "cosmos_databases" {
+  description = "The list of Cosmos DB SQL Databases."
+  type = list(object({
+    name       = string
+    throughput = number
+  }))
+  default = []
+}
+
+variable "cosmos_sql_collections" {
+  description = "The list of cosmos collection names to create. Names must be unique per cosmos instance."
+  type = list(object({
+    name                  = string
+    database_name         = string
+    partition_key_path    = string
+    partition_key_version = number
+  }))
+  default = []
+}

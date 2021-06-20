@@ -59,6 +59,8 @@ This variable group will be used to hold the common values for a specific infras
   | ARM_SUBSCRIPTION_ID | <your_subscription_id> |
   | TF_VAR_aks_agent_vm_count | 3 |
   | TF_VAR_central_resources_workspace_name | cr-demo |
+  | TF_VAR_service_resources_workspace_name | sr-demo |
+  | TF_VAR_data_partition_resources_workspace_name | dp1-demo |
   | TF_VAR_cosmosdb_replica_location | eastus2 |
   | TF_VAR_data_partition_name | opendes |
   | TF_VAR_data_resources_workspace_name | dr-demo |
@@ -87,6 +89,8 @@ az pipelines variable-group create \
   ARM_SUBSCRIPTION_ID="${ARM_SUBSCRIPTION_ID}" \
   TF_VAR_aks_agent_vm_count=3 \
   TF_VAR_central_resources_workspace_name="cr-${ENVIRONMENT}" \
+  TF_VAR_service_resources_workspace_name="sr-${ENVIRONMENT}" \
+  TF_VAR_data_partition_resources_workspace_name="dp1-${ENVIRONMENT}" \
   TF_VAR_cosmosdb_replica_location="${REGION_PAIR}" \
   TF_VAR_data_partition_name="${PARTITION_NAME}" \
   TF_VAR_data_resources_workspace_name="dr-${ENVIRONMENT}" \
