@@ -15,3 +15,7 @@ Follow the directions in the [`data_resources`](./data_partition/README.md) envi
 __Deploy Service Resources__
 
 Follow the directions in the [`service_resources`](./service_resources/README.md) environment.
+
+__Deploy Monitoring Resources__
+
+Follow the directions in the [`monitoring_resources`](./monitoring_resources/README.md) environment.

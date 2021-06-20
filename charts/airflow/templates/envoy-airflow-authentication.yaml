@@ -1,0 +1,120 @@
+apiVersion: networking.istio.io/v1alpha3
+kind: EnvoyFilter
+metadata:
+  name: basic-auth-for-airflow
+  namespace: osdu
+spec:
+  workloadSelector:
+    labels:
+      app: airflow
+  configPatches:
+    - applyTo: HTTP_FILTER
+      match:
+        context: SIDECAR_INBOUND
+        listener:
+          filterChain:
+            filter:
+              name: envoy.http_connection_manager
+              subFilter:
+                name: envoy.router
+      patch:
+        operation: INSERT_BEFORE
+        value:
+          name: envoy.lua.basic-auth-for-airflow
+          typed_config:
+            "@type": "type.googleapis.com/envoy.config.filter.http.lua.v2.Lua"
+            inlineCode: |
+              function starts_with(str, start)
+                 return str:sub(1, #start) == start
+              end
+
+              function decode(data)
+                  -- Useful links http://lua-users.org/wiki/BaseSixtyFour, http://lua-users.org/wiki/StringLibraryTutorial
+                  -- Supported characters for Base64
+                  local base64Characters ='ABCDEFGHIJKLMNOPQRSTUVWXYZabcdefghijklmnopqrstuvwxyz0123456789+/'
+                  -- Removing any characters outside from the ones suported in base 64
+                  data = string.gsub(data, '[^'..base64Characters..'=]', '')
+                  return (data:gsub('.', function(x)
+                      -- in gsub method if a pattern is matched (in this case any character) it will be sent as an argument to the function
+                      if (x == '=') then return '' end
+                      -- finding the position of the character in the base64Characters string which will be used to generate the binary representation of the character 'x'
+                      local r,f='',(base64Characters:find(x)-1)
+                      -- this loop will generate the binary representation and store in variable r
+                      for i=6,1,-1 do r=r..(f%2^i-f%2^(i-1)>0 and '1' or '0') end
+                      -- the value returned is substituted back into the string
+                      return r;
+                  end):gsub('%d%d%d?%d?%d?%d?%d?%d?', function(x)
+                      -- Here the input will be received in binary format as per the above pattern
+                      if (#x ~= 8) then return '' end
+                      local c=0
+                      -- Generating characters from the binary format
+                      for i=1,8 do c=c+(x:sub(i,i)=='1' and 2^(8-i) or 0) end
+                          return string.char(c)
+                  end))
+              end
+
+              function split(inputStr, separator)
+                -- Useful Links http://lua-users.org/wiki/StringLibraryTutorial
+                local Table={}
+                -- string.gmatch method returns an iterator function that, each time it is called, returns the next captures from pattern over the string inputStr
+                -- Here we are using the gmatch function to capture strings which contain at least one character of anything other than the desired separator.
+                for str in string.gmatch(inputStr, "([^"..separator.."]+)") do
+                  table.insert(Table, str)
+                end
+                return Table
+              end
+
+              function read_file(path)
+                local file = io.open(path, "rb") -- r read mode and b binary mode
+                if not file then return nil end
+                local content = file:read "*a" -- *a or *all reads the whole file
+                file:close()
+                return content
+              end
+
+              function authenticationFailure(request_handle)
+                request_handle:logErr("Airflow authentication failed")
+                request_handle:respond({[":status"] = "401"}, "Airflow authentication failed")
+              end
+
+              function authenticationSuccess(request_handle)
+                request_handle:logInfo("Airflow authentication successful")
+              end
+
+              function authenticateRequest(request_handle)
+
+                local path = request_handle:headers():get(":path")
+
+                if (starts_with(path, "/airflow/api/experimental")) then
+
+                  local authHeader = request_handle:headers():get("Authorization")
+                  if starts_with(authHeader, "Basic") then
+                    local encodedCredential = string.sub(authHeader, 7)
+                    local decodedCredential = decode(encodedCredential)
+                    local credsList = split(decodedCredential, ":")
+
+                    local username = credsList[1]
+                    local password = credsList[2]
+
+                    local airflowUsername = "{{ .Values.airflowAuthentication.username }}"
+                    local airflowPasswordFilepath = "{{ .Values.airflowAuthentication.keyvaultMountPath }}" .. "{{ .Values.airflowAuthentication.passwordKey }}"
+
+                    local airflowPassword = read_file(airflowPasswordFilepath)
+                    if (username == airflowUsername and password == airflowPassword) then
+                      authenticationSuccess(request_handle)
+                    else
+                      authenticationFailure(request_handle)
+                    end
+                  else
+                      authenticationFailure(request_handle)
+                  end
+                end
+              end
+
+              function envoy_on_request(request_handle)
+                local status, result = pcall(authenticateRequest, request_handle)
+                if (not status) then
+                  authenticationFailure(request_handle)
+                end
+
+              end

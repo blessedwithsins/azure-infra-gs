@@ -142,10 +142,13 @@ locals {
 
   eg_sbtopic_subscriber               = "servicebusrecordstopic"
   eg_sbtopic_schema_subscriber        = "servicebusschemachangedtopic"
+  eg_sbtopic_gsm_subscriber           = "servicebusstatuschangedtopic"
+  eg_sbtopic_legaltags_subscriber     = "servicebuslegaltagschangedtopic"
   eventgrid_name                      = "${local.base_name_21}-grid"
   eventgrid_records_topic             = format("%s-recordstopic", local.eventgrid_name)
   eventgrid_schema_notification_topic = format("%s-schemachangedtopic", local.eventgrid_name)
   eventgrid_legaltags_topic           = format("%s-legaltagschangedtopic", local.eventgrid_name)
+  eventgrid_gsm_topic                 = format("%s-statuschangedtopic", local.eventgrid_name)
 
   rbac_principals = [
     data.terraform_remote_state.central_resources.outputs.osdu_identity_principal_id,
@@ -248,7 +251,7 @@ module "sdms_storage_account" {
   kind                = "StorageV2"
   replication_type    = var.storage_replication_type
 
-  resource_tags = var.resource_tags
+  resource_tags = merge(var.resource_tags, var.resource_tags_sdms)
 }
 
 // Add Access Control to Principal
@@ -398,6 +401,9 @@ module "event_grid" {
     },
     {
       name = local.eventgrid_schema_notification_topic
+    },
+    {
+      name = local.eventgrid_gsm_topic
     }
   ]
 
@@ -432,6 +438,14 @@ resource "azurerm_eventgrid_event_subscription" "service_bus_topic_subscriber" {
   service_bus_topic_endpoint_id = lookup(module.service_bus.topicsmap, "recordstopiceg")
 }
 
+// Add a Service Bus Topic subscriber that act as EventHandler for legaltagschangedtopic
+resource "azurerm_eventgrid_event_subscription" "service_bus_topic_subscriber_legaltags" {
+  name                          = local.eg_sbtopic_legaltags_subscriber
+  scope                         = lookup(module.event_grid.topics, local.eventgrid_legaltags_topic)
+  depends_on                    = [module.service_bus.id]
+  service_bus_topic_endpoint_id = lookup(module.service_bus.topicsmap, "legaltagschangedtopiceg")
+}
+
 // Add EventGrid EventSubscription Contributor access to Principal For Schema
 resource "azurerm_role_assignment" "event_grid_topics_role_schema" {
   count = length(local.rbac_principals)
@@ -447,6 +461,25 @@ resource "azurerm_eventgrid_event_subscription" "service_bus_topic_subscriber_sc
   scope                         = lookup(module.event_grid.topics, local.eventgrid_schema_notification_topic)
   depends_on                    = [module.service_bus.id]
   service_bus_topic_endpoint_id = lookup(module.service_bus.topicsmap, "schemachangedtopiceg")
+}
+
+// Add EventGrid EventSubscription Contributor access to Principal 
+resource "azurerm_role_assignment" "event_grid_topics_role_gsm" {
+  count = length(local.rbac_principals)
+
+  role_definition_name = "EventGrid EventSubscription Contributor"
+  principal_id         = local.rbac_principals[count.index]
+  scope                = lookup(module.event_grid.topics, local.eventgrid_gsm_topic)
+}
+
+// Add a Service Bus Topic subscriber that act as EventHandler for statuschangedtopic
+resource "azurerm_eventgrid_event_subscription" "service_bus_topic_subscriber_gsm" {
+  name = local.eg_sbtopic_gsm_subscriber
+
+  scope      = lookup(module.event_grid.topics, local.eventgrid_gsm_topic)
+  depends_on = [module.service_bus.id]
+
+  service_bus_topic_endpoint_id = lookup(module.service_bus.topicsmap, "statuschangedtopiceg")
 }
 
 #-------------------------------
