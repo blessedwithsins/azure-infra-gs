@@ -31,10 +31,10 @@ resource "azurerm_subnet" "aks_subnet" {
   virtual_network_name = azurerm_virtual_network.main.name
   resource_group_name  = data.azurerm_resource_group.main.name
   address_prefixes     = [var.subnet_aks_prefix]
-  service_endpoints    = ["Microsoft.Storage",
+  service_endpoints = ["Microsoft.Storage",
     "Microsoft.Sql",
     "Microsoft.KeyVault",
-    "Microsoft.EventHub"]
+  "Microsoft.EventHub"]
 }
 
 resource "azurerm_subnet" "fe_subnet" {
