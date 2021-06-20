@@ -726,3 +726,24 @@ module "aks_config_resources" {
   tenant_id               = data.azurerm_client_config.current.tenant_id
 
 }
+
+module "keyvault_cr_policy" {
+  source = "../../../modules/providers/azure/keyvault-policy"
+
+  vault_id  = data.terraform_remote_state.central_resources.outputs.keyvault_dp_id
+  tenant_id = data.azurerm_client_config.current.tenant_id
+  object_ids = [
+    azurerm_user_assigned_identity.osduidentity.principal_id
+  ]
+  key_permissions         = ["get", "encrypt", "decrypt"]
+  certificate_permissions = ["get"]
+  secret_permissions      = ["get"]
+}
+
+resource "azurerm_role_assignment" "kv_cr_roles" {
+  count = length(local.rbac_principals_airflow)
+
+  role_definition_name = "Reader"
+  principal_id         = local.rbac_principals_airflow[count.index]
+  scope                = data.terraform_remote_state.central_resources.outputs.keyvault_dp_id
+}
