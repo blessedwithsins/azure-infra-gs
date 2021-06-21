@@ -14,52 +14,29 @@
 
 /*
 .Synopsis
-   Terraform Variable Configuration
+   Terraform Variable Override Template
 .DESCRIPTION
-   This file holds the Default Variable Configuration
+   This file holds a variable override sample to be used by pipelines
 */
 
 /*
-The following items are recommended to override in custom.tfvars
 
-1. Resource Tags
-2. Kubernetes Version  ** Lock your version and manage your upgrades.
-3. Agent VM Size       ** Current Default Recomendation.
-4. Agent VM Count      ** Size as appropriate
-5. Agent VM Disk       ** Size as appropriate
-6. Feature Flags       ** Configure as desired
+feature_flag = {
+  osdu_namespace = false
+  flux           = false
+  sa_lock        = false
+}
 
-*/
-
-
-prefix = "infra-mvp"
+prefix = "osdu-mvp"
 
 resource_tags = {
-  contact = "pipeline"
+  environment = "OSDU Demo"
 }
 
 # Kubernetes Settings
 kubernetes_version = "1.18.17"
 aks_agent_vm_size  = "Standard_E4s_v3"
 aks_agent_vm_count = "5"
-aks_agent_vm_disk  = 128
 subnet_aks_prefix  = "10.10.2.0/23"
 
-# Storage Settings
-storage_replication_type = "LRS"
-storage_containers = [
-  "azure-webjobs-hosts"
-]
-storage_shares = [
-  "unit",
-  "crs",
-  "crs-conversion"
-]
-storage_queues = []
-
-# Feature Toggles
-feature_flag = {
-  osdu_namespace = true
-  flux           = true
-  sa_lock        = true
-}
+*/

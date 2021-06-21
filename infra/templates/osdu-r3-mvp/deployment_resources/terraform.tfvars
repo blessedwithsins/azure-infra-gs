@@ -45,17 +45,6 @@ aks_agent_vm_count = "5"
 aks_agent_vm_disk  = 128
 subnet_aks_prefix  = "10.10.2.0/23"
 
-# Storage Settings
-storage_replication_type = "LRS"
-storage_containers = [
-  "azure-webjobs-hosts"
-]
-storage_shares = [
-  "unit",
-  "crs",
-  "crs-conversion"
-]
-storage_queues = []
 
 # Feature Toggles
 feature_flag = {
