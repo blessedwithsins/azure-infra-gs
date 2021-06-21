@@ -39,12 +39,19 @@ steps:
         set -euo pipefail
 
         function writeDockerFile() {
-            echo 'FROM openjdk:8-jdk-alpine
-            VOLUME /tmp
-            ARG JAR_FILE
-            ENV JAVA_OPTS="-XX:InitialRAMPercentage=25.0 -XX:MaxRAMPercentage=50.0 -XX:+HeapDumpOnOutOfMemoryError ${JAVA_OPTS}"
-            COPY ${JAR_FILE} app.jar
-            ENTRYPOINT exec java ${JAVA_OPTS} -jar /app.jar' > Dockerfile
+            echo 'VOLUME /tmp
+                 ARG JAR_FILE
+                 ENV JAVA_OPTS="-XX:InitialRAMPercentage=25.0 -XX:MaxRAMPercentage=50.0 -XX:+HeapDumpOnOutOfMemoryError ${JAVA_OPTS}"
+                 COPY ${JAR_FILE} app.jar
+
+                 ARG EXT_JAR_FILE
+                 COPY ${EXT_JAR_FILE} chaos-monkey-spring-boot-2.4.6-SNAPSHOT-jar-with-dependencies.jar
+                 ENV JAVA_CLASSPATH=/chaos-monkey-spring-boot-2.4.6-SNAPSHOT-jar-with-dependencies.jar
+
+                 ARG EXT_PROP_FILE
+                 COPY ${EXT_PROP_FILE} chaos.properties
+
+                 CMD ["java","-cp","/app.jar","-Dloader.path=/chaos-monkey-spring-boot-2.4.6-SNAPSHOT-jar-with-dependencies.jar","org.springframework.boot.loader.PropertiesLauncher","--spring.profiles.active=chaos-monkey","--spring.config.import=file:///chaos.properties"]' > Dockerfile
         }
 
         curl -L https://aka.ms/acr/installaad/bash | /bin/bash
