@@ -173,6 +173,7 @@ airflow:
         memory: "5Gi"
     podLabels:
       aadpodidbinding: "osdu-identity"
+      sidecar.istio.io/inject: "false"
     autoscaling:
       enabled: false
       ## minReplicas is picked from Values.workers.replicas and default value is 1
@@ -207,6 +208,7 @@ airflow:
         memory: "1Gi"
     podLabels:
       aadpodidbinding: "osdu-identity"
+      sidecar.istio.io/inject: "false"
     variables: |
       {}
 
