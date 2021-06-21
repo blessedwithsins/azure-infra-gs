@@ -39,7 +39,8 @@ steps:
         set -euo pipefail
 
         function writeDockerFile() {
-            echo 'VOLUME /tmp
+            echo 'FROM openjdk:8-jdk-alpine
+                  VOLUME /tmp
                  ARG JAR_FILE
                  ENV JAVA_OPTS="-XX:InitialRAMPercentage=25.0 -XX:MaxRAMPercentage=50.0 -XX:+HeapDumpOnOutOfMemoryError ${JAVA_OPTS}"
                  COPY ${JAR_FILE} app.jar
