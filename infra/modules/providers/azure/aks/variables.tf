@@ -62,6 +62,11 @@ variable "kubernetes_version" {
   default = "1.17.9"
 }
 
+variable "kubernetes_orchestrator_version" {
+  type    = string
+  default = "1.18.19"
+}
+
 variable "admin_user" {
   type    = string
   default = "k8sadmin"

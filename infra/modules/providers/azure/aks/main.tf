@@ -78,15 +78,16 @@ resource "azurerm_kubernetes_cluster" "main" {
   }
 
   default_node_pool {
-    name                = "default"
-    node_count          = var.agent_vm_count
-    vm_size             = var.agent_vm_size
-    os_disk_size_gb     = var.agent_vm_disk
-    vnet_subnet_id      = var.vnet_subnet_id
-    enable_auto_scaling = var.auto_scaling_default_node
-    max_pods            = var.max_pods
-    max_count           = var.auto_scaling_default_node == true ? var.max_node_count : null
-    min_count           = var.auto_scaling_default_node == true ? var.agent_vm_count : null
+    name                 = "default"
+    node_count           = var.agent_vm_count
+    vm_size              = var.agent_vm_size
+    os_disk_size_gb      = var.agent_vm_disk
+    vnet_subnet_id       = var.vnet_subnet_id
+    enable_auto_scaling  = var.auto_scaling_default_node
+    max_pods             = var.max_pods
+    max_count            = var.auto_scaling_default_node == true ? var.max_node_count : null
+    min_count            = var.auto_scaling_default_node == true ? var.agent_vm_count : null
+    orchestrator_version = var.kubernetes_orchestrator_version
   }
 
   network_profile {
