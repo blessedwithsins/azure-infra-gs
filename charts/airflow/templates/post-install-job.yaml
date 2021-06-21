@@ -14,12 +14,13 @@ spec:
   template:
     metadata:
       name: "{{ .Release.Name }}"
+      annotations:
+        sidecar.istio.io/inject: "false"
       labels:
         app.kubernetes.io/managed-by: {{ .Release.Service | quote }}
         app.kubernetes.io/instance: {{ .Release.Name | quote }}
         helm.sh/chart: "{{ .Chart.Name }}-{{ .Chart.Version }}"
         aadpodidbinding: "osdu-identity"
-        sidecar.istio.io/inject: "false"
     spec:
       restartPolicy: Never
       containers:

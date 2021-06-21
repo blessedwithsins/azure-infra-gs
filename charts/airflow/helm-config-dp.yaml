@@ -173,6 +173,7 @@ airflow:
         memory: "5Gi"
     podLabels:
       aadpodidbinding: "osdu-identity"
+    podAnnotations:
       sidecar.istio.io/inject: "false"
     autoscaling:
       enabled: false
@@ -208,6 +209,7 @@ airflow:
         memory: "1Gi"
     podLabels:
       aadpodidbinding: "osdu-identity"
+    podAnnotations:
       sidecar.istio.io/inject: "false"
     variables: |
       {}
