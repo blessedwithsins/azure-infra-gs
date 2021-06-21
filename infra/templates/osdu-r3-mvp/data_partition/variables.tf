@@ -55,6 +55,12 @@ variable "resource_tags" {
   default     = {}
 }
 
+variable "resource_tags_sdms" {
+  description = "Map of tags to apply to sdms resources."
+  type        = map(string)
+  default     = { service = "sdms" }
+}
+
 variable "resource_group_location" {
   description = "The Azure region where data storage resources in this template should be created."
   type        = string

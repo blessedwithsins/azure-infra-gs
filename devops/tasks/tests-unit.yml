@@ -28,6 +28,8 @@ steps:
       TF_VAR_elasticsearch_endpoint: $(elastic-endpoint-${{ parameters.terraformWorkspacePrefix }}-${{ parameters.environmentName }})
       TF_VAR_common_resources_workspace_name: $(TF_VAR_common_resources_workspace_name)
       TF_VAR_central_resources_workspace_name: $(TF_VAR_central_resources_workspace_name)
+      TF_VAR_service_resources_workspace_name: $(TF_VAR_service_resources_workspace_name)
+      TF_VAR_data_partition_resources_workspace_name: $(TF_VAR_data_partition_resources_workspace_name)
       TF_VAR_data_resources_workspace_name: $(TF_VAR_data_resources_workspace_name)
       TF_VAR_data_partition_name: $(TF_VAR_data_partition_name)
       TF_VAR_ssh_public_key_file: $(aksPublicAgentKeySecureDownload.secureFilePath)

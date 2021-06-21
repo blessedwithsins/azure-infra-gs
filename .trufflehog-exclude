@@ -1,2 +1,3 @@
 CHANGELOG.md
+(.*/)?\.envoy-airflow-authentication$
 .*\.http$

@@ -13,7 +13,7 @@
 //  limitations under the License.
 
 prefix      = "osdu-mvp"
-tenant_name = "<your_tenant_name>"
+tenant_name = "azureglobal1"
 
 dashboards = {
   default     = true
@@ -28,12 +28,7 @@ action-groups = {
     email-receiver = [
       {
         name                = "primary receiver",
-        email-address       = "xxxx",
-        common-alert-schema = false
-      },
-      {
-        name                = "secondary receiver",
-        email-address       = "xxxx",
+        email-address       = "dummy@microsoft.com",
         common-alert-schema = false
       }
     ],
@@ -46,8 +41,8 @@ action-groups = {
     sms-receiver = [
       {
         name         = "local support",
-        country-code = "xx",
-        phone        = "xxxxxx"
+        country-code = "91",
+        phone        = "9898989898"
       }
     ]
   }
