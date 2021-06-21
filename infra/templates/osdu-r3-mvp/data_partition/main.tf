@@ -725,7 +725,7 @@ module "aks_config_resources" {
 
 }
 
-module "keyvault_cr_policy" {
+module "keyvault_cr_dp_policy" {
   source = "../../../modules/providers/azure/keyvault-policy"
 
   vault_id  = data.terraform_remote_state.central_resources.outputs.keyvault_dp_id
@@ -738,7 +738,7 @@ module "keyvault_cr_policy" {
   secret_permissions      = ["get"]
 }
 
-resource "azurerm_role_assignment" "kv_cr_roles" {
+resource "azurerm_role_assignment" "kv_cr_dp_roles" {
   count = length(local.rbac_principals_airflow)
 
   role_definition_name = "Reader"
