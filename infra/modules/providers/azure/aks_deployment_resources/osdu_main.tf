@@ -1,4 +1,25 @@
 #-------------------------------
+# Network
+#-------------------------------
+module "network" {
+  source = "../network"
+
+  name                = var.vnet_name
+  resource_group_name = var.resource_group_name
+  address_space       = var.address_space
+  subnet_prefixes     = [var.subnet_fe_prefix, var.subnet_aks_prefix]
+  subnet_names        = [var.fe_subnet_name, var.aks_subnet_name]
+  subnet_service_endpoints = {
+    (var.aks_subnet_name) = ["Microsoft.Storage",
+      "Microsoft.Sql",
+      "Microsoft.KeyVault",
+      "Microsoft.EventHub"]
+  }
+
+  resource_tags = var.resource_tags
+}
+
+#-------------------------------
 # Azure AKS
 #-------------------------------
 module "aks" {
@@ -12,7 +33,7 @@ module "aks" {
   agent_vm_size      = var.aks_agent_vm_size
   agent_vm_disk      = var.aks_agent_vm_disk
   max_node_count     = var.aks_agent_vm_maxcount
-  vnet_subnet_id     = azurerm_subnet.aks_subnet.id
+  vnet_subnet_id     = module.network.subnets.1
   ssh_public_key     = file(var.ssh_public_key_file)
   kubernetes_version = var.kubernetes_version
   log_analytics_id   = var.log_analytics_id
@@ -63,4 +84,30 @@ resource "azurerm_role_assignment" "osdu_identity_mi_operator" {
   principal_id         = module.aks.kubelet_object_id
   scope                = var.osdu_identity_id
   role_definition_name = "Managed Identity Operator"
+}
+
+resource "azurerm_network_security_group" "aks-nsg" {
+  name                = "${var.base_name}-aks-nsg"
+  location            = var.resource_group_location
+  resource_group_name = var.resource_group_name
+}
+
+
+resource "azurerm_network_security_rule" "aks-nsg-security-rule" {
+  name                        = "nsg-rule"
+  priority                    = 100
+  direction                   = "Inbound"
+  access                      = "Allow"
+  protocol                    = "Tcp"
+  source_port_range           = "*"
+  destination_port_range      = "*"
+  source_address_prefix       = var.sr_aks_egress_ip_address
+  destination_address_prefix  = "VirtualNetwork"
+  resource_group_name         = var.resource_group_name
+  network_security_group_name = azurerm_network_security_group.aks-nsg.name
+}
+
+resource "azurerm_subnet_network_security_group_association" "nsg-association" {
+  subnet_id                 = module.network.subnets.1
+  network_security_group_id = azurerm_network_security_group.aks-nsg.id
 }

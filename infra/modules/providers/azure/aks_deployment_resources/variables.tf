@@ -113,13 +113,12 @@ variable "osdu_identity_id" {
 }
 
 # If no values specified, this defaults to Azure DNS
-variable "dns_servers" {
-  description = "The DNS servers to be used with vNet."
+variable "sr_aks_egress_ip_address" {
+  description = "AKS egress ip for SR"
   default     = []
 }
 
-# If no values specified, this defaults to Azure DNS
-variable "sr_aks_egress_ip_address" {
-  description = "AKS egress ip for SR"
+variable "base_name" {
+  description = "Resource Base name"
   default     = []
 }

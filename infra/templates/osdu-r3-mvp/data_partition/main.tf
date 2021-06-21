@@ -706,6 +706,7 @@ module "aks_deployment_resources" {
   container_registry_id_central        = data.terraform_remote_state.central_resources.outputs.container_registry_id
   container_registry_id_data_partition = module.container_registry.container_registry_id
   osdu_identity_id                     = azurerm_user_assigned_identity.osduidentity.id
+  base_name                            = local.base_name
   sr_aks_egress_ip_address             = data.terraform_remote_state.service_resources.outputs.aks_egress_ip_address
 }
 
