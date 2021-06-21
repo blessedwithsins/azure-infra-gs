@@ -13,7 +13,7 @@ module "network" {
     (var.aks_subnet_name) = ["Microsoft.Storage",
       "Microsoft.Sql",
       "Microsoft.KeyVault",
-      "Microsoft.EventHub"]
+    "Microsoft.EventHub"]
   }
 
   resource_tags = var.resource_tags
