@@ -57,7 +57,7 @@ terraform {
     }
     kubernetes = {
       source  = "hashicorp/kubernetes"
-      version = "~> 1.13.3"
+      version = "~> 2.3.2"
     }
     helm = {
       source  = "hashicorp/helm"
@@ -73,29 +73,32 @@ provider "azurerm" {
   features {}
 }
 
-// Hook-up kubectl Provider for Terraform
+data "azurerm_kubernetes_cluster" "testing-aks" {
+  name = var.feature_flag.deploy_airflow ?"${local.base_name_21}-aks":var.service_Resources_Aks
+  resource_group_name = var.feature_flag.deploy_airflow ?local.resource_group_name:data.terraform_remote_state.service_resources.outputs.services_resource_group_name
+  depends_on = [module.airflow.kube_config_block]
+}
 
-//provider "kubernetes" {
-//  load_config_file       = false
-//  host                   = module.airflow.kube_config_block.0.host
-//  username               = module.airflow.kube_config_block.0.username
-//  password               = module.airflow.kube_config_block.0.password
-//  client_certificate     = base64decode(module.airflow.kube_config_block.0.client_certificate)
-//  client_key             = base64decode(module.airflow.kube_config_block.0.client_key)
-//  cluster_ca_certificate = base64decode(module.airflow.kube_config_block.0.cluster_ca_certificate)
-//}
-//
-//// Hook-up helm Provider for Terraform
-//provider "helm" {
-//  kubernetes {
-//    host                   = module.airflow.kube_config_block.0.host
-//    username               = module.airflow.kube_config_block.0.username
-//    password               = module.airflow.kube_config_block.0.password
-//    client_certificate     = base64decode(module.airflow.kube_config_block.0.client_certificate)
-//    client_key             = base64decode(module.airflow.kube_config_block.0.client_key)
-//    cluster_ca_certificate = base64decode(module.airflow.kube_config_block.0.cluster_ca_certificate)
-//  }
-//}
+provider "kubernetes" {
+  host                   = var.feature_flag.deploy_airflow ?data.azurerm_kubernetes_cluster.testing-aks.kube_config.0.host:""
+  username               = var.feature_flag.deploy_airflow ?data.azurerm_kubernetes_cluster.testing-aks.kube_config.0.username:""
+  password               = var.feature_flag.deploy_airflow ?data.azurerm_kubernetes_cluster.testing-aks.kube_config.0.password:""
+  client_certificate     = var.feature_flag.deploy_airflow ?base64decode(data.azurerm_kubernetes_cluster.testing-aks.kube_config.0.client_certificate):""
+  client_key             = var.feature_flag.deploy_airflow ?base64decode(data.azurerm_kubernetes_cluster.testing-aks.kube_config.0.client_key):""
+  cluster_ca_certificate = var.feature_flag.deploy_airflow ?base64decode(data.azurerm_kubernetes_cluster.testing-aks.kube_config.0.cluster_ca_certificate):""
+}
+
+// Hook-up helm Provider for Terraform
+provider "helm" {
+  kubernetes {
+    host                   = var.feature_flag.deploy_airflow ?data.azurerm_kubernetes_cluster.testing-aks.kube_config.0.host:""
+    username               = var.feature_flag.deploy_airflow ?data.azurerm_kubernetes_cluster.testing-aks.kube_config.0.username:""
+    password               = var.feature_flag.deploy_airflow ?data.azurerm_kubernetes_cluster.testing-aks.kube_config.0.password:""
+    client_certificate     = var.feature_flag.deploy_airflow ?base64decode(data.azurerm_kubernetes_cluster.testing-aks.kube_config.0.client_certificate):""
+    client_key             = var.feature_flag.deploy_airflow ?base64decode(data.azurerm_kubernetes_cluster.testing-aks.kube_config.0.client_key):""
+    cluster_ca_certificate = var.feature_flag.deploy_airflow ?base64decode(data.azurerm_kubernetes_cluster.testing-aks.kube_config.0.cluster_ca_certificate):""
+  }
+}
 
 #-------------------------------
 # Private Variables
@@ -154,6 +157,17 @@ data "terraform_remote_state" "central_resources" {
     storage_account_name = var.remote_state_account
     container_name       = var.remote_state_container
     key                  = format("terraform.tfstateenv:%s", var.central_resources_workspace_name)
+  }
+}
+
+
+data "terraform_remote_state" "service_resources" {
+  backend = "azurerm"
+
+  config = {
+    storage_account_name = var.remote_state_account
+    container_name       = var.remote_state_container
+    key                  = format("terraform.tfstateenv:%s", var.service_resources_workspace_name)
   }
 }
 
@@ -460,7 +474,7 @@ resource "azurerm_management_lock" "ingest_sa_lock" {
 
 module "airflow" {
   source = "./airflow"
-//  count  = var.feature_flag.deploy_airflow ? 1 : 0
+  count = var.feature_flag.deploy_airflow ? 1 : 0
 
   storage_account_name = module.storage_account.name
   storage_account_id   = module.storage_account.id
@@ -479,4 +493,5 @@ module "airflow" {
   resource_group_location          = var.resource_group_location
   ssh_public_key_file              = var.ssh_public_key_file
   feature_flag                     = var.feature_flag
+  sr_aks_egress_ip_address         = data.terraform_remote_state.service_resources.outputs.aks_egress_ip_address
 }

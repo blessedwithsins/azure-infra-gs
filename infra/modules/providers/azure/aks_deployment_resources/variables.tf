@@ -123,3 +123,9 @@ variable "aks_egress_ip" {
   default = ""
 }
 
+# If no values specified, this defaults to Azure DNS
+variable "sr_aks_egress_ip_address" {
+  description = "AKS egress ip for SR"
+  default     = []
+}
+

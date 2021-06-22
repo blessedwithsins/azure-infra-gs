@@ -62,11 +62,6 @@ variable "central_resources_workspace_name" {
   type        = string
 }
 
-//variable "service_resources_workspace_name" {
-//  description = "(Required) The workspace name for the service_resources repository terraform environment / template to reference for this template."
-//  type        = string
-//}
-
 variable "container_registry_sku" {
   description = "(Optional) The SKU name of the the container registry. Possible values are Basic, Standard and Premium."
   type        = string
@@ -161,7 +156,7 @@ variable "aks_agent_vm_maxcount" {
 variable "aks_agent_vm_size" {
   type        = string
   description = "The size of each VM in the Agent Pool (e.g. Standard_F1). Changing this forces a new resource to be created."
-  default     = "Standard_D2s_v3"
+  default     = "Standard_E4s_v3"
 }
 
 variable "aks_agent_vm_disk" {
@@ -172,7 +167,7 @@ variable "aks_agent_vm_disk" {
 
 variable "kubernetes_version" {
   type    = string
-  default = "1.18.17"
+  default = "1.19.11"
 }
 
 variable "ssh_public_key_file" {
@@ -262,4 +257,17 @@ variable "ingest_storage_account_key" {
 variable "ingest_storage_account_name" {
   description = ""
   type        = string
+}
+
+# If no values specified, this defaults to Azure DNS
+variable "sr_aks_egress_ip_address" {
+  description = "AKS egress ip for SR"
+  default     = []
+}
+
+# If no values specified, this defaults to Azure DNS
+variable "check" {
+  description = "AKS egress ip for SR"
+  type = bool
+  default     = true
 }

@@ -92,3 +92,7 @@ output "redis_ssl_port" {
 output "aks_egress_ip_address" {
   value = data.azurerm_public_ip.aks_egress_ip.ip_address
 }
+
+output "aks_name" {
+  value = local.aks_cluster_name
+}
