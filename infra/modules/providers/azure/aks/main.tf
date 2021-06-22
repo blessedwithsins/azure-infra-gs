@@ -59,6 +59,20 @@ resource "azurerm_log_analytics_solution" "main" {
   }
 }
 
+resource "azurerm_kubernetes_cluster_node_pool" "internal" {
+  kubernetes_cluster_id = azurerm_kubernetes_cluster.main.id
+  name                  = "internal"
+  node_count            = var.agent_vm_count
+  vm_size               = var.agent_vm_size
+  os_disk_size_gb       = var.agent_vm_disk
+  vnet_subnet_id        = var.vnet_subnet_id
+  enable_auto_scaling   = var.auto_scaling_default_node
+  max_pods              = var.max_pods
+  max_count             = var.auto_scaling_default_node == true ? var.max_node_count : null
+  min_count             = var.auto_scaling_default_node == true ? var.agent_vm_count : null
+  availability_zones    = var.availability_zones
+}
+
 resource "azurerm_kubernetes_cluster" "main" {
   name                = var.name
   resource_group_name = data.azurerm_resource_group.main.name

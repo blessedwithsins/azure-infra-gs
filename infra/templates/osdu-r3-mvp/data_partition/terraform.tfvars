@@ -52,6 +52,10 @@ cosmos_databases = [
   {
     name       = "osdu-db"
     throughput = 12000
+  },
+  {
+    name       = "status-db"
+    throughput = 12000
   }
 ]
 
@@ -214,6 +218,18 @@ cosmos_sql_collections = [
     partition_key_path    = "/partitionKey"
     partition_key_version = 2
   },
+  {
+    name                  = "Status"
+    database_name         = "status-db"
+    partition_key_path    = "/partitionId"
+    partition_key_version = null
+  },
+  {
+    name                  = "DataSetDetails"
+    database_name         = "status-db"
+    partition_key_path    = "/partitionId"
+    partition_key_version = null
+  }
 ]
 
 
@@ -326,5 +342,30 @@ sb_topics = [
         forward_to         = ""
       }
     ]
+  },
+  {
+    name                = "statuschangedtopic"
+    enable_partitioning = true
+    subscriptions = [
+      {
+        name               = "statuschangedtopicsubscription"
+        max_delivery_count = 5
+        lock_duration      = "PT5M"
+        forward_to         = ""
+      }
+    ]
+  },
+  {
+    name                = "statuschangedtopiceg"
+    enable_partitioning = true
+    subscriptions = [
+      {
+        name               = "eg_sb_statussubscription"
+        max_delivery_count = 5
+        lock_duration      = "PT5M"
+        forward_to         = ""
+      }
+    ]
   }
+
 ]
