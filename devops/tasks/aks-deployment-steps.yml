@@ -67,13 +67,13 @@ steps:
     displayName: 'Helm Values - Build Repo'
     inputs:
       targetFiles: |
-        $(Build.SourcesDirectory)/$(Build.Repository.Name)/${{parameters.valuesFile}} => $(Build.SourcesDirectory)/$(Build.Repository.Name)/${{parameters.chartPath}}/values.yaml
+        $(Agent.BuildDirectory)/s/$(Build.Repository.Name)/${{parameters.valuesFile}} => $(Agent.BuildDirectory)/s/$(Build.Repository.Name)/${{parameters.chartPath}}/values.yaml
     condition: eq(variables['HELM_SOURCE'], '')
   - task: qetza.replacetokens.replacetokens-task.replacetokens@3
     displayName: 'Helm Values - Helm Source Repo'
     inputs:
       targetFiles: |
-        $(Build.SourcesDirectory)/$(HELM_SOURCE)/${{parameters.valuesFile}} => $(Build.SourcesDirectory)/$(HELM_SOURCE)/${{parameters.chartPath}}/values.yaml
+        $(Agent.BuildDirectory)/s/$(HELM_SOURCE)/${{parameters.valuesFile}} => $(Agent.BuildDirectory)/s/$(HELM_SOURCE)/${{parameters.chartPath}}/values.yaml
     condition: ne(variables['HELM_SOURCE'], '')
   - ${{ if eq(parameters.installThroughHelm, 'false') }}:
     - template: helm-template.yml
