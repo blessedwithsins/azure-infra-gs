@@ -47,15 +47,15 @@ steps:
         fi
 
         echo "Helm Source Name: $HELM_SOURCE_NAME"
-        cd $(Build.SourcesDirectory)/$HELM_SOURCE_NAME
+        cd $(Agent.BuildDirectory)/s/$HELM_SOURCE_NAME
 
-        cat $(Build.SourcesDirectory)/$HELM_SOURCE_NAME/${{parameters.chartPath}}/values.yaml
+        cat $(Agent.BuildDirectory)/s/$HELM_SOURCE_NAME/${{parameters.chartPath}}/values.yaml
 
         echo "Installing through helm"
         
         if [[ "$NAMESPACE" != "" ]]
         then
-            helm upgrade $SERVICE_NAME $CHART_PATH -f $(Build.SourcesDirectory)/$HELM_SOURCE_NAME/${{parameters.chartPath}}/values.yaml --namespace $NAMESPACE --install --create-namespace --wait --timeout 10m0s
+            helm upgrade $SERVICE_NAME $CHART_PATH -f $(Agent.BuildDirectory)/s/$HELM_SOURCE_NAME/${{parameters.chartPath}}/values.yaml --namespace $NAMESPACE --install --create-namespace --wait --timeout 10m0s
         else
-            helm upgrade $SERVICE_NAME $CHART_PATH -f $(Build.SourcesDirectory)/$HELM_SOURCE_NAME/${{parameters.chartPath}}/values.yaml --install --create-namespace --wait --timeout 10m0s
+            helm upgrade $SERVICE_NAME $CHART_PATH -f $(Agent.BuildDirectory)/s/$HELM_SOURCE_NAME/${{parameters.chartPath}}/values.yaml --install --create-namespace --wait --timeout 10m0s
         fi

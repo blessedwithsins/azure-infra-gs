@@ -56,7 +56,7 @@ steps:
               HELM_SOURCE_NAME=$(Build.Repository.Name)
           fi
 
-          VALUES_FILE_PATH=$(Build.SourcesDirectory)/$HELM_SOURCE_NAME/$VALUES_FILE
+          VALUES_FILE_PATH=$(Agent.BuildDirectory)/s/$HELM_SOURCE_NAME/$VALUES_FILE
           search="cert-manager.io\/cluster-issuer: letsencrypt"
           replace="appgw.ingress.kubernetes.io\/appgw-ssl-certificate: \"appgw-ssl-cert\""
           sed -i "s/$search/$replace/gi" $VALUES_FILE_PATH
