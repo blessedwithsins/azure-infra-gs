@@ -33,7 +33,7 @@ steps:
     - checkout: FluxRepo
       persistCredentials: true
   - checkout: ${{ parameters.checkoutRepo }}
-    path: $(Build.Repository.Name)
+    path: s/$(Build.Repository.Name)
     persistCredentials: true
   - task: "HelmInstaller@1"
     displayName: 'Download Helm'
@@ -56,7 +56,7 @@ steps:
               HELM_SOURCE_NAME=$(Build.Repository.Name)
           fi
 
-          VALUES_FILE_PATH=$(Agent.BuildDirectory)/$HELM_SOURCE_NAME/$VALUES_FILE
+          VALUES_FILE_PATH=$(Build.SourcesDirectory)/$HELM_SOURCE_NAME/$VALUES_FILE
           search="cert-manager.io\/cluster-issuer: letsencrypt"
           replace="appgw.ingress.kubernetes.io\/appgw-ssl-certificate: \"appgw-ssl-cert\""
           sed -i "s/$search/$replace/gi" $VALUES_FILE_PATH
@@ -67,13 +67,13 @@ steps:
     displayName: 'Helm Values - Build Repo'
     inputs:
       targetFiles: |
-        $(Agent.BuildDirectory)/$(Build.Repository.Name)/${{parameters.valuesFile}} => $(Agent.BuildDirectory)/$(Build.Repository.Name)/${{parameters.chartPath}}/values.yaml
+        $(Build.SourcesDirectory)/$(Build.Repository.Name)/${{parameters.valuesFile}} => $(Build.SourcesDirectory)/$(Build.Repository.Name)/${{parameters.chartPath}}/values.yaml
     condition: eq(variables['HELM_SOURCE'], '')
   - task: qetza.replacetokens.replacetokens-task.replacetokens@3
     displayName: 'Helm Values - Helm Source Repo'
     inputs:
       targetFiles: |
-        $(Agent.BuildDirectory)/$(HELM_SOURCE)/${{parameters.valuesFile}} => $(Agent.BuildDirectory)/$(HELM_SOURCE)/${{parameters.chartPath}}/values.yaml
+        $(Build.SourcesDirectory)/$(HELM_SOURCE)/${{parameters.valuesFile}} => $(Build.SourcesDirectory)/$(HELM_SOURCE)/${{parameters.chartPath}}/values.yaml
     condition: ne(variables['HELM_SOURCE'], '')
   - ${{ if eq(parameters.installThroughHelm, 'false') }}:
     - template: helm-template.yml
