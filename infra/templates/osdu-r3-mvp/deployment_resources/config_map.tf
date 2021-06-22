@@ -48,8 +48,8 @@ resource "kubernetes_config_map" "osduconfigmap" {
     ENV_REGISTRY          = data.terraform_remote_state.central_resources.outputs.container_registry_name
     ENV_KEYVAULT          = format("https://%s.vault.azure.net/", data.terraform_remote_state.central_resources.outputs.keyvault_name)
     ENV_LOG_WORKSPACE_ID  = data.terraform_remote_state.central_resources.outputs.log_analytics_id
-    ENV_POSTGRES_USERNAME = var.postgres_username
-    ENV_POSTGRES_HOSTNAME = module.postgreSQL.server_fqdn
+    ENV_POSTGRES_USERNAME = data.terraform_remote_state.service_resources.outputs.postgre_username
+    ENV_POSTGRES_HOSTNAME = data.terraform_remote_state.service_resources.outputs.postgre_server_fqdn
   }
 
   depends_on = [kubernetes_namespace.osdu]

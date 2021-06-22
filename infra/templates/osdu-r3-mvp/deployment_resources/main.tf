@@ -104,13 +104,13 @@ locals {
   base_name_60 = length(local.base_name) < 61 ? local.base_name : "${substr(local.base_name, 0, 60 - length(local.suffix))}${local.suffix}"
   base_name_76 = length(local.base_name) < 77 ? local.base_name : "${substr(local.base_name, 0, 76 - length(local.suffix))}${local.suffix}"
   base_name_83 = length(local.base_name) < 84 ? local.base_name : "${substr(local.base_name, 0, 83 - length(local.suffix))}${local.suffix}"
-
+  ssl_cert_name = "appgw-ssl-cert"
   tenant_id           = data.azurerm_client_config.current.tenant_id
   resource_group_name = format("%s-%s-%s-rg", var.prefix, local.workspace, random_string.workspace_scope.result)
   retention_policy    = var.log_retention_days == 0 ? false : true
 
 
-  redis_cache_name = "${local.base_name}-cache"
+
   postgresql_name  = "${local.base_name}-pg"
 
   vnet_name           = "${local.base_name_60}-vnet"
@@ -150,6 +150,16 @@ data "terraform_remote_state" "central_resources" {
     storage_account_name = var.remote_state_account
     container_name       = var.remote_state_container
     key                  = format("terraform.tfstateenv:%s", var.central_resources_workspace_name)
+  }
+}
+
+data "terraform_remote_state" "service_resources" {
+  backend = "azurerm"
+
+  config = {
+    storage_account_name = var.remote_state_account
+    container_name       = var.remote_state_container
+    key                  = format("terraform.tfstateenv:%s", var.service_resources_workspace_name)
   }
 }
 
@@ -231,7 +241,7 @@ module "appgateway" {
   vnet_name                       = module.network.name
   vnet_subnet_id                  = module.network.subnets.0
   keyvault_id                     = data.terraform_remote_state.central_resources.outputs.keyvault_id
-  keyvault_secret_id              = azurerm_key_vault_certificate.default.0.secret_id
+  keyvault_secret_id              = data.terraform_remote_state.service_resources.outputs.ssl_certificate_secret_id
   ssl_certificate_name            = local.ssl_cert_name
   ssl_policy_type                 = var.ssl_policy_type
   ssl_policy_cipher_suites        = var.ssl_policy_cipher_suites

@@ -38,6 +38,11 @@ output "storage_account" {
   value       = module.storage_account.name
 }
 
+output "storage_account_access_key" {
+  sensitive = true
+  value     = module.storage_account.primary_access_key
+}
+
 output "storage_account_id" {
   description = "The resource id of the storage account instance"
   value       = module.storage_account.id
@@ -88,3 +93,19 @@ output "redis_primary_access_key" {
 output "redis_ssl_port" {
   value = module.redis_cache.ssl_port
 }
+
+output "postgre_server_fqdn" {
+  sensitive = true
+  value = module.postgreSQL.server_fqdn
+}
+
+output "postgre_username" {
+  sensitive = false
+  value = var.postgres_username
+}
+
+output "ssl_certificate_secret_id" {
+  sensitive = true
+  value = azurerm_key_vault_certificate.default.0.secret_id
+}
+
