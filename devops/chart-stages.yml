@@ -29,7 +29,7 @@ parameters:
 stages:
   - ${{ each provider in parameters.providers }}:
     - ${{ each environment in provider.environments }}:
-      - stage: 'Deploy_${{ provider.name }}_${{ environment }}_${{ parameters.serviceName }}'
+      - stage: 'Deploy_${{ provider.name }}_${{ environment }}'
 
         variables:
           - group: '${{ provider.name }} Target Env Secrets - ${{ environment }}'
