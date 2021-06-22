@@ -32,7 +32,7 @@ The following items are recommended to override in custom.tfvars
 */
 
 
-prefix = "infra-mvp"
+prefix = "osdu-mvp"
 
 resource_tags = {
   contact = "pipeline"
