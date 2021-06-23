@@ -184,9 +184,6 @@ module "keyvault" {
 
   keyvault_name       = local.keyvault_name
   resource_group_name = var.resource_group_name
-  secrets = {
-    app-dev-sp-tenant-id = data.azurerm_client_config.current.tenant_id
-  }
 
   resource_tags = var.resource_tags
 }

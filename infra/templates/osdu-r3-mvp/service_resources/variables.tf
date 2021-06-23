@@ -137,6 +137,18 @@ variable "redis_capacity" {
   default     = 1
 }
 
+variable "redis_queue_sku_name" {
+  description = "The Azure Cache for Redis pricing tier. Possible values are Basic, Standard and Premium. Azure currently charges by the minute for all pricing tiers."
+  type        = string
+  default     = "Premium"
+}
+
+variable "redis_queue_zones" {
+  description = "A list of a one or more Availability Zones, where the Redis Cache should be allocated."
+  type        = list(string)
+  default     = ["1", "2"]
+}
+
 variable "postgres_databases" {
   description = "The list of names of the PostgreSQL Database, which needs to be a valid PostgreSQL identifier. Changing this forces a new resource to be created."
   default = [
@@ -300,41 +312,4 @@ variable "appgw_max_capacity" {
   description = "Maximum number of instances to run in the App Gateway"
   type        = number
   default     = 10
-}
-
-variable "cosmosdb_replica_location" {
-  description = "The name of the Azure region to host replicated data. i.e. 'East US' 'East US 2'. More locations can be found at https://azure.microsoft.com/en-us/global-infrastructure/locations/"
-  type        = string
-}
-
-variable "cosmosdb_consistency_level" {
-  description = "The level of consistency backed by SLAs for Cosmos database. Developers can chose from five well-defined consistency levels on the consistency spectrum."
-  type        = string
-  default     = "Session"
-}
-
-variable "cosmosdb_automatic_failover" {
-  description = "Determines if automatic failover is enabled for CosmosDB."
-  type        = bool
-  default     = true
-}
-
-variable "cosmos_databases" {
-  description = "The list of Cosmos DB SQL Databases."
-  type = list(object({
-    name       = string
-    throughput = number
-  }))
-  default = []
-}
-
-variable "cosmos_sql_collections" {
-  description = "The list of cosmos collection names to create. Names must be unique per cosmos instance."
-  type = list(object({
-    name                  = string
-    database_name         = string
-    partition_key_path    = string
-    partition_key_version = number
-  }))
-  default = []
 }

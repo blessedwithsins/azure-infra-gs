@@ -41,7 +41,7 @@ terraform {
   required_providers {
     azurerm = {
       source  = "hashicorp/azurerm"
-      version = "=2.41.0"
+      version = "=2.64.0"
     }
     azuread = {
       source  = "hashicorp/azuread"
@@ -74,12 +74,12 @@ provider "azurerm" {
 }
 
 provider "kubernetes" {
-  host                   = var.feature_flag.deploy_airflow?module.airflow.0.kube_config_block.0.host:""
-  username               = var.feature_flag.deploy_airflow?module.airflow.0.kube_config_block.0.username:""
-  password               = var.feature_flag.deploy_airflow?module.airflow.0.kube_config_block.0.password:""
-  client_certificate     = var.feature_flag.deploy_airflow?base64decode(module.airflow.0.kube_config_block.0.client_certificate):""
-  client_key             = var.feature_flag.deploy_airflow?base64decode(module.airflow.0.kube_config_block.0.client_key):""
-  cluster_ca_certificate = var.feature_flag.deploy_airflow?base64decode(module.airflow.0.kube_config_block.0.cluster_ca_certificate):""
+  host                   = var.feature_flag.deploy_airflow ? module.airflow.0.kube_config_block.0.host : ""
+  username               = var.feature_flag.deploy_airflow ? module.airflow.0.kube_config_block.0.username : ""
+  password               = var.feature_flag.deploy_airflow ? module.airflow.0.kube_config_block.0.password: ""
+  client_certificate     = var.feature_flag.deploy_airflow ? base64decode(module.airflow.0.kube_config_block.0.client_certificate): ""
+  client_key             = var.feature_flag.deploy_airflow ? base64decode(module.airflow.0.kube_config_block.0.client_key): ""
+  cluster_ca_certificate = var.feature_flag.deploy_airflow ? base64decode(module.airflow.0.kube_config_block.0.cluster_ca_certificate): ""
 }
 
 // Hook-up helm Provider for Terraform
