@@ -19,13 +19,14 @@ parameters:
   skipTests: true
   aksAgentSshPublicKeyFilename: 'azure-aks-node-ssh-key.pub'
   aksGitOpsSshPrivateKeyFilename: 'azure-aks-gitops-ssh-key'
+  dependency: TemplateChangeDetection_${{ parameters.configuration.jobName }}_Build
 
 jobs:
 
 - job: Build_${{ parameters.configuration.jobName }}_${{ parameters.environment }}_ComputeWs
   displayName: Initialize Build
   pool: $(AGENT_POOL)
-  dependsOn: TemplateChangeDetection_${{ parameters.configuration.jobName }}_Build
+  dependsOn: parameters.dependency
   condition: or(coalesce(variables.FORCE_RUN, ${{ parameters.forceRun }}), eq(dependencies.TemplateChangeDetection_${{ parameters.configuration.jobName }}_Build.outputs['${{ parameters.configuration.jobName }}.needs_cicd'], 'true'))
 
   steps:

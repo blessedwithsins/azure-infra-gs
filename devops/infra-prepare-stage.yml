@@ -100,11 +100,13 @@ stages:
             configuration: ${{ config }}
             aksAgentSshPublicKeyFilename: ${{ parameters.aksAgentSshPublicKeyFilename }}
             aksGitOpsSshPrivateKeyFilename: ${{ parameters.aksGitOpsSshPrivateKeyFilename }}
+            dependency: TemplateChangeDetection_${{ config.jobName }}_Airflow_Build
 
 
     - stage: ${{ config.jobName }}_${{ environment.name }}_Airflow_Deploy
       dependsOn: ${{ config.jobName }}_${{ environment.name }}_Airflow_Build
       displayName: 'Deploy Airflow-${{ config.jobName }}-${{ environment.name }}'
+      condition: and(succeeded(), eq(${{ config.deployAirflow }}, true))
       jobs:
         - job: TemplateChangeDetection_${{ config.jobName }}_Airflow_Deploy
           displayName: Analyze Changes
@@ -122,3 +124,4 @@ stages:
             configuration: ${{ config }}
             aksAgentSshPublicKeyFilename: ${{ parameters.aksAgentSshPublicKeyFilename }}
             aksGitOpsSshPrivateKeyFilename: ${{ parameters.aksGitOpsSshPrivateKeyFilename }}
+            dependency: TemplateChangeDetection_${{ config.jobName }}_Airflow_Deploy
