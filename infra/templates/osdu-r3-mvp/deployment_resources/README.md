@@ -1,6 +1,6 @@
 # Azure OSDU MVC - Service Resources Configuration
 
-The `osdu` - `service_resources` environment template is intended to provision to Azure resources for OSDU which are specifically used for the AKS cluster and configuration of the cluster.
+The `osdu` - `deployment_resources` environment template is intended to provision to Azure stateless resources for OSDU which are specifically used for the AKS cluster and configuration of the cluster.
 
 __PreRequisites__
 
@@ -42,9 +42,6 @@ resource_tags = {
   contact = "<your_name>"
 }
 
-# Storage Settings
-storage_shares = [ "airflowdags" ]
-storage_queues = [ "airflowlogqueue" ]
 ```
 
 __Provision__
@@ -60,7 +57,8 @@ terraform init -backend-config "storage_account_name=${TF_VAR_remote_state_accou
 
 # This command configures terraform to use a workspace unique to you. This allows you to work
 # without stepping over your teammate's deployments
-TF_WORKSPACE="sr-${UNIQUE}"
+# Also we suggests naming your resource with prefix blue and green as we may automate switching between two
+TF_WORKSPACE="blue-dr-${UNIQUE}"
 terraform workspace new $TF_WORKSPACE || terraform workspace select $TF_WORKSPACE
 ```
 
@@ -86,20 +84,4 @@ Optionally execute the following command to teardown your deployment and delete 
 ```bash
 # Destroy resources and tear down deployment. Only do this if you want to destroy your deployment.
 terraform destroy
-```
-
-## Testing
-
-Please confirm that you've completed the `terraform apply` step before running the integration tests as we're validating the active terraform workspace.
-
-Unit tests can be run using the following command:
-
-```
-go test -v $(go list ./... | grep "unit")
-```
-
-Integration tests can be run using the following command:
-
-```
-go test -v $(go list ./... | grep "integration")
 ```
