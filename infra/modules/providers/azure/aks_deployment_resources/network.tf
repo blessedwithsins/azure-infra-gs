@@ -65,7 +65,7 @@ resource "azurerm_network_security_rule" "aks-nsg-security-rule" {
   protocol                    = "Tcp"
   source_port_range           = "*"
   destination_port_range      = "*"
-  source_address_prefix       = data.azurerm_public_ip.aks_egress_ip.ip_address
+  source_address_prefix       = var.sr_aks_egress_ip_address
   destination_address_prefix  = "VirtualNetwork"
   resource_group_name         = data.azurerm_resource_group.main.name
   network_security_group_name = azurerm_network_security_group.aks-nsg.name

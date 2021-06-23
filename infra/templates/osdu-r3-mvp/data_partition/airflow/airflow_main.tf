@@ -86,109 +86,109 @@ resource "random_string" "airflow_fernete_key_rnd" {
   min_special = 1
 }
 
-
-// Create Fileshare and folder structure
-resource "azurerm_storage_share" "airflow_share" {
-  name                 = "airflowdags"
-  storage_account_name = var.storage_account_name
-  quota                = 50
-}
-
-resource "azurerm_storage_share_directory" "dags" {
-  name                 = "dags"
-  share_name           = azurerm_storage_share.airflow_share.name
-  storage_account_name = var.storage_account_name
-}
-
-resource "azurerm_storage_share_directory" "plugins" {
-  name                 = "plugins"
-  share_name           = azurerm_storage_share.airflow_share.name
-  storage_account_name = var.storage_account_name
-}
-
-resource "azurerm_storage_share_directory" "operators" {
-  name                 = "plugins/operators"
-  share_name           = azurerm_storage_share.airflow_share.name
-  storage_account_name = var.storage_account_name
-  depends_on           = [azurerm_storage_share_directory.plugins]
-}
-
-resource "azurerm_storage_share_directory" "hooks" {
-  name                 = "plugins/hooks"
-  share_name           = azurerm_storage_share.airflow_share.name
-  storage_account_name = var.storage_account_name
-  depends_on           = [azurerm_storage_share_directory.plugins]
-}
-
-resource "azurerm_storage_share_directory" "sensors" {
-  name                 = "plugins/sensors"
-  share_name           = azurerm_storage_share.airflow_share.name
-  storage_account_name = var.storage_account_name
-  depends_on           = [azurerm_storage_share_directory.plugins]
-}
-
-// Airflow log container
-resource "azurerm_storage_container" "main" {
-  name                  = "airflow-logs"
-  storage_account_name  = var.storage_account_name
-  container_access_type = "private"
-}
-
-// Airflow queue for blob create event
-resource "azurerm_storage_queue" "main" {
-  name                 = local.airflow_log_queue_name
-  storage_account_name = var.storage_account_name
-}
-
-// Add the Subscription to the Queue
-resource "azurerm_eventgrid_event_subscription" "airflow_log_event_subscription" {
-  name  = "airflowlogeventsubscription"
-  scope = var.storage_account_id
-
-  storage_queue_endpoint {
-    storage_account_id = var.storage_account_id
-    queue_name         = local.airflow_log_queue_name
-  }
-
-  included_event_types = ["Microsoft.Storage.BlobCreated"]
-
-  subject_filter {
-    subject_begins_with = "/blobServices/default/containers/airflow-logs/blobs"
-  }
-
-  depends_on = [azurerm_storage_queue.main]
-}
-
-// Add Contributor Role Access
-resource "azurerm_role_assignment" "storage_access_airflow" {
-  count = length(local.rbac_principals_airflow)
-
-  role_definition_name = local.role
-  principal_id         = local.rbac_principals_airflow[count.index]
-  scope                = var.storage_account_id
-}
-
-// Add Storage Queue Data Reader Role Access
-resource "azurerm_role_assignment" "queue_reader" {
-  count = length(local.rbac_principals_airflow)
-
-  role_definition_name = "Storage Queue Data Reader"
-  principal_id         = local.rbac_principals_airflow[count.index]
-  scope                = var.storage_account_id
-}
-
-// Add Storage Queue Data Message Processor Role Access
-resource "azurerm_role_assignment" "airflow_log_queue_processor_roles" {
-  count = length(local.rbac_principals_airflow)
-
-  role_definition_name = "Storage Queue Data Message Processor"
-  principal_id         = local.rbac_principals_airflow[count.index]
-  scope                = var.storage_account_id
-}
-
-#-------------------------------
-# Key Vault for Airflow
-#-------------------------------
+//
+//// Create Fileshare and folder structure
+//resource "azurerm_storage_share" "airflow_share" {
+//  name                 = "airflowdags"
+//  storage_account_name = var.storage_account_name
+//  quota                = 50
+//}
+//
+//resource "azurerm_storage_share_directory" "dags" {
+//  name                 = "dags"
+//  share_name           = azurerm_storage_share.airflow_share.name
+//  storage_account_name = var.storage_account_name
+//}
+//
+//resource "azurerm_storage_share_directory" "plugins" {
+//  name                 = "plugins"
+//  share_name           = azurerm_storage_share.airflow_share.name
+//  storage_account_name = var.storage_account_name
+//}
+//
+//resource "azurerm_storage_share_directory" "operators" {
+//  name                 = "plugins/operators"
+//  share_name           = azurerm_storage_share.airflow_share.name
+//  storage_account_name = var.storage_account_name
+//  depends_on           = [azurerm_storage_share_directory.plugins]
+//}
+//
+//resource "azurerm_storage_share_directory" "hooks" {
+//  name                 = "plugins/hooks"
+//  share_name           = azurerm_storage_share.airflow_share.name
+//  storage_account_name = var.storage_account_name
+//  depends_on           = [azurerm_storage_share_directory.plugins]
+//}
+//
+//resource "azurerm_storage_share_directory" "sensors" {
+//  name                 = "plugins/sensors"
+//  share_name           = azurerm_storage_share.airflow_share.name
+//  storage_account_name = var.storage_account_name
+//  depends_on           = [azurerm_storage_share_directory.plugins]
+//}
+//
+//// Airflow log container
+//resource "azurerm_storage_container" "main" {
+//  name                  = "airflow-logs"
+//  storage_account_name  = var.storage_account_name
+//  container_access_type = "private"
+//}
+//
+//// Airflow queue for blob create event
+//resource "azurerm_storage_queue" "main" {
+//  name                 = local.airflow_log_queue_name
+//  storage_account_name = var.storage_account_name
+//}
+//
+//// Add the Subscription to the Queue
+//resource "azurerm_eventgrid_event_subscription" "airflow_log_event_subscription" {
+//  name  = "airflowlogeventsubscription"
+//  scope = var.storage_account_id
+//
+//  storage_queue_endpoint {
+//    storage_account_id = var.storage_account_id
+//    queue_name         = local.airflow_log_queue_name
+//  }
+//
+//  included_event_types = ["Microsoft.Storage.BlobCreated"]
+//
+//  subject_filter {
+//    subject_begins_with = "/blobServices/default/containers/airflow-logs/blobs"
+//  }
+//
+//  depends_on = [azurerm_storage_queue.main]
+//}
+//
+//// Add Contributor Role Access
+//resource "azurerm_role_assignment" "storage_access_airflow" {
+//  count = length(local.rbac_principals_airflow)
+//
+//  role_definition_name = local.role
+//  principal_id         = local.rbac_principals_airflow[count.index]
+//  scope                = var.storage_account_id
+//}
+//
+//// Add Storage Queue Data Reader Role Access
+//resource "azurerm_role_assignment" "queue_reader" {
+//  count = length(local.rbac_principals_airflow)
+//
+//  role_definition_name = "Storage Queue Data Reader"
+//  principal_id         = local.rbac_principals_airflow[count.index]
+//  scope                = var.storage_account_id
+//}
+//
+//// Add Storage Queue Data Message Processor Role Access
+//resource "azurerm_role_assignment" "airflow_log_queue_processor_roles" {
+//  count = length(local.rbac_principals_airflow)
+//
+//  role_definition_name = "Storage Queue Data Message Processor"
+//  principal_id         = local.rbac_principals_airflow[count.index]
+//  scope                = var.storage_account_id
+//}
+//
+//#-------------------------------
+//# Key Vault for Airflow
+//#-------------------------------
 module "keyvault" {
   source = "../../../../modules/providers/azure/keyvault"
 
@@ -243,11 +243,11 @@ resource "azurerm_role_assignment" "kv_cr_roles" {
   principal_id         = local.rbac_principals_airflow[count.index]
   scope                = data.terraform_remote_state.central_resources.outputs.keyvault_dp_id
 }
-
-#-------------------------------
-# OSDU Identity
-#-------------------------------
-// Identity for OSDU Pod Identity
+//
+//#-------------------------------
+//# OSDU Identity
+//#-------------------------------
+//// Identity for OSDU Pod Identity
 resource "azurerm_user_assigned_identity" "osduidentity" {
   name                = local.osdupod_identity_name
   resource_group_name = local.resource_group_name
@@ -255,10 +255,10 @@ resource "azurerm_user_assigned_identity" "osduidentity" {
 
   tags = var.resource_tags
 }
-
-#-------------------------------
-# Container Registry
-#-------------------------------
+//
+//#-------------------------------
+//# Container Registry
+//#-------------------------------
 module "container_registry" {
   source = "../../../../modules/providers/azure/container-registry"
 
@@ -271,7 +271,7 @@ module "container_registry" {
   resource_tags = var.resource_tags
 }
 
-
+//
 #-------------------------------
 # PostgreSQL
 #-------------------------------
@@ -313,51 +313,51 @@ module "postgreSQL" {
 
   resource_tags = var.resource_tags
 }
-
-// Add Contributor Role Access
-resource "azurerm_role_assignment" "postgres_access" {
-  count = length(local.rbac_principals_airflow)
-
-  role_definition_name = local.role
-  principal_id         = local.rbac_principals_airflow[count.index]
-  scope                = module.postgreSQL.server_id
-}
-
-#-------------------------------
-# Azure Redis Cache
-#-------------------------------
-module "redis_cache" {
-  source = "../../../../modules/providers/azure/redis-cache"
-
-  name                = local.redis_cache_name
-  resource_group_name = local.resource_group_name
-  capacity            = var.redis_capacity
-
-  memory_features     = var.redis_config_memory
-  premium_tier_config = var.redis_config_schedule
-
-  resource_tags = var.resource_tags
-}
-
-// Add Contributor Role Access
-resource "azurerm_role_assignment" "redis_cache" {
-  count = length(local.rbac_principals_airflow)
-
-  role_definition_name = local.role
-  principal_id         = local.rbac_principals_airflow[count.index]
-  scope                = module.redis_cache.id
-}
-
-#-------------------------------
-# Log Analytics
-#-------------------------------
-module "log_analytics" {
-  source = "../../../../modules/providers/azure/log-analytics"
-
-  name                = local.logs_name
-  resource_group_name = local.resource_group_name
-  resource_tags       = var.resource_tags
-}
+//
+//// Add Contributor Role Access
+//resource "azurerm_role_assignment" "postgres_access" {
+//  count = length(local.rbac_principals_airflow)
+//
+//  role_definition_name = local.role
+//  principal_id         = local.rbac_principals_airflow[count.index]
+//  scope                = module.postgreSQL.server_id
+//}
+//
+//#-------------------------------
+//# Azure Redis Cache
+//#-------------------------------
+//module "redis_cache" {
+//  source = "../../../../modules/providers/azure/redis-cache"
+//
+//  name                = local.redis_cache_name
+//  resource_group_name = local.resource_group_name
+//  capacity            = var.redis_capacity
+//
+//  memory_features     = var.redis_config_memory
+//  premium_tier_config = var.redis_config_schedule
+//
+//  resource_tags = var.resource_tags
+//}
+//
+//// Add Contributor Role Access
+//resource "azurerm_role_assignment" "redis_cache" {
+//  count = length(local.rbac_principals_airflow)
+//
+//  role_definition_name = local.role
+//  principal_id         = local.rbac_principals_airflow[count.index]
+//  scope                = module.redis_cache.id
+//}
+//
+//#-------------------------------
+//# Log Analytics
+//#-------------------------------
+//module "log_analytics" {
+//  source = "../../../../modules/providers/azure/log-analytics"
+//
+//  name                = local.logs_name
+//  resource_group_name = local.resource_group_name
+//  resource_tags       = var.resource_tags
+//}
 
 #-------------------------------
 # Deployment Resources
@@ -395,33 +395,5 @@ module "aks_deployment_resources" {
   container_registry_id_data_partition = module.container_registry.container_registry_id
   osdu_identity_id                     = azurerm_user_assigned_identity.osduidentity.id
   aks_egress_ip                        = ""
+  sr_aks_egress_ip_address             = var.sr_aks_egress_ip_address
 }
-
-#-------------------------------
-# AKS Configuration Resources
-#-------------------------------
-//module "aks_config_resources" {
-//  source = "../../../../modules/providers/azure/aks_config_resources"
-//
-//  # Do not configure AKS and Helm until resources are fully created
-//  # https://github.com/hashicorp/terraform-provider-kubernetes/blob/6852542fca3894ef4dff397c5b7e7b0c4f32bbac/_examples/aks/README.md
-//  # https://github.com/hashicorp/terraform-provider-helm/issues/647
-//  depends_on = [module.aks_deployment_resources]
-//
-//  log_analytics_id = data.terraform_remote_state.central_resources.outputs.log_analytics_id
-//
-//  pod_identity_id  = azurerm_user_assigned_identity.osduidentity.id
-//  pod_principal_id = azurerm_user_assigned_identity.osduidentity.principal_id
-//
-//  aks_cluster_name = local.aks_cluster_name
-//
-//  # ----- AKS Config Map Settings -------
-//  container_registry_name = module.container_registry.container_registry_name
-//  feature_flag            = var.feature_flag
-//  key_vault_name          = module.keyvault.keyvault_id
-//  postgres_fqdn           = module.postgreSQL.server_fqdn
-//  postgres_username       = var.postgres_username
-//  subscription_name       = data.azurerm_subscription.current.display_name
-//  tenant_id               = data.azurerm_client_config.current.tenant_id
-//
-//}

@@ -62,3 +62,38 @@ output "eventgrid_topics" {
   description = "Properties of the event grid topics."
   value       = module.event_grid.topics
 }
+
+output "kube_config_block" {
+  sensitive = true
+  value     = var.feature_flag.deploy_airflow?module.airflow[0].kube_config_block: null
+}
+
+output "container_registry_name" {
+  description = "The name of the azure container registry resource"
+  value       = var.feature_flag.deploy_airflow?module.airflow[0].container_registry_name:""
+}
+
+output "keyvault_id" {
+  description = "The id of the Keyvault"
+  value       = var.feature_flag.deploy_airflow?module.airflow[0].keyvault_id:""
+}
+
+output "server_fqdn" {
+  description = "The server FQDN"
+  value       = var.feature_flag.deploy_airflow?module.airflow[0].server_fqdn:""
+}
+
+output "osduidentity_id" {
+  description = "The server FQDN"
+  value       = var.feature_flag.deploy_airflow?module.airflow[0].osduidentity_id:""
+}
+
+output "osduidentity_principal_id" {
+  description = "The server FQDN"
+  value       = var.feature_flag.deploy_airflow?module.airflow[0].osduidentity_principal_id:""
+}
+
+output "aks_cluster_name" {
+  description = ""
+  value       = var.feature_flag.deploy_airflow?module.airflow[0].aks_cluster_name:""
+}
