@@ -19,6 +19,7 @@ parameters:
   aksAgentSshPublicKeyFilename: 'azure-aks-node-ssh-key.pub'
   aksGitOpsSshPrivateKeyFilename: 'azure-aks-gitops-ssh-key'
   checkoutRepo: self
+  deployAirflow: false
 
 stages:
 
@@ -78,3 +79,47 @@ stages:
           configuration: ${{ config }}
           aksAgentSshPublicKeyFilename: ${{ parameters.aksAgentSshPublicKeyFilename }}
           aksGitOpsSshPrivateKeyFilename: ${{ parameters.aksGitOpsSshPrivateKeyFilename }}
+
+    - stage: ${{ config.jobName }}_${{ environment.name }}_Airflow_Build
+      displayName: 'Build Airflow-${{ config.jobName }}-${{ environment.name }}'
+      dependsOn: Environment_${{ environment.name }}
+      condition: and(succeeded(), eq(parameteres.deployAirflow, true))
+      jobs:
+        - job: TemplateChangeDetection_${{ config.jobName }}_Airflow_Build
+          displayName: Analyze Changes
+          pool: $(AGENT_POOL)
+          steps:
+            - template: tasks/detect-cicd.yml
+              parameters:
+                terraformTemplatePath: ${{ config.terraformTemplatePathAirflowAKSConfiguration }}
+                jobName: ${{ config.jobName }}
+        - template: infra-build-stage.yml
+          parameters:
+            environment: ${{ environment.name }}
+            enablePrIsolation: ${{ environment.enablePrIsolation }}
+            resourceNameIsolationLevel: ${{ environment.resourceNameIsolationLevel }}
+            configuration: ${{ config }}
+            aksAgentSshPublicKeyFilename: ${{ parameters.aksAgentSshPublicKeyFilename }}
+            aksGitOpsSshPrivateKeyFilename: ${{ parameters.aksGitOpsSshPrivateKeyFilename }}
+
+
+    - stage: ${{ config.jobName }}_${{ environment.name }}_Airflow_Deploy
+      dependsOn: ${{ config.jobName }}_${{ environment.name }}_Airflow_Build
+      displayName: 'Deploy Airflow-${{ config.jobName }}-${{ environment.name }}'
+      jobs:
+        - job: TemplateChangeDetection_${{ config.jobName }}_Airflow_Deploy
+          displayName: Analyze Changes
+          pool: $(AGENT_POOL)
+          steps:
+            - template: tasks/detect-cicd.yml
+              parameters:
+                terraformTemplatePath: ${{ config.terraformTemplatePathAirflowAKSConfiguration }}
+                jobName: ${{ config.jobName }}
+        - template: infra-deploy-stage.yml
+          parameters:
+            environment: ${{ environment.name }}
+            enablePrIsolation: ${{ environment.enablePrIsolation }}
+            resourceNameIsolationLevel: ${{ environment.resourceNameIsolationLevel }}
+            configuration: ${{ config }}
+            aksAgentSshPublicKeyFilename: ${{ parameters.aksAgentSshPublicKeyFilename }}
+            aksGitOpsSshPrivateKeyFilename: ${{ parameters.aksGitOpsSshPrivateKeyFilename }}

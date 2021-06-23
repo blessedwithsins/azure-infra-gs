@@ -78,9 +78,5 @@ stages:
         terraformTemplatePath: /infra/templates/osdu-r3-mvp/data_partition
         deploymentTimeoutInMinutes: 120
         dataPartitionName: opendes1
-      - ${{ if eq(${{ variables.deploy_airflow }}, 'true') }}:
-          - jobName: data_partition_1_airflow_aks_config
-            terraformWorkspacePrefix: airflow-aks-config
-            terraformTemplatePath: /infra/templates/osdu-r3-mvp/airflow_aks_configuration_resources
-            deploymentTimeoutInMinutes: 120
-            dataPartitionName: opendes1
+        terraformTemplatePathAirflowAKSConfiguration: /infra/templates/osdu-r3-mvp/airflow_aks_configuration_resources
+        deployAirflow: true
