@@ -47,6 +47,8 @@ variables:
   value: 'test-harness'
 - name: 'INFRA_REPO'
   value: $[ resources.repositories['InfraRepo'].name ]
+- name: 'deploy_airflow'
+  value: 'false'
 
 
 stages:
@@ -58,8 +60,14 @@ stages:
       resourceNameIsolationLevel: 8
 
     configurations:
-    - jobName: data_partition_1
-      terraformWorkspacePrefix: dp1
+    - jobName: data_partition_5
+      terraformWorkspacePrefix: dp5
       terraformTemplatePath: /infra/templates/osdu-r3-mvp/data_partition
       deploymentTimeoutInMinutes: 120
       dataPartitionName: opendes
+    - ${{ if eq(${{ variables.deploy_airflow }}, 'true') }}:
+        - jobName: data_partition_1_airflow_aks_config
+          terraformWorkspacePrefix: airflow-aks-config
+          terraformTemplatePath: /infra/templates/osdu-r3-mvp/airflow_aks_configuration_resources
+          deploymentTimeoutInMinutes: 120
+          dataPartitionName: opendes1
