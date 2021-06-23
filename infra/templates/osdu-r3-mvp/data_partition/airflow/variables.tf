@@ -215,37 +215,37 @@ variable "sr_aks_egress_ip_address" {
 }
 
 variable "storage_account_name" {
-  type        = string
+  type = string
 }
 
 variable "storage_account_id" {
-  type        = string
+  type = string
 }
 
 variable "resource_group_name" {
-  type        = string
+  type = string
 }
 
 variable "base_name" {
-  type        = string
+  type = string
 }
 
 variable "base_name_21" {
-  type        = string
+  type = string
 }
 
 variable "base_name_60" {
-  type        = string
+  type = string
 }
 
 variable "storage_account_key" {
-  type        = string
+  type = string
 }
 
 variable "ingest_storage_account_key" {
-  type        = string
+  type = string
 }
 
 variable "ingest_storage_account_name" {
-  type        = string
+  type = string
 }

@@ -380,7 +380,7 @@ module "aks_deployment_resources" {
   container_registry_id_central        = data.terraform_remote_state.central_resources.outputs.container_registry_id
   container_registry_id_data_partition = module.container_registry.container_registry_id
   osdu_identity_id                     = azurerm_user_assigned_identity.osduidentity.id
-  base_name = var.base_name
+  base_name                            = var.base_name
   sr_aks_egress_ip_address             = var.sr_aks_egress_ip_address
 }
 
@@ -391,5 +391,5 @@ module "aks_config_resources" {
   source = "../../../../modules/providers/azure/aks_config_resources"
 
   aks_cluster_name = local.aks_cluster_name
-  feature_flag            = var.feature_flag
+  feature_flag     = var.feature_flag
 }

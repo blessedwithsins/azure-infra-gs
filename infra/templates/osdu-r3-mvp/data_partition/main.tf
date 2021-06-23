@@ -76,21 +76,21 @@ provider "azurerm" {
 provider "kubernetes" {
   host                   = var.feature_flag.deploy_airflow ? module.airflow.0.kube_config_block.0.host : ""
   username               = var.feature_flag.deploy_airflow ? module.airflow.0.kube_config_block.0.username : ""
-  password               = var.feature_flag.deploy_airflow ? module.airflow.0.kube_config_block.0.password: ""
-  client_certificate     = var.feature_flag.deploy_airflow ? base64decode(module.airflow.0.kube_config_block.0.client_certificate): ""
-  client_key             = var.feature_flag.deploy_airflow ? base64decode(module.airflow.0.kube_config_block.0.client_key): ""
-  cluster_ca_certificate = var.feature_flag.deploy_airflow ? base64decode(module.airflow.0.kube_config_block.0.cluster_ca_certificate): ""
+  password               = var.feature_flag.deploy_airflow ? module.airflow.0.kube_config_block.0.password : ""
+  client_certificate     = var.feature_flag.deploy_airflow ? base64decode(module.airflow.0.kube_config_block.0.client_certificate) : ""
+  client_key             = var.feature_flag.deploy_airflow ? base64decode(module.airflow.0.kube_config_block.0.client_key) : ""
+  cluster_ca_certificate = var.feature_flag.deploy_airflow ? base64decode(module.airflow.0.kube_config_block.0.cluster_ca_certificate) : ""
 }
 
 // Hook-up helm Provider for Terraform
 provider "helm" {
   kubernetes {
-    host                   = var.feature_flag.deploy_airflow?module.airflow.0.kube_config_block.0.host:""
-    username               = var.feature_flag.deploy_airflow?module.airflow.0.kube_config_block.0.username:""
-    password               = var.feature_flag.deploy_airflow?module.airflow.0.kube_config_block.0.password:""
-    client_certificate     = var.feature_flag.deploy_airflow?base64decode(module.airflow.0.kube_config_block.0.client_certificate):""
-    client_key             = var.feature_flag.deploy_airflow?base64decode(module.airflow.0.kube_config_block.0.client_key):""
-    cluster_ca_certificate = var.feature_flag.deploy_airflow?base64decode(module.airflow.0.kube_config_block.0.cluster_ca_certificate):""
+    host                   = var.feature_flag.deploy_airflow ? module.airflow.0.kube_config_block.0.host : ""
+    username               = var.feature_flag.deploy_airflow ? module.airflow.0.kube_config_block.0.username : ""
+    password               = var.feature_flag.deploy_airflow ? module.airflow.0.kube_config_block.0.password : ""
+    client_certificate     = var.feature_flag.deploy_airflow ? base64decode(module.airflow.0.kube_config_block.0.client_certificate) : ""
+    client_key             = var.feature_flag.deploy_airflow ? base64decode(module.airflow.0.kube_config_block.0.client_key) : ""
+    cluster_ca_certificate = var.feature_flag.deploy_airflow ? base64decode(module.airflow.0.kube_config_block.0.cluster_ca_certificate) : ""
   }
 }
 
@@ -470,25 +470,25 @@ module "airflow" {
 
   central_resources_workspace_name = var.central_resources_workspace_name
 
-  remote_state_account             = var.remote_state_account
-  remote_state_container           = var.remote_state_container
+  remote_state_account   = var.remote_state_account
+  remote_state_container = var.remote_state_container
 
   storage_account_name = module.storage_account.name
   storage_account_id   = module.storage_account.id
   storage_account_key  = module.storage_account.primary_access_key
 
-  ingest_storage_account_key       = module.ingest_storage_account.primary_access_key
-  ingest_storage_account_name      = module.ingest_storage_account.name
+  ingest_storage_account_key  = module.ingest_storage_account.primary_access_key
+  ingest_storage_account_name = module.ingest_storage_account.name
 
-  resource_group_name  = azurerm_resource_group.main.name
-  resource_group_location          = var.resource_group_location
+  resource_group_name     = azurerm_resource_group.main.name
+  resource_group_location = var.resource_group_location
 
-  base_name                        = local.base_name
-  base_name_21                     = local.base_name_21
-  base_name_60                     = local.base_name_60
+  base_name    = local.base_name
+  base_name_21 = local.base_name_21
+  base_name_60 = local.base_name_60
 
-  ssh_public_key_file              = var.ssh_public_key_file
-  feature_flag                     = var.feature_flag
-  sr_aks_egress_ip_address         = data.terraform_remote_state.service_resources.outputs.aks_egress_ip_address
+  ssh_public_key_file      = var.ssh_public_key_file
+  feature_flag             = var.feature_flag
+  sr_aks_egress_ip_address = data.terraform_remote_state.service_resources.outputs.aks_egress_ip_address
 }
 

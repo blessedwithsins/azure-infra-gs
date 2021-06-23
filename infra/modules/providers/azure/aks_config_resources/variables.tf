@@ -8,5 +8,5 @@ variable "feature_flag" {
 }
 
 variable "aks_cluster_name" {
-  type        = string
+  type = string
 }
