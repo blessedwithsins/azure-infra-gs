@@ -90,7 +90,7 @@ variable "postgres_password" {
 variable "postgres_sku" {
   description = "Name of the sku"
   type        = string
-  default     = "GP_Gen5_4"
+  default     = "GP_Gen5_8"
 }
 
 variable "postgres_configurations" {
@@ -156,7 +156,7 @@ variable "aks_agent_vm_maxcount" {
 variable "aks_agent_vm_size" {
   type        = string
   description = "The size of each VM in the Agent Pool (e.g. Standard_F1). Changing this forces a new resource to be created."
-  default     = "Standard_D2s_v3"
+  default     = "Standard_E4s_v3"
 }
 
 variable "aks_agent_vm_disk" {
@@ -167,7 +167,7 @@ variable "aks_agent_vm_disk" {
 
 variable "kubernetes_version" {
   type    = string
-  default = "1.18.17"
+  default = "1.19.11"
 }
 
 variable "ssh_public_key_file" {
@@ -209,52 +209,43 @@ variable "feature_flag" {
   }
 }
 
+variable "sr_aks_egress_ip_address" {
+  description = "AKS egress ip for SR"
+  default     = []
+}
+
 variable "storage_account_name" {
-  description = ""
   type        = string
 }
 
 variable "storage_account_id" {
-  description = ""
   type        = string
 }
 
 variable "resource_group_name" {
-  description = ""
   type        = string
 }
 
 variable "base_name" {
-  description = ""
   type        = string
 }
 
 variable "base_name_21" {
-  description = ""
   type        = string
 }
 
 variable "base_name_60" {
-  description = ""
-  type        = string
-}
-
-variable "resource_group_id" {
-  description = ""
   type        = string
 }
 
 variable "storage_account_key" {
-  description = ""
   type        = string
 }
 
 variable "ingest_storage_account_key" {
-  description = ""
   type        = string
 }
 
 variable "ingest_storage_account_name" {
-  description = ""
   type        = string
 }

@@ -212,6 +212,28 @@ resource "azurerm_role_assignment" "kv_roles" {
   scope                = module.keyvault.keyvault_id
 }
 
+// Policies for Keyvault in Central resources
+module "keyvault_cr_dp_policy" {
+  source = "../../../../modules/providers/azure/keyvault-policy"
+
+  vault_id  = data.terraform_remote_state.central_resources.outputs.keyvault_dp_id
+  tenant_id = data.azurerm_client_config.current.tenant_id
+  object_ids = [
+    azurerm_user_assigned_identity.osduidentity.principal_id
+  ]
+  key_permissions         = ["get", "encrypt", "decrypt"]
+  certificate_permissions = ["get"]
+  secret_permissions      = ["get"]
+}
+
+resource "azurerm_role_assignment" "kv_cr_dp_roles" {
+  count = length(local.rbac_principals_airflow)
+
+  role_definition_name = "Reader"
+  principal_id         = local.rbac_principals_airflow[count.index]
+  scope                = data.terraform_remote_state.central_resources.outputs.keyvault_dp_id
+}
+
 #-------------------------------
 # OSDU Identity
 #-------------------------------
@@ -328,14 +350,13 @@ module "log_analytics" {
 }
 
 #-------------------------------
-# Deployment Resources
+# AKS Deployment Resources
 #-------------------------------
 module "aks_deployment_resources" {
   source = "../../../../modules/providers/azure/aks_deployment_resources"
 
   resource_group_name     = local.resource_group_name
   resource_tags           = var.resource_tags
-  resource_group_id       = var.resource_group_id
   resource_group_location = var.resource_group_location
 
   # ----- VNET Settings -----
@@ -362,6 +383,8 @@ module "aks_deployment_resources" {
   container_registry_id_central        = data.terraform_remote_state.central_resources.outputs.container_registry_id
   container_registry_id_data_partition = module.container_registry.container_registry_id
   osdu_identity_id                     = azurerm_user_assigned_identity.osduidentity.id
+  base_name = var.base_name
+  sr_aks_egress_ip_address             = var.sr_aks_egress_ip_address
 }
 
 #-------------------------------
@@ -370,25 +393,6 @@ module "aks_deployment_resources" {
 module "aks_config_resources" {
   source = "../../../../modules/providers/azure/aks_config_resources"
 
-  # Do not configure AKS and Helm until resources are fully created
-  # https://github.com/hashicorp/terraform-provider-kubernetes/blob/6852542fca3894ef4dff397c5b7e7b0c4f32bbac/_examples/aks/README.md
-  # https://github.com/hashicorp/terraform-provider-helm/issues/647
-  depends_on = [module.aks_deployment_resources]
-
-  log_analytics_id = data.terraform_remote_state.central_resources.outputs.log_analytics_id
-
-  pod_identity_id  = azurerm_user_assigned_identity.osduidentity.id
-  pod_principal_id = azurerm_user_assigned_identity.osduidentity.principal_id
-
   aks_cluster_name = local.aks_cluster_name
-
-  # ----- AKS Config Map Settings -------
-  container_registry_name = module.container_registry.container_registry_name
   feature_flag            = var.feature_flag
-  key_vault_name          = module.keyvault.keyvault_id
-  postgres_fqdn           = module.postgreSQL.server_fqdn
-  postgres_username       = var.postgres_username
-  subscription_name       = data.azurerm_subscription.current.display_name
-  tenant_id               = data.azurerm_client_config.current.tenant_id
-
 }

@@ -3,11 +3,6 @@ variable "resource_group_name" {
   type        = string
 }
 
-variable "resource_group_id" {
-  description = "The address space that is used by the virtual network."
-  type        = string
-}
-
 variable "resource_group_location" {
   description = "The address space that is used by the virtual network."
   type        = string
@@ -98,12 +93,12 @@ variable "ssh_public_key_file" {
 }
 
 variable "container_registry_id_central" {
-  description = ""
+  description = "Container Registry in Central Resources"
   type        = string
 }
 
 variable "container_registry_id_data_partition" {
-  description = ""
+  description = "Container Registry in Data Partition"
   type        = string
 }
 
@@ -112,3 +107,10 @@ variable "osdu_identity_id" {
   type        = string
 }
 
+variable "sr_aks_egress_ip_address" {
+  description = "AKS egress ip for SR"
+}
+
+variable "base_name" {
+  description = "Resource Base name"
+}

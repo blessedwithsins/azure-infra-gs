@@ -205,6 +205,11 @@ variable "feature_flag" {
     osdu_namespace = true
     flux           = true
     sa_lock        = true
-    deploy_airflow = false
+    deploy_airflow = true
   }
+}
+
+variable "service_resources_workspace_name" {
+  description = "(Required) The workspace name for the service_resources repository terraform environment / template to reference for this template."
+  type        = string
 }

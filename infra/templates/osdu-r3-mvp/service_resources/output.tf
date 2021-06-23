@@ -88,3 +88,7 @@ output "redis_primary_access_key" {
 output "redis_ssl_port" {
   value = module.redis_cache.ssl_port
 }
+
+output "aks_egress_ip_address" {
+  value = module.aks.aks_egress_ip_address
+}

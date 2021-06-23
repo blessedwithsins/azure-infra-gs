@@ -19,7 +19,6 @@ module "network" {
   resource_tags = var.resource_tags
 }
 
-
 #-------------------------------
 # Azure AKS
 #-------------------------------
@@ -85,4 +84,30 @@ resource "azurerm_role_assignment" "osdu_identity_mi_operator" {
   principal_id         = module.aks.kubelet_object_id
   scope                = var.osdu_identity_id
   role_definition_name = "Managed Identity Operator"
+}
+
+resource "azurerm_network_security_group" "aks-nsg" {
+  name                = "${var.base_name}-aks-nsg"
+  location            = var.resource_group_location
+  resource_group_name = var.resource_group_name
+}
+
+
+resource "azurerm_network_security_rule" "aks-nsg-security-rule" {
+  name                        = "nsg-rule"
+  priority                    = 100
+  direction                   = "Inbound"
+  access                      = "Allow"
+  protocol                    = "Tcp"
+  source_port_range           = "*"
+  destination_port_range      = "*"
+  source_address_prefix       = var.sr_aks_egress_ip_address
+  destination_address_prefix  = "VirtualNetwork"
+  resource_group_name         = var.resource_group_name
+  network_security_group_name = azurerm_network_security_group.aks-nsg.name
+}
+
+resource "azurerm_subnet_network_security_group_association" "nsg-association" {
+  subnet_id                 = module.network.subnets.1
+  network_security_group_id = azurerm_network_security_group.aks-nsg.id
 }

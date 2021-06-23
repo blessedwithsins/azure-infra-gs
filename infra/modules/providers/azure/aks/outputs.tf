@@ -58,3 +58,7 @@ output "kubelet_client_id" {
 output "node_resource_group" {
   value = azurerm_kubernetes_cluster.main.node_resource_group
 }
+
+output "aks_egress_ip_address" {
+  value = data.azurerm_public_ip.aks_egress_ip.ip_address
+}

@@ -57,7 +57,7 @@ terraform {
     }
     kubernetes = {
       source  = "hashicorp/kubernetes"
-      version = "~> 1.13.3"
+      version = "~> 2.3.2"
     }
     helm = {
       source  = "hashicorp/helm"
@@ -73,41 +73,24 @@ provider "azurerm" {
   features {}
 }
 
-// Hook-up kubectl Provider for Terraform
-
 provider "kubernetes" {
-  /*
-   Adding an alias for a provider makes it optional, without explicitly adding an alias for this provider
-   terraform plan will fail as this provider is using an output (kube_config_block) from airflow module
-   which is only available after terraform apply
-*/
-
-  alias                  = "kubernetes"
-  load_config_file       = false
-  host                   = module.airflow.kube_config_block.0.host
-  username               = module.airflow.kube_config_block.0.username
-  password               = module.airflow.kube_config_block.0.password
-  client_certificate     = base64decode(module.airflow.kube_config_block.0.client_certificate)
-  client_key             = base64decode(module.airflow.kube_config_block.0.client_key)
-  cluster_ca_certificate = base64decode(module.airflow.kube_config_block.0.cluster_ca_certificate)
+  host                   = var.feature_flag.deploy_airflow?module.airflow.0.kube_config_block.0.host:""
+  username               = var.feature_flag.deploy_airflow?module.airflow.0.kube_config_block.0.username:""
+  password               = var.feature_flag.deploy_airflow?module.airflow.0.kube_config_block.0.password:""
+  client_certificate     = var.feature_flag.deploy_airflow?base64decode(module.airflow.0.kube_config_block.0.client_certificate):""
+  client_key             = var.feature_flag.deploy_airflow?base64decode(module.airflow.0.kube_config_block.0.client_key):""
+  cluster_ca_certificate = var.feature_flag.deploy_airflow?base64decode(module.airflow.0.kube_config_block.0.cluster_ca_certificate):""
 }
 
 // Hook-up helm Provider for Terraform
 provider "helm" {
-  /*
-   Adding an alias for a provider makes it optional, without explicitly adding an alias for this provider
-   terraform plan will fail as this provider is using output (kube_config_block) from airflow module
-   which is only available after terraform apply
-*/
-
-  alias = "helm"
   kubernetes {
-    host                   = module.airflow.kube_config_block.0.host
-    username               = module.airflow.kube_config_block.0.username
-    password               = module.airflow.kube_config_block.0.password
-    client_certificate     = base64decode(module.airflow.kube_config_block.0.client_certificate)
-    client_key             = base64decode(module.airflow.kube_config_block.0.client_key)
-    cluster_ca_certificate = base64decode(module.airflow.kube_config_block.0.cluster_ca_certificate)
+    host                   = var.feature_flag.deploy_airflow?module.airflow.0.kube_config_block.0.host:""
+    username               = var.feature_flag.deploy_airflow?module.airflow.0.kube_config_block.0.username:""
+    password               = var.feature_flag.deploy_airflow?module.airflow.0.kube_config_block.0.password:""
+    client_certificate     = var.feature_flag.deploy_airflow?base64decode(module.airflow.0.kube_config_block.0.client_certificate):""
+    client_key             = var.feature_flag.deploy_airflow?base64decode(module.airflow.0.kube_config_block.0.client_key):""
+    cluster_ca_certificate = var.feature_flag.deploy_airflow?base64decode(module.airflow.0.kube_config_block.0.cluster_ca_certificate):""
   }
 }
 
@@ -168,6 +151,16 @@ data "terraform_remote_state" "central_resources" {
     storage_account_name = var.remote_state_account
     container_name       = var.remote_state_container
     key                  = format("terraform.tfstateenv:%s", var.central_resources_workspace_name)
+  }
+}
+
+data "terraform_remote_state" "service_resources" {
+  backend = "azurerm"
+
+  config = {
+    storage_account_name = var.remote_state_account
+    container_name       = var.remote_state_container
+    key                  = format("terraform.tfstateenv:%s", var.service_resources_workspace_name)
   }
 }
 
@@ -471,26 +464,31 @@ resource "azurerm_management_lock" "ingest_sa_lock" {
   lock_level = "CanNotDelete"
 }
 
-
 module "airflow" {
   source = "./airflow"
   count  = var.feature_flag.deploy_airflow ? 1 : 0
 
+  central_resources_workspace_name = var.central_resources_workspace_name
+
+  remote_state_account             = var.remote_state_account
+  remote_state_container           = var.remote_state_container
+
   storage_account_name = module.storage_account.name
   storage_account_id   = module.storage_account.id
-  resource_group_name  = azurerm_resource_group.main.name
-  resource_group_id    = azurerm_resource_group.main.id
   storage_account_key  = module.storage_account.primary_access_key
 
-  central_resources_workspace_name = var.central_resources_workspace_name
+  ingest_storage_account_key       = module.ingest_storage_account.primary_access_key
+  ingest_storage_account_name      = module.ingest_storage_account.name
+
+  resource_group_name  = azurerm_resource_group.main.name
+  resource_group_location          = var.resource_group_location
+
   base_name                        = local.base_name
   base_name_21                     = local.base_name_21
   base_name_60                     = local.base_name_60
-  ingest_storage_account_key       = module.ingest_storage_account.primary_access_key
-  ingest_storage_account_name      = module.ingest_storage_account.name
-  remote_state_account             = var.remote_state_account
-  remote_state_container           = var.remote_state_container
-  resource_group_location          = var.resource_group_location
+
   ssh_public_key_file              = var.ssh_public_key_file
   feature_flag                     = var.feature_flag
+  sr_aks_egress_ip_address         = data.terraform_remote_state.service_resources.outputs.aks_egress_ip_address
 }
+
