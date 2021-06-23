@@ -39,10 +39,12 @@ func TestDataEnvironment(t *testing.T) {
 	testFixture := infratests.IntegrationTestFixture{
 		GoTest:                t,
 		TfOptions:             tfOptions,
-		ExpectedTfOutputCount: 13,
+		ExpectedTfOutputCount: 17,
 		TfOutputAssertions: []infratests.TerraformOutputValidation{
 			redisIntegTests.InspectProvisionedCache("redis_name", "services_resource_group_name"),
+			redisIntegTests.InspectProvisionedCache("redis_queue_name", "services_resource_group_name"),
 			redisIntegTests.CheckRedisWriteOperations("redis_hostname", "redis_primary_access_key", "redis_ssl_port"),
+			redisIntegTests.CheckRedisWriteOperations("redis_queue_hostname", "redis_queue_primary_access_key", "redis_queue_ssl_port"),
 			appGatewayIntegTests.InspectAppGateway("services_resource_group_name", "appgw_name", "keyvault_secret_id"),
 		},
 	}

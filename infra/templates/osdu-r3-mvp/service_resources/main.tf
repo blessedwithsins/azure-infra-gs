@@ -30,7 +30,7 @@ terraform {
   required_providers {
     azurerm = {
       source  = "hashicorp/azurerm"
-      version = "=2.41.0"
+      version = "=2.64.0"
     }
     azuread = {
       source  = "hashicorp/azuread"
@@ -112,6 +112,7 @@ locals {
   storage_name = "${replace(local.base_name_21, "-", "")}config"
 
   redis_cache_name = "${local.base_name}-cache"
+  redis_queue_name = "${local.base_name}-queue"
   postgresql_name  = "${local.base_name}-pg"
 
   vnet_name           = "${local.base_name_60}-vnet"
@@ -126,7 +127,16 @@ locals {
   aks_identity_name = format("%s-pod-identity", local.aks_cluster_name)
   aks_dns_prefix    = local.base_name_60
 
-  cosmosdb_name = "${local.base_name}-system-db"
+  nodepool_zones = [
+    "1",
+    "2"
+  ]
+
+  gateway_zones = [
+    "1",
+    "2",
+    "3"
+  ]
 
   role = "Contributor"
   rbac_principals = [
@@ -288,9 +298,13 @@ module "appgateway" {
   ssl_policy_cipher_suites        = var.ssl_policy_cipher_suites
   ssl_policy_min_protocol_version = var.ssl_policy_min_protocol_version
 
+  gateway_zones = local.gateway_zones
+
   resource_tags = var.resource_tags
   min_capacity  = var.appgw_min_capacity
   max_capacity  = var.appgw_max_capacity
+
+
 }
 
 // Give AGIC Identity Access rights to Change the Application Gateway
@@ -325,6 +339,7 @@ module "aks" {
   resource_group_name = azurerm_resource_group.main.name
 
   dns_prefix         = local.aks_dns_prefix
+  availability_zones = local.nodepool_zones
   agent_vm_count     = var.aks_agent_vm_count
   agent_vm_size      = var.aks_agent_vm_size
   agent_vm_disk      = var.aks_agent_vm_disk
@@ -467,31 +482,28 @@ resource "azurerm_role_assignment" "redis_cache" {
   scope                = module.redis_cache.id
 }
 
+module "redis_queue" {
+  source = "../../../modules/providers/azure/redis-cache"
 
-#-------------------------------
-# CosmosDB
-#-------------------------------
-module "cosmosdb_account" {
-  source = "../../../modules/providers/azure/cosmosdb"
+  name                = local.redis_queue_name
+  resource_group_name = azurerm_resource_group.main.name
+  capacity            = var.redis_capacity
+  sku_name            = var.redis_queue_sku_name
+  zones               = var.redis_queue_zones
 
-  name                     = local.cosmosdb_name
-  resource_group_name      = azurerm_resource_group.main.name
-  primary_replica_location = var.cosmosdb_replica_location
-  automatic_failover       = var.cosmosdb_automatic_failover
-  consistency_level        = var.cosmosdb_consistency_level
-  databases                = var.cosmos_databases
-  sql_collections          = var.cosmos_sql_collections
+  memory_features     = var.redis_config_memory
+  premium_tier_config = var.redis_config_schedule
 
   resource_tags = var.resource_tags
 }
 
-// Add Access Control to Principal
-resource "azurerm_role_assignment" "cosmos_access" {
+// Add Contributor Role Access
+resource "azurerm_role_assignment" "redis_queue" {
   count = length(local.rbac_principals)
 
-  role_definition_name = "Contributor"
+  role_definition_name = local.role
   principal_id         = local.rbac_principals[count.index]
-  scope                = module.cosmosdb_account.account_id
+  scope                = module.redis_queue.id
 }
 
 #-------------------------------
@@ -504,14 +516,4 @@ resource "azurerm_management_lock" "sa_lock" {
   scope      = module.storage_account.id
   lock_level = "CanNotDelete"
 }
-
-# Cosmos db lock
-resource "azurerm_management_lock" "db_lock" {
-  name       = "osdu_system_db_lock"
-  scope      = module.cosmosdb_account.properties.cosmosdb.id
-  lock_level = "CanNotDelete"
-}
-
-
-
 
