@@ -29,7 +29,7 @@ The following items are recommended to override in custom.tfvars
 
 prefix = "osdu-mvp"
 
-data_partition_name = "topdes"
+data_partition_name = "opendes"
 
 resource_tags = {
   contact = "pipeline"
