@@ -188,6 +188,8 @@ resource "azurerm_application_gateway" "main" {
     min_protocol_version = var.ssl_policy_min_protocol_version
   }
 
+  zones = var.gateway_zones
+
   lifecycle {
     ignore_changes = [
       ssl_certificate,

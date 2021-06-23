@@ -30,7 +30,7 @@ terraform {
   required_providers {
     azurerm = {
       source  = "hashicorp/azurerm"
-      version = "=2.41.0"
+      version = "=2.64.0"
     }
     azuread = {
       source  = "hashicorp/azuread"
@@ -112,6 +112,7 @@ locals {
   storage_name = "${replace(local.base_name_21, "-", "")}config"
 
   redis_cache_name = "${local.base_name}-cache"
+  redis_queue_name = "${local.base_name}-queue"
   postgresql_name  = "${local.base_name}-pg"
 
   vnet_name           = "${local.base_name_60}-vnet"
@@ -127,6 +128,18 @@ locals {
   aks_dns_prefix    = local.base_name_60
 
   cosmosdb_name = "${local.base_name}-system-db"
+
+  nodepool_zones = [
+    "1",
+    "2",
+    "3"
+  ]
+
+  gateway_zones = [
+    "1",
+    "2",
+    "3"
+  ]
 
   role = "Contributor"
   rbac_principals = [
@@ -288,9 +301,13 @@ module "appgateway" {
   ssl_policy_cipher_suites        = var.ssl_policy_cipher_suites
   ssl_policy_min_protocol_version = var.ssl_policy_min_protocol_version
 
+  gateway_zones = local.gateway_zones
+
   resource_tags = var.resource_tags
   min_capacity  = var.appgw_min_capacity
   max_capacity  = var.appgw_max_capacity
+
+
 }
 
 // Give AGIC Identity Access rights to Change the Application Gateway
@@ -325,6 +342,7 @@ module "aks" {
   resource_group_name = azurerm_resource_group.main.name
 
   dns_prefix         = local.aks_dns_prefix
+  availability_zones = local.nodepool_zones
   agent_vm_count     = var.aks_agent_vm_count
   agent_vm_size      = var.aks_agent_vm_size
   agent_vm_disk      = var.aks_agent_vm_disk
@@ -465,6 +483,30 @@ resource "azurerm_role_assignment" "redis_cache" {
   role_definition_name = local.role
   principal_id         = local.rbac_principals[count.index]
   scope                = module.redis_cache.id
+}
+
+module "redis_queue" {
+  source = "../../../modules/providers/azure/redis-cache"
+
+  name                = local.redis_queue_name
+  resource_group_name = azurerm_resource_group.main.name
+  capacity            = var.redis_capacity
+  sku_name            = var.redis_queue_sku_name
+  zones               = var.redis_queue_zones
+
+  memory_features     = var.redis_config_memory
+  premium_tier_config = var.redis_config_schedule
+
+  resource_tags = var.resource_tags
+}
+
+// Add Contributor Role Access
+resource "azurerm_role_assignment" "redis_queue" {
+  count = length(local.rbac_principals)
+
+  role_definition_name = local.role
+  principal_id         = local.rbac_principals[count.index]
+  scope                = module.redis_queue.id
 }
 
 

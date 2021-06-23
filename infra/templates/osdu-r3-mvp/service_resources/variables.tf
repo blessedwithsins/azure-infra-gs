@@ -137,6 +137,18 @@ variable "redis_capacity" {
   default     = 1
 }
 
+variable "redis_queue_sku_name" {
+  description = "The Azure Cache for Redis pricing tier. Possible values are Basic, Standard and Premium. Azure currently charges by the minute for all pricing tiers."
+  type        = string
+  default     = "Premium"
+}
+
+variable "redis_queue_zones" {
+  description = "A list of a one or more Availability Zones, where the Redis Cache should be allocated."
+  type        = list(string)
+  default     = ["1", "2"]
+}
+
 variable "postgres_databases" {
   description = "The list of names of the PostgreSQL Database, which needs to be a valid PostgreSQL identifier. Changing this forces a new resource to be created."
   default = [

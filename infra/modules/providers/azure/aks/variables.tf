@@ -161,3 +161,10 @@ variable "enable_kube_dashboard" {
   type    = bool
   default = true
 }
+
+variable "availability_zones" {
+  description = "Availability zones for the aks nodepools"
+  type        = list(string)
+  default     = null
+}
+

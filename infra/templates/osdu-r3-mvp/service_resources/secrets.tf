@@ -153,8 +153,11 @@ resource "azurerm_key_vault_secret" "postgres_password" {
 # Azure Redis Cache
 #-------------------------------
 locals {
-  redis_hostname      = "redis-hostname"
-  redis_password_name = "redis-password"
+  redis_hostname            = "redis-hostname"
+  redis_password_name       = "redis-password"
+  redis_queue_hostname      = "redis-queue-hostname"
+  redis_queue_password_name = "redis-queue-password"
+
 }
 
 resource "azurerm_key_vault_secret" "redis_host" {
@@ -166,6 +169,18 @@ resource "azurerm_key_vault_secret" "redis_host" {
 resource "azurerm_key_vault_secret" "redis_password" {
   name         = local.redis_password_name
   value        = module.redis_cache.primary_access_key
+  key_vault_id = data.terraform_remote_state.central_resources.outputs.keyvault_id
+}
+
+resource "azurerm_key_vault_secret" "redis_queue_host" {
+  name         = local.redis_queue_hostname
+  value        = module.redis_queue.hostname
+  key_vault_id = data.terraform_remote_state.central_resources.outputs.keyvault_id
+}
+
+resource "azurerm_key_vault_secret" "redis_queue_password" {
+  name         = local.redis_queue_password_name
+  value        = module.redis_queue.primary_access_key
   key_vault_id = data.terraform_remote_state.central_resources.outputs.keyvault_id
 }
 

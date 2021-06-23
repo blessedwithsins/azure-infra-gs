@@ -22,7 +22,7 @@ terraform {
   required_providers {
     azurerm = {
       source  = "hashicorp/azurerm"
-      version = "=2.41.0"
+      version = "=2.64.0"
     }
     random = {
       source  = "hashicorp/random"
@@ -145,6 +145,47 @@ resource "azurerm_dashboard" "default_dashboard" {
   })
 }
 
+resource "azurerm_dashboard" "airflow_infra_dashboard" {
+  count = var.dashboards.airflow_infra ? 1 : 0
+
+  name                = "${local.base_name}-airflow-infra-dash"
+  resource_group_name = azurerm_resource_group.main.name
+  location            = azurerm_resource_group.main.location
+  tags                = var.resource_tags
+
+  dashboard_properties = templatefile("${local.template_path}/airflow-infra.tpl", {
+    subscriptionId     = data.azurerm_client_config.current.subscription_id
+    centralGroupPrefix = local.central_group_prefix
+  })
+}
+
+resource "azurerm_dashboard" "airflow_service_dashboard" {
+  count = var.dashboards.airflow_service ? 1 : 0
+
+  name                = "${local.base_name}-airflow-service-dash"
+  resource_group_name = azurerm_resource_group.main.name
+  location            = azurerm_resource_group.main.location
+  tags                = var.resource_tags
+
+  dashboard_properties = templatefile("${local.template_path}/airflow-service.tpl", {
+    subscriptionId     = data.azurerm_client_config.current.subscription_id
+    centralGroupPrefix = local.central_group_prefix
+  })
+}
+
+resource "azurerm_dashboard" "airflow_dags_dashboard" {
+  count = var.dashboards.airflow_dags ? 1 : 0
+
+  name                = "${local.base_name}-airflow-dags-dash"
+  resource_group_name = azurerm_resource_group.main.name
+  location            = azurerm_resource_group.main.location
+  tags                = var.resource_tags
+
+  dashboard_properties = templatefile("${local.template_path}/airflow-dags.tpl", {
+    subscriptionId     = data.azurerm_client_config.current.subscription_id
+    centralGroupPrefix = local.central_group_prefix
+  })
+}
 
 resource "azurerm_dashboard" "appinsights_dashboard" {
   count = var.dashboards.appinsights ? 1 : 0
