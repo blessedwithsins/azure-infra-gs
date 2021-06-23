@@ -55,7 +55,7 @@ variable "sku" {
 variable "storage_mb" {
   description = "Max storage allowed for a server. Possible values are between 5120 MB(5GB) and 1048576 MB(1TB) for the Basic SKU and between 5120 MB(5GB) and 4194304 MB(4TB)."
   type        = number
-  default     = 5120
+  default     = 372736
 }
 
 variable "server_version" {
