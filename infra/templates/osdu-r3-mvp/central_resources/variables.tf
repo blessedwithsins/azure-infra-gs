@@ -33,10 +33,12 @@ variable "feature_flag" {
   type = object({
     kv_lock  = bool
     acr_lock = bool
+    deploy_airflow = bool
   })
   default = {
     kv_lock  = true
     acr_lock = true
+    deploy_airflow = false
   }
 }
 

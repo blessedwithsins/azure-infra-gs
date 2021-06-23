@@ -157,6 +157,7 @@ module "keyvault" {
 #-------------------------------
 module "keyvaultdp" {
   source = "../../../modules/providers/azure/keyvault"
+  count  = var.feature_flag.deploy_airflow ? 1 : 0
 
   keyvault_name       = local.kv_name_dp
   resource_group_name = azurerm_resource_group.main.name

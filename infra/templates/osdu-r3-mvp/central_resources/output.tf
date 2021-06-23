@@ -78,5 +78,5 @@ output "app_insights_name" {
 
 output "keyvault_dp_id" {
   description = "URI for keyvault for Storing App insights Instrumentation Key required by Data Partition resource"
-  value       = module.keyvaultdp.keyvault_id
+  value       = var.feature_flag.deploy_airflow ? module.keyvaultdp.0.keyvault_id : ""
 }
