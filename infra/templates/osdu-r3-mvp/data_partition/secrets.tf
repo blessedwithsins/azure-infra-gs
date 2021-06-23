@@ -78,7 +78,6 @@ resource "azurerm_key_vault_secret" "partition_id" {
 }
 
 
-
 #-------------------------------
 # Storage
 #-------------------------------
@@ -117,8 +116,6 @@ resource "azurerm_key_vault_secret" "ingest_storage_key" {
   value        = module.ingest_storage_account.primary_access_key
   key_vault_id = data.terraform_remote_state.central_resources.outputs.keyvault_id
 }
-
-
 
 #-------------------------------
 # CosmosDB

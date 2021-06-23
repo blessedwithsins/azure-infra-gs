@@ -58,3 +58,7 @@ output "kubelet_client_id" {
 output "node_resource_group" {
   value = azurerm_kubernetes_cluster.main.node_resource_group
 }
+
+output "aks_egress_ip_id" {
+  value = tolist(azurerm_kubernetes_cluster.main.network_profile[0].load_balancer_profile[0].effective_outbound_ips)[0]
+}

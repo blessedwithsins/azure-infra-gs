@@ -49,6 +49,11 @@ variable "central_resources_workspace_name" {
   type        = string
 }
 
+variable "service_resources_workspace_name" {
+  description = "(Required) The workspace name for the service_resources repository terraform environment / template to reference for this template."
+  type        = string
+}
+
 variable "resource_tags" {
   description = "Map of tags to apply to this template."
   type        = map(string)
@@ -186,4 +191,30 @@ variable "elasticsearch_username" {
 variable "elasticsearch_password" {
   type        = string
   description = "password for elasticsearch cluster"
+}
+
+variable "ssh_public_key_file" {
+  type        = string
+  description = "(Required) The SSH public key used to setup log-in credentials on the nodes in the AKS cluster."
+}
+
+variable "feature_flag" {
+  description = "(Optional) A toggle for incubator features"
+  type = object({
+    osdu_namespace = bool
+    flux           = bool
+    sa_lock        = bool
+    deploy_airflow = bool
+  })
+  default = {
+    osdu_namespace = true
+    flux           = true
+    sa_lock        = true
+    deploy_airflow = true
+  }
+}
+
+variable "service_Resources_Aks" {
+  type = string
+  default = "osdu-mvp-sringes-52kf-aks"
 }
