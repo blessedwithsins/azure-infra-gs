@@ -112,3 +112,13 @@ variable "osdu_identity_id" {
   type        = string
 }
 
+# If no values specified, this defaults to Azure DNS
+variable "sr_aks_egress_ip_address" {
+  description = "AKS egress ip for SR"
+  default     = []
+}
+
+variable "base_name" {
+  description = "Resource Base name"
+  default     = []
+}
