@@ -83,7 +83,7 @@ stages:
     - stage: ${{ config.jobName }}_${{ environment.name }}_Airflow_Build
       displayName: 'Build Airflow-${{ config.jobName }}-${{ environment.name }}'
       dependsOn: Environment_${{ environment.name }}
-      condition: and(succeeded(), eq(parameteres.deployAirflow, true))
+      condition: and(succeeded(), eq(parameters.deployAirflow, true))
       jobs:
         - job: TemplateChangeDetection_${{ config.jobName }}_Airflow_Build
           displayName: Analyze Changes
