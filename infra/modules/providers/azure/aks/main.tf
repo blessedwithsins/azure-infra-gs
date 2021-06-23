@@ -143,5 +143,3 @@ resource "azurerm_kubernetes_cluster" "main" {
     ]
   }
 }
-
->>>>>>> airflow_do_changes_master_mr3_nsg
