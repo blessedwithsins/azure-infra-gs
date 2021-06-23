@@ -19,7 +19,6 @@ parameters:
   aksAgentSshPublicKeyFilename: 'azure-aks-node-ssh-key.pub'
   aksGitOpsSshPrivateKeyFilename: 'azure-aks-gitops-ssh-key'
   checkoutRepo: self
-  deployAirflow: false
 
 stages:
 
@@ -82,8 +81,8 @@ stages:
 
     - stage: ${{ config.jobName }}_${{ environment.name }}_Airflow_Build
       displayName: 'Build Airflow-${{ config.jobName }}-${{ environment.name }}'
-      dependsOn: Environment_${{ environment.name }}
-      condition: and(succeeded(), eq(parameters.deployAirflow, true))
+      dependsOn: ${{ config.jobName }}_${{ environment.name }}_Build
+      condition: and(succeeded(), eq(${{ config.deployAirflow }}, true))
       jobs:
         - job: TemplateChangeDetection_${{ config.jobName }}_Airflow_Build
           displayName: Analyze Changes
