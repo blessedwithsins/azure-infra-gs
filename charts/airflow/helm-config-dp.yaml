@@ -2,12 +2,19 @@
 # Specify the azure environment specific values
 #
 azure:
-  tenant: #{data-partition-tenant-id}#
-  subscription: #{data-partition-subscription-id}#
-  resourcegroup: #{base-name-dp}#-rg
-  identity: #{base-name-dp}#-osdu-identity
-  identity_id: #{management-identity-id}#
-  keyvault: #{base-name-dp}#-kv
+  dp:
+    tenant: #{data-partition-tenant-id}#
+    subscription: #{data-partition-subscription-id}#
+    resourcegroup: #{base-name-dp}#-rg
+    identity: #{base-name-dp}#-osdu-identity
+    identity_id: #{management-identity-id}#
+    keyvault: #{base-name-dp}#-kv
+  cr:
+    tenant: #{tenant-id}#
+    subscription: #{subscription-id}#
+    resourcegroup: #{base-name-cr}#-rg
+    keyvault: #{base-name-cr}#-dpkv
+    
 
 
 
@@ -22,10 +29,10 @@ appinsightstatsd:
 #
 logAnalytics:
   workspaceId:
-    secretName: "central-logging"
+    secretName: "dp-logging"
     secretKey: "workspace-id"
   workspaceKey:
-    secretName: "central-logging"
+    secretName: "dp-logging"
     secretKey: "workspace-key"
 
 ################################################################################
