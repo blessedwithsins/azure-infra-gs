@@ -31,14 +31,14 @@ variable "prefix" {
 variable "feature_flag" {
   description = "(Optional) A toggle for incubator features"
   type = object({
-    kv_lock        = bool
-    acr_lock       = bool
+    kv_lock  = bool
+    acr_lock = bool
     deploy_airflow = bool
   })
   default = {
-    kv_lock        = true
-    acr_lock       = true
-    deploy_airflow = false
+    kv_lock  = true
+    acr_lock = true
+    deploy_airflow = true
   }
 }
 
