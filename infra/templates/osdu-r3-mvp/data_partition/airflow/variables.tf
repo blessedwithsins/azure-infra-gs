@@ -268,6 +268,6 @@ variable "sr_aks_egress_ip_address" {
 # If no values specified, this defaults to Azure DNS
 variable "check" {
   description = "AKS egress ip for SR"
-  type = bool
+  type        = bool
   default     = true
 }

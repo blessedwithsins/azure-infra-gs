@@ -501,7 +501,7 @@ resource "azurerm_management_lock" "ingest_sa_lock" {
 
 module "airflow" {
   source = "./airflow"
-  count = var.feature_flag.deploy_airflow ? 1 : 0
+  count  = var.feature_flag.deploy_airflow ? 1 : 0
 
   storage_account_name = module.storage_account.name
   storage_account_id   = module.storage_account.id

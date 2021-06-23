@@ -119,7 +119,7 @@ variable "dns_servers" {
 }
 
 variable "aks_egress_ip" {
-  type = string
+  type    = string
   default = ""
 }
 

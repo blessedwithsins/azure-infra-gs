@@ -215,6 +215,6 @@ variable "feature_flag" {
 }
 
 variable "service_Resources_Aks" {
-  type = string
+  type    = string
   default = "osdu-mvp-sringes-52kf-aks"
 }

@@ -107,7 +107,7 @@ provider "helm" {
 # AKS Configuration Resources
 #-------------------------------
 module "aks_config_resources" {
-  count = var.feature_flag.deploy_airflow ? 1 : 0
+  count  = var.feature_flag.deploy_airflow ? 1 : 0
   source = "../../../modules/providers/azure/aks_config_resources"
 
   log_analytics_id = data.terraform_remote_state.central_resources.outputs.log_analytics_id
