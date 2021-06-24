@@ -74,6 +74,7 @@ provider "azurerm" {
 }
 
 provider "kubernetes" {
+//  load_config_file       = false
   host                   = var.feature_flag.deploy_airflow ? module.airflow.0.kube_config_block.0.host : ""
   username               = var.feature_flag.deploy_airflow ? module.airflow.0.kube_config_block.0.username : ""
   password               = var.feature_flag.deploy_airflow ? module.airflow.0.kube_config_block.0.password : ""
@@ -489,6 +490,6 @@ module "airflow" {
 
   ssh_public_key_file      = var.ssh_public_key_file
   feature_flag             = var.feature_flag
-  sr_aks_egress_ip_address = data.terraform_remote_state.service_resources.outputs.aks_egress_ip_address
+  sr_aks_egress_ip_address = "52.158.172.149"
 }
 
