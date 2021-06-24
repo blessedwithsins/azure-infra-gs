@@ -38,7 +38,7 @@ variable "feature_flag" {
   default = {
     kv_lock        = true
     acr_lock       = true
-    deploy_airflow = true
+    deploy_airflow = false
   }
 }
 

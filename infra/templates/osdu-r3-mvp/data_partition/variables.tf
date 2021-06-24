@@ -205,7 +205,7 @@ variable "feature_flag" {
     osdu_namespace = true
     flux           = true
     sa_lock        = true
-    deploy_airflow = true
+    deploy_airflow = false
   }
 }
 
