@@ -31,6 +31,13 @@ resource "azurerm_key_vault_secret" "airflow_admin_password" {
   key_vault_id = module.keyvault.keyvault_id
 }
 
+// Add the Airflow Admin Password to the Central Key Vault as well
+resource "azurerm_key_vault_secret" "airflow_password" {
+  name         = format("%s-airflow-password", var.data_partition_name)
+  value        = local.airflow_admin_password
+  key_vault_id = data.terraform_remote_state.central_resources.outputs.keyvault_id
+}
+
 // Add the Airflow Log Connection to the Vault
 resource "azurerm_key_vault_secret" "airflow_remote_log_connection" {
   name         = "airflow-remote-log-connection"
