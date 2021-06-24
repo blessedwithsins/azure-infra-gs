@@ -59,7 +59,7 @@ stages:
 
     configurations:
     - jobName: data_partition_1
-      terraformWorkspacePrefix: dp1
+      terraformWorkspacePrefix: dp6
       terraformTemplatePath: /infra/templates/osdu-r3-mvp/data_partition
       deploymentTimeoutInMinutes: 120
-      dataPartitionName: opendes
+      dataPartitionName: topdes
