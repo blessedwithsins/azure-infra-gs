@@ -62,15 +62,15 @@ resource "azurerm_key_vault_secret" "postgres_password" {
   key_vault_id = module.keyvault.keyvault_id
 }
 
-resource "azurerm_key_vault_secret" "redis_host" {
+resource "azurerm_key_vault_secret" "redis_queue_host" {
   name         = local.redis_hostname
-  value        = module.redis_cache.hostname
+  value        = module.redis_queue.hostname
   key_vault_id = module.keyvault.keyvault_id
 }
 
-resource "azurerm_key_vault_secret" "redis_password" {
+resource "azurerm_key_vault_secret" "redis_queue_password" {
   name         = local.redis_password_name
-  value        = module.redis_cache.primary_access_key
+  value        = module.redis_queue.primary_access_key
   key_vault_id = module.keyvault.keyvault_id
 }
 

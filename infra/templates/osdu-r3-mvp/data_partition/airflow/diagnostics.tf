@@ -46,7 +46,7 @@ resource "azurerm_monitor_diagnostic_setting" "postgres_diagnostics" {
 #-------------------------------
 resource "azurerm_monitor_diagnostic_setting" "redis_diagnostics" {
   name                       = "redis_diagnostics"
-  target_resource_id         = module.redis_cache.id
+  target_resource_id         = module.redis_queue.id
   log_analytics_workspace_id = data.terraform_remote_state.central_resources.outputs.log_analytics_id
 
 

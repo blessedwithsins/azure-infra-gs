@@ -12,7 +12,6 @@ locals {
   keyvault_name           = "${local.base_name_21}-kv"
   osdupod_identity_name   = "${local.base_name}-osdu-identity"
   container_registry_name = "${replace(local.base_name_21, "-", "")}cr"
-  redis_cache_name        = "${local.base_name}-cache"
   redis_queue_name        = "${local.base_name}-queue"
   logs_name               = "${local.base_name}-logs"
   vnet_name               = "${local.base_name_60}-vnet"
@@ -311,7 +310,7 @@ resource "azurerm_role_assignment" "postgres_access" {
 #-------------------------------
 # Azure Redis Cache
 #-------------------------------
-module "redis_cache" {
+module "redis_queue" {
   source = "../../../../modules/providers/azure/redis-cache"
 
   name                = local.redis_queue_name
@@ -327,12 +326,12 @@ module "redis_cache" {
 }
 
 // Add Contributor Role Access
-resource "azurerm_role_assignment" "redis_cache" {
+resource "azurerm_role_assignment" "redis_queue" {
   count = length(local.rbac_principals_airflow)
 
   role_definition_name = local.role
   principal_id         = local.rbac_principals_airflow[count.index]
-  scope                = module.redis_cache.id
+  scope                = module.redis_queue.id
 }
 
 #-------------------------------

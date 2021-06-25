@@ -199,7 +199,7 @@ variable "feature_flag" {
     deploy_dp_airflow = bool
   })
   default = {
-    deploy_dp_airflow = true
+    deploy_dp_airflow = false
   }
 }
 
