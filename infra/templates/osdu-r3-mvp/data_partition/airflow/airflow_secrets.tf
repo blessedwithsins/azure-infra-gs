@@ -11,13 +11,15 @@ locals {
 
   redis_hostname      = "redis-hostname"
   redis_password_name = "redis-password"
+  redis_queue_hostname      = "redis-queue-hostname"
+  redis_queue_password_name = "redis-queue-password"
 
   logs_id_name  = "log-workspace-id"
   logs_key_name = "log-workspace-key"
 
 }
 
-// Add the Fernet Key to the Vault
+//// Add the Fernet Key to the Vault
 resource "azurerm_key_vault_secret" "airflow_fernet_key_secret" {
   name         = "airflow-fernet-key"
   value        = base64encode(random_string.airflow_fernete_key_rnd.result)
@@ -132,5 +134,13 @@ resource "azurerm_key_vault_secret" "config_storage_key" {
 resource "azurerm_key_vault_secret" "config_storage_connection" {
   name         = local.config_storage_connection_name
   value        = format("DefaultEndpointsProtocol=https;AccountName=%s;AccountKey=%s;EndpointSuffix=core.windows.net", var.storage_account_name, var.storage_account_key)
+  key_vault_id = module.keyvault.keyvault_id
+}
+
+
+// Data Partition name
+resource "azurerm_key_vault_secret" "data_partition_name" {
+  name         = "data-partition-name"
+  value        = var.data_partition_name
   key_vault_id = module.keyvault.keyvault_id
 }

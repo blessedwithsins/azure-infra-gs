@@ -13,6 +13,7 @@ locals {
   osdupod_identity_name   = "${local.base_name}-osdu-identity"
   container_registry_name = "${replace(local.base_name_21, "-", "")}cr"
   redis_cache_name        = "${local.base_name}-cache"
+  redis_queue_name            = "${local.base_name}-queue"
   logs_name               = "${local.base_name}-logs"
   vnet_name               = "${local.base_name_60}-vnet"
   fe_subnet_name          = "${local.base_name_21}-fe-subnet"
@@ -230,10 +231,10 @@ resource "azurerm_role_assignment" "kv_cr_dp_roles" {
   scope                = data.terraform_remote_state.central_resources.outputs.keyvault_dp_id
 }
 
-#-------------------------------
-# OSDU Identity
-#-------------------------------
-// Identity for OSDU Pod Identity
+//#-------------------------------
+//# OSDU Identity
+//#-------------------------------
+//// Identity for OSDU Pod Identity
 resource "azurerm_user_assigned_identity" "osduidentity" {
   name                = local.osdupod_identity_name
   resource_group_name = local.resource_group_name
@@ -241,10 +242,10 @@ resource "azurerm_user_assigned_identity" "osduidentity" {
 
   tags = var.resource_tags
 }
-
-#-------------------------------
-# Container Registry
-#-------------------------------
+//
+//#-------------------------------
+//# Container Registry
+//#-------------------------------
 module "container_registry" {
   source = "../../../../modules/providers/azure/container-registry"
 
@@ -313,9 +314,11 @@ resource "azurerm_role_assignment" "postgres_access" {
 module "redis_cache" {
   source = "../../../../modules/providers/azure/redis-cache"
 
-  name                = local.redis_cache_name
+  name                = local.redis_queue_name
   resource_group_name = local.resource_group_name
   capacity            = var.redis_capacity
+  sku_name            = var.redis_queue_sku_name
+  zones               = var.redis_queue_zones
 
   memory_features     = var.redis_config_memory
   premium_tier_config = var.redis_config_schedule
