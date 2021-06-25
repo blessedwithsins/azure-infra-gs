@@ -9,8 +9,6 @@ locals {
   config_storage_key_name        = "${local.config_storage_account_name}-key"
   config_storage_connection_name = "${local.config_storage_account_name}-connection"
 
-  redis_hostname            = "redis-hostname"
-  redis_password_name       = "redis-password"
   redis_queue_hostname      = "redis-queue-hostname"
   redis_queue_password_name = "redis-queue-password"
 
@@ -63,13 +61,13 @@ resource "azurerm_key_vault_secret" "postgres_password" {
 }
 
 resource "azurerm_key_vault_secret" "redis_queue_host" {
-  name         = local.redis_hostname
+  name         = local.redis_queue_hostname
   value        = module.redis_queue.hostname
   key_vault_id = module.keyvault.keyvault_id
 }
 
 resource "azurerm_key_vault_secret" "redis_queue_password" {
-  name         = local.redis_password_name
+  name         = local.redis_queue_password_name
   value        = module.redis_queue.primary_access_key
   key_vault_id = module.keyvault.keyvault_id
 }
