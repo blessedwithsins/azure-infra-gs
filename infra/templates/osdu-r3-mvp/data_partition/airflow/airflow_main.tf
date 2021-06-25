@@ -230,9 +230,9 @@ resource "azurerm_role_assignment" "kv_cr_dp_roles" {
   scope                = data.terraform_remote_state.central_resources.outputs.keyvault_dp_id
 }
 
-//#-------------------------------
-//# OSDU Identity
-//#-------------------------------
+#-------------------------------
+# OSDU Identity
+#-------------------------------
 //// Identity for OSDU Pod Identity
 resource "azurerm_user_assigned_identity" "osduidentity" {
   name                = local.osdupod_identity_name
