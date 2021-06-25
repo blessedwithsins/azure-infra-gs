@@ -7,7 +7,7 @@ data:
     {
         backends: ["appinsights-statsd"],
         aiInstrumentationKey: process.env.APPLICATION_INSIGHTS_INSTRUMENTATION_KEY,
-        aiPrefix: "osdu_airflow",
+        aiPrefix: "{{ .Values.airflow.airflow.config.AIRFLOW__SCHEDULER__STATSD_PREFIX }}",
         aiRoleName: "airflow",
         aiRoleInstance: process.env.HOSTNAME,
         aiTrackStatsDMetrics: true,

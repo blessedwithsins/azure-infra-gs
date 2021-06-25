@@ -79,6 +79,13 @@ variable "premium_tier_config" {
   }
 }
 
+variable "zones" {
+  description = "A list of a one or more Availability Zones, where the Redis Cache should be allocated."
+  type        = list(string)
+  default     = null
+}
+
+
 variable "resource_tags" {
   description = "Map of tags to apply to taggable resources in this module. By default the taggable resources are tagged with the name defined above and this map is merged in"
   type        = map(string)

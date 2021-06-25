@@ -102,3 +102,9 @@ variable "ssl_policy_min_protocol_version" {
   type        = string
   default     = "TLSv1_2"
 }
+
+variable "gateway_zones" {
+  description = ""
+  type        = list(string)
+  default     = null
+}
