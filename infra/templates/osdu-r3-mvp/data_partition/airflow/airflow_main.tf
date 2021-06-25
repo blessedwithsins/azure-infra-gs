@@ -48,7 +48,7 @@ data "terraform_remote_state" "central_resources" {
 #-------------------------------
 
 locals {
-  airflow_admin_password = coalesce(var.airflow_admin_password, random_password.airflow_admin_password[0].result)
+  airflow_admin_password = coalesce(var.airflow_admin_password, random_password.airflow_admin_password.result)
   airflow_log_queue_name = "airflowlogqueue"
 }
 

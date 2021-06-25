@@ -51,7 +51,7 @@ resource "azurerm_key_vault_secret" "airflow_remote_log_connection" {
 
 locals {
   postgres_password_name = "postgres-password"
-  postgres_password      = coalesce(var.postgres_password, random_password.postgres[0].result)
+  postgres_password      = coalesce(var.postgres_password, random_password.postgres.result)
 }
 
 resource "azurerm_key_vault_secret" "postgres_password" {
