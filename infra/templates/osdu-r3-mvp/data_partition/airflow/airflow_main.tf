@@ -53,7 +53,6 @@ locals {
 }
 
 resource "random_password" "airflow_admin_password" {
-  count = var.airflow_admin_password == "" ? 1 : 0
 
   length           = 8
   special          = true
@@ -263,8 +262,6 @@ module "container_registry" {
 # PostgreSQL
 #-------------------------------
 resource "random_password" "postgres" {
-  count = var.postgres_password == "" ? 1 : 0
-
   length           = 8
   special          = true
   override_special = "_%@"
