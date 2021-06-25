@@ -196,16 +196,10 @@ variable "ssh_public_key_file" {
 variable "feature_flag" {
   description = "(Optional) A toggle for incubator features"
   type = object({
-    osdu_namespace = bool
-    flux           = bool
-    sa_lock        = bool
-    deploy_airflow = bool
+    deploy_dp_airflow = bool
   })
   default = {
-    osdu_namespace = true
-    flux           = true
-    sa_lock        = true
-    deploy_airflow = false
+    deploy_dp_airflow = false
   }
 }
 

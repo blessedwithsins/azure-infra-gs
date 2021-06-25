@@ -391,5 +391,4 @@ module "aks_config_resources" {
   source = "../../../../modules/providers/azure/aks_config_resources"
 
   aks_cluster_name = local.aks_cluster_name
-  feature_flag     = var.feature_flag
 }

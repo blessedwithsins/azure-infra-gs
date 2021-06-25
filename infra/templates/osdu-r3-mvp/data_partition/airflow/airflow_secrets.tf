@@ -15,7 +15,8 @@ locals {
   logs_id_name  = "log-workspace-id"
   logs_key_name = "log-workspace-key"
 
-}
+}    acr_lock       = true
+
 
 // Add the Fernet Key to the Vault
 resource "azurerm_key_vault_secret" "airflow_fernet_key_secret" {

@@ -193,22 +193,6 @@ variable "subnet_aks_prefix" {
   default     = "10.10.0.0/20"
 }
 
-variable "feature_flag" {
-  description = "(Optional) A toggle for incubator features"
-  type = object({
-    osdu_namespace = bool
-    flux           = bool
-    sa_lock        = bool
-    deploy_airflow = bool
-  })
-  default = {
-    osdu_namespace = true
-    flux           = true
-    sa_lock        = true
-    deploy_airflow = false
-  }
-}
-
 variable "sr_aks_egress_ip_address" {
   description = "AKS egress ip for SR"
   default     = []
