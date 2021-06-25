@@ -233,7 +233,7 @@ resource "azurerm_role_assignment" "kv_cr_dp_roles" {
 #-------------------------------
 # OSDU Identity
 #-------------------------------
-//// Identity for OSDU Pod Identity
+// Identity for OSDU Pod Identity
 resource "azurerm_user_assigned_identity" "osduidentity" {
   name                = local.osdupod_identity_name
   resource_group_name = local.resource_group_name
@@ -241,10 +241,10 @@ resource "azurerm_user_assigned_identity" "osduidentity" {
 
   tags = var.resource_tags
 }
-//
-//#-------------------------------
-//# Container Registry
-//#-------------------------------
+
+#-------------------------------
+# Container Registry
+#-------------------------------
 module "container_registry" {
   source = "../../../../modules/providers/azure/container-registry"
 

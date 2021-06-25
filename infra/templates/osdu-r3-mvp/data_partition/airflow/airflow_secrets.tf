@@ -19,7 +19,7 @@ locals {
 
 }
 
-//// Add the Fernet Key to the Vault
+// Add the Fernet Key to the Vault
 resource "azurerm_key_vault_secret" "airflow_fernet_key_secret" {
   name         = "airflow-fernet-key"
   value        = base64encode(random_string.airflow_fernete_key_rnd.result)
