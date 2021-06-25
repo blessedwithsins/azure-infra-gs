@@ -15,6 +15,11 @@ resource "azurerm_key_vault_certificate" "kv_cert_import" {
   name         = var.key_vault_cert_name
   key_vault_id = var.keyvault_id
 
+  timeouts {
+    create = "15m"
+    delete = "15m"
+  }
+
   certificate {
     contents = filebase64(var.key_vault_cert_import_filepath)
   }
