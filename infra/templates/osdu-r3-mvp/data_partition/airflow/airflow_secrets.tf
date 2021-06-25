@@ -9,8 +9,8 @@ locals {
   config_storage_key_name        = "${local.config_storage_account_name}-key"
   config_storage_connection_name = "${local.config_storage_account_name}-connection"
 
-  redis_hostname      = "redis-hostname"
-  redis_password_name = "redis-password"
+  redis_hostname            = "redis-hostname"
+  redis_password_name       = "redis-password"
   redis_queue_hostname      = "redis-queue-hostname"
   redis_queue_password_name = "redis-queue-password"
 

@@ -13,7 +13,7 @@ locals {
   osdupod_identity_name   = "${local.base_name}-osdu-identity"
   container_registry_name = "${replace(local.base_name_21, "-", "")}cr"
   redis_cache_name        = "${local.base_name}-cache"
-  redis_queue_name            = "${local.base_name}-queue"
+  redis_queue_name        = "${local.base_name}-queue"
   logs_name               = "${local.base_name}-logs"
   vnet_name               = "${local.base_name_60}-vnet"
   fe_subnet_name          = "${local.base_name_21}-fe-subnet"
