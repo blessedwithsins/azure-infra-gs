@@ -96,8 +96,8 @@ spec:
                     local username = credsList[1]
                     local password = credsList[2]
 
-                    local airflowUsername = "{{ .Values.airflowAuthentication.username }}"
-                    local airflowPasswordFilepath = "{{ .Values.airflowAuthentication.keyvaultMountPath }}" .. "{{ .Values.airflowAuthentication.passwordKey }}"
+                    local airflowUsername = "admin"
+                    local airflowPasswordFilepath = "/mnt/azure-keyvault/airflow-admin-password"
 
                     local airflowPassword = read_file(airflowPasswordFilepath)
                     if (username == airflowUsername and password == airflowPassword) then
@@ -112,7 +112,9 @@ spec:
               end
 
               function envoy_on_request(request_handle)
+                start_time = os.time()
                 local status, result = pcall(authenticateRequest, request_handle)
+                Nc_GUI_InfoBox("Elapsed time is: " .. os.clock()-start_time)
                 if (not status) then
                   authenticationFailure(request_handle)
                 end
