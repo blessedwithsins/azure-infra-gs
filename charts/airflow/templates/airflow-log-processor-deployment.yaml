@@ -1,8 +1,8 @@
+{{- $isEnabled := .Values.airflow.isDataPartitionDeployment | default false -}}
 apiVersion: apps/v1
 kind: Deployment
 metadata:
   name: airflow-log-processor
-  namespace: osdu
   labels:
     app: airflow-log-processor
 spec:
@@ -29,13 +29,13 @@ spec:
           - name: AzureLogWorkspaceCustomerId
             valueFrom:
               secretKeyRef:
-                name: central-logging
-                key: workspace-id
+                name: {{ .Values.logAnalytics.workspaceId.secretName }}
+                key: {{ .Values.logAnalytics.workspaceId.secretKey }}
           - name: AzureLogWorkspaceSharedKey
             valueFrom:
               secretKeyRef:
-                name: central-logging
-                key: workspace-key
+                name: {{ .Values.logAnalytics.workspaceKey.secretName }}
+                key: {{ .Values.logAnalytics.workspaceKey.secretKey }}
           - name: AzureWebJobsStorage
             valueFrom:
               secretKeyRef:
@@ -43,24 +43,33 @@ spec:
                 key: storage-connection
         
 ---
+{{- if $isEnabled }}
+apiVersion: keda.sh/v1alpha1
+{{- else }}
 apiVersion: keda.k8s.io/v1alpha1
+{{- end }}
 kind: TriggerAuthentication
 metadata:
   name: azure-queue-auth
-  namespace: osdu
 spec:
   podIdentity:
     provider: azure
 
 ---
-apiVersion: keda.k8s.io/v1alpha1
 kind: ScaledObject
 metadata:
   name: azure-queue-scaledobject
-  namespace: osdu
+{{- if $isEnabled }}
+apiVersion: keda.sh/v1alpha1
 spec:
   scaleTargetRef:
-    deploymentName: azurequeue-function
+    name: airflow-log-processor
+{{- else }}
+apiVersion: keda.k8s.io/v1alpha1
+spec:
+  scaleTargetRef:
+    deploymentName: airflow-log-processor
+{{- end }}
   triggers:
   - type: azure-queue
     metadata:

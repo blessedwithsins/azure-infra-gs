@@ -4,6 +4,17 @@
 appinsightstatsd:
   aadpodidbinding: "osdu-identity"
 
+#################################################################################
+# Specify log analytics configuration
+#
+logAnalytics:
+  workspaceId:
+    secretName: "central-logging"
+    secretKey: "workspace-id"
+  workspaceKey:
+    secretName: "central-logging"
+    secretKey: "workspace-key"
+
 ################################################################################
 # Specify any optional override values
 #
@@ -49,6 +60,15 @@ pgbouncer:
 # Specify the airflow configuration
 #
 airflow:
+
+  ##################################
+  # Kubernetes Pod Operator config
+  ##################################
+  kubernetesPodOperator:
+    namespace: airflow
+  
+  serviceAccount:
+    name: airflow
 
   ###################################
   # Kubernetes - Ingress Configs

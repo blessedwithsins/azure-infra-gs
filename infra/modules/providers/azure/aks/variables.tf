@@ -54,12 +54,12 @@ variable "agent_vm_size" {
 
 variable "max_pods" {
   type    = string
-  default = 30
+  default = 20
 }
 
 variable "kubernetes_version" {
   type    = string
-  default = "1.17.9"
+  default = "1.19.11"
 }
 
 variable "admin_user" {

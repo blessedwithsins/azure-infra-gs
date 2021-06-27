@@ -14,6 +14,8 @@ spec:
   template:
     metadata:
       name: "{{ .Release.Name }}"
+      annotations:
+        sidecar.istio.io/inject: "false"
       labels:
         app.kubernetes.io/managed-by: {{ .Release.Service | quote }}
         app.kubernetes.io/instance: {{ .Release.Name | quote }}

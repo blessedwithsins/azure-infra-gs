@@ -39,7 +39,6 @@ resource "helm_release" "agic" {
   version    = local.helm_agic_version
   namespace  = kubernetes_namespace.agic.metadata.0.name
 
-
   set {
     name  = "appgw.subscriptionId"
     value = data.azurerm_client_config.current.subscription_id
@@ -48,6 +47,11 @@ resource "helm_release" "agic" {
   set {
     name  = "appgw.resourceGroup"
     value = azurerm_resource_group.main.name
+  }
+
+  set {
+    name  = "appgw.applicationGatewayID"
+    value = module.appgateway.id
   }
 
   set {

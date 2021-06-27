@@ -63,13 +63,7 @@ resource "azurerm_key_vault_secret" "storage_connection" {
 # Network
 #-------------------------------
 locals {
-  partition_id = "system"
-
   ssl_cert_name = "appgw-ssl-cert"
-
-  cosmos_connection  = format("%s-cosmos-connection", local.partition_id)
-  cosmos_endpoint    = format("%s-cosmos-endpoint", local.partition_id)
-  cosmos_primary_key = format("%s-cosmos-primary-key", local.partition_id)
 }
 
 resource "azurerm_key_vault_certificate" "default" {
@@ -181,26 +175,5 @@ resource "azurerm_key_vault_secret" "redis_queue_host" {
 resource "azurerm_key_vault_secret" "redis_queue_password" {
   name         = local.redis_queue_password_name
   value        = module.redis_queue.primary_access_key
-  key_vault_id = data.terraform_remote_state.central_resources.outputs.keyvault_id
-}
-
-#-------------------------------
-# CosmosDB
-#-------------------------------
-resource "azurerm_key_vault_secret" "cosmos_connection" {
-  name         = local.cosmos_connection
-  value        = module.cosmosdb_account.properties.cosmosdb.connection_strings[0]
-  key_vault_id = data.terraform_remote_state.central_resources.outputs.keyvault_id
-}
-
-resource "azurerm_key_vault_secret" "cosmos_endpoint" {
-  name         = local.cosmos_endpoint
-  value        = module.cosmosdb_account.properties.cosmosdb.endpoint
-  key_vault_id = data.terraform_remote_state.central_resources.outputs.keyvault_id
-}
-
-resource "azurerm_key_vault_secret" "cosmos_key" {
-  name         = local.cosmos_primary_key
-  value        = module.cosmosdb_account.properties.cosmosdb.primary_master_key
   key_vault_id = data.terraform_remote_state.central_resources.outputs.keyvault_id
 }
