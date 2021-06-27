@@ -18,7 +18,7 @@ steps:
     displayName: 'Helm Install ${{parameters.serviceName}}'
     env:
       SERVICE_NAME: ${{parameters.serviceName}}
-      BASE_NAME_RG: ${{parameters.baseNameRG}}
+      BASE_NAME_RG: ${{parameters.baseResourceGroupName}}
       VALUES_FILE: ${{parameters.valuesFile}}
       CHART_PATH: ${{parameters.chartPath}}
       NAMESPACE: ${{parameters.namespace}}

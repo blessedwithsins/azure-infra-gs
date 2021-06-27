@@ -67,7 +67,7 @@ stages:
                     extractedChartFolder: ${{ parameters.extractedChartFolder }}
                     installThroughHelm: ${{ parameters.installThroughHelm }}
                     ${{ if eq(parameters.isDPDeployment, 'true') }}:
-                      baseNameRG: $(base-name-dp)
+                      baseResourceGroupName: $(base-name-dp)
                     namespace: ${{ parameters.namespace }}
 
                 - template: tasks/flux-chart-wait.yml

@@ -25,7 +25,7 @@ parameters:
   chartModificationScript: ""
   extractedChartFolder: "templates"
   installThroughHelm: false
-  baseNameRG: $(base-name-sr)
+  baseResourceGroupName: $(base-name-sr)
   namespace: ""
 
 steps:
@@ -98,5 +98,5 @@ steps:
         serviceName: ${{parameters.serviceName}}
         chartPath: ${{ parameters.chartPath }}
         valuesFile: ${{ parameters.valuesFile }}
-        baseNameRG: ${{ parameters.baseNameRG }}
+        baseResourceGroupName: ${{ parameters.baseResourceGroupName }}
         namespace: ${{ parameters.namespace }}
