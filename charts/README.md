@@ -192,10 +192,10 @@ airflow:
     enabled: false
   externalRedis:
     ## Azure Redis Cache host
-    host: $(az keyvault secret show --id https://${ENV_VAULT}.vault.azure.net/secrets/base-name-sr --query value -otsv)-cache.redis.cache.windows.net
+    host: $(az keyvault secret show --id https://${ENV_VAULT}.vault.azure.net/secrets/base-name-sr --query value -otsv)-queue.redis.cache.windows.net
     port: 6380
     passwordSecret: "redis"
-    passwordSecretKey: "redis-password"
+    passwordSecretKey: "redis-queue-password"
     databaseNumber: 1  #<-- Adding redis database number according to the Redis config map https://community.opengroup.org/osdu/platform/deployment-and-operations/infra-azure-provisioning/-/blob/master/charts/osdu-common/templates/redis-map.yaml#L7
 
 

@@ -6,7 +6,7 @@ const testUtils = require("../utils/testUtils");
 let appInsights = require("applicationinsights");
 
 // Configure AI
-let version = '0.1.4';
+let version = '0.9.0';
 if (process.env.VERSION !== undefined) {
   version = process.env.VERSION;
 }
@@ -19,7 +19,7 @@ appInsights.setup(process.env.APPINSIGHTS_INSTRUMENTATIONKEY).start();
 const client = appInsights.defaultClient;
 appInsights.defaultClient.context.tags[
   appInsights.defaultClient.context.keys.cloudRole
-] = `azure-probe-test:${version}`;
+] = `probe-test:${version}`;
 appInsights.defaultClient.context.tags[
   appInsights.defaultClient.context.keys.sessionId
 ] = probeId;

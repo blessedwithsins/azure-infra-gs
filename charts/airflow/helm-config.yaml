@@ -114,10 +114,10 @@ airflow:
   redis:
     enabled: false
   externalRedis:
-    host: #{base-name-sr}#-cache.redis.cache.windows.net    #<-- Azure Redis Cache host
+    host: #{base-name-sr}#-queue.redis.cache.windows.net    #<-- Azure Redis Cache host
     port: 6380
     passwordSecret: "redis"
-    passwordSecretKey: "redis-password"
+    passwordSecretKey: "redis-queue-password"
     databaseNumber: 1  #<-- Adding redis database number according to the Redis config map https://community.opengroup.org/osdu/platform/deployment-and-operations/infra-azure-provisioning/-/blob/master/charts/osdu-common/templates/redis-map.yaml#L7
 
   ###################################

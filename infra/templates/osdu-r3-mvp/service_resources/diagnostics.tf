@@ -244,4 +244,20 @@ resource "azurerm_monitor_diagnostic_setting" "redis_diagnostics" {
   }
 }
 
+resource "azurerm_monitor_diagnostic_setting" "redis_queue_diagnostics" {
+  name                       = "redis_queue_diagnostics"
+  target_resource_id         = module.redis_queue.id
+  log_analytics_workspace_id = data.terraform_remote_state.central_resources.outputs.log_analytics_id
+
+
+  metric {
+    category = "AllMetrics"
+
+    retention_policy {
+      days    = var.log_retention_days
+      enabled = local.retention_policy
+    }
+  }
+}
+
 
