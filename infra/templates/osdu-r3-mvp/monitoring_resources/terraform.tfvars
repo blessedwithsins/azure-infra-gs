@@ -102,9 +102,9 @@ log-alerts = {
   airflow-scheduler-host-count-alert = {
     # Scope for log query.
     log-analytics-scope = true,
-    service-name    = "airflow",
-    alert-rule-name = "airflow-scheduler-host-count-alert",
-    description     = "Alert to trigger when the host count of airflow scheduler goes below the reqd count",
+    service-name        = "airflow",
+    alert-rule-name     = "airflow-scheduler-host-count-alert",
+    description         = "Alert to trigger when the host count of airflow scheduler goes below the reqd count",
     # Alert based on metric measurement
     metric-type       = true
     enabled           = "true",
@@ -126,9 +126,9 @@ log-alerts = {
   airflow-web-host-count-alert = {
     # Scope for log query.
     log-analytics-scope = true,
-    service-name    = "airflow",
-    alert-rule-name = "airflow-web-host-count-alert",
-    description     = "Alert to trigger when the host count of airflow web goes below the reqd count",
+    service-name        = "airflow",
+    alert-rule-name     = "airflow-web-host-count-alert",
+    description         = "Alert to trigger when the host count of airflow web goes below the reqd count",
     # Alert based on metric measurement
     metric-type       = true
     enabled           = "true",
@@ -150,9 +150,9 @@ log-alerts = {
   airflow-worker-host-count-alert = {
     # Scope for log query.
     log-analytics-scope = true,
-    service-name    = "airflow",
-    alert-rule-name = "airflow-worker-host-count-alert",
-    description     = "Alert to trigger when the host count of airflow worker goes below the reqd count",
+    service-name        = "airflow",
+    alert-rule-name     = "airflow-worker-host-count-alert",
+    description         = "Alert to trigger when the host count of airflow worker goes below the reqd count",
     # Alert based on metric measurement
     metric-type       = true
     enabled           = "true",
@@ -175,9 +175,9 @@ log-alerts = {
   airflow-scheduler-CPU-Usage-alert = {
     # Scope for log query.
     log-analytics-scope = true,
-    service-name    = "airflow",
-    alert-rule-name = "airflow-scheduler-CPU-Usage-alert",
-    description     = "Alert to trigger when the CPU Usage of the Scheduler goes above the threshold limit",
+    service-name        = "airflow",
+    alert-rule-name     = "airflow-scheduler-CPU-Usage-alert",
+    description         = "Alert to trigger when the CPU Usage of the Scheduler goes above the threshold limit",
     # Alert based on metric measurement
     metric-type       = true
     enabled           = "true",
@@ -199,9 +199,9 @@ log-alerts = {
   airflow-web-CPU-Usage-alert = {
     # Scope for log query.
     log-analytics-scope = true,
-    service-name    = "airflow",
-    alert-rule-name = "airflow-web-CPU-Usage-alert",
-    description     = "Alert to trigger when the CPU Usage of the Airflow Web goes above the threshold limit",
+    service-name        = "airflow",
+    alert-rule-name     = "airflow-web-CPU-Usage-alert",
+    description         = "Alert to trigger when the CPU Usage of the Airflow Web goes above the threshold limit",
     # Alert based on metric measurement
     metric-type       = true
     enabled           = "true",
@@ -223,9 +223,9 @@ log-alerts = {
   airflow-worker-CPU-Usage-alert = {
     # Scope for log query.
     log-analytics-scope = true,
-    service-name    = "airflow",
-    alert-rule-name = "airflow-worker-CPU-Usage-alert",
-    description     = "Alert to trigger when the CPU Usage of the Airflow Worker goes above the threshold limit",
+    service-name        = "airflow",
+    alert-rule-name     = "airflow-worker-CPU-Usage-alert",
+    description         = "Alert to trigger when the CPU Usage of the Airflow Worker goes above the threshold limit",
     # Alert based on metric measurement
     metric-type       = true
     enabled           = "true",
@@ -247,9 +247,9 @@ log-alerts = {
   airflow-postgres-CPU-Usage-alert = {
     # Scope for log query.
     log-analytics-scope = true,
-    service-name    = "airflow",
-    alert-rule-name = "airflow-postgres-CPU-Usage-alert",
-    description     = "Alert to trigger when the CPU Usage of the PostgreSQL Server goes above the threshold limit",
+    service-name        = "airflow",
+    alert-rule-name     = "airflow-postgres-CPU-Usage-alert",
+    description         = "Alert to trigger when the CPU Usage of the PostgreSQL Server goes above the threshold limit",
     # Alert based on metric measurement
     metric-type       = true
     enabled           = "true",
@@ -272,9 +272,9 @@ log-alerts = {
   airflow-scheduler-memory-usage-alert = {
     # Scope for log query.
     log-analytics-scope = true,
-    service-name    = "airflow",
-    alert-rule-name = "airflow-scheduler-memory-usage-alert",
-    description     = "Alert to trigger when the Memory Usage of the Scheduler goes above the threshold limit",
+    service-name        = "airflow",
+    alert-rule-name     = "airflow-scheduler-memory-usage-alert",
+    description         = "Alert to trigger when the Memory Usage of the Scheduler goes above the threshold limit",
     # Alert based on metric measurement
     metric-type       = true
     enabled           = "true",
@@ -296,9 +296,9 @@ log-alerts = {
   airflow-web-memory-usage-alert = {
     # Scope for log query.
     log-analytics-scope = true,
-    service-name    = "airflow",
-    alert-rule-name = "airflow-web-memory-usage-alert",
-    description     = "Alert to trigger when the Memory Usage of the Airflow Web goes above the threshold limit",
+    service-name        = "airflow",
+    alert-rule-name     = "airflow-web-memory-usage-alert",
+    description         = "Alert to trigger when the Memory Usage of the Airflow Web goes above the threshold limit",
     # Alert based on metric measurement
     metric-type       = true
     enabled           = "true",
@@ -320,9 +320,9 @@ log-alerts = {
   airflow-worker-memory-usage-alert = {
     # Scope for log query.
     log-analytics-scope = true,
-    service-name    = "airflow",
-    alert-rule-name = "airflow-worker-memory-usage-alert",
-    description     = "Alert to trigger when the Memory Usage of the Airflow Worker goes above the threshold limit",
+    service-name        = "airflow",
+    alert-rule-name     = "airflow-worker-memory-usage-alert",
+    description         = "Alert to trigger when the Memory Usage of the Airflow Worker goes above the threshold limit",
     # Alert based on metric measurement
     metric-type       = true
     enabled           = "true",
@@ -344,9 +344,9 @@ log-alerts = {
   airflow-Redis-memory-usage-alert = {
     # Scope for log query.
     log-analytics-scope = true,
-    service-name    = "airflow",
-    alert-rule-name = "airflow-redis-memory-usage-alert",
-    description     = "Alert to trigger when the Memory Usage of redis goes above the threshold limit",
+    service-name        = "airflow",
+    alert-rule-name     = "airflow-redis-memory-usage-alert",
+    description         = "Alert to trigger when the Memory Usage of redis goes above the threshold limit",
     # Alert based on metric measurement
     metric-type       = true
     enabled           = "true",
@@ -369,9 +369,9 @@ log-alerts = {
   airflow-service-error-rate-alert = {
     # Scope for log query.
     log-analytics-scope = true,
-    service-name    = "airflow",
-    alert-rule-name = "airflow-service-error-rate-alert",
-    description     = "Alert to trigger when error rate for 5xx goes above the threshold limit",
+    service-name        = "airflow",
+    alert-rule-name     = "airflow-service-error-rate-alert",
+    description         = "Alert to trigger when error rate for 5xx goes above the threshold limit",
     # Alert based on metric measurement
     metric-type       = true
     enabled           = "true",
@@ -393,9 +393,9 @@ log-alerts = {
   airflow-scheduler-heartbeat-alert = {
     # Scope for log query.
     log-analytics-scope = false,
-    service-name    = "airflow",
-    alert-rule-name = "airflow-scheduler-heartbeat-alert",
-    description     = "Alert to trigger when scheduler heartbeat goes below the threshold limit",
+    service-name        = "airflow",
+    alert-rule-name     = "airflow-scheduler-heartbeat-alert",
+    description         = "Alert to trigger when scheduler heartbeat goes below the threshold limit",
     # Alert based on metric measurement
     metric-type       = true
     enabled           = "true",
@@ -417,9 +417,9 @@ log-alerts = {
   airflow-dag-processor-timeout-alert = {
     # Scope for log query.
     log-analytics-scope = false,
-    service-name    = "airflow",
-    alert-rule-name = "airflow-dag-processor-timeout-alert",
-    description     = "Alert to trigger when dag-processor timeouts occur",
+    service-name        = "airflow",
+    alert-rule-name     = "airflow-dag-processor-timeout-alert",
+    description         = "Alert to trigger when dag-processor timeouts occur",
     # Alert based on metric measurement
     metric-type       = true
     enabled           = "true",
@@ -440,9 +440,9 @@ log-alerts = {
   },
   airflow-import-errors-alert = {
     log-analytics-scope = false,
-    service-name    = "airflow",
-    alert-rule-name = "airflow-import-errors-alert",
-    description     = "Import Errors alert rule for airflow service",
+    service-name        = "airflow",
+    alert-rule-name     = "airflow-import-errors-alert",
+    description         = "Import Errors alert rule for airflow service",
     # Alert based on metric measurement
     metric-type       = true
     enabled           = "true",
