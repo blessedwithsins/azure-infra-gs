@@ -303,7 +303,7 @@ module "appgateway" {
   min_capacity  = var.appgw_min_capacity
   max_capacity  = var.appgw_max_capacity
 
-
+  depends_on = [azurerm_key_vault_certificate.default]
 }
 
 // Give AGIC Identity Access rights to Change the Application Gateway
