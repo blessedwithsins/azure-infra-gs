@@ -221,13 +221,13 @@ cosmos_sql_collections = [
   {
     name                  = "Status"
     database_name         = "status-db"
-    partition_key_path    = "/partitionId"
+    partition_key_path    = "/correlationId"
     partition_key_version = null
   },
   {
     name                  = "DataSetDetails"
     database_name         = "status-db"
-    partition_key_path    = "/partitionId"
+    partition_key_path    = "/correlationId"
     partition_key_version = null
   }
 ]

@@ -1,0 +1,20 @@
+{{- if eq .Values.airflow.isDataPartitionDeployment true }}
+apiVersion: networking.istio.io/v1alpha3
+kind: VirtualService
+metadata:
+  name: airflow
+spec:
+  hosts:
+  - {{ .Values.airflow.ingress.web.host | quote }}
+  gateways:
+  - airflow-gateway
+  http:
+  - match:
+    - uri:
+        prefix: {{ .Values.airflow.ingress.web.path }}
+    route:
+    - destination:
+        port:
+          number: 8080
+        host: {{ .Release.Name }}-web
+{{- end }}
