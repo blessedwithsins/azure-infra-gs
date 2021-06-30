@@ -12,7 +12,6 @@
 //  See the License for the specific language governing permissions and
 //  limitations under the License.
 
-
 /*
 .Synopsis
    Terraform Main Control
@@ -56,6 +55,14 @@ terraform {
       source  = "hashicorp/null"
       version = "=3.0.0"
     }
+    kubernetes = {
+      source  = "hashicorp/kubernetes"
+      version = "~> 2.3.2"
+    }
+    helm = {
+      source  = "hashicorp/helm"
+      version = "=2.0.1"
+    }
   }
 }
 
@@ -66,6 +73,26 @@ provider "azurerm" {
   features {}
 }
 
+provider "kubernetes" {
+  host                   = var.feature_flag.deploy_dp_airflow ? module.airflow.0.kube_config_block.0.host : ""
+  username               = var.feature_flag.deploy_dp_airflow ? module.airflow.0.kube_config_block.0.username : ""
+  password               = var.feature_flag.deploy_dp_airflow ? module.airflow.0.kube_config_block.0.password : ""
+  client_certificate     = var.feature_flag.deploy_dp_airflow ? base64decode(module.airflow.0.kube_config_block.0.client_certificate) : ""
+  client_key             = var.feature_flag.deploy_dp_airflow ? base64decode(module.airflow.0.kube_config_block.0.client_key) : ""
+  cluster_ca_certificate = var.feature_flag.deploy_dp_airflow ? base64decode(module.airflow.0.kube_config_block.0.cluster_ca_certificate) : ""
+}
+
+// Hook-up helm Provider for Terraform
+provider "helm" {
+  kubernetes {
+    host                   = var.feature_flag.deploy_dp_airflow ? module.airflow.0.kube_config_block.0.host : ""
+    username               = var.feature_flag.deploy_dp_airflow ? module.airflow.0.kube_config_block.0.username : ""
+    password               = var.feature_flag.deploy_dp_airflow ? module.airflow.0.kube_config_block.0.password : ""
+    client_certificate     = var.feature_flag.deploy_dp_airflow ? base64decode(module.airflow.0.kube_config_block.0.client_certificate) : ""
+    client_key             = var.feature_flag.deploy_dp_airflow ? base64decode(module.airflow.0.kube_config_block.0.client_key) : ""
+    cluster_ca_certificate = var.feature_flag.deploy_dp_airflow ? base64decode(module.airflow.0.kube_config_block.0.cluster_ca_certificate) : ""
+  }
+}
 
 #-------------------------------
 # Private Variables
@@ -108,8 +135,8 @@ locals {
     data.terraform_remote_state.central_resources.outputs.osdu_identity_principal_id,
     data.terraform_remote_state.central_resources.outputs.principal_objectId
   ]
-}
 
+}
 
 #-------------------------------
 # Common Resources
@@ -124,6 +151,16 @@ data "terraform_remote_state" "central_resources" {
     storage_account_name = var.remote_state_account
     container_name       = var.remote_state_container
     key                  = format("terraform.tfstateenv:%s", var.central_resources_workspace_name)
+  }
+}
+
+data "terraform_remote_state" "service_resources" {
+  backend = "azurerm"
+
+  config = {
+    storage_account_name = var.remote_state_account
+    container_name       = var.remote_state_container
+    key                  = format("terraform.tfstateenv:%s", var.service_resources_workspace_name)
   }
 }
 
@@ -426,3 +463,31 @@ resource "azurerm_management_lock" "ingest_sa_lock" {
   scope      = module.ingest_storage_account.id
   lock_level = "CanNotDelete"
 }
+
+module "airflow" {
+  source = "./airflow"
+  count  = var.feature_flag.deploy_dp_airflow ? 1 : 0
+
+  central_resources_workspace_name = var.central_resources_workspace_name
+
+  remote_state_account   = var.remote_state_account
+  remote_state_container = var.remote_state_container
+
+  storage_account_name = module.storage_account.name
+  storage_account_id   = module.storage_account.id
+  storage_account_key  = module.storage_account.primary_access_key
+
+  ingest_storage_account_key  = module.ingest_storage_account.primary_access_key
+  ingest_storage_account_name = module.ingest_storage_account.name
+
+  resource_group_name     = azurerm_resource_group.main.name
+  resource_group_location = var.resource_group_location
+
+  base_name    = local.base_name
+  base_name_21 = local.base_name_21
+  base_name_60 = local.base_name_60
+
+  ssh_public_key_file      = var.ssh_public_key_file
+  sr_aks_egress_ip_address = data.terraform_remote_state.service_resources.outputs.aks_egress_ip_address
+}
+

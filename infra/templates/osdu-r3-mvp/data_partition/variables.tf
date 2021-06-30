@@ -187,3 +187,23 @@ variable "elasticsearch_password" {
   type        = string
   description = "password for elasticsearch cluster"
 }
+
+variable "ssh_public_key_file" {
+  type        = string
+  description = "(Required) The SSH public key used to setup log-in credentials on the nodes in the AKS cluster."
+}
+
+variable "feature_flag" {
+  description = "(Optional) A toggle for incubator features"
+  type = object({
+    deploy_dp_airflow = bool
+  })
+  default = {
+    deploy_dp_airflow = false
+  }
+}
+
+variable "service_resources_workspace_name" {
+  description = "(Required) The workspace name for the service_resources repository terraform environment / template to reference for this template."
+  type        = string
+}

@@ -1,4 +1,5 @@
-{{- if eq .Values.airflow.isDataPartitionDeployment true }}
+{{- $isEnabled := .Values.airflow.isDataPartitionDeployment | default false -}}
+{{- if $isEnabled }}
 apiVersion: networking.istio.io/v1alpha3
 kind: VirtualService
 metadata:
