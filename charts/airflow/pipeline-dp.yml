@@ -1,0 +1,93 @@
+#  Copyright © Microsoft Corporation
+#
+#  Licensed under the Apache License, Version 2.0 (the "License");
+#  you may not use this file except in compliance with the License.
+#  You may obtain a copy of the License at
+#
+#       http://www.apache.org/licenses/LICENSE-2.0
+#
+#  Unless required by applicable law or agreed to in writing, software
+#  distributed under the License is distributed on an "AS IS" BASIS,
+#  WITHOUT WARRANTIES OR CONDITIONS OF ANY KIND, either express or implied.
+#  See the License for the specific language governing permissions and
+#  limitations under the License.
+
+trigger:
+  batch: true
+  branches:
+    include:
+      - master
+  paths:
+    include:
+      - /charts/airflow/*
+      - /charts/osdu-istio/*
+      - /source/airflow-function/*
+    exclude:
+      - /**/*.md
+
+pr:
+  autoCancel: false
+  branches:
+    include:
+      - "*"
+    exclude:
+      - master
+  paths:
+    include:
+      - /charts/airflow/*
+      - /charts/osdu-istio/*
+      - /source/airflow-function/*
+    exclude:
+      - /**/*.md
+
+variables:
+  - group: 'Azure - OSDU'
+  - group: 'Azure - OSDU secrets'
+
+  - name: airflowServiceName
+    value: "airflow"
+  - name: airflowChartPath
+    value: "charts/airflow"
+  - name: airflowValuesFile
+    value: "charts/airflow/helm-config-dp.yaml"
+  - name: istioServiceName
+    value: "istio"
+  - name: istioChartPath
+    value: "charts/osdu-istio"
+  - name: istioValuesFile
+    value: "charts/helm-config.yaml"
+
+stages:
+  - template: pipeline-stages/airflow-custom-stages.yml
+    parameters:
+      sourceFolder: "source"
+      #multiple file paths to be provided with pipe(|) seperated
+      dockerFilePaths: "airflow-function|airflow-statsd"
+      providers:
+        - name: Azure
+          environments: ["dev", "glab"]
+
+  - template: /devops/chart-stages-dp.yml
+    parameters:
+      serviceName: ${{ variables.istioServiceName }}
+      chartPath: ${{ variables.istioChartPath }}
+      valuesFile: ${{ variables.istioValuesFile }}
+      skipDeploy: ${{ variables.SKIP_DEPLOY }}
+      DPName: "opendes"
+      addDPNameToService: false
+      providers:
+        - name: Azure
+          environments: ["dev", "glab"]
+
+  - template: /devops/chart-stages-dp.yml
+    parameters:
+      serviceName: ${{ variables.airflowServiceName }}
+      chartPath: ${{ variables.airflowChartPath }}
+      valuesFile: ${{ variables.airflowValuesFile }}
+      skipDeploy: ${{ variables.SKIP_DEPLOY }}
+      namespace: osdu
+      DPName: "opendes"
+      addDPNameToService: true
+      providers:
+        - name: Azure
+          environments: ["dev", "glab"]

@@ -50,6 +50,11 @@ storage_replication_type = "LRS"
 storage_containers = [
   "azure-webjobs-hosts"
 ]
+
+system_storage_containers = [
+  "opendes"
+]
+
 storage_shares = [
   "unit",
   "crs",
@@ -63,3 +68,47 @@ feature_flag = {
   flux           = true
   sa_lock        = true
 }
+
+# cosmos DB SQL collections
+cosmos_sql_collections = [
+  {
+    name                  = "Authority"
+    database_name         = "osdu-system-db"
+    partition_key_path    = "/id"
+    partition_key_version = null
+
+  },
+  {
+    name                  = "EntityType"
+    database_name         = "osdu-system-db"
+    partition_key_path    = "/id"
+    partition_key_version = null
+  },
+  {
+    name                  = "SchemaInfo"
+    database_name         = "osdu-system-db"
+    partition_key_path    = "/partitionId"
+    partition_key_version = null
+  },
+  {
+    name                  = "Source"
+    database_name         = "osdu-system-db"
+    partition_key_path    = "/id"
+    partition_key_version = null
+  },
+  {
+    name                  = "WorkflowRunV2"
+    database_name         = "osdu-system-db"
+    partition_key_path    = "/partitionKey"
+    partition_key_version = 2
+  },
+]
+
+# Database Settings
+cosmosdb_consistency_level = "Session"
+cosmos_databases = [
+  {
+    name       = "osdu-system-db"
+    throughput = 12000
+  }
+]

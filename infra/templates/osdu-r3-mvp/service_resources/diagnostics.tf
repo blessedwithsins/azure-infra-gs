@@ -261,3 +261,100 @@ resource "azurerm_monitor_diagnostic_setting" "redis_queue_diagnostics" {
 }
 
 
+#-------------------------------
+# CosmosDB
+#-------------------------------
+resource "azurerm_monitor_diagnostic_setting" "db_diagnostics" {
+  name                       = "db_diagnostics"
+  target_resource_id         = module.cosmosdb_account.account_id
+  log_analytics_workspace_id = data.terraform_remote_state.central_resources.outputs.log_analytics_id
+
+  // This one always off.
+  log {
+    category = "CassandraRequests"
+    enabled  = false
+
+    retention_policy {
+      days    = 0
+      enabled = false
+    }
+  }
+
+  log {
+    category = "ControlPlaneRequests"
+
+    retention_policy {
+      days    = var.log_retention_days
+      enabled = local.retention_policy
+    }
+  }
+
+  log {
+    category = "DataPlaneRequests"
+    enabled  = true
+
+    retention_policy {
+      days    = var.log_retention_days
+      enabled = local.retention_policy
+    }
+  }
+
+  // This one always off.
+  log {
+    category = "GremlinRequests"
+    enabled  = false
+
+    retention_policy {
+      days    = 0
+      enabled = false
+    }
+  }
+
+  // This one always off.
+  log {
+    category = "MongoRequests"
+    enabled  = false
+
+    retention_policy {
+      days    = 0
+      enabled = false
+    }
+  }
+
+  log {
+    category = "PartitionKeyRUConsumption"
+
+    retention_policy {
+      days    = var.log_retention_days
+      enabled = local.retention_policy
+    }
+  }
+
+  log {
+    category = "PartitionKeyStatistics"
+
+    retention_policy {
+      days    = var.log_retention_days
+      enabled = local.retention_policy
+    }
+  }
+
+  log {
+    category = "QueryRuntimeStatistics"
+    enabled  = true
+
+    retention_policy {
+      days    = var.log_retention_days
+      enabled = local.retention_policy
+    }
+  }
+
+  metric {
+    category = "Requests"
+
+    retention_policy {
+      days    = var.log_retention_days
+      enabled = local.retention_policy
+    }
+  }
+}

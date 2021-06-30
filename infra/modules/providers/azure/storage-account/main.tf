@@ -28,6 +28,7 @@ resource "azurerm_storage_account" "main" {
   account_kind              = var.kind
   enable_https_traffic_only = var.https
   tags                      = var.resource_tags
+  min_tls_version           = var.min_tls_version
 
   # enrolls storage account into azure 'managed identities' authentication
   identity {

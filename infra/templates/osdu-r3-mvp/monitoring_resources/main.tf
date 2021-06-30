@@ -58,7 +58,9 @@ locals {
   partition_group_prefix = trim(data.terraform_remote_state.partition_resources.outputs.data_partition_group_name, "-rg")
   service_group_prefix   = trim(data.terraform_remote_state.service_resources.outputs.services_resource_group_name, "-rg")
 
-  action-group-id-prefix = "/subscriptions/${data.azurerm_client_config.current.subscription_id}/resourceGroups/${azurerm_resource_group.main.name}/providers/microsoft.insights/actiongroups/"
+  log_analytics_resource_id = "/subscriptions/${data.azurerm_client_config.current.subscription_id}/resourceGroups/${local.central_group_prefix}-rg/providers/Microsoft.OperationalInsights/workspaces/${local.central_group_prefix}-logs"
+  appinsights_resource_id   = "/subscriptions/${data.azurerm_client_config.current.subscription_id}/resourceGroups/${local.central_group_prefix}-rg/providers/Microsoft.Insights/components/${local.central_group_prefix}-ai"
+  action-group-id-prefix    = "/subscriptions/${data.azurerm_client_config.current.subscription_id}/resourceGroups/${azurerm_resource_group.main.name}/providers/microsoft.insights/actiongroups/"
 }
 
 #-------------------------------
@@ -246,13 +248,14 @@ resource "azurerm_monitor_scheduled_query_rules_alert" "alerts" {
     ]
   }
 
-  data_source_id = "/subscriptions/${data.azurerm_client_config.current.subscription_id}/resourceGroups/${local.central_group_prefix}-rg/providers/Microsoft.Insights/components/${local.central_group_prefix}-ai"
-  description    = each.value.description
-  enabled        = each.value.enabled
-  query          = each.value.query
-  severity       = each.value.severity
-  frequency      = each.value.frequency
-  time_window    = each.value.time-window
+  data_source_id = each.value.log-analytics-scope ? local.log_analytics_resource_id : local.appinsights_resource_id
+
+  description = each.value.description
+  enabled     = each.value.enabled
+  query       = each.value.query
+  severity    = each.value.severity
+  frequency   = each.value.frequency
+  time_window = each.value.time-window
   trigger {
     operator  = each.value.trigger-operator
     threshold = each.value.trigger-threshold

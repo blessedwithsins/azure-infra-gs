@@ -124,7 +124,8 @@ variable "log-alerts" {
     trigger-threshold = number,
     # Operator used to compare the result value against the threshold.
     trigger-operator = string,
-
+    # Defines the scope of alert can be true or false. if false default to app-insights
+    log-analytics-scope = bool
     # Type is `any` for the below keys as they need to be null if alert is based on number of results.
     metric-trigger-operator = any,
     # metric-trigger-threshold: Number of violations to trigger alert.

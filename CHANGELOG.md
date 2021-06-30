@@ -15,6 +15,7 @@ __Infra Changes__
 - [Feature 277 - Alerts framework for Monitoring](https://community.opengroup.org/osdu/platform/deployment-and-operations/infra-azure-provisioning/-/merge_requests/277)
 - [Feature 169 - Container hardening for Java based services](https://community.opengroup.org/osdu/platform/deployment-and-operations/infra-azure-provisioning/-/issues/169)
 - [Feature 159 - Added default JVM Parameters](https://community.opengroup.org/osdu/platform/deployment-and-operations/infra-azure-provisioning/-/issues/159)
+- [Issue 163 - Architecture change- service resources- Add cosmos db and Storage account](https://community.opengroup.org/osdu/platform/deployment-and-operations/infra-azure-provisioning/-/issues/163)
 
 # v0.8 (2021-4-9)
 
