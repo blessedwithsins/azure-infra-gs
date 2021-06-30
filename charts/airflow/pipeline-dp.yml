@@ -65,7 +65,7 @@ stages:
       dockerFilePaths: "airflow-function|airflow-statsd"
       providers:
         - name: Azure
-          environments: ["dev", "glab"]
+          environments: ["ingestiontestenv"]
 
   - template: /devops/chart-stages-dp.yml
     parameters:
@@ -73,11 +73,11 @@ stages:
       chartPath: ${{ variables.istioChartPath }}
       valuesFile: ${{ variables.istioValuesFile }}
       skipDeploy: ${{ variables.SKIP_DEPLOY }}
-      DPName: "opendes"
+      DPName: "dp2"
       addDPNameToService: false
       providers:
         - name: Azure
-          environments: ["dev", "glab"]
+          environments: ["ingestiontestenv"]
 
   - template: /devops/chart-stages-dp.yml
     parameters:
@@ -86,8 +86,8 @@ stages:
       valuesFile: ${{ variables.airflowValuesFile }}
       skipDeploy: ${{ variables.SKIP_DEPLOY }}
       namespace: osdu
-      DPName: "opendes"
+      DPName: "dp2"
       addDPNameToService: true
       providers:
         - name: Azure
-          environments: ["dev", "glab"]
+          environments: ["ingestiontestenv"]
