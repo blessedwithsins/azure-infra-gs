@@ -1,0 +1,50 @@
+# This file contains the essential configs for the osdu on azure helm chart
+global:
+
+  isDataPartitionDeployment: true
+
+  # Service(s) Replica Count
+  replicaCount: 2
+
+  ################################################################################
+  # Specify the azure environment specific values
+  #
+  azure:
+    tenant: #{tenant-id}#
+    subscription: #{subscription-id}#
+    resourcegroup: #{base-name-cr}#-rg
+    identity: #{base-name-cr}#-osdu-identity
+    identity_id: #{osdu-identity-id}#
+    keyvault: #{COMMON_RESOURCES_KEY_VAULT_NAME}#
+    appid: #{aad-client-id}#
+
+  ################################################################################
+  # Specify the Ingress Settings
+  # DNS Hostname for thet Gateway
+  # Admin Email Address to be notified for SSL expirations
+  # Lets Encrypt SSL Server
+  #     https://acme-staging-v02.api.letsencrypt.org/directory  --> Staging Server
+  #     https://acme-v02.api.letsencrypt.org/directory --> Production Server
+  #
+  ingress:
+    hostname: #{DNS_HOST}#
+    admin: #{ADMIN_EMAIL}#
+    sslServer: https://acme-v02.api.letsencrypt.org/directory  # Production
+    enableKeyvaultCert: #{ENABLE_KEYVAULT_CERT}#
+
+  ################################################################################
+  # Specify the istio specific values
+  # based64 encoded username and password
+  #
+  istio:
+    username: #{istio-username}#
+    password: #{istio-password}#
+
+  ################################################################################
+  # Specify the resource limits
+  #
+  resourceLimits:
+    defaultCpuRequests: "0.5"
+    defaultMemoryRequests: "4Gi"
+    defaultCpuLimits: "1"
+    defaultMemoryLimits: "4Gi"

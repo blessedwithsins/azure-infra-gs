@@ -196,14 +196,22 @@ variable "ssh_public_key_file" {
 variable "feature_flag" {
   description = "(Optional) A toggle for incubator features"
   type = object({
-    deploy_dp_airflow = bool
+    deploy_dp_airflow           = bool
+    storage_mgmt_policy_enabled = bool
   })
   default = {
-    deploy_dp_airflow = false
+    deploy_dp_airflow           = false
+    storage_mgmt_policy_enabled = false
   }
 }
 
 variable "service_resources_workspace_name" {
   description = "(Required) The workspace name for the service_resources repository terraform environment / template to reference for this template."
   type        = string
+}
+
+variable "sa_retention_days" {
+  description = "Number of days that to retain data in file-staging-area"
+  type        = number
+  default     = 30
 }
