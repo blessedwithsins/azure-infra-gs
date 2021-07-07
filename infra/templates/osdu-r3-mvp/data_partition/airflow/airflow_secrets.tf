@@ -142,3 +142,33 @@ resource "azurerm_key_vault_secret" "data_partition_name" {
   value        = var.data_partition_name
   key_vault_id = module.keyvault.keyvault_id
 }
+
+resource "azurerm_key_vault_secret" "principal_id" {
+  name         = "app-dev-sp-username"
+  value        = var.sp_client_id
+  key_vault_id = module.keyvault.keyvault_id
+}
+
+resource "azurerm_key_vault_secret" "principal_secret" {
+  name         = "app-dev-sp-password"
+  value        = var.sp_client_secret
+  key_vault_id = module.keyvault.keyvault_id
+}
+
+resource "azurerm_key_vault_secret" "application_id" {
+  name         = "aad-client-id"
+  value        = var.aad_client_id
+  key_vault_id = module.keyvault.keyvault_id
+}
+
+resource "azurerm_key_vault_secret" "tenant_id" {
+  name         = "app-dev-sp-tenant-id"
+  value        = data.azurerm_client_config.current.tenant_id
+  key_vault_id = module.keyvault.keyvault_id
+}
+
+resource "azurerm_key_vault_secret" "insights" {
+  name         = "appinsights-key"
+  value        = var.app_insights_key
+  key_vault_id = module.keyvault.keyvault_id
+}

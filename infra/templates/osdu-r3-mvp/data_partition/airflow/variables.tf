@@ -234,6 +234,22 @@ variable "ingest_storage_account_name" {
   type = string
 }
 
+variable "app_insights_key" {
+  type = string
+}
+
+variable "sp_client_id" {
+  type = string
+}
+
+variable "sp_client_secret" {
+  type = string
+}
+
+variable "aad_client_id" {
+  type = string
+}
+
 variable "redis_queue_sku_name" {
   description = "The Azure Cache for Redis pricing tier. Possible values are Basic, Standard and Premium. Azure currently charges by the minute for all pricing tiers."
   type        = string
