@@ -12,7 +12,6 @@
 //  See the License for the specific language governing permissions and
 //  limitations under the License.
 
-
 /*
 .Synopsis
    Terraform Main Control
@@ -42,7 +41,7 @@ terraform {
   required_providers {
     azurerm = {
       source  = "hashicorp/azurerm"
-      version = "=2.41.0"
+      version = "=2.64.0"
     }
     azuread = {
       source  = "hashicorp/azuread"
@@ -56,6 +55,14 @@ terraform {
       source  = "hashicorp/null"
       version = "=3.0.0"
     }
+    kubernetes = {
+      source  = "hashicorp/kubernetes"
+      version = "~> 2.3.2"
+    }
+    helm = {
+      source  = "hashicorp/helm"
+      version = "=2.0.1"
+    }
   }
 }
 
@@ -66,6 +73,26 @@ provider "azurerm" {
   features {}
 }
 
+provider "kubernetes" {
+  host                   = var.feature_flag.deploy_dp_airflow ? module.airflow.0.kube_config_block.0.host : ""
+  username               = var.feature_flag.deploy_dp_airflow ? module.airflow.0.kube_config_block.0.username : ""
+  password               = var.feature_flag.deploy_dp_airflow ? module.airflow.0.kube_config_block.0.password : ""
+  client_certificate     = var.feature_flag.deploy_dp_airflow ? base64decode(module.airflow.0.kube_config_block.0.client_certificate) : ""
+  client_key             = var.feature_flag.deploy_dp_airflow ? base64decode(module.airflow.0.kube_config_block.0.client_key) : ""
+  cluster_ca_certificate = var.feature_flag.deploy_dp_airflow ? base64decode(module.airflow.0.kube_config_block.0.cluster_ca_certificate) : ""
+}
+
+// Hook-up helm Provider for Terraform
+provider "helm" {
+  kubernetes {
+    host                   = var.feature_flag.deploy_dp_airflow ? module.airflow.0.kube_config_block.0.host : ""
+    username               = var.feature_flag.deploy_dp_airflow ? module.airflow.0.kube_config_block.0.username : ""
+    password               = var.feature_flag.deploy_dp_airflow ? module.airflow.0.kube_config_block.0.password : ""
+    client_certificate     = var.feature_flag.deploy_dp_airflow ? base64decode(module.airflow.0.kube_config_block.0.client_certificate) : ""
+    client_key             = var.feature_flag.deploy_dp_airflow ? base64decode(module.airflow.0.kube_config_block.0.client_key) : ""
+    cluster_ca_certificate = var.feature_flag.deploy_dp_airflow ? base64decode(module.airflow.0.kube_config_block.0.cluster_ca_certificate) : ""
+  }
+}
 
 #-------------------------------
 # Private Variables
@@ -96,17 +123,20 @@ locals {
 
   eg_sbtopic_subscriber               = "servicebusrecordstopic"
   eg_sbtopic_schema_subscriber        = "servicebusschemachangedtopic"
+  eg_sbtopic_gsm_subscriber           = "servicebusstatuschangedtopic"
+  eg_sbtopic_legaltags_subscriber     = "servicebuslegaltagschangedtopic"
   eventgrid_name                      = "${local.base_name_21}-grid"
   eventgrid_records_topic             = format("%s-recordstopic", local.eventgrid_name)
   eventgrid_schema_notification_topic = format("%s-schemachangedtopic", local.eventgrid_name)
   eventgrid_legaltags_topic           = format("%s-legaltagschangedtopic", local.eventgrid_name)
+  eventgrid_gsm_topic                 = format("%s-statuschangedtopic", local.eventgrid_name)
 
   rbac_principals = [
     data.terraform_remote_state.central_resources.outputs.osdu_identity_principal_id,
     data.terraform_remote_state.central_resources.outputs.principal_objectId
   ]
-}
 
+}
 
 #-------------------------------
 # Common Resources
@@ -121,6 +151,16 @@ data "terraform_remote_state" "central_resources" {
     storage_account_name = var.remote_state_account
     container_name       = var.remote_state_container
     key                  = format("terraform.tfstateenv:%s", var.central_resources_workspace_name)
+  }
+}
+
+data "terraform_remote_state" "service_resources" {
+  backend = "azurerm"
+
+  config = {
+    storage_account_name = var.remote_state_account
+    container_name       = var.remote_state_container
+    key                  = format("terraform.tfstateenv:%s", var.service_resources_workspace_name)
   }
 }
 
@@ -193,7 +233,7 @@ module "sdms_storage_account" {
   kind                = "StorageV2"
   replication_type    = var.storage_replication_type
 
-  resource_tags = var.resource_tags
+  resource_tags = merge(var.resource_tags, var.resource_tags_sdms)
 }
 
 // Add Access Control to Principal
@@ -316,6 +356,9 @@ module "event_grid" {
     },
     {
       name = local.eventgrid_schema_notification_topic
+    },
+    {
+      name = local.eventgrid_gsm_topic
     }
   ]
 
@@ -350,6 +393,14 @@ resource "azurerm_eventgrid_event_subscription" "service_bus_topic_subscriber" {
   service_bus_topic_endpoint_id = lookup(module.service_bus.topicsmap, "recordstopiceg")
 }
 
+// Add a Service Bus Topic subscriber that act as EventHandler for legaltagschangedtopic
+resource "azurerm_eventgrid_event_subscription" "service_bus_topic_subscriber_legaltags" {
+  name                          = local.eg_sbtopic_legaltags_subscriber
+  scope                         = lookup(module.event_grid.topics, local.eventgrid_legaltags_topic)
+  depends_on                    = [module.service_bus.id]
+  service_bus_topic_endpoint_id = lookup(module.service_bus.topicsmap, "legaltagschangedtopiceg")
+}
+
 // Add EventGrid EventSubscription Contributor access to Principal For Schema
 resource "azurerm_role_assignment" "event_grid_topics_role_schema" {
   count = length(local.rbac_principals)
@@ -365,6 +416,25 @@ resource "azurerm_eventgrid_event_subscription" "service_bus_topic_subscriber_sc
   scope                         = lookup(module.event_grid.topics, local.eventgrid_schema_notification_topic)
   depends_on                    = [module.service_bus.id]
   service_bus_topic_endpoint_id = lookup(module.service_bus.topicsmap, "schemachangedtopiceg")
+}
+
+// Add EventGrid EventSubscription Contributor access to Principal 
+resource "azurerm_role_assignment" "event_grid_topics_role_gsm" {
+  count = length(local.rbac_principals)
+
+  role_definition_name = "EventGrid EventSubscription Contributor"
+  principal_id         = local.rbac_principals[count.index]
+  scope                = lookup(module.event_grid.topics, local.eventgrid_gsm_topic)
+}
+
+// Add a Service Bus Topic subscriber that act as EventHandler for statuschangedtopic
+resource "azurerm_eventgrid_event_subscription" "service_bus_topic_subscriber_gsm" {
+  name = local.eg_sbtopic_gsm_subscriber
+
+  scope      = lookup(module.event_grid.topics, local.eventgrid_gsm_topic)
+  depends_on = [module.service_bus.id]
+
+  service_bus_topic_endpoint_id = lookup(module.service_bus.topicsmap, "statuschangedtopiceg")
 }
 
 #-------------------------------
@@ -392,4 +462,52 @@ resource "azurerm_management_lock" "ingest_sa_lock" {
   name       = "osdu_ingest_sa_lock"
   scope      = module.ingest_storage_account.id
   lock_level = "CanNotDelete"
+}
+
+module "airflow" {
+  source = "./airflow"
+  count  = var.feature_flag.deploy_dp_airflow ? 1 : 0
+
+  central_resources_workspace_name = var.central_resources_workspace_name
+
+  remote_state_account   = var.remote_state_account
+  remote_state_container = var.remote_state_container
+
+  storage_account_name = module.storage_account.name
+  storage_account_id   = module.storage_account.id
+  storage_account_key  = module.storage_account.primary_access_key
+
+  ingest_storage_account_key  = module.ingest_storage_account.primary_access_key
+  ingest_storage_account_name = module.ingest_storage_account.name
+
+  resource_group_name     = azurerm_resource_group.main.name
+  resource_group_location = var.resource_group_location
+
+  base_name    = local.base_name
+  base_name_21 = local.base_name_21
+  base_name_60 = local.base_name_60
+
+  ssh_public_key_file      = var.ssh_public_key_file
+  sr_aks_egress_ip_address = data.terraform_remote_state.service_resources.outputs.aks_egress_ip_address
+}
+
+
+# Reference (https://registry.terraform.io/providers/hashicorp/azurerm/latest/docs/resources/storage_management_policy)
+# Prefix Value (https://stackoverflow.com/questions/65593429/set-lifecycle-management-rule-on-all-blobs-in-a-container)
+resource "azurerm_storage_management_policy" "main" {
+  storage_account_id = module.storage_account.id
+  rule {
+    name    = "auto-delete-blobs"
+    enabled = var.feature_flag.storage_mgmt_policy_enabled
+    filters {
+      prefix_match = ["file-staging-area"]
+      blob_types   = ["blockBlob"]
+
+    }
+    actions {
+      base_blob {
+        delete_after_days_since_modification_greater_than = var.sa_retention_days
+      }
+    }
+  }
 }

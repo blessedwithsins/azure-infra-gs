@@ -67,6 +67,9 @@ This key pair can be used to ssh into an AKS node if needed.
 ## What type of SSL certificate is used by default?
 The current architecture by default uses a certificate manager by [Jet Stack]( https://github.com/jetstack/cert-manager) that automatically provisions certificates into the Application Gateway and currently is configured with 2 Issuers.  “Lets Encrypt Staging” and “Lets Encrypt Production”.  Future tasks will validate a process for a Bring Your Own Certificate.
 
+## How to enable auto-delete of files from the file-staging-area blob container?
+There is a lifecyle management policy applied on the file-staging-area container where in it can be decided to retain the data in it for a specified number of days.The default value for the retention days is 30.You can configure the number of days via variable "sa_retention_days" and enable this feature by setting the value of "storage_mgmt_policy_enabled" feature flag to true.
+
 # Infrastructure Provisioning Walkthroughs
 
 ## Can someone show me how they set up OSDU on Azure?
@@ -143,10 +146,29 @@ Data Ingestion is currently under development and due to initial OSDU community 
 
 Airflow Web authentication is now rbac enabled. To understand user roles, create new users and manage users please refer [here](https://community.opengroup.org/osdu/platform/deployment-and-operations/infra-azure-provisioning/-/blob/master/docs/airflow-rbac-guide.md).
 
+## How to create a User in Entitlements V2
+Users in Entitlements V2 can be created and managed using this Rest Client [here](https://community.opengroup.org/osdu/platform/deployment-and-operations/infra-azure-provisioning/-/blob/master/tools/rest/entitlement_manage.http)
+
+Also refer this documentation [here](https://community.opengroup.org/osdu/platform/deployment-and-operations/infra-azure-provisioning/-/blob/master/docs/osdu-entitlement-roles.md) to understand the heirarchy of groups and which permissions can be enabled by adding specific groups
+
 # Infrastructure Upgrade Walkthroughs
 
 This section will outline the process for upgrading infrastructure whenever we have a breaking change in our infrastructure templates.
 
+# Known Issues and mitigation
+1. Deploying the "App Gateway Solution" fails with "Enabling solution of type AzureAppGatewayAnalytics is not allowed" error.
+
+      Error: Error creating/updating Log Analytics Solution "AzureAppGatewayAnalytics(osdu-mvp)" (Workspace "/subscriptions/xxx/resourceGroups/osdu-mvp/providers/Microsoft.OperationalInsights/workspaces/osdu-mvp" / Resource Group "osdu-mvp"): operationsmanagement.SolutionsClient#CreateOrUpdate: Failure sending request: StatusCode=400 -- Original Error: Code="InvalidOperationArgument" Message="Enabling solution of type AzureAppGatewayAnalytics is not allowed"
+
+        on ../../../modules/providers/azure/log-analytics/main.tf line 36, in resource "azurerm_log_analytics_solution" "main":
+        36: resource "azurerm_log_analytics_solution" "main" {
+
+
+      Releasing state lock. This may take a few moments...
+      ##[error]Script failed with error: Error: The process '/bin/bash' failed with exit code
+
+    For release **0.8.0 and below** the cherry-pick the changes in the [MR](https://community.opengroup.org/osdu/platform/deployment-and-operations/infra-azure-provisioning/-/merge_requests/310) to fix the issue.
+    
 ## Release 0.5.0 Upgrade (January 2021)
 These steps outline the process of upgrading infrastructure to version 0.5.0.
 1.	Disable any infrastructure pipelines.

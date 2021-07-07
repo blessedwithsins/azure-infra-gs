@@ -30,7 +30,7 @@ terraform {
   required_providers {
     azurerm = {
       source  = "hashicorp/azurerm"
-      version = "=2.46.0"
+      version = "=2.64.0"
     }
     azuread = {
       source  = "hashicorp/azuread"
@@ -109,9 +109,11 @@ locals {
   resource_group_name = format("%s-%s-%s-rg", var.prefix, local.workspace, random_string.workspace_scope.result)
   retention_policy    = var.log_retention_days == 0 ? false : true
 
-  storage_name = "${replace(local.base_name_21, "-", "")}config"
+  storage_name        = "${replace(local.base_name_21, "-", "")}config"
+  system_storage_name = "${replace(local.base_name_21, "-", "")}data"
 
   redis_cache_name = "${local.base_name}-cache"
+  redis_queue_name = "${local.base_name}-queue"
   postgresql_name  = "${local.base_name}-pg"
 
   vnet_name           = "${local.base_name_60}-vnet"
@@ -125,6 +127,18 @@ locals {
   aks_cluster_name  = "${local.base_name_60}-aks"
   aks_identity_name = format("%s-pod-identity", local.aks_cluster_name)
   aks_dns_prefix    = local.base_name_60
+
+  cosmosdb_name = "${local.base_name}-system-db"
+
+  nodepool_zones = [
+    "1",
+    "2"
+  ]
+
+  gateway_zones = [
+    "1",
+    "2"
+  ]
 
   role = "Contributor"
   rbac_principals = [
@@ -246,6 +260,37 @@ resource "azurerm_role_assignment" "airflow_log_queue_processor_roles" {
   scope                = module.storage_account.id
 }
 
+module "system_storage_account" {
+  source = "../../../modules/providers/azure/storage-account"
+
+  name                = local.system_storage_name
+  resource_group_name = azurerm_resource_group.main.name
+  container_names     = var.system_storage_containers
+  kind                = "StorageV2"
+  replication_type    = var.storage_replication_type
+
+  resource_tags  = var.resource_tags
+  blob_cors_rule = var.blob_cors_rule
+}
+
+// Add Contributor Role Access
+resource "azurerm_role_assignment" "system_storage_access" {
+  count = length(local.rbac_principals)
+
+  role_definition_name = local.role
+  principal_id         = local.rbac_principals[count.index]
+  scope                = module.system_storage_account.id
+}
+
+// Add Data Contributor Role to Principal
+resource "azurerm_role_assignment" "system_storage_data_contributor" {
+  count      = length(local.rbac_principals)
+  depends_on = [azurerm_role_assignment.system_storage_access]
+
+  role_definition_name = "Storage Blob Data Contributor"
+  principal_id         = local.rbac_principals[count.index]
+  scope                = module.system_storage_account.id
+}
 
 
 #-------------------------------
@@ -286,9 +331,13 @@ module "appgateway" {
   ssl_policy_cipher_suites        = var.ssl_policy_cipher_suites
   ssl_policy_min_protocol_version = var.ssl_policy_min_protocol_version
 
+  gateway_zones = local.gateway_zones
+
   resource_tags = var.resource_tags
   min_capacity  = var.appgw_min_capacity
   max_capacity  = var.appgw_max_capacity
+
+  depends_on = [azurerm_key_vault_certificate.default]
 }
 
 // Give AGIC Identity Access rights to Change the Application Gateway
@@ -296,6 +345,7 @@ resource "azurerm_role_assignment" "appgwcontributor" {
   principal_id         = azurerm_user_assigned_identity.agicidentity.principal_id
   scope                = module.appgateway.id
   role_definition_name = "Contributor"
+
 }
 
 // Give AGIC Identity the rights to look at the Resource Group
@@ -323,6 +373,7 @@ module "aks" {
   resource_group_name = azurerm_resource_group.main.name
 
   dns_prefix         = local.aks_dns_prefix
+  availability_zones = local.nodepool_zones
   agent_vm_count     = var.aks_agent_vm_count
   agent_vm_size      = var.aks_agent_vm_size
   agent_vm_disk      = var.aks_agent_vm_disk
@@ -465,6 +516,55 @@ resource "azurerm_role_assignment" "redis_cache" {
   scope                = module.redis_cache.id
 }
 
+module "redis_queue" {
+  source = "../../../modules/providers/azure/redis-cache"
+
+  name                = local.redis_queue_name
+  resource_group_name = azurerm_resource_group.main.name
+  capacity            = var.redis_capacity
+  sku_name            = var.redis_queue_sku_name
+  zones               = var.redis_queue_zones
+
+  memory_features     = var.redis_config_memory
+  premium_tier_config = var.redis_config_schedule
+
+  resource_tags = var.resource_tags
+}
+
+// Add Contributor Role Access
+resource "azurerm_role_assignment" "redis_queue" {
+  count = length(local.rbac_principals)
+
+  role_definition_name = local.role
+  principal_id         = local.rbac_principals[count.index]
+  scope                = module.redis_queue.id
+}
+
+#-------------------------------
+# CosmosDB
+#-------------------------------
+module "cosmosdb_account" {
+  source = "../../../modules/providers/azure/cosmosdb"
+
+  name                     = local.cosmosdb_name
+  resource_group_name      = azurerm_resource_group.main.name
+  primary_replica_location = var.cosmosdb_replica_location
+  automatic_failover       = var.cosmosdb_automatic_failover
+  consistency_level        = var.cosmosdb_consistency_level
+  databases                = var.cosmos_databases
+  sql_collections          = var.cosmos_sql_collections
+
+  resource_tags = var.resource_tags
+}
+
+// Add Access Control to Principal
+resource "azurerm_role_assignment" "cosmos_access" {
+  count = length(local.rbac_principals)
+
+  role_definition_name = "Contributor"
+  principal_id         = local.rbac_principals[count.index]
+  scope                = module.cosmosdb_account.account_id
+}
 
 #-------------------------------
 # Locks
@@ -474,5 +574,11 @@ resource "azurerm_management_lock" "sa_lock" {
 
   name       = "osdu_file_share_lock"
   scope      = module.storage_account.id
+  lock_level = "CanNotDelete"
+}
+
+resource "azurerm_management_lock" "system_sa_lock" {
+  name       = "osdu_system_sa_lock"
+  scope      = module.system_storage_account.id
   lock_level = "CanNotDelete"
 }

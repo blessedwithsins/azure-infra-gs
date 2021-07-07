@@ -1,0 +1,61 @@
+#  Copyright � Microsoft Corporation
+#
+#  Licensed under the Apache License, Version 2.0 (the "License");
+#  you may not use this file except in compliance with the License.
+#  You may obtain a copy of the License at
+#
+#       http://www.apache.org/licenses/LICENSE-2.0
+#
+#  Unless required by applicable law or agreed to in writing, software
+#  distributed under the License is distributed on an "AS IS" BASIS,
+#  WITHOUT WARRANTIES OR CONDITIONS OF ANY KIND, either express or implied.
+#  See the License for the specific language governing permissions and
+#  limitations under the License.
+
+# This template is responsible for detecting a service being alive.
+steps:
+  - task: AzureCLI@1
+    displayName: 'Helm Install ${{parameters.serviceName}}'
+    env:
+      SERVICE_NAME: ${{parameters.serviceName}}
+      BASE_NAME_RG: ${{parameters.baseResourceGroupName}}
+      VALUES_FILE: ${{parameters.valuesFile}}
+      CHART_PATH: ${{parameters.chartPath}}
+      NAMESPACE: ${{parameters.namespace}}
+    inputs:
+      azureSubscription: '$(SERVICE_CONNECTION_NAME)'
+      addSpnToEnvironment: true
+      scriptLocation: inlineScript
+      inlineScript: |
+        #!/usr/bin/env bash
+        set -euo pipefail
+
+        echo "Logging in to AKS"
+        echo "------------------------------------"
+        sudo az aks install-cli
+        AKS_NAME=$(az aks list --resource-group $BASE_NAME_RG-rg --query '[].{name:name}' -otsv)
+        az aks get-credentials -g $BASE_NAME_RG-rg -n $AKS_NAME
+
+        echo "Helm Source: $(HELM_SOURCE)"
+        echo "Build Trigger Repo Name: $(Build.Repository.Name)"
+
+        if [[ "$(HELM_SOURCE)" != "" ]]
+        then
+            HELM_SOURCE_NAME=$(HELM_SOURCE)
+        else
+            HELM_SOURCE_NAME=$(Build.Repository.Name)
+        fi
+
+        echo "Helm Source Name: $HELM_SOURCE_NAME"
+        cd $(Agent.BuildDirectory)/s/$HELM_SOURCE_NAME
+
+        cat $(Agent.BuildDirectory)/s/$HELM_SOURCE_NAME/${{parameters.chartPath}}/values.yaml
+
+        echo "Installing through helm"
+        
+        if [[ "$NAMESPACE" != "" ]]
+        then
+            helm upgrade $SERVICE_NAME $CHART_PATH -f $(Agent.BuildDirectory)/s/$HELM_SOURCE_NAME/${{parameters.chartPath}}/values.yaml --namespace $NAMESPACE --install --create-namespace --wait --timeout 10m0s
+        else
+            helm upgrade $SERVICE_NAME $CHART_PATH -f $(Agent.BuildDirectory)/s/$HELM_SOURCE_NAME/${{parameters.chartPath}}/values.yaml --install --create-namespace --wait --timeout 10m0s
+        fi

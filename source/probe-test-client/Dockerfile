@@ -5,10 +5,7 @@ COPY package.json ./
 COPY package-lock.json ./
 
 RUN rm -rf node_modules/
-RUN npm install
-RUN npm install applicationinsights --save
-RUN npm i --save lodash
-RUN npm i --save lodash.isequal
+RUN npm install && npm install applicationinsights --save && npm i --save lodash && npm i --save lodash.isequal
 
 ENV NODE_ENV=production
 
@@ -17,6 +14,5 @@ COPY testData ./testData
 COPY utils ./utils
 
 COPY config.js .
-
 
 CMD ["npm", "test"]

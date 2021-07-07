@@ -1,0 +1,19 @@
+{{- $isEnabled := .Values.airflow.isDataPartitionDeployment | default false -}}
+{{ if $isEnabled }}
+apiVersion: aadpodidentity.k8s.io/v1
+kind: AzureIdentity
+metadata:
+  name: osdu-identity
+spec:
+  type: 0
+  resourceID: "/subscriptions/{{ .Values.azure.dp.subscription }}/resourcegroups/{{ .Values.azure.dp.resourcegroup }}/providers/Microsoft.ManagedIdentity/userAssignedIdentities/{{ .Values.azure.dp.identity }}"
+  clientID: "{{ .Values.azure.dp.identity_id }}"
+---
+apiVersion: aadpodidentity.k8s.io/v1
+kind: AzureIdentityBinding
+metadata:
+  name: osdu-identity-binding
+spec:
+  azureIdentity: osdu-identity
+  selector: osdu-identity
+{{ end }}
