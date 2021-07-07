@@ -4,6 +4,17 @@
 appinsightstatsd:
   aadpodidbinding: "osdu-identity"
 
+#################################################################################
+# Specify log analytics configuration
+#
+logAnalytics:
+  workspaceId:
+    secretName: "central-logging"
+    secretKey: "workspace-id"
+  workspaceKey:
+    secretName: "central-logging"
+    secretKey: "workspace-key"
+
 ################################################################################
 # Specify any optional override values
 #
@@ -14,6 +25,12 @@ image:
 
 airflowLogin:
   name: admin
+
+
+airflowAuthentication:
+  username: admin
+  keyvaultMountPath: /mnt/azure-keyvault/
+  passwordKey: airflow-admin-password
 
 ################################################################################
 # Specify any custom configs/environment values
@@ -43,6 +60,15 @@ pgbouncer:
 # Specify the airflow configuration
 #
 airflow:
+
+  ##################################
+  # Kubernetes Pod Operator config
+  ##################################
+  kubernetesPodOperator:
+    namespace: airflow
+  
+  serviceAccount:
+    name: airflow
 
   ###################################
   # Kubernetes - Ingress Configs
@@ -88,10 +114,10 @@ airflow:
   redis:
     enabled: false
   externalRedis:
-    host: #{base-name-sr}#-cache.redis.cache.windows.net    #<-- Azure Redis Cache host
+    host: #{base-name-sr}#-queue.redis.cache.windows.net    #<-- Azure Redis Cache host
     port: 6380
     passwordSecret: "redis"
-    passwordSecretKey: "redis-password"
+    passwordSecretKey: "redis-queue-password"
     databaseNumber: 1  #<-- Adding redis database number according to the Redis config map https://community.opengroup.org/osdu/platform/deployment-and-operations/infra-azure-provisioning/-/blob/master/charts/osdu-common/templates/redis-map.yaml#L7
 
   ###################################
@@ -108,14 +134,33 @@ airflow:
   # Airflow - WebUI Configs
   ###################################
   web:
+    replicas: 1
+    livenessProbe:
+      timeoutSeconds: 60
+    resources:
+      requests:
+        cpu: "2000m"
+        memory: "2Gi"
+      limits:
+        cpu: "3000m"
+        memory: "2Gi"
     podLabels:
       aadpodidbinding: "osdu-identity"
+    podAnnotations:
+      sidecar.istio.io/userVolumeMount: '[{"name": "azure-keyvault", "mountPath": "/mnt/azure-keyvault", "readonly": true}]'
     baseUrl: "http://localhost/airflow"
 
   ###################################
   # Airflow - Worker Configs
   ###################################
   workers:
+    resources:
+      requests:
+        cpu: "1200m"
+        memory: "5Gi"
+      limits:
+        cpu: "1200m"
+        memory: "5Gi"
     podLabels:
       aadpodidbinding: "osdu-identity"
     autoscaling:
@@ -132,9 +177,6 @@ airflow:
     labels:
       # DO NOT DELETE THIS LABEL. SET IT TO "false" WHEN AUTOSCALING IS DISABLED, SET IT TO "true" WHEN AUTOSCALING IS ENABLED
       autoscalingEnabled: "false"
-    resources:
-      requests:
-        memory: "512Mi"
 
   ###################################
   # Airflow - Flower Configs
@@ -146,6 +188,13 @@ airflow:
   # Airflow - Scheduler Configs
   ###################################
   scheduler:
+    resources:
+      requests:
+        cpu: "3000m"
+        memory: "1Gi"
+      limits:
+        cpu: "3000m"
+        memory: "1Gi"
     podLabels:
       aadpodidbinding: "osdu-identity"
     variables: |
@@ -156,8 +205,8 @@ airflow:
   ###################################
   airflow:
     image:
-      repository: apache/airflow
-      tag: 1.10.12-python3.6
+      repository: community.opengroup.org:5555/osdu/platform/deployment-and-operations/base-containers-azure/airflow-docker-image/master
+      tag: v0.9
       pullPolicy: IfNotPresent
       pullSecret: ""
     config:
@@ -171,7 +220,7 @@ airflow:
       AIRFLOW__WEBSERVER__AUTHENTICATE: "True"
       AIRFLOW__WEBSERVER__AUTH_BACKEND: "airflow.contrib.auth.backends.password_auth"
       AIRFLOW__WEBSERVER__RBAC: "True"
-      AIRFLOW__API__AUTH_BACKEND: "airflow.contrib.auth.backends.password_auth"
+      AIRFLOW__API__AUTH_BACKEND: "airflow.api.auth.backend.default"
       AIRFLOW__CORE__REMOTE_LOGGING: "True"
       AIRFLOW__CORE__REMOTE_LOG_CONN_ID: "az_log"
       AIRFLOW__CORE__REMOTE_BASE_LOG_FOLDER: "wasb-airflowlog"
@@ -189,6 +238,11 @@ airflow:
       AIRFLOW_VAR_CORE__SERVICE__FILE__HOST: "http://file.osdu.svc.cluster.local/api/file/v2"
       AIRFLOW_VAR_CORE__SERVICE__WORKFLOW__HOST: "http://ingestion-workflow.osdu.svc.cluster.local/api/workflow"
       AIRFLOW_VAR_CORE__SERVICE__SEARCH_WITH_CURSOR__URL: "http://search-service.osdu.svc.cluster.local/api/search/v2/query_with_cursor"
+      AIRFLOW__WEBSERVER__WORKERS: 15
+      AIRFLOW__WEBSERVER__WORKER_REFRESH_BATCH_SIZE: 0
+      AIRFLOW__CORE__STORE_SERIALIZED_DAGS: True #This flag decides whether to serialise DAGs and persist them in DB
+      AIRFLOW__CORE__STORE_DAG_CODE: True #This flag decides whether to persist DAG files code in DB
+      AIRFLOW__WEBSERVER__WORKER_CLASS: gevent
     extraEnv:
     - name: CLOUD_PROVIDER
       value: "azure"

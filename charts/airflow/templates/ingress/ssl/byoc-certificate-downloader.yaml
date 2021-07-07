@@ -1,0 +1,45 @@
+{{- $isEnabled := .Values.airflow.isDataPartitionDeployment | default false -}}
+{{ if and $isEnabled .Values.airflow.ingress.web.tls.BYOCEnabled }}
+apiVersion: batch/v1
+kind: Job
+metadata:
+  # This Job is needed to download the certificate from keyvault via csi provider
+  name: "byoc-certificate-downloader-job"
+  namespace: istio-system
+  labels:
+    app.kubernetes.io/managed-by: {{ .Release.Service | quote }}
+    app.kubernetes.io/instance: {{ .Release.Name | quote }}
+    app.kubernetes.io/version: {{ .Chart.AppVersion }}
+spec:
+  template:
+    metadata:
+      name: "{{ .Release.Name }}"
+      labels:
+        app.kubernetes.io/managed-by: {{ .Release.Service | quote }}
+        app.kubernetes.io/instance: {{ .Release.Name | quote }}
+        helm.sh/chart: "{{ .Chart.Name }}-{{ .Chart.Version }}"
+        aadpodidbinding: "osdu-identity"
+    spec:
+      restartPolicy: Never
+      containers:
+      - name: certificate-downloader
+        image: python:3.6.12-slim-buster
+        command: ['sh','-c','python -c "import time"']
+        volumeMounts:
+        - name: airflow-tls
+          mountPath: "/mnt/airflow-tls"
+          readOnly: true
+        env:
+        - name: TLS_KEY
+          valueFrom:
+            secretKeyRef:
+              name: {{ .Values.airflow.ingress.web.tls.secretName }}
+              key: tls.key
+      volumes:
+      - name: airflow-tls
+        csi:
+          driver: secrets-store.csi.k8s.io
+          readOnly: true
+          volumeAttributes:
+            secretProviderClass: airflow-tls       
+{{ end }}

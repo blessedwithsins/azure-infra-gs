@@ -1,0 +1,49 @@
+#  Copyright © Microsoft Corporation
+#
+#  Licensed under the Apache License, Version 2.0 (the "License");
+#  you may not use this file except in compliance with the License.
+#  You may obtain a copy of the License at
+#
+#       http://www.apache.org/licenses/LICENSE-2.0
+#
+#  Unless required by applicable law or agreed to in writing, software
+#  distributed under the License is distributed on an "AS IS" BASIS,
+#  WITHOUT WARRANTIES OR CONDITIONS OF ANY KIND, either express or implied.
+#  See the License for the specific language governing permissions and
+#  limitations under the License.
+
+parameters:
+  serviceName: ""
+  chartPath: ""
+  valuesFile: ""
+  skipDeploy: false
+  checkoutRepo: self
+  namespace: ""
+
+steps:
+  - checkout: ${{ parameters.checkoutRepo }}
+    path: s/$(Build.Repository.Name)
+    persistCredentials: true
+  - task: "HelmInstaller@1"
+    displayName: 'Download Helm'
+    inputs:
+      helmVersionToInstall: 3.3.0
+  - task: qetza.replacetokens.replacetokens-task.replacetokens@3
+    displayName: 'Helm Values - Build Repo'
+    inputs:
+      targetFiles: |
+        $(Agent.BuildDirectory)/s/$(Build.Repository.Name)/${{parameters.valuesFile}} => $(Agent.BuildDirectory)/s/$(Build.Repository.Name)/${{parameters.chartPath}}/values.yaml
+    condition: eq(variables['HELM_SOURCE'], '')
+  - task: qetza.replacetokens.replacetokens-task.replacetokens@3
+    displayName: 'Helm Values - Helm Source Repo'
+    inputs:
+      targetFiles: |
+        $(Agent.BuildDirectory)/s/$(HELM_SOURCE)/${{parameters.valuesFile}} => $(Agent.BuildDirectory)/s/$(HELM_SOURCE)/${{parameters.chartPath}}/values.yaml
+    condition: ne(variables['HELM_SOURCE'], '')
+  - template: helm-install.yml
+    parameters:
+      serviceName: ${{parameters.serviceName}}
+      chartPath: ${{ parameters.chartPath }}
+      valuesFile: ${{ parameters.valuesFile }}
+      baseResourceGroupName: $(base-name-dp)
+      namespace: ${{ parameters.namespace }}

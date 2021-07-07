@@ -1,10 +1,10 @@
 version: '3'
 services:
-  azureprobetestclient:
+  probetest:
     build:
       context: .
       dockerfile: Dockerfile
-    image: msosdu.azurecr.io/azure-probe-test-client:$VERSION
+    image: msosdu.azurecr.io/probe-test:$VERSION
     environment:
       TERM: xterm
       TENANT_ID: $TENANT_ID

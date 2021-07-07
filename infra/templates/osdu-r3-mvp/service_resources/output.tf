@@ -88,3 +88,26 @@ output "redis_primary_access_key" {
 output "redis_ssl_port" {
   value = module.redis_cache.ssl_port
 }
+
+output "aks_egress_ip_address" {
+  value = module.aks.aks_egress_ip_address
+}
+
+output "redis_queue_name" {
+  description = "The name of the redis_queue"
+  value       = module.redis_queue.name
+}
+
+output "redis_queue_hostname" {
+  value = module.redis_queue.hostname
+}
+
+output "redis_queue_primary_access_key" {
+  sensitive = true
+  value     = module.redis_queue.primary_access_key
+}
+
+output "redis_queue_ssl_port" {
+  value = module.redis_queue.ssl_port
+}
+

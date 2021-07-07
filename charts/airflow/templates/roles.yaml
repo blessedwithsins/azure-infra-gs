@@ -15,7 +15,7 @@ apiVersion: rbac.authorization.k8s.io/v1beta1
 kind: Role
 metadata:
   name: airflow
-  namespace: airflow
+  namespace: {{ .Values.airflow.kubernetesPodOperator.namespace }}
 rules:
   - apiGroups:
       - ''
@@ -47,12 +47,17 @@ apiVersion: rbac.authorization.k8s.io/v1beta1
 kind: RoleBinding
 metadata:
   name: airflow
-  namespace: airflow
+  namespace: {{ .Values.airflow.kubernetesPodOperator.namespace }}
 roleRef:
   apiGroup: rbac.authorization.k8s.io
   kind: Role
   name: airflow
 subjects:
   - kind: ServiceAccount
-    name: airflow
+    name: {{ .Values.airflow.serviceAccount.name }}
+    {{- $isEnabled := .Values.airflow.isDataPartitionDeployment | default false -}}
+    {{ if $isEnabled }}
+    namespace: {{ .Release.Namespace}}
+    {{ else }}
     namespace: osdu
+    {{ end }}

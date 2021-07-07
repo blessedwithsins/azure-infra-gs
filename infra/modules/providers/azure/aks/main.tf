@@ -24,6 +24,12 @@ data "azurerm_resource_group" "main" {
   name = var.resource_group_name
 }
 
+data "azurerm_public_ip" "aks_egress_ip" {
+  // Splits the Resource Id for the Egress IP to get the name
+  name                = split("/", tolist(azurerm_kubernetes_cluster.main.network_profile[0].load_balancer_profile[0].effective_outbound_ips)[0])[8]
+  resource_group_name = azurerm_kubernetes_cluster.main.node_resource_group
+}
+
 data "azurerm_subscription" "current" {}
 
 resource "random_id" "main" {
@@ -59,6 +65,22 @@ resource "azurerm_log_analytics_solution" "main" {
   }
 }
 
+resource "azurerm_kubernetes_cluster_node_pool" "internal" {
+  kubernetes_cluster_id = azurerm_kubernetes_cluster.main.id
+  name                  = "internal"
+  node_count            = var.agent_vm_count
+  vm_size               = var.agent_vm_size
+  os_disk_size_gb       = var.agent_vm_disk
+  vnet_subnet_id        = var.vnet_subnet_id
+  enable_auto_scaling   = var.auto_scaling_default_node
+  max_pods              = var.max_pods
+  max_count             = var.auto_scaling_default_node == true ? var.max_node_count : null
+  min_count             = var.auto_scaling_default_node == true ? var.agent_vm_count : null
+  availability_zones    = var.availability_zones
+  mode                  = "System"
+  orchestrator_version  = var.kubernetes_version
+}
+
 resource "azurerm_kubernetes_cluster" "main" {
   name                = var.name
   resource_group_name = data.azurerm_resource_group.main.name
@@ -78,16 +100,17 @@ resource "azurerm_kubernetes_cluster" "main" {
   }
 
   default_node_pool {
-    name                = "default"
-    node_count          = var.agent_vm_count
-    vm_size             = var.agent_vm_size
-    os_disk_size_gb     = var.agent_vm_disk
-    vnet_subnet_id      = var.vnet_subnet_id
-    enable_auto_scaling = var.auto_scaling_default_node
-    max_pods            = var.max_pods
+    name                   = "default"
+    node_count             = "2"
+    vm_size                = var.agent_vm_size
+    os_disk_size_gb        = var.agent_vm_disk
+    vnet_subnet_id         = var.vnet_subnet_id
+    enable_auto_scaling    = var.auto_scaling_default_node
+    max_pods               = var.max_pods
+    max_count              = "2"
+    min_count              = "2"
+    orchestrator_version   = var.kubernetes_version
     enable_host_encryption = true
-    max_count           = var.auto_scaling_default_node == true ? var.max_node_count : null
-    min_count           = var.auto_scaling_default_node == true ? var.agent_vm_count : null
   }
 
   network_profile {

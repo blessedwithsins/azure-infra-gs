@@ -105,3 +105,9 @@ variable "blob_cors_rule" {
   default     = []
   description = "List of CORS Rules to be applied on the Blob Service."
 }
+
+variable "min_tls_version" {
+  description = "The minimum supported TLS version for the storage account"
+  type        = string
+  default     = "TLS1_2"
+}

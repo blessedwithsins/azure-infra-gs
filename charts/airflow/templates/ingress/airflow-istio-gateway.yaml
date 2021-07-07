@@ -1,0 +1,20 @@
+{{- $isEnabled := .Values.airflow.isDataPartitionDeployment | default false -}}
+{{- if $isEnabled }}
+apiVersion: networking.istio.io/v1alpha3
+kind: Gateway
+metadata:
+  name: airflow-gateway
+spec:
+  selector:
+    istio: ingressgateway # use Istio default gateway implementation
+  servers:
+  - port:
+      number: 443
+      name: https
+      protocol: HTTPS
+    tls:
+      mode: SIMPLE
+      credentialName: {{ .Values.airflow.ingress.web.tls.secretName }}
+    hosts:
+    - {{ .Values.airflow.ingress.web.host | quote }}
+{{- end }}

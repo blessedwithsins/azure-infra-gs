@@ -50,9 +50,16 @@ func validateMinTLSVersion(t *testing.T, minTLSVersion string) {
 
 // validateResourceGroupCaches - Validate the caches within the resource group
 func validateResourceGroupCacheCount(t *testing.T, caches []string, expectedCacheName string) {
-	expectedResourceGroupCaches := []string{expectedCacheName}
+	contains := false
 
-	require.Equal(t, expectedResourceGroupCaches, caches, "The provisioned caches in the RG don't match the expected result")
+	for _, cache := range caches {
+		if cache == expectedCacheName {
+			contains = true
+			break
+		}
+	}
+
+	require.True(t, contains, "The provisioned caches in the RG don't contain the expected cache")
 }
 
 // InspectProvisionedCache - Runs a suite of test assertions to validate that a provisioned redis cache

@@ -55,6 +55,12 @@ variable "resource_tags" {
   default     = {}
 }
 
+variable "resource_tags_sdms" {
+  description = "Map of tags to apply to sdms resources."
+  type        = map(string)
+  default     = { service = "sdms" }
+}
+
 variable "resource_group_location" {
   description = "The Azure region where data storage resources in this template should be created."
   type        = string
@@ -180,4 +186,32 @@ variable "elasticsearch_username" {
 variable "elasticsearch_password" {
   type        = string
   description = "password for elasticsearch cluster"
+}
+
+variable "ssh_public_key_file" {
+  type        = string
+  description = "(Required) The SSH public key used to setup log-in credentials on the nodes in the AKS cluster."
+}
+
+variable "feature_flag" {
+  description = "(Optional) A toggle for incubator features"
+  type = object({
+    deploy_dp_airflow           = bool
+    storage_mgmt_policy_enabled = bool
+  })
+  default = {
+    deploy_dp_airflow           = false
+    storage_mgmt_policy_enabled = false
+  }
+}
+
+variable "service_resources_workspace_name" {
+  description = "(Required) The workspace name for the service_resources repository terraform environment / template to reference for this template."
+  type        = string
+}
+
+variable "sa_retention_days" {
+  description = "Number of days that to retain data in file-staging-area"
+  type        = number
+  default     = 30
 }

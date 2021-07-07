@@ -1,3 +1,4 @@
+{{- $isEnabled := .Values.airflow.isDataPartitionDeployment | default false -}}
 apiVersion: apps/v1
 kind: Deployment
 metadata:
@@ -24,6 +25,11 @@ spec:
         volumeMounts:
           - name: config-volume
             mountPath: /usr/src/app/statsd/backends/config
+          {{- if $isEnabled }}
+          - name: azure-cr-keyvault
+            mountPath: "/mnt/azure-cr-keyvault"
+            readOnly: true
+          {{- end }}
         env:
           - name: APPLICATION_INSIGHTS_INSTRUMENTATION_KEY
             valueFrom:
@@ -44,3 +50,12 @@ spec:
         - name: config-volume
           configMap: 
             name: airflow-appinsight-statsd-config
+        {{- if $isEnabled }}
+        - name: azure-cr-keyvault
+          csi:
+            driver: secrets-store.csi.k8s.io
+            readOnly: true
+            volumeAttributes:
+              secretProviderClass: azure-cr-keyvault
+        {{- end }}
+        
