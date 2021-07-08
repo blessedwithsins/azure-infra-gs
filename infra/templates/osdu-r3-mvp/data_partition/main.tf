@@ -489,10 +489,10 @@ module "airflow" {
 
   ssh_public_key_file      = var.ssh_public_key_file
   sr_aks_egress_ip_address = data.terraform_remote_state.service_resources.outputs.aks_egress_ip_address
-//  app_insights_key         = data.terraform_remote_state.central_resources.outputs.appinsights_key
-//  sp_client_id             = data.terraform_remote_state.central_resources.outputs.app_dev_sp_username
-//  sp_client_secret         = data.terraform_remote_state.central_resources.outputs.app_dev_sp_password
-//  aad_client_id            = data.terraform_remote_state.central_resources.outputs.aad_client_id
+  //  app_insights_key         = data.terraform_remote_state.central_resources.outputs.appinsights_key
+  //  sp_client_id             = data.terraform_remote_state.central_resources.outputs.app_dev_sp_username
+  //  sp_client_secret         = data.terraform_remote_state.central_resources.outputs.app_dev_sp_password
+  //  aad_client_id            = data.terraform_remote_state.central_resources.outputs.aad_client_id
 }
 
 
