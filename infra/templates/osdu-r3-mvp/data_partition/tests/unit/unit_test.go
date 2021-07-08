@@ -15,9 +15,9 @@
 package test
 
 import (
+	"fmt"
 	"os"
 	"testing"
-	"fmt"
 
 	"github.com/gruntwork-io/terratest/modules/terraform"
 	"github.com/microsoft/cobalt/test-harness/infratests"
