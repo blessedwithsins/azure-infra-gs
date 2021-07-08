@@ -17,6 +17,7 @@ package test
 import (
 	"os"
 	"testing"
+	"fmt"
 
 	"github.com/gruntwork-io/terratest/modules/terraform"
 	"github.com/microsoft/cobalt/test-harness/infratests"
@@ -44,12 +45,23 @@ func TestTemplate(t *testing.T) {
 		"azurerm_resource_group.main": expectedAppDevResourceGroup,
 	}
 
+	deploy_dp_airflow := os.Getenv("TF_VAR_deploy_dp_airflow")
+	resourceCount := 0
+
+	if deploy_dp_airflow == "true" {
+	    fmt.Println("Deploy Airflow in DP, true")
+	    resourceCount = 225
+	} else {
+        fmt.Println("Deploy Airflow in DP, false")
+        resourceCount = 139
+	}
+
 	testFixture := infratests.UnitTestFixture{
 		GoTest:                          t,
 		TfOptions:                       tfOptions,
 		Workspace:                       workspace,
 		PlanAssertions:                  nil,
-		ExpectedResourceCount:           139,
+		ExpectedResourceCount:           resourceCount,
 		ExpectedResourceAttributeValues: resourceDescription,
 	}
 

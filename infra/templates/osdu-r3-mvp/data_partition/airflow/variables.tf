@@ -236,18 +236,22 @@ variable "ingest_storage_account_name" {
 
 variable "app_insights_key" {
   type = string
+  default = ""
 }
 
 variable "sp_client_id" {
   type = string
+  default = ""
 }
 
 variable "sp_client_secret" {
   type = string
+  default = ""
 }
 
 variable "aad_client_id" {
   type = string
+  default = ""
 }
 
 variable "redis_queue_sku_name" {
