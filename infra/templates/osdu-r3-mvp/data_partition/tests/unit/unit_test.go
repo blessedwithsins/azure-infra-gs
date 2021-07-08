@@ -46,7 +46,7 @@ func TestTemplate(t *testing.T) {
 	}
 
 // 	deploy_dp_airflow := os.Getenv("TF_VAR_deploy_dp_airflow")
-	resourceCount := 0
+// 	resourceCount := 0
 
 // 	if deploy_dp_airflow == "true" {
 // 	    fmt.Println("Deploy Airflow in DP, true")
