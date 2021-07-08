@@ -35,11 +35,22 @@ var tfOptions = &terraform.Options{
 
 // Runs a suite of test assertions to validate that a provisioned data source environment
 // is fully functional.
+var deploy_dp_airflow = os.Getenv("TF_VAR_deploy_dp_airflow")
+
 func TestDataEnvironment(t *testing.T) {
+
+	resourceCount := 0
+
+	if deploy_dp_airflow == "true" {
+		resourceCount = 8
+	} else {
+		resourceCount = 8
+	}
+
 	testFixture := infratests.IntegrationTestFixture{
 		GoTest:                t,
 		TfOptions:             tfOptions,
-		ExpectedTfOutputCount: 8,
+		ExpectedTfOutputCount: resourceCount,
 		TfOutputAssertions: []infratests.TerraformOutputValidation{
 			storageIntegTests.InspectStorageAccount("storage_account", "storage_containers", "data_partition_group_name"),
 			cosmosIntegTests.InspectProvisionedCosmosDBAccount("data_partition_group_name", "cosmosdb_account_name", "cosmosdb_properties"),
