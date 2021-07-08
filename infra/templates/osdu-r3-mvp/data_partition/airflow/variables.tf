@@ -248,5 +248,5 @@ variable "redis_queue_zones" {
 
 variable "cr_keyvault_id" {
   description = "Id for Keyvault in Central Resources"
-  type = string
+  type        = string
 }
