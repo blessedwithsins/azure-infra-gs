@@ -45,7 +45,7 @@ func TestTemplate(t *testing.T) {
 		"azurerm_resource_group.main": expectedAppDevResourceGroup,
 	}
 
-	deploy_dp_airflow := os.Getenv("TF_VAR_deploy_dp_airflow")
+// 	deploy_dp_airflow := os.Getenv("TF_VAR_deploy_dp_airflow")
 	resourceCount := 0
 
 // 	if deploy_dp_airflow == "true" {
