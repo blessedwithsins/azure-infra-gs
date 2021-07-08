@@ -52,7 +52,7 @@ func TestTemplate(t *testing.T) {
 
 	if deploy_dp_airflow == "true" {
 		fmt.Println("Deploy Airflow in DP, true")
-		resourceCount = 225
+		resourceCount = 229
 	} else {
 		fmt.Println("value for deploy_dp_airflow")
 		fmt.Println(deploy_dp_airflow)
