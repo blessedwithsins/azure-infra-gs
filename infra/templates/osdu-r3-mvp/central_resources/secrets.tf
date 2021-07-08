@@ -116,13 +116,6 @@ resource "azurerm_key_vault_secret" "insights" {
   key_vault_id = module.keyvault.keyvault_id
 }
 
-// data source to output the value of secret
-data "azurerm_key_vault_secret" "data_insights" {
-  name         = "appinsights-key"
-  key_vault_id = module.keyvault.keyvault_id
-}
-
-
 #-------------------------------
 # Log Analytics
 #-------------------------------
@@ -138,7 +131,6 @@ resource "azurerm_key_vault_secret" "workspace_key" {
   key_vault_id = module.keyvault.keyvault_id
 }
 
-
 #-------------------------------
 # AD Principal and Applications
 #-------------------------------
@@ -148,21 +140,9 @@ resource "azurerm_key_vault_secret" "principal_id" {
   key_vault_id = module.keyvault.keyvault_id
 }
 
-// data source to output the value of secret
-data "azurerm_key_vault_secret" "data_principal_id" {
-  name         = "app-dev-sp-username"
-  key_vault_id = module.keyvault.keyvault_id
-}
-
 resource "azurerm_key_vault_secret" "principal_secret" {
   name         = "app-dev-sp-password"
   value        = module.service_principal.client_secret
-  key_vault_id = module.keyvault.keyvault_id
-}
-
-// data source to output the value of secret
-data "azurerm_key_vault_secret" "data_principal_secret" {
-  name         = "app-dev-sp-password"
   key_vault_id = module.keyvault.keyvault_id
 }
 
@@ -176,12 +156,6 @@ resource "azurerm_key_vault_secret" "principal_object_id" {
 resource "azurerm_key_vault_secret" "application_id" {
   name         = "aad-client-id"
   value        = module.ad_application.id
-  key_vault_id = module.keyvault.keyvault_id
-}
-
-// data source to output the value of secret
-data "azurerm_key_vault_secret" "data_application_id" {
-  name         = "aad-client-id"
   key_vault_id = module.keyvault.keyvault_id
 }
 

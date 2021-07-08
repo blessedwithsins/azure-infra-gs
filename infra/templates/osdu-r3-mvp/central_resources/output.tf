@@ -75,23 +75,3 @@ output "app_insights_name" {
   description = "The name of the appinsights resource"
   value       = module.app_insights.app_insights_name
 }
-
-output "appinsights_key" {
-  description = "Instrumentation key for app insights"
-  value       = data.azurerm_key_vault_secret.data_insights.value
-}
-
-output "app_dev_sp_username" {
-  description = "Service principal username"
-  value       = data.azurerm_key_vault_secret.data_principal_id.value
-}
-
-output "app_dev_sp_password" {
-  description = "Service Principal secret"
-  value       = data.azurerm_key_vault_secret.data_principal_secret.value
-}
-
-output "aad_client_id" {
-  description = "AAD Client ID"
-  value       = data.azurerm_key_vault_secret.data_application_id.value
-}

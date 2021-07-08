@@ -234,22 +234,6 @@ variable "ingest_storage_account_name" {
   type = string
 }
 
-variable "app_insights_key" {
-  type = string
-}
-
-variable "sp_client_id" {
-  type = string
-}
-
-variable "sp_client_secret" {
-  type = string
-}
-
-variable "aad_client_id" {
-  type = string
-}
-
 variable "redis_queue_sku_name" {
   description = "The Azure Cache for Redis pricing tier. Possible values are Basic, Standard and Premium. Azure currently charges by the minute for all pricing tiers."
   type        = string
@@ -260,4 +244,9 @@ variable "redis_queue_zones" {
   description = "A list of a one or more Availability Zones, where the Redis Cache should be allocated."
   type        = list(number)
   default     = [1, 2]
+}
+
+variable "cr_keyvault_id" {
+  description = "Id for Keyvault in Central Resources"
+  type = string
 }
