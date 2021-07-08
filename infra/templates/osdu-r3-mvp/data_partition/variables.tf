@@ -200,7 +200,7 @@ variable "feature_flag" {
     storage_mgmt_policy_enabled = bool
   })
   default = {
-    deploy_dp_airflow           = true
+    deploy_dp_airflow           = false
     storage_mgmt_policy_enabled = false
   }
 }
