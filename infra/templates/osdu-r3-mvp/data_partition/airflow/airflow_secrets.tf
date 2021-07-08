@@ -161,7 +161,7 @@ resource "azurerm_key_vault_secret" "application_id" {
   key_vault_id = module.keyvault.keyvault_id
 }
 
-resource "azurerm_key_vault_secret" "tenant_id" {
+resource "azurerm_key_vault_secret" "sp_tenant_id" {
   name         = "app-dev-sp-tenant-id"
   value        = data.azurerm_client_config.current.tenant_id
   key_vault_id = module.keyvault.keyvault_id
