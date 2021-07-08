@@ -143,32 +143,56 @@ resource "azurerm_key_vault_secret" "data_partition_name" {
   key_vault_id = module.keyvault.keyvault_id
 }
 
-resource "azurerm_key_vault_secret" "principal_id" {
+// data source to output the value of secret
+data "azurerm_key_vault_secret" "data_principal_id" {
   name         = "app-dev-sp-username"
-  value        = var.sp_client_id
+  key_vault_id = var.cr_keyvault_id
+}
+
+// data source to output the value of secret
+data "azurerm_key_vault_secret" "data_principal_secret" {
+  name         = "app-dev-sp-password"
+  key_vault_id = var.cr_keyvault_id
+}
+
+// data source to output the value of secret
+data "azurerm_key_vault_secret" "data_application_id" {
+  name         = "aad-client-id"
+  key_vault_id = var.cr_keyvault_id
+}
+
+// data source to output the value of secret
+data "azurerm_key_vault_secret" "data_insights" {
+  name         = "appinsights-key"
+  key_vault_id = var.cr_keyvault_id
+}
+
+resource "azurerm_key_vault_secret" "principal_id" {
+  name         = "AZURE_CLIENT_ID"
+  value        = data.azurerm_key_vault_secret.data_principal_id.value
   key_vault_id = module.keyvault.keyvault_id
 }
 
 resource "azurerm_key_vault_secret" "principal_secret" {
-  name         = "app-dev-sp-password"
-  value        = var.sp_client_secret
+  name         = "AZURE_CLIENT_SECRET"
+  value        = data.azurerm_key_vault_secret.data_principal_secret.value
   key_vault_id = module.keyvault.keyvault_id
 }
 
 resource "azurerm_key_vault_secret" "application_id" {
-  name         = "aad-client-id"
-  value        = var.aad_client_id
+  name         = "AAD_CLIENT_ID"
+  value        = data.azurerm_key_vault_secret.data_application_id.value
   key_vault_id = module.keyvault.keyvault_id
 }
 
-resource "azurerm_key_vault_secret" "sp_tenant_id" {
-  name         = "app-dev-sp-tenant-id"
+resource "azurerm_key_vault_secret" "tenant_id" {
+  name         = "AZURE_TENANT_ID"
   value        = data.azurerm_client_config.current.tenant_id
   key_vault_id = module.keyvault.keyvault_id
 }
 
 resource "azurerm_key_vault_secret" "insights" {
   name         = "appinsights-key"
-  value        = var.app_insights_key
+  value        = data.azurerm_key_vault_secret.data_insights.value
   key_vault_id = module.keyvault.keyvault_id
 }
