@@ -16,7 +16,7 @@ parameters:
   environment: ''
   configuration: ''
   forceRun: true
-  skipTests: false
+  skipTests: true
   aksAgentSshPublicKeyFilename: 'azure-aks-node-ssh-key.pub'
   aksGitOpsSshPrivateKeyFilename: 'azure-aks-gitops-ssh-key'
 
