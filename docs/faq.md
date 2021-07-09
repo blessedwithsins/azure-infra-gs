@@ -67,6 +67,9 @@ This key pair can be used to ssh into an AKS node if needed.
 ## What type of SSL certificate is used by default?
 The current architecture by default uses a certificate manager by [Jet Stack]( https://github.com/jetstack/cert-manager) that automatically provisions certificates into the Application Gateway and currently is configured with 2 Issuers.  “Lets Encrypt Staging” and “Lets Encrypt Production”.  Future tasks will validate a process for a Bring Your Own Certificate.
 
+## How to enable auto-delete of files from the file-staging-area blob container?
+There is a lifecyle management policy applied on the file-staging-area container where in it can be decided to retain the data in it for a specified number of days.The default value for the retention days is 30.You can configure the number of days via variable "sa_retention_days" and enable this feature by setting the value of "storage_mgmt_policy_enabled" feature flag to true.
+
 # Infrastructure Provisioning Walkthroughs
 
 ## Can someone show me how they set up OSDU on Azure?

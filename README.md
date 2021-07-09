@@ -278,6 +278,8 @@ __Automated Pipeline Installation__
 
 1. Setup Service Automation following directions [here](./docs/service-automation.md).
 
+1. Setup Airflow DNS to point the deployed airflow in data partition followin directions [here](./docs/dp-airflow-dns-setup.md)
+
 
 __Data Migration for Entitlements from Milestone 4(v0.7.0) or lower, to Milestone 5(v0.8.0) or higher__
 

@@ -39,7 +39,7 @@ func TestDataEnvironment(t *testing.T) {
 	testFixture := infratests.IntegrationTestFixture{
 		GoTest:                t,
 		TfOptions:             tfOptions,
-		ExpectedTfOutputCount: 17,
+		ExpectedTfOutputCount: 18,
 		TfOutputAssertions: []infratests.TerraformOutputValidation{
 			redisIntegTests.InspectProvisionedCache("redis_name", "services_resource_group_name"),
 			redisIntegTests.InspectProvisionedCache("redis_queue_name", "services_resource_group_name"),

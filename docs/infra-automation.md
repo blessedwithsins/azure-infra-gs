@@ -106,6 +106,19 @@ az pipelines variable-group create \
   -ojson
 ```
 
+__Enable Airflow Multi partition support__
+
+To enable airflow multi partition turn on the feature flag by running the below command. **This will create infrastructure to support separate airflow cluster for every data partition**. If you don't want to enable it you can skip this step
+
+```bash
+az pipelines variable-group variable create \
+  --id "Infrastructure Pipeline Variables - ${ENVIRONMENT}" \
+  --name "TF_VAR_feature_flag" \
+  --value "{\"deploy_dp_airflow\": true}" \
+  -ojson
+```
+
+
 __Setup and Configure the ADO Library `Infrastructure Pipeline Secrets - demo`__
 > This should be linked Secrets from Azure Key Vault `osducommon<random>`
 

@@ -55,9 +55,11 @@ action-groups = {
 log-alerts = {
   #------------Storage Service Alerts----------------#
   storage-cpu-alert = {
-    service-name    = "storage",
-    alert-rule-name = "CPU-Soft-Limit",
-    description     = "CPU Soft limit alert rule for storage service",
+    # Scope for log query.
+    log-analytics-scope = false,
+    service-name        = "storage",
+    alert-rule-name     = "CPU-Soft-Limit",
+    description         = "CPU Soft limit alert rule for storage service",
     # Alert based on metric measurement
     metric-type       = true
     enabled           = "false",
@@ -77,9 +79,11 @@ log-alerts = {
     metric-trigger-column = "timestamp"
   },
   storage-put-record-duration = {
-    service-name    = "storage",
-    alert-rule-name = "Put-Record-Duration",
-    description     = "Alert for duration of storage service PUT record API call",
+    # Scope for log query.
+    log-analytics-scope = false,
+    service-name        = "storage",
+    alert-rule-name     = "Put-Record-Duration",
+    description         = "Alert for duration of storage service PUT record API call",
     # Alert based on Number of results hence metric-type is false
     metric-type       = false
     enabled           = "true",
@@ -459,6 +463,31 @@ log-alerts = {
     metric-trigger-threshold = 1,
     # Type can be based on total breaches or consecutive breaches of threshold.
     metric-trigger-type   = "Consecutive",
+    metric-trigger-column = "Operation"
+  },
+  # Airflow Dag Alerts # 
+  # Sample #
+  airflow-dagrun-duration-alert = {
+    log-analytics-scope = false,
+    service-name        = "airflow",
+    alert-rule-name     = "airflow-dagrun-duration-alert",
+    description         = "Alert rule when the dag run duration exceeds expected time limit.",
+    # Alert based on metric measurement
+    metric-type       = true
+    enabled           = "false",
+    severity          = 3,
+    frequency         = 5,
+    time-window       = 5,
+    action-group-name = ["ProdActionGroup", "DevActionGroup"],
+    query             = "customMetrics\n| where name has \"dagrun.duration.success\" or name has \"dagrun.duration.failed\"\n| parse kind=regex name with @\"([0-9a-zA-Z_])*\\.\" partitionId @\"\\.dagrun\\.duration\\.([0-9a-zA-Z_\\.])*\"\n| extend dataPartitionId = case(partitionId == \"\", \"common-cluster\",\n    partitionId)\n| parse kind=regex name with @\"([0-9a-zA-Z_])*\\.dagrun\\.duration\\.([0-9a-zA-Z_])*\\.\" dagName\n| where dagName has \"sample_python_dag\"\n| extend duration = value / 1000\n| summarize AggregatedValue= max(duration) by Operation = strcat(dagName,\"-dagrun.duration\"), bin(timestamp, 5m), dataPartitionId",
+    # Expected dag run duration
+    trigger-threshold       = 150,
+    trigger-operator        = "GreaterThan",
+    metric-trigger-operator = "Equal",
+    # Number of times the threshold value is allowed to exceed
+    metric-trigger-threshold = 1,
+    # Type can be based on total breaches or consecutive breaches of threshold.
+    metric-trigger-type   = "Total",
     metric-trigger-column = "Operation"
   }
 }

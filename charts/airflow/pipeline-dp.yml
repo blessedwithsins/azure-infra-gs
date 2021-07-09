@@ -55,7 +55,7 @@ variables:
   - name: istioChartPath
     value: "charts/osdu-istio"
   - name: istioValuesFile
-    value: "charts/helm-config.yaml"
+    value: "charts/helm-config-dp.yaml"
 
 stages:
   - template: pipeline-stages/airflow-custom-stages.yml

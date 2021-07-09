@@ -115,8 +115,8 @@ The below configurations are recommended ones for airflow webserver
 - AIRFLOW__CORE__MIN_SERIALIZED_DAG_FETCH_INTERVAL: 300 (This config controls when your DAGs are updated in the Webserver)
 
 
-For the below configurations 
-1. AIRFLOW__CORE__MIN_SERIALIZED_DAG_UPDATE_INTERVAL 
+For the below configurations
+1. AIRFLOW__CORE__MIN_SERIALIZED_DAG_UPDATE_INTERVAL
 2. AIRFLOW__CORE__MIN_SERIALIZED_DAG_FETCH_INTERVAL
 
 The value should be reduced/increased as per need basis
@@ -178,7 +178,6 @@ web:
     - Add this environment variable in [AIRFLOW__CORE__DAG_FILE_PROCESSOR_TIMEOUT](https://airflow.apache.org/docs/apache-airflow/1.10.12/configurations-ref.html#dag-file-processor-timeout) by following instructions mentioned [here](https://community.opengroup.org/osdu/platform/deployment-and-operations/infra-azure-provisioning/-/blob/update_airflow_scalability_documentation/docs/airflow-scalability-guide.md#how-to-change-airflow-configuration) with a suitable value accordingly.
     - Redeploy airflow to AKS
 
-
 ### Configurations used to achieve 1000 Requests per second at Trigger Workflow API in Ingestion Workflow service
 
 - Containers Used
@@ -194,19 +193,17 @@ web:
     - Memory Limit - 4Gi
 
 - Airflow WebServer Configuration
+
   AIRFLOW__WEBSERVER__WORKERS: 8 (Defines the number of Gunicorn workers)
+
   AIRFLOW__CORE__SQL_ALCHEMY_POOL_SIZE: 20  (Maximum number of database connections in the connection pool)
 
-  The replicas for PG Bouncer component need to be increased 5 as existing to handle the connection pooling
+  The replicas for PG Bouncer component need to be increased to 5 to handle the connection pooling
   for increased number of clients
 
   Recommendation - Due to increased replicas for pg bouncer high CPU consumption (70%) are observed
-  for 8 Core General purpose Azure postgres sql, so 16 core General purpose SKU will be recommended 
+  for 8 Core General purpose Azure postgres sql, so 16 core General purpose SKU will be recommended
   one for such high loads.
-  
-  Gatling Report - https://fireflymn73.z19.web.core.windows.net/Firefly-141271/index.html
-
-  Note: After lasrge number 
   
 
 
