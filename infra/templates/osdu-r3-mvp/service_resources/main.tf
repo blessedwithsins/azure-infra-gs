@@ -582,10 +582,3 @@ resource "azurerm_management_lock" "system_sa_lock" {
   scope      = module.system_storage_account.id
   lock_level = "CanNotDelete"
 }
-
-# Cosmos db lock
-resource "azurerm_management_lock" "db_lock" {
-  name       = "osdu_system_db_lock"
-  scope      = module.cosmosdb_account.properties.cosmosdb.id
-  lock_level = "CanNotDelete"
-}
