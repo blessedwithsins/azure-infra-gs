@@ -1,0 +1,16 @@
+{{- $isEnabled := .Values.airflow.isDataPartitionDeployment | default false -}}
+{{ if and $isEnabled (not .Values.airflow.ingress.web.tls.BYOCEnabled) }}
+apiVersion: cert-manager.io/v1
+kind: Certificate
+metadata:
+  name: airflow-prod-certificate
+  namespace: istio-system
+spec:
+  secretName: {{ .Values.airflow.ingress.web.tls.secretName }}
+  issuerRef:
+    kind: Issuer
+    name: letsencrypt
+  commonName: {{ .Values.airflow.ingress.web.host }}
+  dnsNames:
+  - {{ .Values.airflow.ingress.web.host }}
+{{ end }}

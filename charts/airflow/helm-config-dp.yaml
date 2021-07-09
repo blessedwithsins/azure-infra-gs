@@ -96,20 +96,16 @@ airflow:
   # Kubernetes - Ingress Configs
   ###################################
   ingress:
-    enabled: true
+    enabled: false
     web:
-      annotations:
-        kubernetes.io/ingress.class: istio
       path: "/airflow"
-      host: #{DNS_HOST}#
+      host: #{AIRFLOW_DNS_HOST}#
       livenessPath: "/airflow/health"
       tls:
-        enabled: true
-        secretName: osdu-certificate
-      precedingPaths:
-        - path: "/airflow/*"
-          serviceName: airflow-web
-          servicePort: 8080
+        BYOCEnabled: #{DP_ENABLE_KEYVAULT_CERT}#
+        secretName: airflow-prod-certificate
+        certificateAdmin: admin@email.com
+        sslServer: https://acme-v02.api.letsencrypt.org/directory
 
   ###################################
   # Database - External Database
