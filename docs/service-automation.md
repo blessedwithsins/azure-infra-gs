@@ -227,6 +227,57 @@ This variable group is a linked variable group that links to the Environment Key
 - subscription-id
 - tenant-id
 
+__Setup and Configure the ADO Library `Azure Target Env Data Partition opendes - demo`__
+
+This needs to be configured only if airflow multi partition support is enabled
+
+This variable group will be used to hold the specific environment values necessary for configuring airflow in data partition.
+
+| Variable | Value |
+|----------|-------|
+| AAD_CLIENT_ID                         | `$(aad-client-id)`                |
+| AIRFLOW_DNS_HOST                      | <your_airflow_FQDN>               |
+| AZURE_CLIENT_ID                       | `$(app-dev-sp-username)`        |
+| AZURE_CLIENT_SECRET                   | `$(app-dev-sp-password)`                    |
+| AZURE_TENANT_ID                       | `$(app-dev-sp-tenant-id)`          |
+| DP_ENABLE_KEYVAULT_CERT               | `false`              Set this variable to `true` if you want to use your own certificate from Keyvault certificate - istio-ssl-certificate. <br> To configure certificate in keyvault follow the instructions [here](/docs/byoc-dp-airflow-istio-certificate.md)                                         |
+| OSDU_SVC_ENDPOINT                     | <your_FQDN>                       |
+
+```bash
+DATA_PARTITION_NAME=opendes
+DNS_HOST="<your_ingress_hostname>"  # ie: osdu.contoso.com
+AIRFLOW_DNS_HOST="<your airflow dns host>"
+
+
+az pipelines variable-group create \
+  --name "Azure Target Env - ${UNIQUE}" \
+  --authorize true \
+  --variables \
+  AAD_CLIENT_ID='$(aad-client-id)' \
+  AIRFLOW_DNS_HOST="$AIRFLOW_DNS_HOST" \
+  AZURE_CLIENT_ID='$(app-dev-sp-username)' \
+  AZURE_TENANT_ID='$(app-dev-sp-tenant-id)' \
+  AZURE_CLIENT_SECRET='$(app-dev-sp-password)' \
+  DP_ENABLE_KEYVAULT_CERT="false" \
+  OSDU_SVC_ENDPOINT="$DNS_HOST" \
+  -ojson
+```
+
+__Setup and Configure the ADO Library `Azure Target Env Data Partition opendes Secrets - demo`__
+
+This needs to be configured only if airflow multi partition support is enabled
+
+This variable group will be used to hold the specific environment values which are part of keyvault secrets necessary for configuring airflow in data partition.
+
+This variable group should be linked to the keyvault created in data partition resource group
+
+- data-partition-tenant-id
+- data-partition-subscription-id
+- base-name-dp
+- management-identity-id
+- data-partition-name
+
+
 
 __Setup and Configure the ADO Library `Azure Service Release - partition`__
 
@@ -748,7 +799,7 @@ az pipelines create \
   -ojson
 ```
 
-4. Add a Pipeline for __chart-osdu-airflow__  to deploy Istio Authorization Policies.
+4. Add a Pipeline for __chart-osdu-airflow__  to deploy airflow.
 
     _Repo:_ `infra-azure-provisioning`
     _Path:_ `/devops/pipelines/chart-airflow.yml`
@@ -761,6 +812,22 @@ az pipelines create \
   --branch master  \
   --repository-type tfsgit  \
   --yaml-path /devops/pipelines/chart-airflow.yml  \
+  -ojson
+```
+
+5. Add a Pipeline for __chart-osdu-airflow-opendes__  to deploy airflow in data partition if it is enabled.
+
+    _Repo:_ `infra-azure-provisioning`
+    _Path:_ `/charts/airflow/pipeline-dp.yml`
+    _Validate:_ Airflow Pods are running except for airflow-setup-default-user which is a job pod.
+
+```bash
+az pipelines create \
+  --name 'chart-airflow-opendes'  \
+  --repository infra-azure-provisioning  \
+  --branch master  \
+  --repository-type tfsgit  \
+  --yaml-path /charts/airflow/pipeline-dp.yml  \
   -ojson
 ```
 

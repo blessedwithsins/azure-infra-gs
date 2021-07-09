@@ -467,7 +467,7 @@ log-alerts = {
   },
   # Airflow Dag Alerts # 
   # Sample #
-  airflow-import-errors-alert = {
+  airflow-dagrun-duration-alert = {
     log-analytics-scope = false,
     service-name        = "airflow",
     alert-rule-name     = "airflow-dagrun-duration-alert",
