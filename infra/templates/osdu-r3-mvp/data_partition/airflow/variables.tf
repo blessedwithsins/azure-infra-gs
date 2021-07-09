@@ -245,3 +245,8 @@ variable "redis_queue_zones" {
   type        = list(number)
   default     = [1, 2]
 }
+
+variable "cr_keyvault_id" {
+  description = "Id for Keyvault in Central Resources"
+  type        = string
+}
