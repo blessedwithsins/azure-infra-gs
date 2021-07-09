@@ -19,10 +19,10 @@ spec:
     usePodIdentity: "true"
     useVMManagedIdentity: "false"
     userAssignedIdentityID: ""
-    resourceGroup: "{{ .Values.azure.dp.resourcegroup }}"
-    keyvaultName: "{{ .Values.azure.dp.keyvault }}"
-    subscriptionId: "{{ .Values.azure.dp.subscription }}"
-    tenantId: "{{ .Values.azure.dp.tenant }}"
+    resourceGroup: "{{ .Values.azure.resourcegroup }}"
+    keyvaultName: "{{ .Values.azure.keyvault }}"
+    subscriptionId: "{{ .Values.azure.subscription }}"
+    tenantId: "{{ .Values.azure.tenant }}"
     objects: |
       array:
         - |

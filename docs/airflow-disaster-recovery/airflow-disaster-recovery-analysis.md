@@ -7,12 +7,17 @@ This is a guide on how to make our current Airflow resources resilient to disast
 ## Disaster Management and Recovery (Airflow Engine) 
  
 ### Requirements 
-·	Airflow is deployed on K8S, hence in case of zonal failures, K8S should support zonal recovery.  
-·	Worker node, Web server, scheduler should be recoverable to support business continuity.  
-·	Airflow storage requirements to be recoverable from Zonal failures: 
-·	RDBMS (PostGres) for metadata  
-·	Queues (Azure Redis) for task submission  
-·	Airflow Webserver should be highly available. Airflow for REST API – 99%
+
+1. 	Airflow is deployed on K8S, hence in case of zonal failures, K8S should support zonal recovery.  
+  - Worker node, Web server, scheduler should be recoverable to support business continuity.  
+2. 	Airflow storage requirements to be recoverable from Zonal failures
+  - RDBMS (PostGres) for metadata:
+    State of airflow workflows is maintained in Postgres. So, we need to setup a data sync for Postgres to a Postgres in another region.
+  - Queues (Azure Redis) for task submission:
+    Workflow run tasks are queued for Airflow scheduler to pick.
+  - DAGs (Storage File Share) for storing DAGs:
+    DAGs submitted to airflow and other configs are maintained in storage account.
+
 
 | Component | Deployed | Failover Support |
 | ------ | ------ | ------ |
