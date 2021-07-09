@@ -168,25 +168,25 @@ data "azurerm_key_vault_secret" "data_insights" {
 }
 
 resource "azurerm_key_vault_secret" "principal_id" {
-  name         = "AZURE_CLIENT_ID"
+  name         = "app-dev-sp-username"
   value        = data.azurerm_key_vault_secret.data_principal_id.value
   key_vault_id = module.keyvault.keyvault_id
 }
 
 resource "azurerm_key_vault_secret" "principal_secret" {
-  name         = "AZURE_CLIENT_SECRET"
+  name         = "app-dev-sp-password"
   value        = data.azurerm_key_vault_secret.data_principal_secret.value
   key_vault_id = module.keyvault.keyvault_id
 }
 
 resource "azurerm_key_vault_secret" "application_id" {
-  name         = "AAD_CLIENT_ID"
+  name         = "aad-client-id"
   value        = data.azurerm_key_vault_secret.data_application_id.value
   key_vault_id = module.keyvault.keyvault_id
 }
 
-resource "azurerm_key_vault_secret" "tenant_id" {
-  name         = "AZURE_TENANT_ID"
+resource "azurerm_key_vault_secret" "azure_tenant_id" {
+  name         = "app-dev-sp-tenant-id"
   value        = data.azurerm_client_config.current.tenant_id
   key_vault_id = module.keyvault.keyvault_id
 }
