@@ -6,8 +6,8 @@ metadata:
   name: osdu-identity
 spec:
   type: 0
-  resourceID: "/subscriptions/{{ .Values.azure.dp.subscription }}/resourcegroups/{{ .Values.azure.dp.resourcegroup }}/providers/Microsoft.ManagedIdentity/userAssignedIdentities/{{ .Values.azure.dp.identity }}"
-  clientID: "{{ .Values.azure.dp.identity_id }}"
+  resourceID: "/subscriptions/{{ .Values.azure.subscription }}/resourcegroups/{{ .Values.azure.resourcegroup }}/providers/Microsoft.ManagedIdentity/userAssignedIdentities/{{ .Values.azure.identity }}"
+  clientID: "{{ .Values.azure.identity_id }}"
 ---
 apiVersion: aadpodidentity.k8s.io/v1
 kind: AzureIdentityBinding

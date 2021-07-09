@@ -2,27 +2,19 @@
 # Specify the azure environment specific values
 #
 azure:
-  dp:
-    tenant: #{data-partition-tenant-id}#
-    subscription: #{data-partition-subscription-id}#
-    resourcegroup: #{base-name-dp}#-rg
-    identity: #{base-name-dp}#-osdu-identity
-    identity_id: #{management-identity-id}#
-    keyvault: #{base-name-dp}#-kv
-  cr:
-    tenant: #{tenant-id}#
-    subscription: #{subscription-id}#
-    resourcegroup: #{base-name-cr}#-rg
-    keyvault: #{base-name-cr}#-dpkv
-    
-
-
+  tenant: #{data-partition-tenant-id}#
+  subscription: #{data-partition-subscription-id}#
+  resourcegroup: #{base-name-dp}#-rg
+  identity: #{base-name-dp}#-osdu-identity
+  identity_id: #{management-identity-id}#
+  keyvault: #{base-name-dp}#-kv
 
 ################################################################################
 # App insights configuration
 #
 appinsightstatsd:
   aadpodidbinding: "osdu-identity"
+  key: #{appinsights-key}#
 
 #################################################################################
 # Specify log analytics configuration
@@ -284,10 +276,7 @@ airflow:
     - name: AIRFLOW_VAR_AAD_CLIENT_ID
       value: "#{AAD_CLIENT_ID}#"
     - name: AIRFLOW_VAR_APPINSIGHTS_KEY
-      valueFrom:
-        secretKeyRef:
-          name: central-logging
-          key: appinsights
+      value: "#{appinsights-key}#"
     extraConfigmapMounts:
         - name: remote-log-config
           mountPath: /opt/airflow/config
