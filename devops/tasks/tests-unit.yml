@@ -15,10 +15,6 @@
 parameters:
   skip: false
 
-variables:
-  - name: TF_VAR_deploy_dp_airflow
-    value: false
-
 steps:
   - task: AzureCLI@1
     displayName: 'Run Unit Tests'
@@ -54,6 +50,10 @@ steps:
       inlineScript: |
         #!/usr/bin/env bash
         set -euo pipefail
+
+        if [ ! -z $TF_VAR_deploy_dp_airflow ]; then
+          export TF_VAR_deploy_dp_airflow=false
+        fi
 
         export ARM_TENANT_ID=$tenantId
         export ARM_CLIENT_SECRET=$servicePrincipalKey
