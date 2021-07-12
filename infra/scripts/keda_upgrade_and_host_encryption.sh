@@ -66,7 +66,7 @@ function terraformVersionCheck() {
 #echo "Terraform verion check complete"
 
 echo "Logging in to az cli"
-az login --service-principal -u "$servicePrincipalId" --password="$servicePrincipalKey" --tenant "$tenantId" --subscription "$ARM_SUBSCRIPTION_ID"
+az login --service-principal -u "$servicePrincipalId" --password="$servicePrincipalKey" --tenant "$tenantId"
 
 echo "Login successful"
 
@@ -133,9 +133,8 @@ tar xvf master.tar
 cd infra-azure-provisioning-keda-upgrade-1/infra/templates/osdu-r3-mvp/service_resources
 terraform init -upgrade -backend-config "storage_account_name=$TF_VAR_remote_state_account" -backend-config "container_name=$TF_VAR_remote_state_container"
 
-#echo "Deleting osdu-mvp-default-c1ie-rg resource group"
-#terraform state list
-#terraform state rm "/subscriptions/7c052588-ead2-45c9-9346-5b156a157bd1/resourceGroups/osdu-mvp-default-c1ie-rg"
+terraform state rm helm_release.keda
+
 echo "Terraform applying"
 terraform apply -auto-approve
 
@@ -176,10 +175,10 @@ rm -rf master*
 rm -rf indexer-queue*
 rm -rf helm-charts*
 
-echo "Enabling host based encryption for the AKS cluster by terraform applying"
-curl -kLSs https://community.opengroup.org/osdu/platform/deployment-and-operations/infra-azure-provisioning/-/archive/keda-upgrade-2/infra-azure-provisioning-keda-upgrade-2.tar -o master.tar
-tar xvf master.tar
+#echo "Enabling host based encryption for the AKS cluster by terraform applying"
+#curl -kLSs https://community.opengroup.org/osdu/platform/deployment-and-operations/infra-azure-provisioning/-/archive/keda-upgrade-2/infra-azure-provisioning-keda-upgrade-2.tar -o master.tar
+#tar xvf master.tar
 
-cd infra-azure-provisioning-keda-upgrade-2/infra/templates/osdu-r3-mvp/service_resources
-terraform init -upgrade -backend-config "storage_account_name=$TF_VAR_remote_state_account" -backend-config "container_name=$TF_VAR_remote_state_container"
-terraform apply -auto-approve
+#cd infra-azure-provisioning-keda-upgrade-2/infra/templates/osdu-r3-mvp/service_resources
+#terraform init -upgrade -backend-config "storage_account_name=$TF_VAR_remote_state_account" -backend-config "container_name=$TF_VAR_remote_state_container"
+#terraform apply -auto-approve
