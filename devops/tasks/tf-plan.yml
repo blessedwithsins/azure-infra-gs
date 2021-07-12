@@ -59,6 +59,7 @@ steps:
       TF_VAR_principal_objectId: $(TF_VAR_principal_objectId)
       TF_VAR_gitops_path: $(TF_VAR_gitops_path)
       TF_VAR_override_file: $(System.DefaultWorkingDirectory)/${{ parameters.terraformVariableFile }}
+      TF_VAR_deploy_dp_airflow: $(TF_VAR_deploy_dp_airflow)
 
     inputs:
       azureSubscription: '$(SERVICE_CONNECTION_NAME)'
