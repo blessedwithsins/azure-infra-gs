@@ -41,6 +41,7 @@ steps:
       TF_VAR_principal_objectId: $(TF_VAR_principal_objectId)
       TF_VAR_gitops_path: $(TF_VAR_gitops_path)
       TF_VAR_deploy_dp_airflow: $(TF_VAR_deploy_dp_airflow)
+      TF_VAR_feature_flag: $(TF_VAR_feature_flag)
 
     condition: not(coalesce(variables.SKIP_TESTS, ${{ parameters.skip }}))
     inputs:
