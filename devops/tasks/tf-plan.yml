@@ -18,10 +18,6 @@ parameters:
     terraformWorkspacePrefix: ''
     environmentName: ''
 
-variables:
-  - name: TF_VAR_deploy_dp_airflow
-    value: false
-
 steps:
   - task: DownloadSecureFile@1
     name: 'aksPublicAgentKeySecureDownload'  # The name with which to reference the secure file's path on the agent.
