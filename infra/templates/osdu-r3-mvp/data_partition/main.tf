@@ -74,23 +74,23 @@ provider "azurerm" {
 }
 
 provider "kubernetes" {
-  host                   = var.feature_flag.deploy_dp_airflow ? module.airflow.0.kube_config_block.0.host : ""
-  username               = var.feature_flag.deploy_dp_airflow ? module.airflow.0.kube_config_block.0.username : ""
-  password               = var.feature_flag.deploy_dp_airflow ? module.airflow.0.kube_config_block.0.password : ""
-  client_certificate     = var.feature_flag.deploy_dp_airflow ? base64decode(module.airflow.0.kube_config_block.0.client_certificate) : ""
-  client_key             = var.feature_flag.deploy_dp_airflow ? base64decode(module.airflow.0.kube_config_block.0.client_key) : ""
-  cluster_ca_certificate = var.feature_flag.deploy_dp_airflow ? base64decode(module.airflow.0.kube_config_block.0.cluster_ca_certificate) : ""
+  host                   = var.deploy_dp_airflow ? module.airflow.0.kube_config_block.0.host : ""
+  username               = var.deploy_dp_airflow ? module.airflow.0.kube_config_block.0.username : ""
+  password               = var.deploy_dp_airflow ? module.airflow.0.kube_config_block.0.password : ""
+  client_certificate     = var.deploy_dp_airflow ? base64decode(module.airflow.0.kube_config_block.0.client_certificate) : ""
+  client_key             = var.deploy_dp_airflow ? base64decode(module.airflow.0.kube_config_block.0.client_key) : ""
+  cluster_ca_certificate = var.deploy_dp_airflow ? base64decode(module.airflow.0.kube_config_block.0.cluster_ca_certificate) : ""
 }
 
 // Hook-up helm Provider for Terraform
 provider "helm" {
   kubernetes {
-    host                   = var.feature_flag.deploy_dp_airflow ? module.airflow.0.kube_config_block.0.host : ""
-    username               = var.feature_flag.deploy_dp_airflow ? module.airflow.0.kube_config_block.0.username : ""
-    password               = var.feature_flag.deploy_dp_airflow ? module.airflow.0.kube_config_block.0.password : ""
-    client_certificate     = var.feature_flag.deploy_dp_airflow ? base64decode(module.airflow.0.kube_config_block.0.client_certificate) : ""
-    client_key             = var.feature_flag.deploy_dp_airflow ? base64decode(module.airflow.0.kube_config_block.0.client_key) : ""
-    cluster_ca_certificate = var.feature_flag.deploy_dp_airflow ? base64decode(module.airflow.0.kube_config_block.0.cluster_ca_certificate) : ""
+    host                   = var.deploy_dp_airflow ? module.airflow.0.kube_config_block.0.host : ""
+    username               = var.deploy_dp_airflow ? module.airflow.0.kube_config_block.0.username : ""
+    password               = var.deploy_dp_airflow ? module.airflow.0.kube_config_block.0.password : ""
+    client_certificate     = var.deploy_dp_airflow ? base64decode(module.airflow.0.kube_config_block.0.client_certificate) : ""
+    client_key             = var.deploy_dp_airflow ? base64decode(module.airflow.0.kube_config_block.0.client_key) : ""
+    cluster_ca_certificate = var.deploy_dp_airflow ? base64decode(module.airflow.0.kube_config_block.0.cluster_ca_certificate) : ""
   }
 }
 
@@ -466,7 +466,7 @@ resource "azurerm_management_lock" "ingest_sa_lock" {
 
 module "airflow" {
   source = "./airflow"
-  count  = var.feature_flag.deploy_dp_airflow ? 1 : 0
+  count  = var.deploy_dp_airflow ? 1 : 0
 
   central_resources_workspace_name = var.central_resources_workspace_name
 
