@@ -51,7 +51,7 @@ steps:
         #!/usr/bin/env bash
         set -euo pipefail
 
-        if [ ! -z $TF_VAR_deploy_dp_airflow ]; then
+        if [ $TF_VAR_deploy_dp_airflow != "true" ] && [ $TF_VAR_deploy_dp_airflow != "false" ]; then
           export TF_VAR_deploy_dp_airflow=false
         fi
 
