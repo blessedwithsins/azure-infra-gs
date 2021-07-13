@@ -121,6 +121,7 @@ locals {
   aks_subnet_name     = "${local.base_name_21}-aks-subnet"
   be_subnet_name      = "${local.base_name_21}-be-subnet"
   app_gw_name         = "${local.base_name_60}-gw"
+  istio_app_gw_name   = "${local.base_name_21}-istio-gw"
   appgw_identity_name = format("%s-agic-identity", local.app_gw_name)
 
 
@@ -128,16 +129,16 @@ locals {
   aks_identity_name = format("%s-pod-identity", local.aks_cluster_name)
   aks_dns_prefix    = local.base_name_60
 
-  cosmosdb_name = "${local.base_name}-system-db"
-
-  nodepool_zones = [
+  availability_zones = [
     "1",
-    "2"
+    "2",
+    "3"
   ]
 
   gateway_zones = [
     "1",
-    "2"
+    "2",
+    "3"
   ]
 
   role = "Contributor"
@@ -340,6 +341,32 @@ module "appgateway" {
   depends_on = [azurerm_key_vault_certificate.default]
 }
 
+module "istio_appgateway" {
+  count = var.feature_flag.autoscaling ? 1 : 0
+
+  source = "../../../modules/providers/azure/appgw"
+
+  name                = local.istio_app_gw_name
+  resource_group_name = azurerm_resource_group.main.name
+
+  vnet_name                       = module.network.name
+  vnet_subnet_id                  = module.network.subnets.0
+  keyvault_id                     = data.terraform_remote_state.central_resources.outputs.keyvault_id
+  keyvault_secret_id              = azurerm_key_vault_certificate.default.0.secret_id
+  ssl_certificate_name            = local.ssl_cert_name
+  ssl_policy_type                 = var.ssl_policy_type
+  ssl_policy_cipher_suites        = var.ssl_policy_cipher_suites
+  ssl_policy_min_protocol_version = var.ssl_policy_min_protocol_version
+  backend_address_pool_ips        = var.istio_int_load_balancer_ip == "" ? null : [var.istio_int_load_balancer_ip]
+
+  gateway_zones = local.gateway_zones
+
+  resource_tags = var.resource_tags
+  min_capacity  = var.appgw_min_capacity
+  max_capacity  = var.appgw_max_capacity
+  host_name     = var.aks_dns_host
+}
+
 // Give AGIC Identity Access rights to Change the Application Gateway
 resource "azurerm_role_assignment" "appgwcontributor" {
   principal_id         = azurerm_user_assigned_identity.agicidentity.principal_id
@@ -361,7 +388,6 @@ resource "azurerm_role_assignment" "agic_app_gw_mi" {
   scope                = module.appgateway.managed_identity_resource_id
   role_definition_name = "Managed Identity Operator"
 }
-
 
 #-------------------------------
 # Azure AKS
@@ -392,6 +418,26 @@ module "aks" {
   resource_tags = var.resource_tags
 }
 
+resource "azurerm_kubernetes_cluster_node_pool" "services" {
+  count = var.feature_flag.autoscaling ? 1 : 0
+
+  name                  = "services"
+  kubernetes_cluster_id = module.aks.id
+  node_count            = var.aks_services_agent_vm_count
+  min_count             = var.aks_services_agent_vm_count
+  max_count             = var.aks_services_agent_vm_maxcount
+  availability_zones    = local.availability_zones
+  vnet_subnet_id        = module.network.subnets.1
+  orchestrator_version  = var.kubernetes_version
+  vm_size               = var.aks_services_agent_vm_size
+  os_disk_size_gb       = var.aks_services_agent_vm_disk
+  enable_auto_scaling   = true
+  max_pods              = var.max_pods
+  node_labels           = { nodepool = "services" }
+
+  tags = var.resource_tags
+}
+
 data "azurerm_resource_group" "aks_node_resource_group" {
   name = module.aks.node_resource_group
 }
@@ -408,6 +454,15 @@ resource "azurerm_role_assignment" "vm_contributor" {
   principal_id         = module.aks.kubelet_object_id
   scope                = data.azurerm_resource_group.aks_node_resource_group.id
   role_definition_name = "Virtual Machine Contributor"
+}
+
+// Give AKS Access to Operate the Network
+resource "azurerm_role_assignment" "subnet_contributor" {
+  count = var.feature_flag.autoscaling ? 1 : 0
+
+  principal_id         = module.aks.principal_id
+  scope                = module.network.subnets.1
+  role_definition_name = "Contributor"
 }
 
 // Give AKS Access to Pull from ACR
@@ -438,6 +493,14 @@ resource "azurerm_role_assignment" "osdu_identity_mi_operator" {
   role_definition_name = "Managed Identity Operator"
 }
 
+# // Give AD Principal Access rights to AKS cluster
+resource "azurerm_role_assignment" "aks_contributor" {
+  count = var.feature_flag.autoscaling ? 1 : 0
+
+  principal_id         = data.terraform_remote_state.central_resources.outputs.osdu_service_principal_id
+  scope                = module.aks.id
+  role_definition_name = "Contributor"
+}
 
 #-------------------------------
 # PostgreSQL

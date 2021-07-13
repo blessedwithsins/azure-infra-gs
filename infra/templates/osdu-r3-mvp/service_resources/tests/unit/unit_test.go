@@ -35,6 +35,10 @@ var tfOptions = &terraform.Options{
 	},
 }
 
+var istioEnabled = os.Getenv("AUTOSCALING_ENABLED")
+var istioResourses = 11
+var totalResources = 119
+
 func TestTemplate(t *testing.T) {
 	expectedAppDevResourceGroup := asMap(t, `{
 		"location": "`+region+`"
@@ -44,12 +48,17 @@ func TestTemplate(t *testing.T) {
 		"azurerm_resource_group.main": expectedAppDevResourceGroup,
 	}
 
+	expectedResourceCount := totalResources
+	if istioEnabled != "true" {
+		expectedResourceCount = totalResources - istioResourses
+	}
+
 	testFixture := infratests.UnitTestFixture{
 		GoTest:                          t,
 		TfOptions:                       tfOptions,
 		Workspace:                       workspace,
 		PlanAssertions:                  nil,
-		ExpectedResourceCount:           126,
+		ExpectedResourceCount:           expectedResourceCount,
 		ExpectedResourceAttributeValues: resourceDescription,
 	}
 

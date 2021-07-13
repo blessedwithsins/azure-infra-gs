@@ -39,11 +39,14 @@ resource_tags = {
 }
 
 # Kubernetes Settings
-kubernetes_version = "1.19.11"
-aks_agent_vm_size  = "Standard_E4s_v3"
-aks_agent_vm_count = "5"
-aks_agent_vm_disk  = 128
-subnet_aks_prefix  = "10.10.2.0/23"
+kubernetes_version          = "1.19.11"
+aks_agent_vm_size           = "Standard_E4s_v3"
+aks_agent_vm_count          = "5"
+aks_agent_vm_disk           = 128
+aks_services_agent_vm_size  = "Standard_E4s_v3"
+aks_services_agent_vm_count = "5"
+aks_services_agent_vm_disk  = 128
+subnet_aks_prefix           = "10.10.2.0/23"
 
 # Storage Settings
 storage_replication_type = "LRS"
@@ -67,6 +70,7 @@ feature_flag = {
   osdu_namespace = true
   flux           = true
   sa_lock        = true
+  autoscaling    = false
 }
 
 # cosmos DB SQL collections

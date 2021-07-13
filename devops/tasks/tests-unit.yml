@@ -14,33 +14,46 @@
 
 parameters:
   skip: false
+  terraformWorkspacePrefix: ''
+
 
 steps:
   - task: AzureCLI@1
     displayName: 'Run Unit Tests'
     env:
+      TERRAFORM_WORKSPACE_PREFIX: ${{ parameters.terraformWorkspacePrefix }}
       TF_VAR_remote_state_container: $(TF_VAR_remote_state_container)
       TF_VAR_remote_state_account: $(TF_VAR_remote_state_account)
-      TF_VAR_resource_group_location: $(TF_VAR_resource_group_location)
       TF_VAR_cosmosdb_replica_location: $(TF_VAR_cosmosdb_replica_location)
-      TF_VAR_elasticsearch_username: $(elastic-username-${{ parameters.terraformWorkspacePrefix }}-${{ parameters.environmentName }})
-      TF_VAR_elasticsearch_password: $(elastic-password-${{ parameters.terraformWorkspacePrefix }}-${{ parameters.environmentName }})
-      TF_VAR_elasticsearch_endpoint: $(elastic-endpoint-${{ parameters.terraformWorkspacePrefix }}-${{ parameters.environmentName }})
-      TF_VAR_common_resources_workspace_name: $(TF_VAR_common_resources_workspace_name)
+      TF_VAR_resource_group_location: $(TF_VAR_resource_group_location)
       TF_VAR_central_resources_workspace_name: $(TF_VAR_central_resources_workspace_name)
       TF_VAR_service_resources_workspace_name: $(TF_VAR_service_resources_workspace_name)
       TF_VAR_data_partition_resources_workspace_name: $(TF_VAR_data_partition_resources_workspace_name)
       TF_VAR_data_resources_workspace_name: $(TF_VAR_data_resources_workspace_name)
       TF_VAR_data_partition_name: $(TF_VAR_data_partition_name)
+      TF_VAR_gitops_ssh_url: $(TF_VAR_gitops_ssh_url)
+      TF_VAR_gitops_url_branch: $(TF_VAR_gitops_url_branch)
+      TF_VAR_flux_recreate: $(TF_VAR_flux_recreate)
+      TF_VAR_gitops_branch: $(TF_VAR_gitops_branch)
       TF_VAR_ssh_public_key_file: $(aksPublicAgentKeySecureDownload.secureFilePath)
       TF_VAR_gitops_ssh_key_file: $(aksPrivateGitopsKeySecureDownload.secureFilePath)
-      TF_VAR_gitops_ssh_url: $(TF_VAR_gitops_ssh_url)
+      TF_VAR_elasticsearch_username: $(elastic-username-${{ parameters.terraformWorkspacePrefix }}-${{ parameters.environmentName }})
+      TF_VAR_elasticsearch_password: $(elastic-password-${{ parameters.terraformWorkspacePrefix }}-${{ parameters.environmentName }})
+      TF_VAR_elasticsearch_endpoint: $(elastic-endpoint-${{ parameters.terraformWorkspacePrefix }}-${{ parameters.environmentName }})
       TF_VAR_principal_appId: $(TF_VAR_principal_appId)
       TF_VAR_principal_name: $(TF_VAR_principal_name)
       TF_VAR_principal_password: $(TF_VAR_principal_password)
       TF_VAR_principal_objectId: $(TF_VAR_principal_objectId)
       TF_VAR_gitops_path: $(TF_VAR_gitops_path)
       TF_VAR_deploy_dp_airflow: $(TF_VAR_deploy_dp_airflow)
+      TF_VAR_aks_services_agent_vm_count: $(TF_VAR_aks_services_agent_vm_count)
+      TF_VAR_aks_services_agent_vm_maxcount: $(TF_VAR_aks_services_agent_vm_maxcount)
+      TF_VAR_aks_services_agent_vm_size: $(TF_VAR_aks_services_agent_vm_size)
+      TF_VAR_aks_agent_vm_count: $(TF_VAR_aks_agent_vm_count)
+      TF_VAR_aks_agent_vm_maxcount: $(TF_VAR_aks_agent_vm_maxcount)
+      TF_VAR_aks_agent_vm_size: $(TF_VAR_aks_agent_vm_size)
+      TF_VAR_istio_int_load_balancer_ip: $(TF_VAR_istio_int_load_balancer_ip)
+      TF_VAR_aks_dns_host: $(TF_VAR_aks_dns_host)
 
     condition: not(coalesce(variables.SKIP_TESTS, ${{ parameters.skip }}))
     inputs:
@@ -60,6 +73,16 @@ steps:
         export ARM_CLIENT_ID=$servicePrincipalId
         export ARM_ACCESS_KEY=$(az storage account keys list --subscription "$ARM_SUBSCRIPTION_ID" --account-name "$(TF_VAR_remote_state_account)" --query "[0].value" --output tsv)
         cd "$ARTIFACT_ROOT"/"$TERRAFORM_TEMPLATE_PATH"
+
+        if [[ "$TERRAFORM_WORKSPACE_PREFIX" == sr* ]]; then
+          # Check if istio appgw enable
+          pushd $(TF_TEMPLATE_WORKING_DIR)
+          [ ! -f $TF_VARFILE ] && TF_VARFILE=override.tfvars
+          AUTOSCALING_ENABLED=$(echo 'var.feature_flag["autoscaling"]' | terraform console -var-file=$TF_VARFILE)
+          echo "AUTOSCALING_ENABLED : ${AUTOSCALING_ENABLED}"
+          export AUTOSCALING_ENABLED
+          popd
+        fi
 
         # Setting the scripts to be run as executable
         chmod -fR 755 *.sh || true

@@ -84,6 +84,8 @@ jobs:
   - template: tasks/tests-unit.yml
     parameters:
       skip: ${{ parameters.skipTests }}
+      terraformWorkspacePrefix: ${{ parameters.configuration.terraformWorkspacePrefix }}
+
 
   - template: tasks/tf-plan.yml
     parameters:

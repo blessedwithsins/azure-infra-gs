@@ -1,6 +1,8 @@
 # This file contains the essential configs for the osdu on azure helm chart
 global:
 
+  # Set to 'true' if you'd like to enable autoscaling. Details in 'autoscaling.md'
+  isAutoscalingEnabled: true
   # Service(s) Replica Count
   replicaCount: 2
 
@@ -37,6 +39,8 @@ global:
   istio:
     username: #{istio-username}#
     password: #{istio-password}#
+    loadBalancerIP: #{istio-int-load-balancer-ip}#
+    dns_host: #{DNS_HOST}#    
   ################################################################################
   # Specify the resource limits
   #
@@ -45,3 +49,8 @@ global:
     defaultMemoryRequests: "4Gi"
     defaultCpuLimits: "1"
     defaultMemoryLimits: "4Gi"
+
+  job:
+    name: cert-checker
+    image: mcr.microsoft.com/azure-cli 
+    configmap_name: osdu-istio-appgw-cert    
