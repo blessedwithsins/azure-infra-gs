@@ -1,6 +1,10 @@
 const axios = require("axios");
 const config = require("./config");
+const telemetryUtils = require("./utils/telemetryUtils");
 const qs = require("querystring");
+const axiosRetry = require('axios-retry');
+
+axiosRetry(axios, { retries: 3, retryDelay: axiosRetry.exponentialDelay });
 
 const generateToken = async () => {
   try {
@@ -8,10 +12,10 @@ const generateToken = async () => {
       config.api_host.auth,
       qs.stringify(config.auth_params)
     );
-    // log success
+    telemetryUtils.passApiRequest(config.api_host.auth, qs.stringify(config.auth_params));
     return "Bearer " + res.data.access_token;
   } catch (err) {
-    // log error
+    telemetryUtils.failApiRequest(config.api_host.auth, err, qs.stringify(config.auth_params));
   }
 };
 
@@ -24,10 +28,10 @@ const getListOfPartitions = async (token) => {
     const res = await axios.get(endpoint, {
       headers: authHeader,
     });
-    // log success
+    telemetryUtils.passApiRequest(endpoint, token);
     return res.data;
   } catch (err) {
-    // log error
+    telemetryUtils.failApiRequest(endpoint, err, token);
   }
 };
 
@@ -41,9 +45,9 @@ const sendLegalTagUpdateRequest = async (token, partition) => {
     const res = await axios.get(endpoint, {
       headers: authHeader,
     });
-    // log success
+    telemetryUtils.passApiRequest(endpoint, partition);
   } catch (err) {
-    // log error
+    telemetryUtils.failApiRequest(endpoint, err, partition);
   }
 };
 

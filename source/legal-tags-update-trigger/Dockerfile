@@ -7,6 +7,7 @@ RUN npm install
 
 ENV NODE_ENV=production
 
+COPY utils ./utils
 COPY cronjob.js ./cronjob.js
 COPY config.js ./config.js
 
