@@ -43,12 +43,6 @@ steps:
       TF_VAR_principal_objectId: $(TF_VAR_principal_objectId)
       TF_VAR_gitops_path: $(TF_VAR_gitops_path)
       TF_VAR_deploy_dp_airflow: $(TF_VAR_deploy_dp_airflow)
-      TF_VAR_aks_services_agent_vm_count: $(TF_VAR_aks_services_agent_vm_count)
-      TF_VAR_aks_services_agent_vm_maxcount: $(TF_VAR_aks_services_agent_vm_maxcount)
-      TF_VAR_aks_services_agent_vm_size: $(TF_VAR_aks_services_agent_vm_size)
-      TF_VAR_aks_agent_vm_count: $(TF_VAR_aks_agent_vm_count)
-      TF_VAR_aks_agent_vm_maxcount: $(TF_VAR_aks_agent_vm_maxcount)
-      TF_VAR_aks_agent_vm_size: $(TF_VAR_aks_agent_vm_size)
       TF_VAR_istio_int_load_balancer_ip: $(TF_VAR_istio_int_load_balancer_ip)
       TF_VAR_aks_dns_host: $(TF_VAR_aks_dns_host)
 
