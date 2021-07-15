@@ -42,7 +42,7 @@ steps:
             echo 'FROM community.opengroup.org:5555/osdu/platform/deployment-and-operations/base-containers-azure/alpine-zulu8:0.0.3
             VOLUME /tmp
             ARG JAR_FILE
-            ENV JAVA_OPTS="-Xshare:on -Xlog:class+load=info -XX:InitialRAMPercentage=25.0 -XX:MaxRAMPercentage=50.0 -XX:+HeapDumpOnOutOfMemoryError ${JAVA_OPTS}"
+            ENV JAVA_OPTS="-Xshare:on -XX:InitialRAMPercentage=25.0 -XX:MaxRAMPercentage=50.0 -XX:+HeapDumpOnOutOfMemoryError ${JAVA_OPTS}"
             COPY ${JAR_FILE} app.jar
             RUN java -Xshare:dump -jar /app.jar
             ENTRYPOINT exec java -verbose ${JAVA_OPTS} -jar /app.jar' > Dockerfile
