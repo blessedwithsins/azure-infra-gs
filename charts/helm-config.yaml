@@ -2,7 +2,7 @@
 global:
 
   # Set to 'true' if you'd like to enable autoscaling. Details in 'autoscaling.md'
-  isAutoscalingEnabled: true
+  isAutoscalingEnabled: false
   # Service(s) Replica Count
   replicaCount: 2
 
