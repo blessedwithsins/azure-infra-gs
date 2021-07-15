@@ -45,7 +45,7 @@ steps:
             ENV JAVA_OPTS="-Xshare:on -XX:InitialRAMPercentage=25.0 -XX:MaxRAMPercentage=50.0 -XX:+HeapDumpOnOutOfMemoryError ${JAVA_OPTS}"
             COPY ${JAR_FILE} app.jar
             RUN java -Xshare:dump -jar /app.jar
-            ENTRYPOINT exec java -verbose ${JAVA_OPTS} -jar /app.jar' > Dockerfile
+            ENTRYPOINT exec java ${JAVA_OPTS} -jar /app.jar' > Dockerfile
         }
 
         curl -L https://aka.ms/acr/installaad/bash | /bin/bash
