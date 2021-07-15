@@ -128,17 +128,16 @@ locals {
   aks_cluster_name  = "${local.base_name_60}-aks"
   aks_identity_name = format("%s-pod-identity", local.aks_cluster_name)
   aks_dns_prefix    = local.base_name_60
+  cosmosdb_name     = "${local.base_name}-system-db"
 
-  availability_zones = [
+  nodepool_zones = [
     "1",
-    "2",
-    "3"
+    "2"
   ]
 
   gateway_zones = [
     "1",
-    "2",
-    "3"
+    "2"
   ]
 
   role = "Contributor"
@@ -332,8 +331,6 @@ module "appgateway" {
   ssl_policy_cipher_suites        = var.ssl_policy_cipher_suites
   ssl_policy_min_protocol_version = var.ssl_policy_min_protocol_version
 
-  gateway_zones = local.gateway_zones
-
   resource_tags = var.resource_tags
   min_capacity  = var.appgw_min_capacity
   max_capacity  = var.appgw_max_capacity
@@ -426,7 +423,7 @@ resource "azurerm_kubernetes_cluster_node_pool" "services" {
   node_count            = var.aks_services_agent_vm_count
   min_count             = var.aks_services_agent_vm_count
   max_count             = var.aks_services_agent_vm_maxcount
-  availability_zones    = local.availability_zones
+  availability_zones    = local.nodepool_zones
   vnet_subnet_id        = module.network.subnets.1
   orchestrator_version  = var.kubernetes_version
   vm_size               = var.aks_services_agent_vm_size
