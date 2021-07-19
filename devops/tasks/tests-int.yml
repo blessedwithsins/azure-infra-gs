@@ -31,10 +31,6 @@ steps:
         #!/usr/bin/env bash
         set -euo pipefail
 
-        if [ $TF_VAR_deploy_dp_airflow != "true" ] && [ $TF_VAR_deploy_dp_airflow != "false" ]; then
-          export TF_VAR_deploy_dp_airflow=false
-        fi
-
         export ARM_TENANT_ID=$tenantId
         export ARM_CLIENT_SECRET=$servicePrincipalKey
         export ARM_CLIENT_ID=$servicePrincipalId
