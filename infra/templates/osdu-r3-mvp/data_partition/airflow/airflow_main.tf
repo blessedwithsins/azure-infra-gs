@@ -116,13 +116,6 @@ resource "azurerm_storage_share_directory" "sensors" {
   depends_on           = [azurerm_storage_share_directory.plugins]
 }
 
-// Airflow log container
-resource "azurerm_storage_container" "main" {
-  name                  = "airflow-logs"
-  storage_account_name  = var.storage_account_name
-  container_access_type = "private"
-}
-
 // Airflow queue for blob create event
 resource "azurerm_storage_queue" "main" {
   name                 = local.airflow_log_queue_name
