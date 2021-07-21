@@ -16,7 +16,7 @@ trigger:
   batch: true
   branches:
     include:
-    - master
+    - ingestiontestenv
   paths:
     include:
     - /infra/modules/providers/*

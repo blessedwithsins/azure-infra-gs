@@ -17,7 +17,7 @@ trigger:
   batch: true
   branches:
     include:
-    - master
+    - ingestiontestenv
   paths:
     include:
     - /infra/modules/providers/*
@@ -58,8 +58,8 @@ stages:
       resourceNameIsolationLevel: 8
 
     configurations:
-    - jobName: data_partition_1
-      terraformWorkspacePrefix: dp1
+    - jobName: data_partition_2
+      terraformWorkspacePrefix: dp2
       terraformTemplatePath: /infra/templates/osdu-r3-mvp/data_partition
       deploymentTimeoutInMinutes: 120
       dataPartitionName: opendes
