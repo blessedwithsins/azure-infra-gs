@@ -46,7 +46,8 @@ aks_agent_vm_disk           = 128
 aks_services_agent_vm_size  = "Standard_E4s_v3"
 aks_services_agent_vm_count = "5"
 aks_services_agent_vm_disk  = 128
-subnet_aks_prefix           = "10.10.2.0/23"
+subnet_aks_prefix           = "10.10.0.0/20"
+subnet_fe_prefix            = "10.10.16.0/24"
 
 # Storage Settings
 storage_replication_type = "LRS"

@@ -525,7 +525,7 @@ module "postgreSQL" {
   sku                       = var.postgres_sku
   postgresql_configurations = var.postgres_configurations
 
-  storage_mb                   = 5120
+  storage_mb                   = 372736
   server_version               = "10.0"
   backup_retention_days        = 7
   geo_redundant_backup_enabled = true
