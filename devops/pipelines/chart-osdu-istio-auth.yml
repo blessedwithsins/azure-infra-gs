@@ -16,7 +16,7 @@
     batch: true
     branches:
       include:
-        - master
+        - ingestiontestenv
     paths:
       include:
         - /charts/osdu-istio-auth/*
