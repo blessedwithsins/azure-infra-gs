@@ -41,6 +41,24 @@ grant_type=client_credentials
 @domain = contoso.com
 @user_group = users@{{data_partition_id}}.{{domain}}
 
+# ---------------------------------
+# Group Name
+# ---------------------------------
+# This is the identifier for the group you are adding.
+@group_name = app.trusted
+
+# ---------------------------------
+# Group Type can be Editor/Admin/Ops/Viewer
+# ---------------------------------
+@editors_group_type=users.datalake.editors
+@admins_group_type=users.datalake.admins
+@ops_group_type=users.datalake.ops
+@viewers_group_type=users.datalake.viewers
+
+# ---------------------------------
+# Group Type Email
+# ---------------------------------
+@group_type_email = {{admins_group_type}}@{{data_partition_id}}.{{domain}}
 
 # ---------------------------------
 # USER EMAIL ADDRESS
@@ -49,7 +67,6 @@ grant_type=client_credentials
 # When using AAD, this is the email for the user if adding an AAD user.
 # When using ADD and a Service principal this is the OID of the Service Principal.
 @member_email = myuser@email.com
-
 
 
 # ---------------------------------
@@ -75,6 +92,55 @@ Authorization: Bearer {{access_token}}
 Accept: application/json
 data-partition-id: {{data_partition_id}}
 
+# -----------------------
+# Create Group
+# -----------------------
+
+###
+# Purpose: Create a new Group.
+# @name createGroup
+POST {{ENTITLEMENTS_HOST}}/groups
+Authorization: Bearer {{access_token}}
+Accept: application/json
+data-partition-id: {{data_partition_id}}
+Content-Type: application/json
+
+{
+  "name": "{{group_name}}",
+  "description": "My Group"
+}
+
+# -----------------------
+# Add admin user to group
+# -----------------------
+
+###
+# Purpose: Allow group type to access the group.
+# @name addAccessToGroupType
+POST {{ENTITLEMENTS_HOST}}/groups/{{group_name}}@{{data_partition_id}}.{{domain}}/members
+Authorization: Bearer {{access_token}}
+Accept: application/json
+data-partition-id: {{data_partition_id}}
+Content-Type: application/json
+
+{
+  "email": {{group_type_email}},
+  "role": "MEMBER"
+}
+
+
+# -----------------------
+# Get All groups
+# -----------------------
+
+###
+# Purpose: Get all Groups.
+# @name getAllGroups
+GET {{ENTITLEMENTS_HOST}}/groups
+Authorization: Bearer {{access_token}}
+Accept: application/json
+data-partition-id: {{data_partition_id}}
+Content-Type: application/json
 
 
 # -----------------------

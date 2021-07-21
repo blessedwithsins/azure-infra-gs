@@ -1,0 +1,64 @@
+#  Copyright © Microsoft Corporation
+#
+#  Licensed under the Apache License, Version 2.0 (the "License");
+#  you may not use this file except in compliance with the License.
+#  You may obtain a copy of the License at
+#
+#       http://www.apache.org/licenses/LICENSE-2.0
+#
+#  Unless required by applicable law or agreed to in writing, software
+#  distributed under the License is distributed on an "AS IS" BASIS,
+#  WITHOUT WARRANTIES OR CONDITIONS OF ANY KIND, either express or implied.
+#  See the License for the specific language governing permissions and
+#  limitations under the License.
+
+
+trigger:
+  batch: true
+  branches:
+    include:
+    - master
+  paths:
+    include:
+    - /infra/modules/providers/*
+    - /infra/templates/osdu-r3-mvp/monitoring_resources/*
+    - /test-harness/terratest-extensions/*
+    - /devops/pipelines/infrastructure-monitoring-resources.yml
+    exclude:
+    - /**/*.md
+
+# resources:
+#   repositories:
+#   - repository: InfraRepo
+#     type: git
+#     name: infra-azure-provisioning
+
+variables:
+- group: 'Infrastructure Pipeline Variables'
+- name: 'TF_VERSION'
+  value: '0.14.4'
+- name: 'GO_VERSION'
+  value: '1.12.14'
+- name: 'TF_ROOT_DIR'
+  value: 'infra'
+- name: 'PIPELINE_ROOT_DIR'
+  value: 'devops'
+- name: 'TEST_HARNESS_DIR'
+  value: 'test-harness'
+- name: 'INFRA_REPO'
+  value: $[ resources.repositories['InfraRepo'].name ]
+
+
+stages:
+- template: /devops/infra-prepare-stage.yml
+  parameters:
+    environments:
+    - name: 'demo'
+      enablePrIsolation: false
+      resourceNameIsolationLevel: 8
+
+    configurations:
+    - jobName: monitoring_resources
+      terraformWorkspacePrefix: mr
+      terraformTemplatePath: /infra/templates/osdu-r3-mvp/monitoring_resources
+      deploymentTimeoutInMinutes: 120

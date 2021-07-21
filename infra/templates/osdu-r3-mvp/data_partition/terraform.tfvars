@@ -45,6 +45,9 @@ storage_containers = [
   "file-staging-area",
   "file-persistent-area"
 ]
+storage_containers_dp_airflow = [
+  "airflow-logs"
+]
 
 # Database Settings
 cosmosdb_consistency_level = "Session"

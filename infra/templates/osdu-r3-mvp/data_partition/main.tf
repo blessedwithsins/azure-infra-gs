@@ -197,7 +197,7 @@ module "storage_account" {
 
   name                = local.storage_name
   resource_group_name = azurerm_resource_group.main.name
-  container_names     = var.storage_containers
+  container_names     = var.feature_flag.deploy_dp_airflow ? concat(var.storage_containers, var.storage_containers_dp_airflow) : var.storage_containers
   kind                = "StorageV2"
   replication_type    = var.storage_replication_type
 
@@ -489,6 +489,7 @@ module "airflow" {
 
   ssh_public_key_file      = var.ssh_public_key_file
   sr_aks_egress_ip_address = data.terraform_remote_state.service_resources.outputs.aks_egress_ip_address
+  cr_keyvault_id           = data.terraform_remote_state.central_resources.outputs.keyvault_id
 }
 
 

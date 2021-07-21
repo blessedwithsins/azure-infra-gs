@@ -73,6 +73,7 @@ This variable group will be used to hold the common values for a specific infras
   | TF_VAR_principal_objectId | <your_principal_objectId> |
   | TF_VAR_principal_password | <your_principal_password> |
   | TF_VAR_resource_group_location | centralus |
+  | TF_VAR_deploy_dp_airflow | false |
 
 ```bash
 ENVIRONMENT="demo"
@@ -103,20 +104,21 @@ az pipelines variable-group create \
   TF_VAR_principal_objectId="${TF_VAR_principal_objectId}" \
   TF_VAR_principal_password="${TF_VAR_principal_password}" \
   TF_VAR_resource_group_location="${REGION}" \
+  TF_VAR_deploy_dp_airflow="false" \
   -ojson
 ```
 
 __Enable Airflow Multi partition support__
 
-To enable airflow multi partition turn on the feature flag by running the below command. **This will create infrastructure to support separate airflow cluster for every data partition**. If you don't want to enable it you can skip this step
+To enable airflow multi partition turn on the feature flag by following the below steps. **This will create infrastructure to support separate airflow cluster for every data partition**. If you don't want to enable it you can skip this step
 
-```bash
-az pipelines variable-group variable create \
-  --id "Infrastructure Pipeline Variables - ${ENVIRONMENT}" \
-  --name "TF_VAR_feature_flag" \
-  --value "{\"deploy_dp_airflow\": true}" \
-  -ojson
-```
+1. Go to Pipelines Library in ADO
+2. Go to `Infrastructure Pipeline Variables - demo` variable group
+3. Add or update the below variable
+  
+  | Variable | Value |
+  |----------|-------|
+  | TF_VAR_deploy_dp_airflow | true |
 
 
 __Setup and Configure the ADO Library `Infrastructure Pipeline Secrets - demo`__

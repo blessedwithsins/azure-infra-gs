@@ -131,3 +131,18 @@ blob_cors_rule = [
   }
 ]
 ```
+
+### Enabling Storage Management Policy on file-staging-area container
+
+Storage management policy is applied on the file-staging-area container where it can be decided to retain the data in it for a specified number of days.To enable Storage management policy on file-staging-area Containers, add the variable `storage_mgmt_policy_enabled` as a `feature_flag` in `custom.tfvars`.Override the default retention days using `sa_retention_days`.
+
+```go
+
+// Enable Storage management policy
+feature_flag = {
+  storage_mgmt_policy_enabled = true
+}
+
+// Override the default retention days
+sa_retention_days = 7
+```

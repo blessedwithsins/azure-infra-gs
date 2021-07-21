@@ -1,0 +1,132 @@
+{{- if and (eq (.Values.global.isDataPartitionDeployment | default false) false)  .Values.global.isAutoscalingEnabled }}
+apiVersion: batch/v1
+kind: Job
+metadata:
+  name: {{ .Values.global.job.name }}
+  namespace: osdu
+  labels:
+    app: "{{ .Values.global.job.name }}"
+spec:
+  template:
+    spec:
+      containers:
+      - name: cert-checker
+        image: {{ .Values.global.job.image }}
+        env:
+        - name: client_id
+          valueFrom:
+            secretKeyRef:
+              name: active-directory
+              key: principal-clientid
+        - name: client_secret
+          valueFrom:
+            secretKeyRef:
+              name: active-directory
+              key: principal-clientpassword
+        - name: tenant_id
+          valueFrom:
+            secretKeyRef:
+              name: active-directory
+              key: tenantid
+        - name: ENV_SR_GROUP_NAME
+          valueFrom:
+            configMapKeyRef:
+              name: {{ .Values.global.job.configmap_name }}
+              key: ENV_SR_GROUP_NAME
+        - name: ENV_KEYVAULT_NAME
+          valueFrom:
+            configMapKeyRef:
+              name: {{ .Values.global.job.configmap_name }}
+              key: ENV_KEYVAULT_NAME
+        - name: ENV_CLUSTER_NAME
+          valueFrom:
+            configMapKeyRef:
+              name: {{ .Values.global.job.configmap_name }}
+              key: ENV_CLUSTER_NAME
+        command:
+        - /bin/sh
+        args:
+        - -c
+        - |
+          SIDECAR_PORT=15020
+          KV_CERT_NAME=appgw-ssl-cert
+          K8S_ISTIONAMESPACE_NAME=istio-system
+
+          # Cleanup function
+          cleanup() {
+              echo Clean all existing files
+              rm -f cert.crt cert.key osdu-certificate.pfx ${KV_CERT_NAME}.pem
+              curl -X POST "http://localhost:${SIDECAR_PORT}/quitquitquit"
+          }
+
+          trap cleanup 0 2 3 6 ERR
+
+          set -e
+          # Wait for internet connection
+          until nc -z google.com 80
+          do
+            sleep 1
+          done
+          
+          # Install kubectl
+          if [ ! -x /usr/local/bin/kubectl ]; then
+            echo "Download and install kubectl..."
+            curl -Lo /usr/local/bin/kubectl https://storage.googleapis.com/kubernetes-release/release/$(curl -s https://storage.googleapis.com/kubernetes-release/release/stable.txt)/bin/linux/amd64/kubectl
+            chmod a+x /usr/local/bin/kubectl
+          fi
+
+          # Install coreutils
+          apk add --update coreutils
+
+          # Log in in Azure and get cluster credentials
+          az login --service-principal -u ${client_id} -p ${client_secret} --tenant ${tenant_id}
+          az aks get-credentials --resource-group ${ENV_SR_GROUP_NAME} --name ${ENV_CLUSTER_NAME}
+
+{{- if .Values.global.ingress.enableKeyvaultCert }}
+
+          K8S_CERT_SECRET=appgw-ssl-cert
+          K8S_NAMESPACE_NAME=istio-system
+
+          # Download BYOC certificate from keyvault
+          az keyvault secret download --file ${KV_CERT_NAME}.pfx --vault-name ${ENV_KEYVAULT_NAME} --encoding base64 --name ${KV_CERT_NAME}
+
+          # Extract key and crt
+          openssl pkcs12 -in ${K8S_CERT_SECRET}.pfx -out cert.pem -passin pass:"" -nodes -passout pass:""
+          openssl rsa -in cert.pem -out cert.key
+          openssl crl2pkcs7 -nocrl -certfile cert.pem | openssl pkcs7 -print_certs -out cert.crt
+
+          # Create secret for istio-ingressgateway in istio-system namespace
+          kubectl create secret -n ${K8S_ISTIONAMESPACE_NAME} generic ${K8S_CERT_SECRET} \
+          --save-config --dry-run=client \
+          --from-file=tls.crt=cert.crt --from-file=tls.key=cert.key \
+          -o yaml | kubectl apply -f -
+
+{{ else }}
+          
+          K8S_CERT_SECRET=osdu-certificate
+          K8S_NAMESPACE_NAME=osdu
+
+          # Get osdu-certificate secret created by cert-manager in osdu namespace and extract key and crt
+          kubectl get secret -n ${K8S_NAMESPACE_NAME} ${K8S_CERT_SECRET} -o jsonpath="{ .data.tls\.crt }" | base64 -d > cert.crt
+          kubectl get secret -n ${K8S_NAMESPACE_NAME} ${K8S_CERT_SECRET} -o jsonpath="{ .data.tls\.key }" | base64 -d > cert.key
+
+          # Create secret for istio-ingressgateway in istio-system namespace from key and crt
+          kubectl create secret -n ${K8S_ISTIONAMESPACE_NAME} generic ${K8S_CERT_SECRET} \
+          --save-config --dry-run=client \
+          --from-file=tls.crt=cert.crt --from-file=tls.key=cert.key \
+          -o yaml | kubectl apply -f -
+
+          # Create certificate file
+          openssl pkcs12 \
+            -passout pass: \
+            -export \
+            -out osdu-certificate.pfx \
+            -in cert.crt \
+            -inkey cert.key
+
+          # Upload certificate file in Key Vault to use in in AppGW
+          az keyvault certificate import --vault-name ${ENV_KEYVAULT_NAME} -n ${KV_CERT_NAME} -f osdu-certificate.pfx
+
+{{- end }} 
+      restartPolicy: Never
+{{- end }} 

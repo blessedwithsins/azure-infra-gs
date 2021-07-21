@@ -89,6 +89,10 @@ variable "storage_containers" {
   type        = list(string)
 }
 
+variable "storage_containers_dp_airflow" {
+  description = "The list of storage container names to create for data partition airflow"
+  type        = list(string)
+}
 variable "blob_cors_rule" {
   type = list(
     object(
