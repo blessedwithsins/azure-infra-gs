@@ -1,0 +1,70 @@
+#  Copyright © Microsoft Corporation
+#
+#  Licensed under the Apache License, Version 2.0 (the "License");
+#  you may not use this file except in compliance with the License.
+#  You may obtain a copy of the License at
+#
+#       http://www.apache.org/licenses/LICENSE-2.0
+#
+#  Unless required by applicable law or agreed to in writing, software
+#  distributed under the License is distributed on an "AS IS" BASIS,
+#  WITHOUT WARRANTIES OR CONDITIONS OF ANY KIND, either express or implied.
+#  See the License for the specific language governing permissions and
+#  limitations under the License.
+
+#####################
+# README: Defines a Stage to output all dag files
+#####################
+
+parameters:
+  environment: 'dev'
+  dockerfilePath: ''
+  outputDagFolder: ''
+  environmentVars: ''
+
+stages:
+
+  - stage: 'Build_Dags'
+
+    jobs:
+      - job: Build_Dags
+        displayName: Build and output dags
+        pool:
+          name: $(AGENT_POOL)
+        steps:
+          - task: AzureCLI@1
+            displayName: Execute docker
+            inputs:
+              azureSubscription: $(SERVICE_CONNECTION_NAME)
+              addSpnToEnvironment: true
+              scriptLocation: inlineScript
+              inlineScript: |
+                // Generate the env file for docker run
+                NEWLINE=$'\n'
+                cat > .env << EOF
+                ${{ parameters.environmentVars }}
+                EOF
+                cat .env
+
+                docker_image_name=dag-build-orchestrator:$(Build.SourceVersion)
+                docker build -t $docker_image_name --file ${{ parameters.dockerfilePath }} .
+
+                # Checking if container with name docker_generate_dags exists then delete
+                # Container with a name is required to perform the copy operation below
+
+                if [ "$(docker ps -a | grep docker_generate_dags)" ]; then
+                  docker stop docker_generate_dags
+                  docker rm docker_generate_dags
+                fi
+
+                docker run --name "docker_generate_dags" -v /var/run/docker.sock:/var/run/docker.sock --env-file .env $docker_image_name
+
+                # Copying the dag folder from the docker container to he host
+                output_dag_folder=${{ parameters.outputDagFolder }}
+                docker cp "docker_generate_dags:$output_dag_folder" .
+
+          - task: PublishPipelineArtifact@1
+            displayName: Copy Dag Files
+            inputs:
+              targetPath: $(System.DefaultWorkingDirectory)/output_dags
+              artifactName: output_dags

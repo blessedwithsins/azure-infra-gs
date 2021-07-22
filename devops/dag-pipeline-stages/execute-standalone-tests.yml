@@ -1,0 +1,49 @@
+#  Copyright © Microsoft Corporation
+#
+#  Licensed under the Apache License, Version 2.0 (the "License");
+#  you may not use this file except in compliance with the License.
+#  You may obtain a copy of the License at
+#
+#       http://www.apache.org/licenses/LICENSE-2.0
+#
+#  Unless required by applicable law or agreed to in writing, software
+#  distributed under the License is distributed on an "AS IS" BASIS,
+#  WITHOUT WARRANTIES OR CONDITIONS OF ANY KIND, either express or implied.
+#  See the License for the specific language governing permissions and
+#  limitations under the License.
+
+#####################
+# README: Defines a Stage to execute Unit Tests for DAGs
+#####################
+
+parameters:
+  dockerfilePath: ''
+  buildArgs: ''
+
+stages:
+  - stage: 'Execute_Standalone_Tests'
+    jobs:
+      - job: Execute_Standalone_Tests
+        displayName: Execute Standalone Test Cases
+        pool:
+          name: $(AGENT_POOL)
+        steps:
+
+          - task: AzureCLI@1
+            displayName: Execute Standalone Tests
+            env:
+              AZURE_TENANT_ID: $(app-dev-sp-tenant-id)
+              AZURE_AD_APP_RESOURCE_ID: $(aad-client-id)
+              AZURE_CLIENT_ID: $(app-dev-sp-username)
+              AZURE_CLIENT_SECRET: $(app-dev-sp-password)
+              DMS_ACL: $(ACL_VIEWERS)@$(OSDU_TENANT).$(DOMAIN)
+            inputs:
+              azureSubscription: $(SERVICE_CONNECTION_NAME)
+              addSpnToEnvironment: true
+              scriptLocation: inlineScript
+              inlineScript: |
+                docker_image_name=execute-dag-standalone-tests:$(Build.SourceVersion)
+                docker build -t $docker_image_name ${{ parameters.buildArgs}} --file ${{ parameters.dockerfilePath }} .
+
+
+
