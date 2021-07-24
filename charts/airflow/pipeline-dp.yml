@@ -73,7 +73,7 @@ stages:
       chartPath: ${{ variables.istioChartPath }}
       valuesFile: ${{ variables.istioValuesFile }}
       skipDeploy: ${{ variables.SKIP_DEPLOY }}
-      DPName: "dp2"
+      DPName: "opendes"
       addDPNameToService: false
       providers:
         - name: Azure
@@ -86,7 +86,7 @@ stages:
       valuesFile: ${{ variables.airflowValuesFile }}
       skipDeploy: ${{ variables.SKIP_DEPLOY }}
       namespace: osdu
-      DPName: "dp2"
+      DPName: "opendes"
       addDPNameToService: true
       providers:
         - name: Azure
