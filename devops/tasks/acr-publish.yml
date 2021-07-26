@@ -44,7 +44,7 @@ steps:
             ARG JAR_FILE
             COPY ${JAR_FILE} app.jar
             RUN java -Xshare:dump -jar /app.jar
-            ENV JAVA_OPTS="-Xshare:on -XX:InitialRAMPercentage=25.0 -XX:MaxRAMPercentage=50.0 -XX:+HeapDumpOnOutOfMemoryError ${JAVA_OPTS}"
+            ENV JAVA_OPTS="-Xshare:auto -XX:InitialRAMPercentage=25.0 -XX:MaxRAMPercentage=50.0 -XX:+HeapDumpOnOutOfMemoryError ${JAVA_OPTS}"
             ENTRYPOINT exec java ${JAVA_OPTS} -jar /app.jar' > Dockerfile
         }
 
