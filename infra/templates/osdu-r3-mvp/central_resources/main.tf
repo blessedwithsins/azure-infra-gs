@@ -160,7 +160,7 @@ module "keyvault_policy" {
     module.service_principal.id
   ]
   key_permissions         = ["get", "encrypt", "decrypt"]
-  certificate_permissions = ["get"]
+  certificate_permissions = ["get", "update", "import"]
   secret_permissions      = ["get"]
 }
 

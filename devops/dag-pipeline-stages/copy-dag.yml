@@ -1,0 +1,113 @@
+#  Copyright © Microsoft Corporation
+#
+#  Licensed under the Apache License, Version 2.0 (the "License");
+#  you may not use this file except in compliance with the License.
+#  You may obtain a copy of the License at
+#
+#       http://www.apache.org/licenses/LICENSE-2.0
+#
+#  Unless required by applicable law or agreed to in writing, software
+#  distributed under the License is distributed on an "AS IS" BASIS,
+#  WITHOUT WARRANTIES OR CONDITIONS OF ANY KIND, either express or implied.
+#  See the License for the specific language governing permissions and
+#  limitations under the License.
+
+#####################
+# README: Defines a Stage to Copy Dag files
+#####################
+
+parameters:
+  outputDagsFolder: 'output_dags'
+  deployPackagedDag: 'false'
+
+stages:
+
+  - stage: 'Copy_Dags'
+    jobs:
+      - job: Copy_Dags
+        displayName: Copy Dag files to Azure file share
+        pool:
+          name: $(AGENT_POOL)
+        steps:
+          - task: DownloadPipelineArtifact@2
+            displayName: Download Dag files
+            inputs:
+              artifact: ${{ parameters.outputDagsFolder }}
+              path: $(System.DefaultWorkingDirectory)/output_dags
+          - task: AzureCLI@1
+            displayName: Copy
+            inputs:
+              azureSubscription: $(SERVICE_CONNECTION_NAME)
+              addSpnToEnvironment: true
+              scriptLocation: inlineScript
+              inlineScript: |
+
+                # Installing the Azcopy utility
+                apk add --update coreutils && rm -rf /var/cache/apk/*
+                mkdir -p tmp
+                cd tmp
+                wget -O azcopy_v10.tar.gz https://aka.ms/downloadazcopy-v10-linux && tar -xf azcopy_v10.tar.gz --strip-components=1
+                cp ./azcopy /usr/bin/
+                cd ..
+
+                EXPIRE=$(date -u -d "59 minutes" '+%Y-%m-%dT%H:%M:%SZ')
+                START=$(date -u -d "-1 minute" '+%Y-%m-%dT%H:%M:%SZ')
+
+                accountKey=$(airflow-storage-key)
+                accountName=$(airflow-storage)
+
+                #Generating the SAS Token required for Authorization
+                AZURE_STORAGE_SAS_TOKEN=$(az storage account generate-sas --account-name $accountName  --account-key $accountKey --start $START --expiry $EXPIRE --https-only --resource-types sco --services f --permissions cwdlur -o tsv)
+                cd output_dags
+
+                if [ ${{ parameters.deployPackagedDag }}  == "true" ]; then
+                  echo "Packaged Dags are enabled"
+                  if [ -d "./dags/" ]; then
+                    # Copying the zipped dag inside the dags folder
+                    azcopy cp "./dags/*.zip" "https://${accountName}.file.core.windows.net/airflowdags/dags?${AZURE_STORAGE_SAS_TOKEN}" --recursive=true
+                  fi
+                else
+                    echo "Packaged Dags are disabled"
+                    if [ -d "./dags/" ]; then
+                      # Copying all the contents inside the dags folder
+                      azcopy cp "./dags/*" "https://${accountName}.file.core.windows.net/airflowdags/dags?${AZURE_STORAGE_SAS_TOKEN}" --recursive=true
+                      cd dags
+
+                      # Now syncing only the folders which are part of source to remove the deleted files
+                      for directory in *; do
+                        if [ -d "$directory" ]; then
+                          azcopy sync "./$directory/" "https://${accountName}.file.core.windows.net/airflowdags/dags/$directory?${AZURE_STORAGE_SAS_TOKEN}" --recursive=true --delete-destination=true
+                        fi
+                      done
+                      cd ..
+                    fi
+
+                    if [ -d "./plugins/" ]; then
+                      # Copying all the contents inside the plugins folder
+                      azcopy cp "./plugins/*" "https://${accountName}.file.core.windows.net/airflowdags/plugins?${AZURE_STORAGE_SAS_TOKEN}" --recursive=true
+                      cd plugins
+
+                      if [ -d "operators" ]; then
+                        cd operators
+                        # Syncing only the sub folders which are part of source in operators folder
+                        for directory in *; do
+                          if [ -d "$directory" ]; then
+                            azcopy sync "./$directory/" "https://${accountName}.file.core.windows.net/airflowdags/plugins/operators/$directory?${AZURE_STORAGE_SAS_TOKEN}" --recursive=true --delete-destination=true
+                          fi
+                        done
+                        cd ..
+                      fi
+
+                      if [ -d "hooks" ]; then
+                        cd hooks
+                        # Syncing only the sub folders which are part of source in hooks folder
+                        for directory in *; do
+                          if [ -d "$directory" ]; then
+                            azcopy sync "./$directory/" "https://${accountName}.file.core.windows.net/airflowdags/plugins/hooks/$directory?${AZURE_STORAGE_SAS_TOKEN}" --recursive=true --delete-destination=true
+                          fi
+                        done
+                        cd ..
+                      fi
+                      cd ..
+                    fi
+                fi
