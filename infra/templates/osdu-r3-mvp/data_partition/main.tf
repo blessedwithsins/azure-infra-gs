@@ -74,6 +74,7 @@ provider "azurerm" {
 }
 
 provider "kubernetes" {
+  load_config_file       = false
   host                   = var.deploy_dp_airflow ? module.airflow.0.kube_config_block.0.host : ""
   username               = var.deploy_dp_airflow ? module.airflow.0.kube_config_block.0.username : ""
   password               = var.deploy_dp_airflow ? module.airflow.0.kube_config_block.0.password : ""
