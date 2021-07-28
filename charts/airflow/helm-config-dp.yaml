@@ -7,7 +7,7 @@ azure:
   resourcegroup: #{base-name-dp}#-rg
   identity: #{base-name-dp}#-osdu-identity
   identity_id: #{management-identity-id}#
-  keyvault: #{base-name-dp}#-kv
+  keyvault: osdu-mvp-dp2inge-tf7q-kv
 
 ################################################################################
 # App insights configuration
