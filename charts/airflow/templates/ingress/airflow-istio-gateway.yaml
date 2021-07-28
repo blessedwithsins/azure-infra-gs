@@ -9,12 +9,6 @@ spec:
     istio: ingressgateway # use Istio default gateway implementation
   servers:
   - port:
-      number: 80
-      name: http
-      protocol: HTTP
-    hosts:
-    - {{ .Values.airflow.ingress.web.host | quote }}
-  - port:
       number: 443
       name: https
       protocol: HTTPS
