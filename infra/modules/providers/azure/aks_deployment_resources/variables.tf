@@ -117,5 +117,5 @@ variable "base_name" {
 
 variable "is_byoc_enabled" {
   description = "Flag to indicate whether BYOC is enabled or not"
-  type = bool
+  type        = bool
 }
