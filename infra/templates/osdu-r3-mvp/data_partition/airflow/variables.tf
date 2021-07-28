@@ -250,3 +250,8 @@ variable "cr_keyvault_id" {
   description = "Id for Keyvault in Central Resources"
   type        = string
 }
+
+variable "is_byoc_enabled" {
+  description = "Flag to indicate whether BYOC is enabled or not"
+  type        = bool
+}

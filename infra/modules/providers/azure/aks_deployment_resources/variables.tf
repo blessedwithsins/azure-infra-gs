@@ -114,3 +114,8 @@ variable "sr_aks_egress_ip_address" {
 variable "base_name" {
   description = "Resource Base name"
 }
+
+variable "is_byoc_enabled" {
+  description = "Flag to indicate whether BYOC is enabled or not"
+  type        = bool
+}
