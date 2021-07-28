@@ -117,3 +117,7 @@ spec:
               serviceName: policy-service
               servicePort: 80
             path: /api/policy/*
+          - backend:
+              serviceName: seismic-header-service
+              servicePort: 80
+            path: /seismic-header/api/v1/*
