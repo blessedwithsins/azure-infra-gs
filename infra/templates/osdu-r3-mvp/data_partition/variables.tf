@@ -219,3 +219,9 @@ variable "sa_retention_days" {
   type        = number
   default     = 30
 }
+
+variable "is_byoc_enabled" {
+  description = "Flag to indicate whether BYOC is enabled or not"
+  type        = bool
+  default     = false
+}
