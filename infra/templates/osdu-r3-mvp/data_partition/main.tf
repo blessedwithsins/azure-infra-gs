@@ -488,6 +488,7 @@ module "airflow" {
   base_name_60 = local.base_name_60
 
   ssh_public_key_file      = var.ssh_public_key_file
+  is_byoc_enabled          = var.is_byoc_enabled
   sr_aks_egress_ip_address = data.terraform_remote_state.service_resources.outputs.aks_egress_ip_address
   cr_keyvault_id           = data.terraform_remote_state.central_resources.outputs.keyvault_id
 }
