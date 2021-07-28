@@ -139,13 +139,22 @@ airflow:
       timeoutSeconds: 60
     resources:
       requests:
-        cpu: "2000m"
-        memory: "2Gi"
+        cpu: "1000m"
+        memory: "4Gi"
       limits:
-        cpu: "3000m"
-        memory: "2Gi"
+        cpu: "1000m"
+        memory: "4Gi"
     podLabels:
       aadpodidbinding: "osdu-identity"
+    autoscale:
+      enabled: false
+      minReplicas: 2
+      maxReplicas: 20
+      scaleDown:
+        coolDownPeriod: 60
+    labels:
+      # DO NOT DELETE THIS LABEL. SET IT TO "false" WHEN AUTOSCALING IS DISABLED, SET IT TO "true" WHEN AUTOSCALING IS ENABLED
+      autoscalingEnabled: "false"
     podAnnotations:
       sidecar.istio.io/userVolumeMount: '[{"name": "azure-keyvault", "mountPath": "/mnt/azure-keyvault", "readonly": true}]'
     baseUrl: "http://localhost/airflow"
@@ -238,7 +247,7 @@ airflow:
       AIRFLOW_VAR_CORE__SERVICE__FILE__HOST: "http://file.osdu.svc.cluster.local/api/file/v2"
       AIRFLOW_VAR_CORE__SERVICE__WORKFLOW__HOST: "http://ingestion-workflow.osdu.svc.cluster.local/api/workflow"
       AIRFLOW_VAR_CORE__SERVICE__SEARCH_WITH_CURSOR__URL: "http://search-service.osdu.svc.cluster.local/api/search/v2/query_with_cursor"
-      AIRFLOW__WEBSERVER__WORKERS: 15
+      AIRFLOW__WEBSERVER__WORKERS: 8
       AIRFLOW__WEBSERVER__WORKER_REFRESH_BATCH_SIZE: 0
       AIRFLOW__CORE__STORE_SERIALIZED_DAGS: True #This flag decides whether to serialise DAGs and persist them in DB
       AIRFLOW__CORE__STORE_DAG_CODE: True #This flag decides whether to persist DAG files code in DB

@@ -44,7 +44,6 @@ stages:
                 cat > .env << EOF
                 ${{ parameters.environmentVars }}
                 EOF
-                cat .env
 
                 docker_image_name=dag-build-orchestrator:$(Build.SourceVersion)
                 docker build -t $docker_image_name --file ${{ parameters.dockerfilePath }} .
