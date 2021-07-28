@@ -92,7 +92,7 @@ resource "azurerm_network_security_group" "aks-nsg" {
   resource_group_name = var.resource_group_name
 }
 
-resource "azurerm_network_security_rule" "aks-nsg-security-rule" {
+resource "azurerm_network_security_rule" "aks-nsg-http-allow-rule" {
   count                       = var.is_byoc_enabled ? 0 : 1
   name                        = "http-allow-rule"
   priority                    = 100
