@@ -4,8 +4,10 @@ apiVersion: apps/v1
 kind: Deployment
 metadata:
   # This Deployment is needed to download the certificate from keyvault via csi provider
-  name: "byoc-certificate-downloader"
-  namespace: istio-system          
+  name: byoc-certificate-downloader
+  namespace: istio-system
+  labels:
+    app: byoc-certificate-downloader
 spec:
   replicas: 1
   selector:
@@ -13,12 +15,12 @@ spec:
       app: byoc-certificate-downloader
   template:
     metadata:
-      name: "{{ .Release.Name }}-byoc-certificate-downloader"
+      name: byoc-certificate-downloader
       labels:
         aadpodidbinding: "osdu-identity"
     spec:
       containers:
-      - name: certificate-downloader
+      - name: byoc-certificate-downloader
         image: hashicorp/http-echo
         imagePullPolicy: IfNotPresent
         args:
