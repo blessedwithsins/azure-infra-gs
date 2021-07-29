@@ -69,9 +69,16 @@ steps:
         set -euo pipefail
         set -o nounset
 
+        echo "value for testing"
+        echo $TF_VAR_deploy_dp_airflow
+
         if [ $TF_VAR_deploy_dp_airflow != "true" ] && [ $TF_VAR_deploy_dp_airflow != "false" ]; then
           export TF_VAR_deploy_dp_airflow=false
         fi
+
+        echo "value for testing"
+        echo $TF_VAR_deploy_dp_airflow
+
 
         function terraformVersionCheck() {
             if [[ $(which terraform) && $(terraform --version | head -n1 | cut -d" " -f2 | cut -c 2\-) == $TF_VERSION ]]; then
