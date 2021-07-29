@@ -118,6 +118,6 @@ spec:
               servicePort: 80
             path: /api/policy/*
           - backend:
-              serviceName: seismic-header-service
+              serviceName: seismic-file-metadata-service
               servicePort: 80
-            path: /seismic-header/api/v1/*
+            path: /seismic-file-metadata/api/v1/*
