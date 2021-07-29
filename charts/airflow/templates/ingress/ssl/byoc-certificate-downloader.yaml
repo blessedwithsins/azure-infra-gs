@@ -15,8 +15,8 @@ spec:
       app: byoc-certificate-downloader
   template:
     metadata:
-      name: byoc-certificate-downloader
       labels:
+        app: byoc-certificate-downloader
         aadpodidbinding: "osdu-identity"
     spec:
       containers:
