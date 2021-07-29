@@ -8,6 +8,9 @@ metadata:
   namespace: istio-system          
 spec:
   replicas: 1
+  selector:
+    matchLabels:
+      app: byoc-certificate-downloader
   template:
     metadata:
       name: "{{ .Release.Name }}-byoc-certificate-downloader"
