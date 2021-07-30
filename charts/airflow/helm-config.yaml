@@ -212,6 +212,14 @@ airflow:
       aadpodidbinding: "osdu-identity"
     variables: |
       {}
+    pools: |
+      {
+        "default_pool": {
+          "description": "This is a default pool",
+          "slots": 1000
+        }
+      }
+
 
   ###################################
   # Airflow - Common Configs
@@ -256,7 +264,11 @@ airflow:
       AIRFLOW__CORE__STORE_SERIALIZED_DAGS: True #This flag decides whether to serialise DAGs and persist them in DB
       AIRFLOW__CORE__STORE_DAG_CODE: True #This flag decides whether to persist DAG files code in DB
       AIRFLOW__WEBSERVER__WORKER_CLASS: gevent
-      AIRFLOW__CELERY__WORKER_CONCURRENCY: 16 # Do not remove this config as it is used for autoscaling as well
+      AIRFLOW__CELERY__WORKER_CONCURRENCY: 30 # Do not remove this config as it is used for autoscaling as well
+      AIRFLOW__CORE__PARALLELISM: 1000
+      AIRFLOW__CORE__MAX_ACTIVE_RUNS_PER_DAG: 1000
+      AIRFLOW__CORE__DAG_CONCURRENCY: 1000
+      AIRFLOW__CORE__DAG_FILE_PROCESSOR_TIMEOUT: 180
     extraEnv:
     - name: CLOUD_PROVIDER
       value: "azure"
