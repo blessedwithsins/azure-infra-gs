@@ -1,30 +1,28 @@
 {{- $isEnabled := .Values.airflow.isDataPartitionDeployment | default false -}}
 {{ if and $isEnabled .Values.airflow.ingress.web.tls.BYOCEnabled }}
-apiVersion: batch/v1
-kind: Job
+apiVersion: apps/v1
+kind: Deployment
 metadata:
-  # This Job is needed to download the certificate from keyvault via csi provider
-  name: "byoc-certificate-downloader-job"
+  # This Deployment is needed to download the certificate from keyvault via csi provider
+  name: byoc-certificate-downloader
   namespace: istio-system
   labels:
-    app.kubernetes.io/managed-by: {{ .Release.Service | quote }}
-    app.kubernetes.io/instance: {{ .Release.Name | quote }}
-    app.kubernetes.io/version: {{ .Chart.AppVersion }}
+    app: byoc-certificate-downloader
 spec:
+  replicas: 1
+  selector:
+    matchLabels:
+      app: byoc-certificate-downloader
   template:
     metadata:
-      name: "{{ .Release.Name }}"
       labels:
-        app.kubernetes.io/managed-by: {{ .Release.Service | quote }}
-        app.kubernetes.io/instance: {{ .Release.Name | quote }}
-        helm.sh/chart: "{{ .Chart.Name }}-{{ .Chart.Version }}"
+        app: byoc-certificate-downloader
         aadpodidbinding: "osdu-identity"
     spec:
-      restartPolicy: Never
       containers:
-      - name: certificate-downloader
-        image: python:3.6.12-slim-buster
-        command: ['sh','-c','python -c "import time"']
+      - name: byoc-certificate-downloader
+        image: mcr.microsoft.com/azuredocs/aci-helloworld
+        imagePullPolicy: IfNotPresent
         volumeMounts:
         - name: airflow-tls
           mountPath: "/mnt/airflow-tls"
@@ -41,5 +39,5 @@ spec:
           driver: secrets-store.csi.k8s.io
           readOnly: true
           volumeAttributes:
-            secretProviderClass: airflow-tls       
+            secretProviderClass: airflow-tls  
 {{ end }}

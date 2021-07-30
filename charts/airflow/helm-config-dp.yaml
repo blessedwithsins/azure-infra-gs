@@ -2,27 +2,19 @@
 # Specify the azure environment specific values
 #
 azure:
-  dp:
-    tenant: #{data-partition-tenant-id}#
-    subscription: #{data-partition-subscription-id}#
-    resourcegroup: #{base-name-dp}#-rg
-    identity: #{base-name-dp}#-osdu-identity
-    identity_id: #{management-identity-id}#
-    keyvault: #{base-name-dp}#-kv
-  cr:
-    tenant: #{tenant-id}#
-    subscription: #{subscription-id}#
-    resourcegroup: #{base-name-cr}#-rg
-    keyvault: #{base-name-cr}#-dpkv
-    
-
-
+  tenant: #{data-partition-tenant-id}#
+  subscription: #{data-partition-subscription-id}#
+  resourcegroup: #{base-name-dp}#-rg
+  identity: #{base-name-dp}#-osdu-identity
+  identity_id: #{management-identity-id}#
+  keyvault: #{base-name-dp}#-kv
 
 ################################################################################
 # App insights configuration
 #
 appinsightstatsd:
   aadpodidbinding: "osdu-identity"
+  key: #{appinsights-key}#
 
 #################################################################################
 # Specify log analytics configuration
@@ -75,6 +67,11 @@ pgbouncer:
     passwordSecret: "postgres"
     passwordSecretKey: "postgres-password"
 
+################################################################################
+# Specify KEDA configuration
+#
+keda:
+  version_2_enabled: false
 
 ################################################################################
 # Specify the airflow configuration
@@ -152,13 +149,22 @@ airflow:
       timeoutSeconds: 60
     resources:
       requests:
-        cpu: "2000m"
-        memory: "2Gi"
+        cpu: "1000m"
+        memory: "4Gi"
       limits:
-        cpu: "3000m"
-        memory: "2Gi"
+        cpu: "1000m"
+        memory: "4Gi"
     podLabels:
       aadpodidbinding: "osdu-identity"
+    autoscale:
+      enabled: false
+      minReplicas: 2
+      maxReplicas: 20
+      scaleDown:
+        coolDownPeriod: 60
+    labels:
+      # DO NOT DELETE THIS LABEL. SET IT TO "false" WHEN AUTOSCALING IS DISABLED, SET IT TO "true" WHEN AUTOSCALING IS ENABLED
+      autoscalingEnabled: "false"
     podAnnotations:
       sidecar.istio.io/userVolumeMount: '[{"name": "azure-keyvault", "mountPath": "/mnt/azure-keyvault", "readonly": true}]'
     baseUrl: "http://localhost/airflow"
@@ -178,17 +184,15 @@ airflow:
       aadpodidbinding: "osdu-identity"
     podAnnotations:
       sidecar.istio.io/inject: "false"
-    autoscaling:
+    autoscale:
       enabled: false
-      ## minReplicas is picked from Values.workers.replicas and default value is 1
-      maxReplicas: 3
-      metrics:
-      - type: Resource
-        resource:
-          name: memory
-          target:
-            type: Utilization
-            averageUtilization: 60
+      minReplicas: 2
+      maxReplicas: 20
+      scaleDown:
+        coolDownPeriod: 300
+    celery:
+      gracefullTermination: true
+      gracefullTerminationPeriod: 600
     labels:
       # DO NOT DELETE THIS LABEL. SET IT TO "false" WHEN AUTOSCALING IS DISABLED, SET IT TO "true" WHEN AUTOSCALING IS ENABLED
       autoscalingEnabled: "false"
@@ -255,11 +259,12 @@ airflow:
       AIRFLOW_VAR_CORE__SERVICE__FILE__HOST: "https://#{OSDU_SVC_ENDPOINT}#/api/file/v2"
       AIRFLOW_VAR_CORE__SERVICE__WORKFLOW__HOST: "https://#{OSDU_SVC_ENDPOINT}#/api/workflow"
       AIRFLOW_VAR_CORE__SERVICE__SEARCH_WITH_CURSOR__URL: "https://#{OSDU_SVC_ENDPOINT}#/api/search/v2/query_with_cursor"
-      AIRFLOW__WEBSERVER__WORKERS: 15
+      AIRFLOW__WEBSERVER__WORKERS: 8
       AIRFLOW__WEBSERVER__WORKER_REFRESH_BATCH_SIZE: 0
       AIRFLOW__CORE__STORE_SERIALIZED_DAGS: True #This flag decides whether to serialise DAGs and persist them in DB
       AIRFLOW__CORE__STORE_DAG_CODE: True #This flag decides whether to persist DAG files code in DB
       AIRFLOW__WEBSERVER__WORKER_CLASS: gevent
+      AIRFLOW__CELERY__WORKER_CONCURRENCY: 16 # Do not remove this config as it is used for autoscaling as well
     extraEnv:
     - name: CLOUD_PROVIDER
       value: "azure"
@@ -284,14 +289,20 @@ airflow:
     - name: AIRFLOW_VAR_AAD_CLIENT_ID
       value: "#{AAD_CLIENT_ID}#"
     - name: AIRFLOW_VAR_APPINSIGHTS_KEY
-      valueFrom:
-        secretKeyRef:
-          name: central-logging
-          key: appinsights
+      value: "#{appinsights-key}#"
+    - name: PYTHONPATH
+      value: "/opt/celery"
+    # Needed for installing python osdu python sdk. In future this will be changed
+    - name: CI_COMMIT_TAG
+      value: "v0.10.0"
     extraConfigmapMounts:
         - name: remote-log-config
           mountPath: /opt/airflow/config
           configMap: airflow-remote-log-config
+          readOnly: true
+        - name: celery-config
+          mountPath: /opt/celery
+          configMap: celery-config
           readOnly: true
     extraPipPackages: [
         "flask-bcrypt==0.7.1",
@@ -308,7 +319,11 @@ airflow:
         "azure-servicebus==7.0.1",
         "toposort==1.6",
         "strict-rfc3339==0.7",
-        "https://azglobalosdutestlake.blob.core.windows.net/pythonsdk/osdu_api-0.0.4.tar.gz"
+        "jsonschema==3.2.0",
+        "pyyaml==5.4.1",
+        "requests==2.25.1",
+        "tenacity==8.0.1",
+        "https://azglobalosdutestlake.blob.core.windows.net/pythonsdk/osdu_api-0.10.0.tar.gz"
     ]
     extraVolumeMounts:
         - name: azure-keyvault

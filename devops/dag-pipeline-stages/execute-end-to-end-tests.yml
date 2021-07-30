@@ -1,0 +1,58 @@
+#  Copyright © Microsoft Corporation
+#
+#  Licensed under the Apache License, Version 2.0 (the "License");
+#  you may not use this file except in compliance with the License.
+#  You may obtain a copy of the License at
+#
+#       http://www.apache.org/licenses/LICENSE-2.0
+#
+#  Unless required by applicable law or agreed to in writing, software
+#  distributed under the License is distributed on an "AS IS" BASIS,
+#  WITHOUT WARRANTIES OR CONDITIONS OF ANY KIND, either express or implied.
+#  See the License for the specific language governing permissions and
+#  limitations under the License.
+
+#####################
+# README: Defines a Stage to execute End to End Tests for DAGs
+#####################
+
+parameters:
+  outputDagsFolder: 'output_dags'
+  dockerfilePath: ''
+  environmentVars: ''
+
+stages:
+  - stage: 'Execute_End_to_End_Tests'
+    jobs:
+      - job: Execute_End_to_End_Tests
+        displayName: Execute End to End Test Cases
+        pool:
+          name: $(AGENT_POOL)
+        steps:
+          - task: DownloadPipelineArtifact@2
+            displayName: Download Dag files
+            inputs:
+              artifact: ${{ parameters.outputDagsFolder }}
+              path: $(System.DefaultWorkingDirectory)/output_dags
+
+          - task: AzureCLI@1
+            displayName: Execute End to End Tests
+            env:
+              AZURE_TENANT_ID: $(app-dev-sp-tenant-id)
+            inputs:
+              azureSubscription: $(SERVICE_CONNECTION_NAME)
+              addSpnToEnvironment: true
+              scriptLocation: inlineScript
+              inlineScript: |
+                // Generate the env file for docker run
+                NEWLINE=$'\n'
+                cat > .env << EOF
+                ${{ parameters.environmentVars }}
+                EOF
+
+                docker_image_name=execute-end-to-end-tests:$(Build.SourceVersion)
+
+                docker build -t $docker_image_name --file ${{ parameters.dockerfilePath }} .
+
+                docker run --env-file .env $docker_image_name
+

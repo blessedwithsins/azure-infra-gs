@@ -1,0 +1,33 @@
+{{- if .Values.airflow.web.autoscale.enabled -}}
+apiVersion: autoscaling/v2beta2
+kind: HorizontalPodAutoscaler
+metadata:
+  name: {{ printf "%s" .Release.Name | trunc 63 | trimSuffix "-" }}-web
+  labels:
+    component: web
+spec:
+  scaleTargetRef:
+    apiVersion: apps/v1
+    kind: Deployment
+    name: {{ printf "%s" .Release.Name | trunc 63 | trimSuffix "-" }}-web
+  minReplicas: {{ .Values.airflow.web.autoscale.minReplicas }}
+  maxReplicas: {{ .Values.airflow.web.autoscale.maxReplicas }}
+  metrics:
+    - type: Resource
+      resource:
+        name: cpu
+        target:
+          averageUtilization: 70
+          type: Utilization
+  behavior:
+    scaleUp:
+      policies:
+      - type: Percent
+        value: 200
+        periodSeconds: 30
+    scaleDown:
+      policies:
+      - type: Percent
+        value: 30
+        periodSeconds: {{ .Values.airflow.web.autoscale.scaleDown.coolDownPeriod }}
+{{- end }}

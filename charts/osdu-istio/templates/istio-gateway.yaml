@@ -1,0 +1,24 @@
+{{- if and (eq (.Values.global.isDataPartitionDeployment | default false) false)  .Values.global.isAutoscalingEnabled }}
+apiVersion: networking.istio.io/v1alpha3
+kind: Gateway
+metadata:
+  name: istio-gateway
+  namespace: osdu
+spec:
+  selector:
+    istio: ingressgateway # use istio default controller
+  servers:
+    - port:
+        number: 443
+        name: https
+        protocol: HTTPS
+      hosts:
+        - "{{ .Values.global.istio.dns_host }}"
+      tls:
+        mode: SIMPLE
+        {{- if .Values.global.ingress.enableKeyvaultCert }}
+        credentialName: appgw-ssl-cert
+        {{ else }}
+        credentialName: osdu-certificate
+        {{- end }} 
+{{- end }} 

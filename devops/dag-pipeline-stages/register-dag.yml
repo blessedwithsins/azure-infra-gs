@@ -1,0 +1,148 @@
+#  Copyright © Microsoft Corporation
+#
+#  Licensed under the Apache License, Version 2.0 (the "License");
+#  you may not use this file except in compliance with the License.
+#  You may obtain a copy of the License at
+#
+#       http://www.apache.org/licenses/LICENSE-2.0
+#
+#  Unless required by applicable law or agreed to in writing, software
+#  distributed under the License is distributed on an "AS IS" BASIS,
+#  WITHOUT WARRANTIES OR CONDITIONS OF ANY KIND, either express or implied.
+#  See the License for the specific language governing permissions and
+#  limitations under the License.
+
+#####################
+# README: Defines a Stage to Register the Dag with Workflow Service
+#####################
+
+parameters:
+  outputDagsFolder: 'output_dags'
+
+stages:
+
+  - stage: 'Register_Dags'
+    jobs:
+      - job: Register_Dags
+        displayName: Register the Dag with Workflow Service
+        pool:
+          name: $(AGENT_POOL)
+        steps:
+          - task: DownloadPipelineArtifact@2
+            displayName: Download Dag files
+            inputs:
+              artifact: ${{ parameters.outputDagsFolder }}
+              path: $(System.DefaultWorkingDirectory)/output_dags
+
+          - task: UsePythonVersion@0
+            inputs:
+              versionSpec: '3.8'
+
+          - task: AzureCLI@1
+            displayName: DAG Registration
+            env:
+              AZURE_TENANT_ID: $(app-dev-sp-tenant-id)
+              AZURE_AD_APP_RESOURCE_ID: $(aad-client-id)
+              AZURE_CLIENT_ID: $(app-dev-sp-username)
+              AZURE_CLIENT_SECRET: $(app-dev-sp-password)
+
+            inputs:
+              azureSubscription: $(SERVICE_CONNECTION_NAME)
+              addSpnToEnvironment: true
+              scriptLocation: inlineScript
+              inlineScript: |
+                cat > requirements.txt << EOF
+                msal
+                EOF
+
+                # Python script for generating the Bearer Token
+                cat > Token.py << EOF
+                import os
+                import msal
+
+                class AzureToken(object):
+
+                  def get_azure_id_token(self):
+                    tenant_id = os.getenv('AZURE_TENANT_ID')
+                    resource_id = os.getenv('AZURE_AD_APP_RESOURCE_ID')
+                    client_id = os.getenv('AZURE_CLIENT_ID')
+                    client_secret = os.getenv('AZURE_CLIENT_SECRET')
+
+                    if tenant_id is None:
+                      print('Please pass tenant Id to generate token')
+                      exit(1)
+                    if resource_id is None:
+                      print('Please pass resource Id to generate token')
+                      exit(1)
+                    if client_id is None:
+                      print('Please pass client Id to generate token')
+                      exit(1)
+                    if client_secret is None:
+                      print('Please pass client secret to generate token')
+                      exit(1)
+
+                    try:
+                      authority_host_uri = 'https://login.microsoftonline.com'
+                      authority_uri = authority_host_uri + '/' + tenant_id
+                      scope = [resource_id + '/.default']
+                      app = msal.ConfidentialClientApplication(client_id=client_id, authority=authority_uri, client_credential=client_secret)
+                      result = app.acquire_token_for_client(scopes=scope)
+                      token = 'Bearer ' +  result.get('access_token')
+                      print(token)
+                      return token
+                    except Exception as e:
+                      print(e)
+
+                if __name__ == '__main__':
+                  AzureToken().get_azure_id_token()
+                EOF
+
+                # Python script for registering the DAG by calling Workflow service API
+                cat > register_dag.py << EOF
+
+                import json
+                import requests
+                import os
+
+                class RegisterDag:
+
+                  def __init__(self):
+                    self.token = os.environ.get('BEARER_TOKEN')
+                    self.data_partition_id = os.environ.get('OSDU_TENANT')
+                    self.workflow_service_url = 'https://' + os.environ.get('AZURE_DNS_NAME') + '/api/workflow/v1/workflow'
+
+                  def register(self):
+                    self.register_dag()
+
+                  def register_dag(self):
+                    with open('./output_dags/workflow_request_body.json', 'r', encoding='utf-8') as f:
+                      file_data = json.load(f)
+
+                      for data in file_data:
+                        data = json.dumps(data)
+
+                        headers = {
+                          'Content-Type': 'application/json',
+                          'Authorization': self.token,
+                          'data-partition-id': self.data_partition_id
+                        }
+
+                        response = requests.post(self.workflow_service_url, headers=headers, data=data)
+                        if response.status_code == 200:
+                          workflow_id = response.json().get('workflowId')
+                          print("DAG registered with workflowId: {0}".format(workflow_id))
+                        elif response.status_code == 409:
+                          workflow_id = response.json().get('workflowId')
+                          print("DAG is already registered with workflowId: {0}".format(workflow_id))
+                        else:
+                          print("Error while registering DAG {0}".format(response.raise_for_status()))
+                          exit(1)
+
+                if __name__ == "__main__":
+                  RegisterDag().register()
+
+                EOF
+
+                pip install -r ./requirements.txt
+                export BEARER_TOKEN=$(python ./Token.py)
+                python ./register_dag.py

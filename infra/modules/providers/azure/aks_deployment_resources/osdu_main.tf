@@ -92,10 +92,24 @@ resource "azurerm_network_security_group" "aks-nsg" {
   resource_group_name = var.resource_group_name
 }
 
+resource "azurerm_network_security_rule" "aks-nsg-http-allow-rule" {
+  count                       = var.ssl_challenge_required ? 1 : 0
+  name                        = "http-allow-rule"
+  priority                    = 100
+  direction                   = "Inbound"
+  access                      = "Allow"
+  protocol                    = "Tcp"
+  source_port_range           = "*"
+  destination_port_range      = "80"
+  source_address_prefix       = "*"
+  destination_address_prefix  = "*"
+  resource_group_name         = var.resource_group_name
+  network_security_group_name = azurerm_network_security_group.aks-nsg.name
+}
 
 resource "azurerm_network_security_rule" "aks-nsg-security-rule" {
   name                        = "nsg-rule"
-  priority                    = 100
+  priority                    = 110
   direction                   = "Inbound"
   access                      = "Allow"
   protocol                    = "Tcp"

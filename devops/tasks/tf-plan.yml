@@ -18,7 +18,6 @@ parameters:
     terraformWorkspacePrefix: ''
     environmentName: ''
 
-
 steps:
   - task: DownloadSecureFile@1
     name: 'aksPublicAgentKeySecureDownload'  # The name with which to reference the secure file's path on the agent.
@@ -37,7 +36,6 @@ steps:
       TF_VAR_remote_state_account: $(TF_VAR_remote_state_account)
       TF_VAR_cosmosdb_replica_location: $(TF_VAR_cosmosdb_replica_location)
       TF_VAR_resource_group_location: $(TF_VAR_resource_group_location)
-      TF_VAR_common_resources_workspace_name: $(TF_VAR_common_resources_workspace_name)
       TF_VAR_central_resources_workspace_name: $(TF_VAR_central_resources_workspace_name)
       TF_VAR_service_resources_workspace_name: $(TF_VAR_service_resources_workspace_name)
       TF_VAR_data_partition_resources_workspace_name: $(TF_VAR_data_partition_resources_workspace_name)
@@ -45,7 +43,6 @@ steps:
       TF_VAR_data_partition_name: $(TF_VAR_data_partition_name)
       TF_VAR_gitops_ssh_url: $(TF_VAR_gitops_ssh_url)
       TF_VAR_gitops_url_branch: $(TF_VAR_gitops_url_branch)
-      TF_VAR_aks_agent_vm_count: $(TF_VAR_aks_agent_vm_count)
       TF_VAR_flux_recreate: $(TF_VAR_flux_recreate)
       TF_VAR_gitops_branch: $(TF_VAR_gitops_branch)
       TF_VAR_ssh_public_key_file: $(aksPublicAgentKeySecureDownload.secureFilePath)
@@ -59,6 +56,11 @@ steps:
       TF_VAR_principal_objectId: $(TF_VAR_principal_objectId)
       TF_VAR_gitops_path: $(TF_VAR_gitops_path)
       TF_VAR_override_file: $(System.DefaultWorkingDirectory)/${{ parameters.terraformVariableFile }}
+      TF_VAR_deploy_dp_airflow: $(TF_VAR_deploy_dp_airflow)
+      TF_VAR_istio_int_load_balancer_ip: $(TF_VAR_istio_int_load_balancer_ip)
+      TF_VAR_aks_dns_host: $(TF_VAR_aks_dns_host)
+      ${{ if ne(variables['TF_VAR_ssl_challenge_required'], '') }}:
+        TF_VAR_ssl_challenge_required: $(TF_VAR_ssl_challenge_required)
 
     inputs:
       azureSubscription: '$(SERVICE_CONNECTION_NAME)'
@@ -68,6 +70,10 @@ steps:
         #!/usr/bin/env bash
         set -euo pipefail
         set -o nounset
+
+        if [ $TF_VAR_deploy_dp_airflow != "true" ] && [ $TF_VAR_deploy_dp_airflow != "false" ]; then
+          export TF_VAR_deploy_dp_airflow=false
+        fi
 
         function terraformVersionCheck() {
             if [[ $(which terraform) && $(terraform --version | head -n1 | cut -d" " -f2 | cut -c 2\-) == $TF_VERSION ]]; then

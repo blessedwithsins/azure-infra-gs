@@ -142,3 +142,57 @@ resource "azurerm_key_vault_secret" "data_partition_name" {
   value        = var.data_partition_name
   key_vault_id = module.keyvault.keyvault_id
 }
+
+// data source to output the value of secret
+data "azurerm_key_vault_secret" "data_principal_id" {
+  name         = "app-dev-sp-username"
+  key_vault_id = var.cr_keyvault_id
+}
+
+// data source to output the value of secret
+data "azurerm_key_vault_secret" "data_principal_secret" {
+  name         = "app-dev-sp-password"
+  key_vault_id = var.cr_keyvault_id
+}
+
+// data source to output the value of secret
+data "azurerm_key_vault_secret" "data_application_id" {
+  name         = "aad-client-id"
+  key_vault_id = var.cr_keyvault_id
+}
+
+// data source to output the value of secret
+data "azurerm_key_vault_secret" "data_insights" {
+  name         = "appinsights-key"
+  key_vault_id = var.cr_keyvault_id
+}
+
+resource "azurerm_key_vault_secret" "principal_id" {
+  name         = "app-dev-sp-username"
+  value        = data.azurerm_key_vault_secret.data_principal_id.value
+  key_vault_id = module.keyvault.keyvault_id
+}
+
+resource "azurerm_key_vault_secret" "principal_secret" {
+  name         = "app-dev-sp-password"
+  value        = data.azurerm_key_vault_secret.data_principal_secret.value
+  key_vault_id = module.keyvault.keyvault_id
+}
+
+resource "azurerm_key_vault_secret" "application_id" {
+  name         = "aad-client-id"
+  value        = data.azurerm_key_vault_secret.data_application_id.value
+  key_vault_id = module.keyvault.keyvault_id
+}
+
+resource "azurerm_key_vault_secret" "azure_tenant_id" {
+  name         = "app-dev-sp-tenant-id"
+  value        = data.azurerm_client_config.current.tenant_id
+  key_vault_id = module.keyvault.keyvault_id
+}
+
+resource "azurerm_key_vault_secret" "insights" {
+  name         = "appinsights-key"
+  value        = data.azurerm_key_vault_secret.data_insights.value
+  key_vault_id = module.keyvault.keyvault_id
+}

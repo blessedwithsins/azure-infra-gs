@@ -254,7 +254,7 @@ __Manual Installation (**Preferred**)__
 
 1. Deploy the application helm charts following the directions [here](https://community.opengroup.org/osdu/platform/deployment-and-operations/helm-charts-azure).
 
-1. Upload the Integration Test Data following directions [here](./tools/test_data).
+1. Upload the Test Data (Entitlements) following directions [here](./tools/test_data).
 
 1. Register your partition with the Data Partition API by following the instructions [here](./tools/rest/README.md) to configure your IDE to make authenticated requests to your OSDU instance and send the API request located [here](./tools/rest/partition.http) (createPartition).
 
@@ -274,9 +274,11 @@ __Automated Pipeline Installation__
 
 1. Upload the Configuration Data following directions [here](./docs/configuration-data.md).
 
-1. Upload the Integration Test Data following directions [here](./tools/test_data).
+1. Upload the Test Data (Entitlements) following directions [here](./tools/test_data).
 
 1. Setup Service Automation following directions [here](./docs/service-automation.md).
+
+1. Setup Airflow DNS to point the deployed airflow in data partition followin directions [here](./docs/dp-airflow-dns-setup.md)
 
 
 __Data Migration for Entitlements from Milestone 4(v0.7.0) or lower, to Milestone 5(v0.8.0) or higher__

@@ -61,6 +61,11 @@ output "osdu_identity_principal_id" {
   value       = azurerm_user_assigned_identity.osduidentity.principal_id
 }
 
+output "osdu_service_principal_id" {
+  description = "AD Principal ID"
+  value       = module.service_principal.id
+}
+
 output "osdu_identity_client_id" {
   description = "The client id for the User Assigned Identity"
   value       = azurerm_user_assigned_identity.osduidentity.client_id
@@ -74,9 +79,4 @@ output "principal_objectId" {
 output "app_insights_name" {
   description = "The name of the appinsights resource"
   value       = module.app_insights.app_insights_name
-}
-
-output "keyvault_dp_id" {
-  description = "URI for keyvault for Storing App insights Instrumentation Key required by Data Partition resource"
-  value       = var.feature_flag.deploy_dp_airflow ? module.keyvaultdp.0.keyvault_id : ""
 }

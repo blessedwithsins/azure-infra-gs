@@ -116,13 +116,6 @@ resource "azurerm_storage_share_directory" "sensors" {
   depends_on           = [azurerm_storage_share_directory.plugins]
 }
 
-// Airflow log container
-resource "azurerm_storage_container" "main" {
-  name                  = "airflow-logs"
-  storage_account_name  = var.storage_account_name
-  container_access_type = "private"
-}
-
 // Airflow queue for blob create event
 resource "azurerm_storage_queue" "main" {
   name                 = local.airflow_log_queue_name
@@ -206,28 +199,6 @@ resource "azurerm_role_assignment" "kv_roles" {
   role_definition_name = "Reader"
   principal_id         = local.rbac_principals_airflow[count.index]
   scope                = module.keyvault.keyvault_id
-}
-
-// Policies for Keyvault in Central resources
-module "keyvault_cr_dp_policy" {
-  source = "../../../../modules/providers/azure/keyvault-policy"
-
-  vault_id  = data.terraform_remote_state.central_resources.outputs.keyvault_dp_id
-  tenant_id = data.azurerm_client_config.current.tenant_id
-  object_ids = [
-    azurerm_user_assigned_identity.osduidentity.principal_id
-  ]
-  key_permissions         = ["get", "encrypt", "decrypt"]
-  certificate_permissions = ["get"]
-  secret_permissions      = ["get"]
-}
-
-resource "azurerm_role_assignment" "kv_cr_dp_roles" {
-  count = length(local.rbac_principals_airflow)
-
-  role_definition_name = "Reader"
-  principal_id         = local.rbac_principals_airflow[count.index]
-  scope                = data.terraform_remote_state.central_resources.outputs.keyvault_dp_id
 }
 
 #-------------------------------
@@ -381,6 +352,7 @@ module "aks_deployment_resources" {
   osdu_identity_id                     = azurerm_user_assigned_identity.osduidentity.id
   base_name                            = var.base_name
   sr_aks_egress_ip_address             = var.sr_aks_egress_ip_address
+  ssl_challenge_required               = var.ssl_challenge_required
 }
 
 #-------------------------------

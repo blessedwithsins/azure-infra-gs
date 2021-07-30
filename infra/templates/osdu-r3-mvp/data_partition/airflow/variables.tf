@@ -245,3 +245,13 @@ variable "redis_queue_zones" {
   type        = list(number)
   default     = [1, 2]
 }
+
+variable "cr_keyvault_id" {
+  description = "Id for Keyvault in Central Resources"
+  type        = string
+}
+
+variable "ssl_challenge_required" {
+  description = "Flag to indicate whether http01 ssl challenge is required"
+  type        = bool
+}

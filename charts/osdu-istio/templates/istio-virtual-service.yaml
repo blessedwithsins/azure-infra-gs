@@ -1,0 +1,205 @@
+{{- if and (eq (.Values.global.isDataPartitionDeployment | default false) false)  .Values.global.isAutoscalingEnabled }}
+apiVersion: networking.istio.io/v1alpha3
+kind: VirtualService
+metadata:
+  name: istio-api
+  namespace: osdu
+spec:
+  hosts:
+  - "{{ .Values.global.istio.dns_host }}"
+  gateways:
+  - istio-gateway
+  http:
+  - match:
+    - uri:
+        exact: "/"
+    route:
+    - destination:
+        host: osdu-common
+        port:
+          number: 80     
+  - match:         
+    - uri:
+        prefix: "/api/partition/v1"
+    route:
+    - destination:
+        host: partition
+        port:
+          number: 80
+  - match:
+    - uri:
+        prefix: "/entitlements/v1"
+    route:
+    - destination:
+        host: entitlements-azure
+        port:
+          number: 80
+  - match:
+    - uri:
+        prefix: "/api/legal/v1"
+    route:
+    - destination:
+        host: legal
+        port:
+          number: 80
+  - match:
+    - uri:
+        prefix: "/api/storage/v2"
+    route:
+    - destination:
+        host: storage
+        port:
+          number: 80
+  - match:
+    - uri:
+        prefix: "/api/indexer/v2"
+    route:
+    - destination:
+        host: indexer-service
+        port:
+          number: 80
+  - match:
+    - uri:
+        prefix: "/api/search/v2"
+    route:
+    - destination:
+        host: search-service
+        port:
+          number: 80
+  - match:
+    - uri:
+        prefix: "/api/search-extensions/v1alpha"
+    route:
+    - destination:
+        host: search-extensions
+        port:
+          number: 80
+  - match:
+    - uri:
+        prefix: "/api/delivery/v2"
+    route:
+    - destination:
+        host: delivery
+        port:
+          number: 80
+  - match:
+    - uri:
+        prefix: "/api/schema-service/v1"
+    route:
+    - destination:
+        host: schema-service
+        port:
+          number: 80
+  - match:
+    - uri:
+        prefix: "/api/register/v1"
+    route:
+    - destination:
+        host: register
+        port:
+          number: 80
+  - match:
+    - uri:
+        prefix: "/api/crs/catalog"
+    route:
+    - destination:
+        host: crs-catalog-service
+        port:
+          number: 80
+  - match:
+    - uri:
+        prefix: "/api/crs/converter"
+    route:
+    - destination:
+        host: crs-conversion-service
+        port:
+          number: 80
+  - match:
+    - uri:
+        prefix: "/api/unit"
+    route:
+    - destination:
+        host: unit-service
+        port:
+          number: 80
+  - match:
+    - uri:
+        prefix: "/api/file"
+    route:
+    - destination:
+        host: file
+        port:
+          number: 80
+  - match:
+    - uri:
+        prefix: "/api/workflow"
+    route:
+    - destination:
+        host: workflow
+        port:
+          number: 80
+  - match:
+    - uri:
+        prefix: "/api/os-wellbore-ddms"
+    route:
+    - destination:
+        host: os-wellbore-ddms
+        port:
+          number: 80
+  - match:
+    - uri:
+        prefix: "/api/notification/v1"
+    route:
+    - destination:
+        host: notification
+        port:
+          number: 80
+  - match:
+    - uri:
+        prefix: "/api/well-planning"
+    route:
+    - destination:
+        host: well-planning
+        port:
+          number: 80                  
+  - match:
+    - uri:
+        prefix: "/api/entitlements/v2"
+    route:
+    - destination:
+        host: entitlements
+        port:
+          number: 80
+  - match:
+    - uri:
+        prefix: "/seistore-svc/api/v3"
+    route:
+    - destination:
+        host: sdms
+        port:
+          number: 80      
+  - match:
+    - uri:
+        prefix: "/api/ingestion"
+    route:
+    - destination:
+        host: ingestion-service
+        port:
+          number: 80
+  - match:
+    - uri:
+        prefix: "/api/well-delivery"
+    route:
+    - destination:
+        host: well-delivery
+        port:
+          number: 80
+  - match:
+    - uri:
+        prefix: "/api/policy/v1"
+    route:
+    - destination:
+        host: policy-service
+        port:
+          number: 80          
+{{- end }} 
