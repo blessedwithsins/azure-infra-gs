@@ -59,8 +59,8 @@ steps:
       TF_VAR_deploy_dp_airflow: $(TF_VAR_deploy_dp_airflow)
       TF_VAR_istio_int_load_balancer_ip: $(TF_VAR_istio_int_load_balancer_ip)
       TF_VAR_aks_dns_host: $(TF_VAR_aks_dns_host)
-    ${{ if eq(variables['TF_VAR_ssl_challenge_required'], '') }}:
-      TF_VAR_ssl_challenge_required: $(TF_VAR_ssl_challenge_required)
+      ${{ if ne(variables['TF_VAR_ssl_challenge_required'], '') }}:
+        TF_VAR_ssl_challenge_required: $(TF_VAR_ssl_challenge_required)
 
     inputs:
       azureSubscription: '$(SERVICE_CONNECTION_NAME)'
