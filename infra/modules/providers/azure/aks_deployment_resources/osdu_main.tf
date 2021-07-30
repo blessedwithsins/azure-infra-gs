@@ -93,7 +93,7 @@ resource "azurerm_network_security_group" "aks-nsg" {
 }
 
 resource "azurerm_network_security_rule" "aks-nsg-http-allow-rule" {
-  count                       = var.is_byoc_enabled ? 0 : 1
+  count                       = var.ssl_challenge_required ? 0 : 1
   name                        = "http-allow-rule"
   priority                    = 100
   direction                   = "Inbound"
