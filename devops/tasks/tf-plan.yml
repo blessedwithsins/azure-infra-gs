@@ -75,6 +75,8 @@ steps:
           export TF_VAR_deploy_dp_airflow=false
         fi
 
+        env
+
         function terraformVersionCheck() {
             if [[ $(which terraform) && $(terraform --version | head -n1 | cut -d" " -f2 | cut -c 2\-) == $TF_VERSION ]]; then
                 echo "Terraform version check completed"

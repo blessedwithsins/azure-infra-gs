@@ -56,6 +56,8 @@ steps:
         #!/usr/bin/env bash
         set -euo pipefail
 
+        env
+
         export ARM_TENANT_ID=$tenantId
         export ARM_CLIENT_SECRET=$servicePrincipalKey
         export ARM_CLIENT_ID=$servicePrincipalId
