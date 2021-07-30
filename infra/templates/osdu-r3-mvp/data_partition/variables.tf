@@ -210,7 +210,7 @@ variable "feature_flag" {
 variable "deploy_dp_airflow" {
   description = "Flag to deploy Airflow Infrastructure in Data Partition Resource Group"
   type        = bool
-  default     = true
+  default     = false
 }
 
 variable "service_resources_workspace_name" {
