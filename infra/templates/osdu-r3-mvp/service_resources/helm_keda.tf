@@ -17,10 +17,10 @@
 # Keda
 #-------------------------------
 locals {
-  helm_keda_name    = "keda"
-  helm_keda_ns      = "keda"
-  helm_keda_repo    = "https://kedacore.github.io/charts"
-  helm_keda_version = "2.2.0"
+  helm_keda_name      = "keda"
+  helm_keda_ns        = "keda"
+  helm_keda_repo      = "https://kedacore.github.io/charts"
+  helm_keda_version   = var.feature_flag.keda_v2_enabled == true ? "2.2.0" : "1.5.0"
 }
 
 resource "kubernetes_namespace" "keda" {

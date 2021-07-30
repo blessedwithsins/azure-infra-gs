@@ -70,7 +70,7 @@ az login --service-principal -u "$servicePrincipalId" --password="$servicePrinci
 
 echo "Login successful"
 
-#az aks get-credentials --resource-group="$myResourceGroup" --name="$myAKSCluster"
+az aks get-credentials --resource-group="$myResourceGroup" --name="$myAKSCluster"
 
 #echo "Credential fetch successful"
 
@@ -138,42 +138,42 @@ terraform state rm helm_release.keda
 echo "Terraform applying"
 terraform apply -auto-approve
 
-cd ../../../../..
-
-if [ "$automatedDeployment" = "yes" ]; then
-
-  echo "Deploying keda scaled objects for airflow log processor"
-  #TODO helm install airflow-log-processor-deployment.yaml
-  #cd infra-azure-provisioning-keda-upgrade-1/charts/airflow/templates
-
-  echo "Deploying keda scaled objects for indexer queue"
-  curl -kLSs https://community.opengroup.org/osdu/platform/system/indexer-queue/-/archive/keda-upgrade/indexer-queue-keda-upgrade.tar -o indexer-queue.tar
-  tar xvf indexer-queue.tar
-
-  cd indexer-queue-keda-upgrade/devops/azure/chart
-  helm install indexer-queue . -n "$namespace"
-  cd ../../../..
-else
-  echo "Deploying keda scaled objects for ingest-services, logprocessor"
-  curl -kLSs https://community.opengroup.org/osdu/platform/deployment-and-operations/helm-charts-azure/-/archive/keda-upgrade/helm-charts-azure-keda-upgrade.tar -o helm-charts-azure.tar
-  tar xvf helm-charts-azure.tar
-
-  echo "Deploying osdu-airflow"
-  cd helm-charts-azure-keda-upgrade/osdu-airflow/
-  helm install osdu-airflow . -n "$namespace"
-
-  echo "Deploying osdu-core_services"
-  cd ../osdu-azure/osdu-core_services
-  helm install osdu-core_services . -n "$namespace"
-
-  echo "Deploying osdu-ingest_enrich"
-  cd ../osdu-ingest_enrich/
-  helm install osdu-ingest_enrich . -n "$namespace"
-fi
-
-rm -rf master*
-rm -rf indexer-queue*
-rm -rf helm-charts*
+#cd ../../../../..
+#
+#if [ "$automatedDeployment" = "yes" ]; then
+#
+#  echo "Deploying keda scaled objects for airflow log processor"
+#  #TODO helm install airflow-log-processor-deployment.yaml
+#  #cd infra-azure-provisioning-keda-upgrade-1/charts/airflow/templates
+#
+#  echo "Deploying keda scaled objects for indexer queue"
+#  curl -kLSs https://community.opengroup.org/osdu/platform/system/indexer-queue/-/archive/keda-upgrade/indexer-queue-keda-upgrade.tar -o indexer-queue.tar
+#  tar xvf indexer-queue.tar
+#
+#  cd indexer-queue-keda-upgrade/devops/azure/chart
+#  helm install indexer-queue . -n "$namespace"
+#  cd ../../../..
+#else
+#  echo "Deploying keda scaled objects for ingest-services, logprocessor"
+#  curl -kLSs https://community.opengroup.org/osdu/platform/deployment-and-operations/helm-charts-azure/-/archive/keda-upgrade/helm-charts-azure-keda-upgrade.tar -o helm-charts-azure.tar
+#  tar xvf helm-charts-azure.tar
+#
+#  echo "Deploying osdu-airflow"
+#  cd helm-charts-azure-keda-upgrade/osdu-airflow/
+#  helm install osdu-airflow . -n "$namespace"
+#
+#  echo "Deploying osdu-core_services"
+#  cd ../osdu-azure/osdu-core_services
+#  helm install osdu-core_services . -n "$namespace"
+#
+#  echo "Deploying osdu-ingest_enrich"
+#  cd ../osdu-ingest_enrich/
+#  helm install osdu-ingest_enrich . -n "$namespace"
+#fi
+#
+#rm -rf master*
+#rm -rf indexer-queue*
+#rm -rf helm-charts*
 
 #echo "Enabling host based encryption for the AKS cluster by terraform applying"
 #curl -kLSs https://community.opengroup.org/osdu/platform/deployment-and-operations/infra-azure-provisioning/-/archive/keda-upgrade-2/infra-azure-provisioning-keda-upgrade-2.tar -o master.tar

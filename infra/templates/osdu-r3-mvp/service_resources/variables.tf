@@ -31,17 +31,18 @@ variable "prefix" {
 variable "feature_flag" {
   description = "(Optional) A toggle for incubator features"
   type = object({
-    osdu_namespace = bool
-    flux           = bool
-    sa_lock        = bool
-    autoscaling    = bool
-
+    osdu_namespace  = bool
+    flux            = bool
+    sa_lock         = bool
+    autoscaling     = bool
+    keda_v2_enabled = bool
   })
   default = {
-    osdu_namespace = true
-    flux           = true
-    sa_lock        = true
-    autoscaling    = false
+    osdu_namespace  = true
+    flux            = true
+    sa_lock         = true
+    autoscaling     = false
+    keda_v2_enabled = false
   }
 }
 
