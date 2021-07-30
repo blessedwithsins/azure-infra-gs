@@ -251,7 +251,7 @@ variable "cr_keyvault_id" {
   type        = string
 }
 
-variable "is_byoc_enabled" {
-  description = "Flag to indicate whether BYOC is enabled or not"
+variable "ssl_challenge_required" {
+  description = "Flag to indicate whether http01 ssl challenge is required"
   type        = bool
 }
