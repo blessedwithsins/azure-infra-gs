@@ -59,7 +59,7 @@ pgbouncer:
 # Specify KEDA configuration
 #
 keda:
-  version_2_enabled: false
+  version_2_enabled: true
 
 
 ################################################################################
@@ -153,14 +153,14 @@ airflow:
     podLabels:
       aadpodidbinding: "osdu-identity"
     autoscale:
-      enabled: false
+      enabled: true
       minReplicas: 2
       maxReplicas: 20
       scaleDown:
         coolDownPeriod: 60
     labels:
       # DO NOT DELETE THIS LABEL. SET IT TO "false" WHEN AUTOSCALING IS DISABLED, SET IT TO "true" WHEN AUTOSCALING IS ENABLED
-      autoscalingEnabled: "false"
+      autoscalingEnabled: "true"
     podAnnotations:
       sidecar.istio.io/userVolumeMount: '[{"name": "azure-keyvault", "mountPath": "/mnt/azure-keyvault", "readonly": true}]'
     baseUrl: "http://localhost/airflow"
@@ -179,7 +179,7 @@ airflow:
     podLabels:
       aadpodidbinding: "osdu-identity"
     autoscale:
-      enabled: false
+      enabled: true
       minReplicas: 2
       maxReplicas: 20
       scaleDown:
@@ -189,7 +189,7 @@ airflow:
       gracefullTerminationPeriod: 600
     labels:
       # DO NOT DELETE THIS LABEL. SET IT TO "false" WHEN AUTOSCALING IS DISABLED, SET IT TO "true" WHEN AUTOSCALING IS ENABLED
-      autoscalingEnabled: "false"
+      autoscalingEnabled: "true"
 
   ###################################
   # Airflow - Flower Configs
