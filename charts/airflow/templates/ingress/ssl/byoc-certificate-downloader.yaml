@@ -21,11 +21,8 @@ spec:
     spec:
       containers:
       - name: byoc-certificate-downloader
-        image: hashicorp/http-echo
+        image: mcr.microsoft.com/azuredocs/aci-helloworld
         imagePullPolicy: IfNotPresent
-        args:
-          - -listen=:8080
-          - -text="hello world"
         volumeMounts:
         - name: airflow-tls
           mountPath: "/mnt/airflow-tls"
