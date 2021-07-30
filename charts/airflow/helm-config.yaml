@@ -55,6 +55,12 @@ pgbouncer:
     passwordSecret: "postgres"
     passwordSecretKey: "postgres-password"
 
+################################################################################
+# Specify KEDA configuration
+#
+keda:
+  version_2_enabled: false
+
 
 ################################################################################
 # Specify the airflow configuration
@@ -172,17 +178,15 @@ airflow:
         memory: "5Gi"
     podLabels:
       aadpodidbinding: "osdu-identity"
-    autoscaling:
+    autoscale:
       enabled: false
-      ## minReplicas is picked from Values.workers.replicas and default value is 1
-      maxReplicas: 3
-      metrics:
-      - type: Resource
-        resource:
-          name: memory
-          target:
-            type: Utilization
-            averageUtilization: 60
+      minReplicas: 2
+      maxReplicas: 20
+      scaleDown:
+        coolDownPeriod: 300
+    celery:
+      gracefullTermination: true
+      gracefullTerminationPeriod: 600
     labels:
       # DO NOT DELETE THIS LABEL. SET IT TO "false" WHEN AUTOSCALING IS DISABLED, SET IT TO "true" WHEN AUTOSCALING IS ENABLED
       autoscalingEnabled: "false"
@@ -252,6 +256,7 @@ airflow:
       AIRFLOW__CORE__STORE_SERIALIZED_DAGS: True #This flag decides whether to serialise DAGs and persist them in DB
       AIRFLOW__CORE__STORE_DAG_CODE: True #This flag decides whether to persist DAG files code in DB
       AIRFLOW__WEBSERVER__WORKER_CLASS: gevent
+      AIRFLOW__CELERY__WORKER_CONCURRENCY: 16 # Do not remove this config as it is used for autoscaling as well
     extraEnv:
     - name: CLOUD_PROVIDER
       value: "azure"
@@ -295,10 +300,16 @@ airflow:
         secretKeyRef:
           name: central-logging
           key: appinsights
+    - name: PYTHONPATH
+      value: "/opt/celery"
     extraConfigmapMounts:
         - name: remote-log-config
           mountPath: /opt/airflow/config
           configMap: airflow-remote-log-config
+          readOnly: true
+        - name: celery-config
+          mountPath: /opt/celery
+          configMap: celery-config
           readOnly: true
     extraPipPackages: [
         "flask-bcrypt==0.7.1",

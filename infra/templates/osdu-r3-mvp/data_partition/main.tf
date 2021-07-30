@@ -74,23 +74,23 @@ provider "azurerm" {
 }
 
 provider "kubernetes" {
-  host                   = var.feature_flag.deploy_dp_airflow ? module.airflow.0.kube_config_block.0.host : ""
-  username               = var.feature_flag.deploy_dp_airflow ? module.airflow.0.kube_config_block.0.username : ""
-  password               = var.feature_flag.deploy_dp_airflow ? module.airflow.0.kube_config_block.0.password : ""
-  client_certificate     = var.feature_flag.deploy_dp_airflow ? base64decode(module.airflow.0.kube_config_block.0.client_certificate) : ""
-  client_key             = var.feature_flag.deploy_dp_airflow ? base64decode(module.airflow.0.kube_config_block.0.client_key) : ""
-  cluster_ca_certificate = var.feature_flag.deploy_dp_airflow ? base64decode(module.airflow.0.kube_config_block.0.cluster_ca_certificate) : ""
+  host                   = var.deploy_dp_airflow ? module.airflow.0.kube_config_block.0.host : ""
+  username               = var.deploy_dp_airflow ? module.airflow.0.kube_config_block.0.username : ""
+  password               = var.deploy_dp_airflow ? module.airflow.0.kube_config_block.0.password : ""
+  client_certificate     = var.deploy_dp_airflow ? base64decode(module.airflow.0.kube_config_block.0.client_certificate) : ""
+  client_key             = var.deploy_dp_airflow ? base64decode(module.airflow.0.kube_config_block.0.client_key) : ""
+  cluster_ca_certificate = var.deploy_dp_airflow ? base64decode(module.airflow.0.kube_config_block.0.cluster_ca_certificate) : ""
 }
 
 // Hook-up helm Provider for Terraform
 provider "helm" {
   kubernetes {
-    host                   = var.feature_flag.deploy_dp_airflow ? module.airflow.0.kube_config_block.0.host : ""
-    username               = var.feature_flag.deploy_dp_airflow ? module.airflow.0.kube_config_block.0.username : ""
-    password               = var.feature_flag.deploy_dp_airflow ? module.airflow.0.kube_config_block.0.password : ""
-    client_certificate     = var.feature_flag.deploy_dp_airflow ? base64decode(module.airflow.0.kube_config_block.0.client_certificate) : ""
-    client_key             = var.feature_flag.deploy_dp_airflow ? base64decode(module.airflow.0.kube_config_block.0.client_key) : ""
-    cluster_ca_certificate = var.feature_flag.deploy_dp_airflow ? base64decode(module.airflow.0.kube_config_block.0.cluster_ca_certificate) : ""
+    host                   = var.deploy_dp_airflow ? module.airflow.0.kube_config_block.0.host : ""
+    username               = var.deploy_dp_airflow ? module.airflow.0.kube_config_block.0.username : ""
+    password               = var.deploy_dp_airflow ? module.airflow.0.kube_config_block.0.password : ""
+    client_certificate     = var.deploy_dp_airflow ? base64decode(module.airflow.0.kube_config_block.0.client_certificate) : ""
+    client_key             = var.deploy_dp_airflow ? base64decode(module.airflow.0.kube_config_block.0.client_key) : ""
+    cluster_ca_certificate = var.deploy_dp_airflow ? base64decode(module.airflow.0.kube_config_block.0.cluster_ca_certificate) : ""
   }
 }
 
@@ -197,7 +197,7 @@ module "storage_account" {
 
   name                = local.storage_name
   resource_group_name = azurerm_resource_group.main.name
-  container_names     = var.feature_flag.deploy_dp_airflow ? concat(var.storage_containers, var.storage_containers_dp_airflow) : var.storage_containers
+  container_names     = var.deploy_dp_airflow ? concat(var.storage_containers, var.storage_containers_dp_airflow) : var.storage_containers
   kind                = "StorageV2"
   replication_type    = var.storage_replication_type
 
@@ -466,7 +466,7 @@ resource "azurerm_management_lock" "ingest_sa_lock" {
 
 module "airflow" {
   source = "./airflow"
-  count  = var.feature_flag.deploy_dp_airflow ? 1 : 0
+  count  = var.deploy_dp_airflow ? 1 : 0
 
   central_resources_workspace_name = var.central_resources_workspace_name
 
@@ -488,7 +488,7 @@ module "airflow" {
   base_name_60 = local.base_name_60
 
   ssh_public_key_file      = var.ssh_public_key_file
-  is_byoc_enabled          = var.is_byoc_enabled
+  ssl_challenge_required   = var.ssl_challenge_required
   sr_aks_egress_ip_address = data.terraform_remote_state.service_resources.outputs.aks_egress_ip_address
   cr_keyvault_id           = data.terraform_remote_state.central_resources.outputs.keyvault_id
 }
