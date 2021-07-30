@@ -19,6 +19,7 @@
 parameters:
   dockerfilePath: ''
   buildArgs: ''
+  skipFailure: false
 
 stages:
   - stage: 'Execute_Standalone_Tests'
@@ -31,6 +32,7 @@ stages:
 
           - task: AzureCLI@1
             displayName: Execute Standalone Tests
+            continueOnError: ${{ parameters.skipFailure }}
             env:
               AZURE_TENANT_ID: $(app-dev-sp-tenant-id)
               AZURE_AD_APP_RESOURCE_ID: $(aad-client-id)
@@ -44,6 +46,3 @@ stages:
               inlineScript: |
                 docker_image_name=execute-dag-standalone-tests:$(Build.SourceVersion)
                 docker build -t $docker_image_name ${{ parameters.buildArgs}} --file ${{ parameters.dockerfilePath }} .
-
-
-

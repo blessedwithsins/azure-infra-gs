@@ -44,6 +44,8 @@ steps:
       TF_VAR_gitops_path: $(TF_VAR_gitops_path)
       TF_VAR_istio_int_load_balancer_ip: $(TF_VAR_istio_int_load_balancer_ip)
       TF_VAR_aks_dns_host: $(TF_VAR_aks_dns_host)
+      ${{ if ne(variables['TF_VAR_ssl_challenge_required'], '') }}:
+        TF_VAR_ssl_challenge_required: $(TF_VAR_ssl_challenge_required)
 
     condition: not(coalesce(variables.SKIP_TESTS, ${{ parameters.skip }}))
     inputs:

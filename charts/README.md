@@ -337,6 +337,9 @@ airflow:
           configMapKeyRef:
             name: osdu-svc-properties
             key: ENV_KEYVAULT
+      # Needed for installing python osdu python sdk. In future this will be changed
+      - name: CI_COMMIT_TAG
+        value: "v0.10.0"
     extraConfigmapMounts:
       - name: remote-log-config
         mountPath: /opt/airflow/config
@@ -357,7 +360,11 @@ airflow:
         "azure-servicebus==7.0.1",
         "toposort==1.6",
         "strict-rfc3339==0.7",
-        "https://azglobalosdutestlake.blob.core.windows.net/pythonsdk/osdu_api-0.0.4.tar.gz"
+        "jsonschema==3.2.0",
+        "pyyaml==5.4.1",
+        "requests==2.25.1",
+        "tenacity==8.0.1",
+        "https://azglobalosdutestlake.blob.core.windows.net/pythonsdk/osdu_api-0.10.0.tar.gz"
     ]
     extraVolumeMounts:
       - name: azure-keyvault

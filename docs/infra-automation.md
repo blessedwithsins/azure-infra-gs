@@ -119,6 +119,7 @@ To enable airflow multi partition turn on the feature flag by following the belo
   | Variable | Value |
   |----------|-------|
   | TF_VAR_deploy_dp_airflow | true |
+  | TF_VAR_ssl_challenge_required | true (if not using BYOC) <br> false (if using BYOC) |
 
 
 __Setup and Configure the ADO Library `Infrastructure Pipeline Secrets - demo`__

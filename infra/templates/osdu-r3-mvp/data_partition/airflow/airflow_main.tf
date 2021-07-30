@@ -352,6 +352,7 @@ module "aks_deployment_resources" {
   osdu_identity_id                     = azurerm_user_assigned_identity.osduidentity.id
   base_name                            = var.base_name
   sr_aks_egress_ip_address             = var.sr_aks_egress_ip_address
+  ssl_challenge_required               = var.ssl_challenge_required
 }
 
 #-------------------------------

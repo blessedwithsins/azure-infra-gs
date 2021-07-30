@@ -1,0 +1,48 @@
+{{- if and .Values.airflow.workers.autoscale.enabled .Values.keda.version_2_enabled -}}
+apiVersion: keda.sh/v1alpha1
+kind: ScaledObject
+metadata:
+  # We truncate at 63 chars because some Kubernetes name fields are limited to this (by the DNS naming spec).
+  name: {{ printf "%s" .Release.Name | trunc 63 | trimSuffix "-" }}-worker
+spec:
+  scaleTargetRef:
+    kind: StatefulSet
+    name: {{ printf "%s" .Release.Name | trunc 63 | trimSuffix "-" }}-worker
+  pollingInterval: 30
+  minReplicaCount: {{ .Values.airflow.workers.autoscale.minReplicas }}
+  maxReplicaCount: {{ .Values.airflow.workers.autoscale.maxReplicas }}
+  advanced:
+    horizontalPodAutoscalerConfig:
+      behavior:
+        scaleUp:
+          stabilizationWindowSeconds: 120
+          policies:
+          - type: Percent
+            value: 900
+            periodSeconds: 30
+        scaleDown:
+          stabilizationWindowSeconds: 300
+          policies:
+          - type: Percent
+            value: 30
+            periodSeconds: {{ .Values.airflow.workers.autoscale.scaleDown.coolDownPeriod }}
+  triggers:
+    - type: postgresql
+      metadata:
+      {{- if eq (.Values.pgbouncer.enabled | default false) true }}
+        host: {{ .Values.pgbouncer.airflowdb.host | quote }}
+        userName: {{ .Values.pgbouncer.airflowdb.user | quote }}
+        port: {{ .Values.pgbouncer.airflowdb.port | quote }}
+        dbName: {{ .Values.pgbouncer.airflowdb.name | quote }}
+      {{- else }}
+        host: {{ .Values.airflow.externalDatabase.host | quote }}
+        userName: {{ .Values.airflow.externalDatabase.user | quote }}
+        port: {{ .Values.airflow.externalDatabase.port | quote }}
+        dbName: {{ .Values.airflow.externalDatabase.database | quote }}
+      {{- end}}
+        passwordFromEnv: DATABASE_PASSWORD
+        sslmode: "require"
+        targetQueryValue: "1"
+        query: "SELECT ceil(COUNT(*)::decimal / {{ .Values.airflow.airflow.config.AIRFLOW__CELERY__WORKER_CONCURRENCY }}) FROM task_instance WHERE state='running' OR state='queued'"
+        metricName: "active_tasks_count"
+{{- end }}

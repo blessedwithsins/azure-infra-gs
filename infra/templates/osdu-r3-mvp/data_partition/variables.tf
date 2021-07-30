@@ -200,13 +200,21 @@ variable "ssh_public_key_file" {
 variable "feature_flag" {
   description = "(Optional) A toggle for incubator features"
   type = object({
-    deploy_dp_airflow           = bool
     storage_mgmt_policy_enabled = bool
   })
   default = {
+<<<<<<< HEAD
     deploy_dp_airflow           = true
+=======
+>>>>>>> master
     storage_mgmt_policy_enabled = false
   }
+}
+
+variable "deploy_dp_airflow" {
+  description = "Flag to deploy Airflow Infrastructure in Data Partition Resource Group"
+  type        = bool
+  default     = false
 }
 
 variable "service_resources_workspace_name" {
@@ -218,4 +226,10 @@ variable "sa_retention_days" {
   description = "Number of days that to retain data in file-staging-area"
   type        = number
   default     = 30
+}
+
+variable "ssl_challenge_required" {
+  description = "Flag to indicate whether http01 ssl challenge is required"
+  type        = bool
+  default     = true
 }

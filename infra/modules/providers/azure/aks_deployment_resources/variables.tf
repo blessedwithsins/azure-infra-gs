@@ -114,3 +114,8 @@ variable "sr_aks_egress_ip_address" {
 variable "base_name" {
   description = "Resource Base name"
 }
+
+variable "ssl_challenge_required" {
+  description = "Flag to indicate whether http01 ssl challenge is required"
+  type        = bool
+}

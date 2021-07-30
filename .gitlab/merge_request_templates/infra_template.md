@@ -17,6 +17,11 @@
 
 <!-- If this introduces a breaking change, please describe the impact and migration path for existing applications below. -->
 
+## MR Guildelines
+- [ ] Paste TF Plan for the MR. 
+- [ ] Pre-Merge pipeline should be run before merging. (Azure team)
+- [ ] Does the module exists for new resource. 
+- [ ] Is there a new variable added in the MR. (Don’t use library variables and use locals) 
 
 ## Other information
 -------------------------------------
