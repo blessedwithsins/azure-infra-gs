@@ -227,5 +227,5 @@ variable "sa_retention_days" {
 variable "ssl_challenge_required" {
   description = "Flag to indicate whether http01 ssl challenge is required"
   type        = bool
-  default     = false
+  default     = true
 }
