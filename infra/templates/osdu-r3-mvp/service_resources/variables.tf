@@ -35,7 +35,6 @@ variable "feature_flag" {
     flux           = bool
     sa_lock        = bool
     autoscaling    = bool
-
   })
   default = {
     osdu_namespace = true
@@ -43,6 +42,12 @@ variable "feature_flag" {
     sa_lock        = true
     autoscaling    = false
   }
+}
+
+variable "keda_v2_enabled" {
+  description = "Feature flag for kuda v2. Needs to be true if keda v2 is installed else false"
+  type        = bool
+  default     = false
 }
 
 variable "randomization_level" {
