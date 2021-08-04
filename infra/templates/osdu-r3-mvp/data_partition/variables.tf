@@ -203,10 +203,6 @@ variable "feature_flag" {
     storage_mgmt_policy_enabled = bool
   })
   default = {
-<<<<<<< HEAD
-    deploy_dp_airflow           = true
-=======
->>>>>>> master
     storage_mgmt_policy_enabled = false
   }
 }
