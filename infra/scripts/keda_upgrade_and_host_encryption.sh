@@ -17,6 +17,7 @@ read -p "Gitops ssh public key file" sshPublicKeyFile
 read -p "Gitops ssh key file" gitopsSshKeyFile
 read -p "Terraform workspace name" tfWorkspaceName
 read -p "Resource Group Location" resourceGroupLocation
+read -p "Repo branch name with feature flag for keda v2 present on https://community.opengroup.org/osdu/platform/deployment-and-operations/infra-azure-provisioning. This branch should be in sync with your current infra setup" repoBranch
 
 read -p "Automated Pipeline deployment (only yes is accepted as true. Any other input will be treated as manual deployment): " automatedDeployment
 
@@ -127,10 +128,11 @@ done
 set -euo pipefail
 
 echo "terraform applying with keda version updated to 2.2.0"
-curl -kLSs https://community.opengroup.org/osdu/platform/deployment-and-operations/infra-azure-provisioning/-/archive/keda-upgrade-1/infra-azure-provisioning-keda-upgrade-1.tar -o master.tar
+curl -kLSs https://community.opengroup.org/osdu/platform/deployment-and-operations/infra-azure-provisioning/-/archive/${repoBranch}/infra-azure-provisioning-${repoBranch}.tar -o master.tar
 tar xvf master.tar
 
 cd infra-azure-provisioning-keda-upgrade-1/infra/templates/osdu-r3-mvp/service_resources
+echo "keda_v2_enabled = true" >> override.tfvars
 terraform init -upgrade -backend-config "storage_account_name=$TF_VAR_remote_state_account" -backend-config "container_name=$TF_VAR_remote_state_container"
 
 terraform state rm helm_release.keda

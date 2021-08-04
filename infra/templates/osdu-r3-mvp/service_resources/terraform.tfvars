@@ -67,12 +67,14 @@ storage_queues = []
 
 # Feature Toggles
 feature_flag = {
-  osdu_namespace  = true
-  flux            = true
-  sa_lock         = true
-  autoscaling     = false
-  keda_v2_enabled = true
+  osdu_namespace = true
+  flux           = true
+  sa_lock        = true
+  autoscaling    = false
 }
+
+# Feature flag for keda v2
+keda_v2_enabled = false
 
 # cosmos DB SQL collections
 cosmos_sql_collections = [
