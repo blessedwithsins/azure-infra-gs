@@ -35,7 +35,12 @@ var tfOptions = &terraform.Options{
 	},
 }
 
+var deploy_dp_airflow = os.Getenv("TF_VAR_deploy_dp_airflow")
+var airflow_dp_resource_count = 87
+var expected_resource_count = 139
+
 func TestTemplate(t *testing.T) {
+
 	expectedAppDevResourceGroup := asMap(t, `{
 		"location": "`+region+`"
 	}`)
@@ -44,12 +49,16 @@ func TestTemplate(t *testing.T) {
 		"azurerm_resource_group.main": expectedAppDevResourceGroup,
 	}
 
+	if deploy_dp_airflow == "true" {
+		expected_resource_count = expected_resource_count + airflow_dp_resource_count
+	}
+
 	testFixture := infratests.UnitTestFixture{
 		GoTest:                          t,
 		TfOptions:                       tfOptions,
 		Workspace:                       workspace,
 		PlanAssertions:                  nil,
-		ExpectedResourceCount:           139,
+		ExpectedResourceCount:           expected_resource_count,
 		ExpectedResourceAttributeValues: resourceDescription,
 	}
 

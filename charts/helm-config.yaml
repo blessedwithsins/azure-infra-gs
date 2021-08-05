@@ -40,7 +40,8 @@ global:
     username: #{istio-username}#
     password: #{istio-password}#
     loadBalancerIP: #{istio-int-load-balancer-ip}#
-    dns_host: #{DNS_HOST}#    
+    dns_host: #{ISTIO_DNS_HOST}# 
+    enableIstioKeyvaultCert: #{ENABLE_ISTIO_KEYVAULT_CERT}#     
   ################################################################################
   # Specify the resource limits
   #

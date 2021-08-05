@@ -111,7 +111,7 @@ spec:
               # Log In in Azure
               az login --service-principal -u ${client_id} -p ${client_secret} --tenant ${tenant_id}
 
-{{- if .Values.global.ingress.enableKeyvaultCert }}
+{{- if .Values.global.istio.enableIstioKeyvaultCert  }}
 
               K8S_CERT_SECRET=appgw-ssl-cert
               K8S_NAMESPACE_NAME=istio-system

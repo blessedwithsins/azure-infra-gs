@@ -42,6 +42,7 @@ steps:
       TF_VAR_principal_password: $(TF_VAR_principal_password)
       TF_VAR_principal_objectId: $(TF_VAR_principal_objectId)
       TF_VAR_gitops_path: $(TF_VAR_gitops_path)
+      TF_VAR_deploy_dp_airflow: $(TF_VAR_deploy_dp_airflow)
       TF_VAR_istio_int_load_balancer_ip: $(TF_VAR_istio_int_load_balancer_ip)
       TF_VAR_aks_dns_host: $(TF_VAR_aks_dns_host)
       ${{ if ne(variables['TF_VAR_ssl_challenge_required'], '') }}:
@@ -55,6 +56,10 @@ steps:
       inlineScript: |
         #!/usr/bin/env bash
         set -euo pipefail
+
+        if [ $TF_VAR_deploy_dp_airflow != "true" ] && [ $TF_VAR_deploy_dp_airflow != "false" ]; then
+          export TF_VAR_deploy_dp_airflow=false
+        fi
 
         export ARM_TENANT_ID=$tenantId
         export ARM_CLIENT_SECRET=$servicePrincipalKey
