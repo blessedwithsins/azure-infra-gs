@@ -13,12 +13,12 @@ read -p "Terraform workspace for central resources: " centralResourceTerraformWo
 read -p "Gitops Branch: " gitopsBranch
 read -p "Gitops ssh url: " gitopsSshUrl
 read -p "Gitops path: " gitopsPath
-read -p "Gitops ssh public key file" sshPublicKeyFile
-read -p "Gitops ssh key file" gitopsSshKeyFile
-read -p "Terraform workspace name" tfWorkspaceName
-read -p "Resource Group Location" resourceGroupLocation
-read -p "Git Repo link with feature flag for keda v2 present.(Script assumes that repo name is infra-azure-provisioning. You can edit it if its something else)" gitRepo
-read -p "Repo branch name with feature flag for keda v2 present. This branch should be in sync with your current infra setup" repoBranch
+read -p "Gitops ssh public key file: " sshPublicKeyFile
+read -p "Gitops ssh key file: " gitopsSshKeyFile
+read -p "Terraform workspace name: " tfWorkspaceName
+read -p "Resource Group Location: " resourceGroupLocation
+read -p "Git Repo link with feature flag for keda v2 present.(Script assumes that repo name is infra-azure-provisioning. You can edit it if its something else): " gitRepo
+read -p "Repo branch name with feature flag for keda v2 present. This branch should be in sync with your current infra setup: " repoBranch
 
 read -p "Automated Pipeline deployment (only yes is accepted as true. Any other input will be treated as manual deployment): " automatedDeployment
 
@@ -143,7 +143,7 @@ terraform init -upgrade -backend-config "storage_account_name=$TF_VAR_remote_sta
 terraform state rm helm_release.keda
 
 echo "Terraform applying"
-terraform apply -auto-approve
+terraform apply -var-file override.tfvars
 
 #cd ../../../../..
 #

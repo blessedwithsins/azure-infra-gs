@@ -46,6 +46,12 @@ resource "azurerm_postgresql_server" "main" {
   ssl_enforcement_enabled      = var.ssl_enforcement_enabled
 
   public_network_access_enabled = var.public_network_access
+
+  lifecycle {
+    ignore_changes = [
+      storage_mb
+    ]
+  }
 }
 
 resource "azurerm_postgresql_database" "main" {

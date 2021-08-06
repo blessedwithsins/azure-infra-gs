@@ -5,10 +5,11 @@ A user can follow following steps to upgrade keda version -
 
 1. We've set keda_v2_enabled field in feature_flag variable in service resource to false.
 It represents that currently osdu infra is currently using 1.5 version.
-
-2. Either run it or follow the steps in this script - infra/scripts/keda_upgrade_and_host_encryption.sh. 
+2. If using flux, reduce replica count to 0 for flux deployment until step 4. (use command - kubectl edit deployment flux -n flux)
+3. Either run it or follow the steps in this script - infra/scripts/keda_upgrade_and_host_encryption.sh. 
    This script requires some inputs. Feel free to edit the script as per requirement.
-3. Override keda_v2_enabled field to true.
+4. Override keda_v2_enabled field to true.
+
 
 Service deployment steps for manual users - 
 1. We've added a variable named isKedaV2Enabled in Values.yaml for following files in helm-charts-azure repo-
