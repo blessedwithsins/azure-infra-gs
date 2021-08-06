@@ -41,7 +41,7 @@ function enableFlux {
 }
 
 function disableFlux {
-  echo "Enabling flux"
+  echo "Disabling flux"
   kubectl patch deployment flux -p '{"spec":{"replicas": 0}}' -n flux
 }
 
@@ -128,18 +128,16 @@ helm uninstall -n keda keda
 
 echo "Deleting Keda v1 CRDs"
 
-kubectl patch crd/scaledobjects.keda.k8s.io -p '{"metadata":{"finalizers":[]}}' --type=merge
-
 NEXT_WAIT_TIME=0
-until [ $NEXT_WAIT_TIME -eq 5 ] || timeout 3 kubectl delete crd scaledobjects.keda.k8s.io; do
+until [ $NEXT_WAIT_TIME -eq 5 ] || timeout 3 kubectl delete crd scaledobjects.keda.k8s.io --ignore-not-found=true; do
+    kubectl patch crd/scaledobjects.keda.k8s.io -p '{"metadata":{"finalizers":[]}}' --type=merge
     sleep $(( NEXT_WAIT_TIME++ ))
 done
 [ "$NEXT_WAIT_TIME" -lt 5 ]
 
-kubectl patch crd/triggerauthentications.keda.k8s.io -p '{"metadata":{"finalizers":[]}}' --type=merge
-
 NEXT_WAIT_TIME=0
-until [ $NEXT_WAIT_TIME -eq 5 ] || timeout 3 kubectl delete crd triggerauthentications.keda.k8s.io; do
+until [ $NEXT_WAIT_TIME -eq 5 ] || timeout 3 kubectl delete crd triggerauthentications.keda.k8s.io --ignore-not-found=true; do
+    kubectl patch crd/triggerauthentications.keda.k8s.io -p '{"metadata":{"finalizers":[]}}' --type=merge
     sleep $(( NEXT_WAIT_TIME++ ))
 done
 [ "$NEXT_WAIT_TIME" -lt 5 ]

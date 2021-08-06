@@ -1,4 +1,4 @@
-{{- $isEnabled := .Values.airflow.isDataPartitionDeployment | default false -}}
+{{- $isEnabled := .Values.keda.version_2_enabled | default false -}}
 apiVersion: apps/v1
 kind: Deployment
 metadata:
