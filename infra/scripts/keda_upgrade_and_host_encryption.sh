@@ -35,6 +35,18 @@ export TF_VAR_remote_state_account="$TF_VAR_remote_state_account"
 export TF_VAR_remote_state_container="$TF_VAR_remote_state_container"
 export TF_VAR_resource_group_location="$resourceGroupLocation"
 
+function enableFlux {
+  echo "Enabling flux"
+  kubectl patch deployment flux -p '{"spec":{"replicas": 1}}' -n flux
+}
+
+function disableFlux {
+  echo "Enabling flux"
+  kubectl patch deployment flux -p '{"spec":{"replicas": 0}}' -n flux
+}
+
+trap enableFlux EXIT
+
 echo "Script Started"
 if [ ! "$namespace" ]; then
   echo "Assigning default namespace: osdu"
@@ -92,6 +104,8 @@ export TF_VAR_central_resources_workspace_name="$centralResourceTerraformWorkspa
 
 export ARM_ACCESS_KEY="$storageAccountArmAccessKey"
 
+disableFlux
+
 echo "Deleting existing scaled objects"
 NEXT_WAIT_TIME=0
 until [ $NEXT_WAIT_TIME -eq 5 ] || timeout 3 kubectl delete scaledobjects.keda.k8s.io --all; do
@@ -114,11 +128,15 @@ helm uninstall -n keda keda
 
 echo "Deleting Keda v1 CRDs"
 
+kubectl patch crd/scaledobjects.keda.k8s.io -p '{"metadata":{"finalizers":[]}}' --type=merge
+
 NEXT_WAIT_TIME=0
 until [ $NEXT_WAIT_TIME -eq 5 ] || timeout 3 kubectl delete crd scaledobjects.keda.k8s.io; do
     sleep $(( NEXT_WAIT_TIME++ ))
 done
 [ "$NEXT_WAIT_TIME" -lt 5 ]
+
+kubectl patch crd/triggerauthentications.keda.k8s.io -p '{"metadata":{"finalizers":[]}}' --type=merge
 
 NEXT_WAIT_TIME=0
 until [ $NEXT_WAIT_TIME -eq 5 ] || timeout 3 kubectl delete crd triggerauthentications.keda.k8s.io; do
