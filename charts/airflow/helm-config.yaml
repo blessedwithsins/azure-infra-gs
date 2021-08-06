@@ -59,7 +59,7 @@ pgbouncer:
 # Specify KEDA configuration
 #
 keda:
-  version_2_enabled: false
+  version_2_enabled: true
 
 
 ################################################################################
