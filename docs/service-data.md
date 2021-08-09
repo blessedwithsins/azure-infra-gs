@@ -11,7 +11,7 @@ UNIQUE="<your_osdu_unique>"         # ie: demo
 AZURE_DNS_NAME="<your_osdu_fqdn>"   # ie: osdu-$UNIQUE.contoso.com
 DATA_PARTITION="<your_partition>"   # ie:opendes
 ACR_REGISTRY="<repository>"         # ie: msosdu.azurecr.io
-TAG="<app_version>"                 # ie: 0.9.0
+TAG="<app_version>"                 # ie: 0.10.0
 
 # This logs your local Azure CLI in using the configured service principal.
 az login --service-principal -u $ARM_CLIENT_ID -p $ARM_CLIENT_SECRET --tenant $ARM_TENANT_ID
@@ -42,7 +42,7 @@ UNIQUE="<your_osdu_unique>"         # ie: demo
 AZURE_DNS_NAME="<your_osdu_fqdn>"   # ie: osdu-$UNIQUE.contoso.com
 DATA_PARTITION="<your_partition>"   # ie:opendes
 ACR_REGISTRY="<repository>"         # ie: msosdu.azurecr.io
-TAG="<app_version>"                 # ie: 0.9.0
+TAG="<app_version>"                 # ie: 0.10.0
 
 # This logs your local Azure CLI in using the configured service principal.
 az login --service-principal -u $ARM_CLIENT_ID -p $ARM_CLIENT_SECRET --tenant $ARM_TENANT_ID
@@ -74,7 +74,7 @@ UNIQUE="<your_osdu_unique>"         # ie: demo
 DNS_HOST="<your_osdu_fqdn>"         # ie: osdu-$UNIQUE.contoso.com
 DATA_PARTITION="<your_partition>"   # ie:opendes
 ACR_REGISTRY="<repository>"         # ie: msosdu.azurecr.io
-TAG="<app_version>"                 # ie: 0.9.0
+TAG="<app_version>"                 # ie: 0.10.0
 
 # This logs your local Azure CLI in using the configured service principal.
 az login --service-principal -u $ARM_CLIENT_ID -p $ARM_CLIENT_SECRET --tenant $ARM_TENANT_ID
