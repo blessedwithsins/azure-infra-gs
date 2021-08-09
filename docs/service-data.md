@@ -107,7 +107,7 @@ UNIQUE="<your_osdu_unique>"         # ie: demo
 AZURE_DNS_NAME="<your_osdu_fqdn>"   # ie: osdu-$UNIQUE.contoso.com
 DATA_PARTITION="<your_partition>"   # ie:opendes
 ACR_REGISTRY="<your_acr_fqdn>"      # ie: myacr.azurecr.io
-TAG="<app_version>"                 # ie: 0.8.0
+TAG="<app_version>"                 # ie: 0.10.0
 
 # This logs your local Azure CLI in using the configured service principal.
 az login --service-principal -u $ARM_CLIENT_ID -p $ARM_CLIENT_SECRET --tenant $ARM_TENANT_ID
@@ -116,7 +116,7 @@ GROUP=$(az group list --query "[?contains(name, 'cr${UNIQUE}')].name" -otsv)
 ENV_VAULT=$(az keyvault list --resource-group $GROUP --query [].name -otsv)
 
 cat > .env << EOF
-DAG_TASK_IMAGE=$DAG_TASK_IMAGE:$TAG
+DAG_TASK_IMAGE=${ACR_REGISTRY}/segy-to-zgy-conversion-dag:$TAG
 SHARED_TENANT=$DATA_PARTITION
 AZURE_DNS_NAME=$AZURE_DNS_NAME
 AZURE_TENANT_ID=$ARM_TENANT_ID
@@ -142,8 +142,12 @@ UNIQUE="<your_osdu_unique>"         # ie: demo
 AZURE_DNS_NAME="<your_osdu_fqdn>"   # ie: osdu-$UNIQUE.contoso.com
 DATA_PARTITION="<your_partition>"   # ie:opendes
 ACR_REGISTRY="<your_acr_fqdn>"      # ie: myacr.azurecr.io
-DAG_NAME=="vds_dag"
-TAG="latest"                        # For now the latest tag should be used for the image places in the Open VDS Project
+DAG_NAME="vds_dag"
+TAG="latest"                        # For now the latest tag should be used for the image places in the Open VDS Project. For example, 0.10.0
+AZURE_AD_APP_RESOURCE_ID="<your_azure_ad_resource_id>"
+AZURE_CLIENT_ID="<your azure_client_id>"
+AZURE_CLIENT_SECRET="<your azure client secret>"
+SHARED_TENANT="<your shared tenant>" # i.e: opendes
 
 # This logs your local Azure CLI in using the configured service principal.
 az login --service-principal -u $ARM_CLIENT_ID -p $ARM_CLIENT_SECRET --tenant $ARM_TENANT_ID
@@ -161,6 +165,6 @@ AZURE_CLIENT_ID=$AZURE_CLIENT_ID
 AZURE_CLIENT_SECRET=$AZURE_CLIENT_SECRET
 EOF
 
-(cd ../../.. && docker build -f deployments/scripts/azure/Dockerfile -t $ACR_REGISTRY/$DAG_NAME:$TAG .)
+#(cd ../../.. && docker build -f deployments/scripts/azure/Dockerfile -t $ACR_REGISTRY/$DAG_NAME:$TAG .)
 docker run -it --env-file .env $ACR_REGISTRY/$DAG_NAME:$TAG
 ```
