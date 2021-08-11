@@ -101,6 +101,13 @@
                 {
                   "name": "Dimensions",
                   "value": {
+                    "aggregation": "Sum",
+                    "splitBy": [
+                      {
+                        "name": "HTTPStatus",
+                        "type": "string"
+                      }
+                    ],
                     "xAxis": {
                       "name": "TimeGenerated",
                       "type": "datetime"
@@ -110,14 +117,7 @@
                         "name": "count_",
                         "type": "long"
                       }
-                    ],
-                    "splitBy": [
-                      {
-                        "name": "HTTPStatus",
-                        "type": "string"
-                      }
-                    ],
-                    "aggregation": "Sum"
+                    ]
                   },
                   "isOptional": true
                 },
@@ -139,12 +139,28 @@
               "settings": {
                 "content": {
                   "Query": "let ContainerIdList = KubePodInventory\n| where Name has \"airflow-web\"\n| where strlen(ContainerID)>0\n| distinct ContainerID, PodLabel, Namespace, PodIp, Name;\nContainerLog\n| where ContainerID in (ContainerIdList)\n| where LogEntry contains \"HTTP/1.1\" and LogEntry !contains \"/airflow/health\"\n| lookup kind=leftouter (ContainerIdList) on ContainerID\n| project-away Image, ImageTag, Repository, Name, TimeOfCommand\n| project-rename PodName=Name1\n| parse kind=regex PodName with partitionId \"-airflow-web-[[:graph:]]\"\n| extend clusterName = case(partitionId == \"\", \"common-cluster\",\n                       partitionId)\n| parse kind=regex LogEntry with '[[:graph:]] HTTP/1.1\" ' values\n| extend status = toint(split(values, \" \")[0]), timeTaken = toint(split(values, \" \")[1])\n| extend HTTPStatus = case(status between (200 .. 299), \"2XX\",\n                       status between (300 .. 399), \"3XX\",\n                       status between (400 .. 499), \"4XX\",\n                       status between (500 .. 599), \"5XX\",\n                       \"XX\")\n| where HTTPStatus == \"4XX\"\n| summarize ErrorCount = count() by HTTPStatus, bin(TimeGenerated, 1m), clusterName\n| render timechart\n\n",
-                  "PartTitle": "Number of 4XX Errors"
+                  "ControlType": "FrameControlChart",
+                  "PartTitle": "Number of 4XX Errors",
+                  "Dimensions": {
+                    "xAxis": {
+                      "name": "TimeGenerated",
+                      "type": "datetime"
+                    },
+                    "yAxis": [
+                      {
+                        "name": "ErrorCount",
+                        "type": "long"
+                      }
+                    ],
+                    "splitBy": [
+                      {
+                        "name": "HTTPStatus",
+                        "type": "string"
+                      }
+                    ],
+                    "aggregation": "Sum"
+                  }
                 }
-              },
-              "savedContainerState": {
-                "partTitle": "Number of 4XX Errors",
-                "assetName": "${centralGroupPrefix}-logs"
               }
             }
           },
@@ -225,6 +241,13 @@
                 {
                   "name": "Dimensions",
                   "value": {
+                    "aggregation": "Sum",
+                    "splitBy": [
+                      {
+                        "name": "HTTPStatus",
+                        "type": "string"
+                      }
+                    ],
                     "xAxis": {
                       "name": "TimeGenerated",
                       "type": "datetime"
@@ -234,14 +257,7 @@
                         "name": "count_",
                         "type": "long"
                       }
-                    ],
-                    "splitBy": [
-                      {
-                        "name": "HTTPStatus",
-                        "type": "string"
-                      }
-                    ],
-                    "aggregation": "Sum"
+                    ]
                   },
                   "isOptional": true
                 },
@@ -263,12 +279,27 @@
               "settings": {
                 "content": {
                   "Query": "let ContainerIdList = KubePodInventory\n| where Name has \"airflow-web\"\n| where strlen(ContainerID)>0\n| distinct ContainerID, PodLabel, Namespace, PodIp, Name;\nContainerLog\n| where ContainerID in (ContainerIdList)\n| where LogEntry contains \"HTTP/1.1\" and LogEntry !contains \"/airflow/health\"\n| lookup kind=leftouter (ContainerIdList) on ContainerID\n| project-away Image, ImageTag, Repository, Name, TimeOfCommand\n| project-rename PodName=Name1\n| parse kind=regex PodName with partitionId \"-airflow-web-[[:graph:]]\"\n| extend clusterName = case(partitionId == \"\", \"common-cluster\",\n                       partitionId)\n| parse kind=regex LogEntry with '[[:graph:]] HTTP/1.1\" ' values\n| extend status = toint(split(values, \" \")[0]), timeTaken = toint(split(values, \" \")[1])\n| extend HTTPStatus = case(status between (200 .. 299), \"2XX\",\n                       status between (300 .. 399), \"3XX\",\n                       status between (400 .. 499), \"4XX\",\n                       status between (500 .. 599), \"5XX\",\n                       \"XX\")\n| where HTTPStatus == \"5XX\"\n| summarize ErrorCount = count() by HTTPStatus, bin(TimeGenerated, 1m), clusterName\n| render timechart\n\n",
-                  "PartTitle": "Number of 5XX Errors"
+                  "PartTitle": "Number of 5XX Errors",
+                  "Dimensions": {
+                    "xAxis": {
+                      "name": "TimeGenerated",
+                      "type": "datetime"
+                    },
+                    "yAxis": [
+                      {
+                        "name": "ErrorCount",
+                        "type": "long"
+                      }
+                    ],
+                    "splitBy": [
+                      {
+                        "name": "HTTPStatus",
+                        "type": "string"
+                      }
+                    ],
+                    "aggregation": "Sum"
+                  }
                 }
-              },
-              "savedContainerState": {
-                "partTitle": "Number of 5XX Errors",
-                "assetName": "${centralGroupPrefix}-logs"
               }
             }
           },
@@ -349,6 +380,13 @@
                 {
                   "name": "Dimensions",
                   "value": {
+                    "aggregation": "Sum",
+                    "splitBy": [
+                      {
+                        "name": "Column1",
+                        "type": "string"
+                      }
+                    ],
                     "xAxis": {
                       "name": "TimeGenerated",
                       "type": "datetime"
@@ -358,14 +396,7 @@
                         "name": "TimeTaken",
                         "type": "int"
                       }
-                    ],
-                    "splitBy": [
-                      {
-                        "name": "Column1",
-                        "type": "string"
-                      }
-                    ],
-                    "aggregation": "Sum"
+                    ]
                   },
                   "isOptional": true
                 },
@@ -386,13 +417,28 @@
               "type": "Extension/Microsoft_OperationsManagementSuite_Workspace/PartType/LogsDashboardPart",
               "settings": {
                 "content": {
-                  "Query": "let apiCall = \"POST /airflow/api/experimental/dags\";\nlet ContainerIdList = KubePodInventory\n| where Name has \"airflow-web\"\n| where strlen(ContainerID)>0\n| distinct ContainerID, PodLabel, Namespace, PodIp, Name;\nContainerLog\n| where ContainerID in (ContainerIdList)\n| where LogEntry contains \"HTTP/1.1\" and LogEntry contains apiCall \n| lookup kind=leftouter (ContainerIdList) on ContainerID\n| project-away Image, ImageTag, Repository, Name, TimeOfCommand\n| project-rename PodName=Name1\n| parse kind=regex PodName with partitionId \"-airflow-web-[[:graph:]]\"\n| extend clusterName = case(partitionId == \"\", \"common-cluster\",\n                       partitionId)\n| parse kind=regex LogEntry with '[[:graph:]] HTTP/1.1\" ' values\n| extend timeTaken = toint(split(values, \" \")[1])\n| summarize TimeTaken = max(timeTaken) by TimeGenerated, apiCall, clusterName\n| render timechart\t\n\n",
-                  "PartTitle": "Latency of Trigger API"
+                  "Query": "let apiCall = \"POST /airflow/api/experimental/dags\";\nlet ContainerIdList = KubePodInventory\n| where Name has \"airflow-web\"\n| where strlen(ContainerID)>0\n| distinct ContainerID, PodLabel, Namespace, PodIp, Name;\nContainerLog\n| where ContainerID in (ContainerIdList)\n| where LogEntry contains \"HTTP/1.1\" and LogEntry contains apiCall \n| lookup kind=leftouter (ContainerIdList) on ContainerID\n| project-away Image, ImageTag, Repository, Name, TimeOfCommand\n| project-rename PodName=Name1\n| parse kind=regex PodName with partitionId \"-airflow-web-[[:graph:]]\"\n| extend clusterName = case(partitionId == \"\", \"common-cluster\",\n                       partitionId)\n| parse kind=regex LogEntry with '[[:graph:]] HTTP/1.1\" ' values\n| extend timeTaken = toint(split(values, \" \")[1])\n| summarize TimeTaken = max(timeTaken) by TimeGenerated, clusterName, apiCall\n| render timechart\t\n\n",
+                  "PartTitle": "Latency of Trigger API",
+                  "Dimensions": {
+                    "xAxis": {
+                      "name": "TimeGenerated",
+                      "type": "datetime"
+                    },
+                    "yAxis": [
+                      {
+                        "name": "TimeTaken",
+                        "type": "int"
+                      }
+                    ],
+                    "splitBy": [
+                      {
+                        "name": "clusterName",
+                        "type": "string"
+                      }
+                    ],
+                    "aggregation": "Sum"
+                  }
                 }
-              },
-              "savedContainerState": {
-                "partTitle": "Latency of Trigger API",
-                "assetName": "${centralGroupPrefix}-logs"
               }
             }
           },
@@ -410,8 +456,8 @@
                 "content": {
                   "settings": {
                     "content": "# Airflow Scheduler",
-                    "title": "",
-                    "subtitle": ""
+                    "subtitle": "",
+                    "title": ""
                   }
                 }
               }
@@ -494,6 +540,13 @@
                 {
                   "name": "Dimensions",
                   "value": {
+                    "aggregation": "Sum",
+                    "splitBy": [
+                      {
+                        "name": "clusterName",
+                        "type": "string"
+                      }
+                    ],
                     "xAxis": {
                       "name": "timestamp",
                       "type": "datetime"
@@ -503,14 +556,7 @@
                         "name": "DagBagSize",
                         "type": "real"
                       }
-                    ],
-                    "splitBy": [
-                      {
-                        "name": "clusterName",
-                        "type": "string"
-                      }
-                    ],
-                    "aggregation": "Sum"
+                    ]
                   },
                   "isOptional": true
                 },
@@ -531,9 +577,14 @@
               "type": "Extension/Microsoft_OperationsManagementSuite_Workspace/PartType/LogsDashboardPart",
               "settings": {
                 "content": {
-                  "Query": "customMetrics\n| where name has \"ti_failures\"\n| parse kind=regex name with @\"([0-9a-zA-Z_])*\\.\" partitionId @\"\\.ti_failures\" \n| extend clusterName = case(partitionId == \"\", \"common-cluster\",\n                       partitionId)\n| summarize TaskInstanceFailures = max(value) by timestamp, MetricName=\"TaskInstance Failures\", clusterName\n| render timechart \n\n",
-                  "PartTitle": "Total Task Failures",
                   "Dimensions": {
+                    "aggregation": "Sum",
+                    "splitBy": [
+                      {
+                        "name": "MetricName",
+                        "type": "string"
+                      }
+                    ],
                     "xAxis": {
                       "name": "timestamp",
                       "type": "datetime"
@@ -543,20 +594,11 @@
                         "name": "TaskInstanceFailures",
                         "type": "real"
                       }
-                    ],
-                    "splitBy": [
-                      {
-                        "name": "MetricName",
-                        "type": "string"
-                      }
-                    ],
-                    "aggregation": "Sum"
-                  }
+                    ]
+                  },
+                  "PartTitle": "Total Task Failures",
+                  "Query": "customMetrics\n| where name has \"ti_failures\"\n| parse kind=regex name with @\"([0-9a-zA-Z_])*\\.\" partitionId @\"\\.ti_failures\" \n| extend clusterName = case(partitionId == \"\", \"common-cluster\",\n                       partitionId)\n| summarize TaskInstanceFailures = max(value) by timestamp, MetricName=\"TaskInstance Failures\", clusterName\n| render timechart \n\n"
                 }
-              },
-              "savedContainerState": {
-                "partTitle": "Total Task Failures",
-                "assetName": "${centralGroupPrefix}-ai"
               }
             }
           },
@@ -637,6 +679,13 @@
                 {
                   "name": "Dimensions",
                   "value": {
+                    "aggregation": "Sum",
+                    "splitBy": [
+                      {
+                        "name": "clusterName",
+                        "type": "string"
+                      }
+                    ],
                     "xAxis": {
                       "name": "timestamp",
                       "type": "datetime"
@@ -646,14 +695,7 @@
                         "name": "DagBagSize",
                         "type": "real"
                       }
-                    ],
-                    "splitBy": [
-                      {
-                        "name": "clusterName",
-                        "type": "string"
-                      }
-                    ],
-                    "aggregation": "Sum"
+                    ]
                   },
                   "isOptional": true
                 },
@@ -674,7 +716,7 @@
               "type": "Extension/Microsoft_OperationsManagementSuite_Workspace/PartType/LogsDashboardPart",
               "settings": {
                 "content": {
-                  "Query": "customMetrics\n| where name has \"dagbag_size\"\n| parse kind=regex name with @\"([0-9a-zA-Z_])*\\.\" partitionId @\"\\.dagbag_size\" \n| extend clusterName = case(partitionId == \"\", \"common-cluster\",\n                       partitionId)\n| summarize DagBagSize = max(value) by timestamp, MetricName = \"dagbag_size\", clusterName\n| render timechart \n\n",
+                  "Query": "customMetrics\n| where name has \"dagbag_size\"\n| parse kind=regex name with @\"([0-9a-zA-Z_])*\\.\" partitionId @\"\\.dagbag_size\" \n| extend clusterName = case(partitionId == \"\", \"common-cluster\",\n                       partitionId)\n| summarize DagBagSize = max(value) by timestamp, clusterName, MetricName = \"dagbag_size\"\n| render timechart \n\n",
                   "PartTitle": "DagBag Size",
                   "Dimensions": {
                     "xAxis": {
@@ -689,17 +731,13 @@
                     ],
                     "splitBy": [
                       {
-                        "name": "MetricName",
+                        "name": "clusterName",
                         "type": "string"
                       }
                     ],
                     "aggregation": "Sum"
                   }
                 }
-              },
-              "savedContainerState": {
-                "partTitle": "DagBag Size",
-                "assetName": "${centralGroupPrefix}-ai"
               }
             }
           },
@@ -780,6 +818,8 @@
                 {
                   "name": "Dimensions",
                   "value": {
+                    "aggregation": "Sum",
+                    "splitBy": [],
                     "xAxis": {
                       "name": "timestamp",
                       "type": "datetime"
@@ -789,9 +829,7 @@
                         "name": "DagBagSize",
                         "type": "real"
                       }
-                    ],
-                    "splitBy": [],
-                    "aggregation": "Sum"
+                    ]
                   },
                   "isOptional": true
                 },
@@ -812,7 +850,7 @@
               "type": "Extension/Microsoft_OperationsManagementSuite_Workspace/PartType/LogsDashboardPart",
               "settings": {
                 "content": {
-                  "Query": "customMetrics\n| where name has \"dag_processing.import_errors\"\n| parse kind=regex name with @\"([0-9a-zA-Z_])*\\.\" partitionId @\"\\.dag_processing\\.import_errors\" \n| extend clusterName = case(partitionId == \"\", \"common-cluster\",\n                       partitionId)\n| summarize ImportErrors = max(value) by timestamp,MetricName = \"Import_Errors\", clusterName\n| render timechart ",
+                  "Query": "customMetrics\n| where name has \"dag_processing.import_errors\"\n| parse kind=regex name with @\"([0-9a-zA-Z_])*\\.\" partitionId @\"\\.dag_processing\\.import_errors\" \n| extend clusterName = case(partitionId == \"\", \"common-cluster\",\n                       partitionId)\n| summarize ImportErrors = abs(max(value)) by timestamp, clusterName, MetricName = \"Import_Errors\"\n| render timechart \n",
                   "PartTitle": "Import Errors",
                   "Dimensions": {
                     "xAxis": {
@@ -827,17 +865,13 @@
                     ],
                     "splitBy": [
                       {
-                        "name": "MetricName",
+                        "name": "clusterName",
                         "type": "string"
                       }
                     ],
                     "aggregation": "Sum"
                   }
                 }
-              },
-              "savedContainerState": {
-                "partTitle": "Import Errors",
-                "assetName": "${centralGroupPrefix}-ai"
               }
             }
           },
@@ -855,8 +889,8 @@
                 "content": {
                   "settings": {
                     "content": "# Airflow Dag Processor",
-                    "title": "",
-                    "subtitle": ""
+                    "subtitle": "",
+                    "title": ""
                   }
                 }
               }
@@ -939,6 +973,8 @@
                 {
                   "name": "Dimensions",
                   "value": {
+                    "aggregation": "Sum",
+                    "splitBy": [],
                     "xAxis": {
                       "name": "timestamp",
                       "type": "datetime"
@@ -948,9 +984,7 @@
                         "name": "ProcessorTimeouts",
                         "type": "real"
                       }
-                    ],
-                    "splitBy": [],
-                    "aggregation": "Sum"
+                    ]
                   },
                   "isOptional": true
                 },
@@ -971,7 +1005,7 @@
               "type": "Extension/Microsoft_OperationsManagementSuite_Workspace/PartType/LogsDashboardPart",
               "settings": {
                 "content": {
-                  "Query": "customMetrics\n| where name has \"dag_processing.processor_timeouts\"\n| parse kind=regex name with @\"([0-9a-zA-Z_])*\\.\" partitionId @\"\\.dag_processing\\.processor_timeouts\" \n| extend clusterName = case(partitionId == \"\", \"common-cluster\",\n                       partitionId)\n| summarize ProcessorTimeouts = max(value) by timestamp, MetricName = \"dag_processing.processor_timeouts\", clusterName\n| render timechart \n",
+                  "Query": "customMetrics\n| where name has \"dag_processing.processor_timeouts\"\n| parse kind=regex name with @\"([0-9a-zA-Z_])*\\.\" partitionId @\"\\.dag_processing\\.processor_timeouts\" \n| extend clusterName = case(partitionId == \"\", \"common-cluster\",\n                       partitionId)\n| summarize ProcessorTimeouts = max(value) by timestamp, clusterName, MetricName = \"dag_processing.processor_timeouts\"\n| render timechart \n\n",
                   "PartTitle": "Processor Timeouts",
                   "Dimensions": {
                     "xAxis": {
@@ -986,17 +1020,13 @@
                     ],
                     "splitBy": [
                       {
-                        "name": "MetricName",
+                        "name": "clusterName",
                         "type": "string"
                       }
                     ],
                     "aggregation": "Sum"
                   }
                 }
-              },
-              "savedContainerState": {
-                "partTitle": "Processor Timeouts",
-                "assetName": "${centralGroupPrefix}-ai"
               }
             }
           },
@@ -1077,6 +1107,8 @@
                 {
                   "name": "Dimensions",
                   "value": {
+                    "aggregation": "Sum",
+                    "splitBy": [],
                     "xAxis": {
                       "name": "timestamp",
                       "type": "datetime"
@@ -1086,9 +1118,7 @@
                         "name": "ConcurrentDagProcesses",
                         "type": "real"
                       }
-                    ],
-                    "splitBy": [],
-                    "aggregation": "Sum"
+                    ]
                   },
                   "isOptional": true
                 },
@@ -1109,7 +1139,7 @@
               "type": "Extension/Microsoft_OperationsManagementSuite_Workspace/PartType/LogsDashboardPart",
               "settings": {
                 "content": {
-                  "Query": "customMetrics\n| where name has \"dag_processing.processes\"\n| parse kind=regex name with @\"([0-9a-zA-Z_])*\\.\" partitionId @\"\\.dag_processing\\.processes\" \n| extend clusterName = case(partitionId == \"\", \"common-cluster\",\n                       partitionId)\n| summarize ConcurrentDagProcesses = max(value) by timestamp, MetricName=\"dag_processing.processes\", clusterName\n| render timechart \n\n",
+                  "Query": "customMetrics\n| where name has \"dag_processing.processes\"\n| parse kind=regex name with @\"([0-9a-zA-Z_])*\\.\" partitionId @\"\\.dag_processing\\.processes\" \n| extend clusterName = case(partitionId == \"\", \"common-cluster\",\n                       partitionId)\n| summarize ConcurrentDagProcesses = max(value) by timestamp, clusterName, MetricName=\"dag_processing.processes\"\n| render timechart \n\n",
                   "PartTitle": "Concurrent Dag Processes",
                   "Dimensions": {
                     "xAxis": {
@@ -1124,17 +1154,13 @@
                     ],
                     "splitBy": [
                       {
-                        "name": "MetricName",
+                        "name": "clusterName",
                         "type": "string"
                       }
                     ],
                     "aggregation": "Sum"
                   }
                 }
-              },
-              "savedContainerState": {
-                "partTitle": "Concurrent Dag Processes",
-                "assetName": "${centralGroupPrefix}-ai"
               }
             }
           },
@@ -1152,8 +1178,8 @@
                 "content": {
                   "settings": {
                     "content": "# Airflow Executor",
-                    "title": "",
-                    "subtitle": ""
+                    "subtitle": "",
+                    "title": ""
                   }
                 }
               }
@@ -1236,6 +1262,8 @@
                 {
                   "name": "Dimensions",
                   "value": {
+                    "aggregation": "Sum",
+                    "splitBy": [],
                     "xAxis": {
                       "name": "timestamp",
                       "type": "datetime"
@@ -1245,9 +1273,7 @@
                         "name": "RunningTasks",
                         "type": "real"
                       }
-                    ],
-                    "splitBy": [],
-                    "aggregation": "Sum"
+                    ]
                   },
                   "isOptional": true
                 },
@@ -1268,7 +1294,7 @@
               "type": "Extension/Microsoft_OperationsManagementSuite_Workspace/PartType/LogsDashboardPart",
               "settings": {
                 "content": {
-                  "Query": "customMetrics\n| where name has \"executor.running_tasks\"\n| parse kind=regex name with @\"([0-9a-zA-Z_])*\\.\" partitionId @\"\\.executor\\.running_tasks\" \n| extend clusterName = case(partitionId == \"\", \"common-cluster\",\n                       partitionId)\n| summarize RunningTasks = max(value) by timestamp, MetricName=\"executor.running_tasks\", clusterName\n| render timechart \n",
+                  "Query": "customMetrics\n| where name has \"executor.running_tasks\"\n| parse kind=regex name with @\"([0-9a-zA-Z_])*\\.\" partitionId @\"\\.executor\\.running_tasks\" \n| extend clusterName = case(partitionId == \"\", \"common-cluster\",\n                       partitionId)\n| summarize RunningTasks = max(value) by timestamp, clusterName, MetricName=\"executor.running_tasks\"\n| render timechart \n\n",
                   "PartTitle": "Running Tasks on Executor",
                   "Dimensions": {
                     "xAxis": {
@@ -1283,17 +1309,13 @@
                     ],
                     "splitBy": [
                       {
-                        "name": "MetricName",
+                        "name": "clusterName",
                         "type": "string"
                       }
                     ],
                     "aggregation": "Sum"
                   }
                 }
-              },
-              "savedContainerState": {
-                "partTitle": "Running Tasks on Executor",
-                "assetName": "${centralGroupPrefix}-ai"
               }
             }
           },
@@ -1374,6 +1396,13 @@
                 {
                   "name": "Dimensions",
                   "value": {
+                    "aggregation": "Sum",
+                    "splitBy": [
+                      {
+                        "name": "clusterName",
+                        "type": "string"
+                      }
+                    ],
                     "xAxis": {
                       "name": "timestamp",
                       "type": "datetime"
@@ -1383,14 +1412,7 @@
                         "name": "RunningTasks",
                         "type": "real"
                       }
-                    ],
-                    "splitBy": [
-                      {
-                        "name": "clusterName",
-                        "type": "string"
-                      }
-                    ],
-                    "aggregation": "Sum"
+                    ]
                   },
                   "isOptional": true
                 },
@@ -1411,7 +1433,7 @@
               "type": "Extension/Microsoft_OperationsManagementSuite_Workspace/PartType/LogsDashboardPart",
               "settings": {
                 "content": {
-                  "Query": "customMetrics\n| where name has \"executor.open_slots\"\n| parse kind=regex name with @\"([0-9a-zA-Z_])*\\.\" partitionId @\"\\.executor\\.open_slots\" \n| extend clusterName = case(partitionId == \"\", \"common-cluster\",\n                       partitionId)\n| summarize OpenSlots = max(value) by timestamp, MetricName=\"executor.open_slots\", clusterName\n| render timechart \n\n",
+                  "Query": "customMetrics\n| where name has \"executor.open_slots\"\n| parse kind=regex name with @\"([0-9a-zA-Z_])*\\.\" partitionId @\"\\.executor\\.open_slots\" \n| extend clusterName = case(partitionId == \"\", \"common-cluster\",\n                       partitionId)\n| summarize OpenSlots = max(value) by timestamp, clusterName, MetricName=\"executor.open_slots\"\n| render timechart \n\n",
                   "PartTitle": "Open Slots on Executor",
                   "Dimensions": {
                     "xAxis": {
@@ -1426,17 +1448,13 @@
                     ],
                     "splitBy": [
                       {
-                        "name": "MetricName",
+                        "name": "clusterName",
                         "type": "string"
                       }
                     ],
                     "aggregation": "Sum"
                   }
                 }
-              },
-              "savedContainerState": {
-                "partTitle": "Open Slots on Executor",
-                "assetName": "${centralGroupPrefix}-ai"
               }
             }
           },
@@ -1517,6 +1535,8 @@
                 {
                   "name": "Dimensions",
                   "value": {
+                    "aggregation": "Sum",
+                    "splitBy": [],
                     "xAxis": {
                       "name": "timestamp",
                       "type": "datetime"
@@ -1526,9 +1546,7 @@
                         "name": "QueuedTasks",
                         "type": "real"
                       }
-                    ],
-                    "splitBy": [],
-                    "aggregation": "Sum"
+                    ]
                   },
                   "isOptional": true
                 },
@@ -1549,7 +1567,7 @@
               "type": "Extension/Microsoft_OperationsManagementSuite_Workspace/PartType/LogsDashboardPart",
               "settings": {
                 "content": {
-                  "Query": "customMetrics\n| where name has \"executor.queued_tasks\"\n| parse kind=regex name with @\"([0-9a-zA-Z_])*\\.\" partitionId @\"\\.executor\\.queued_tasks\"\n| extend clusterName = case(partitionId == \"\", \"common-cluster\",\n                       partitionId)\n| summarize QueuedTasks = max(value) by timestamp, MetricName = \"executor.queued_tasks\", clusterName\n| render timechart\n\n",
+                  "Query": "customMetrics\n| where name has \"executor.queued_tasks\"\n| parse kind=regex name with @\"([0-9a-zA-Z_])*\\.\" partitionId @\"\\.executor\\.queued_tasks\"\n| extend clusterName = case(partitionId == \"\", \"common-cluster\",\n                       partitionId)\n| summarize QueuedTasks = max(value) by timestamp, clusterName, MetricName = \"executor.queued_tasks\"\n| render timechart\n\n",
                   "PartTitle": "Queued Tasks on Executor",
                   "Dimensions": {
                     "xAxis": {
@@ -1564,17 +1582,13 @@
                     ],
                     "splitBy": [
                       {
-                        "name": "MetricName",
+                        "name": "clusterName",
                         "type": "string"
                       }
                     ],
                     "aggregation": "Sum"
                   }
                 }
-              },
-              "savedContainerState": {
-                "partTitle": "Queued Tasks on Executor",
-                "assetName": "${centralGroupPrefix}-ai"
               }
             }
           }
@@ -1608,17 +1622,17 @@
                 "value": "Past 3 days"
               },
               "filteredPartIds": [
-                "StartboardPart-LogsDashboardPart-5f661255-7b67-43c0-9ef2-0d49e36dc648",
-                "StartboardPart-LogsDashboardPart-5f661255-7b67-43c0-9ef2-0d49e36dc64a",
-                "StartboardPart-LogsDashboardPart-5f661255-7b67-43c0-9ef2-0d49e36dc64c",
-                "StartboardPart-LogsDashboardPart-5f661255-7b67-43c0-9ef2-0d49e36dc650",
-                "StartboardPart-LogsDashboardPart-5f661255-7b67-43c0-9ef2-0d49e36dc652",
-                "StartboardPart-LogsDashboardPart-5f661255-7b67-43c0-9ef2-0d49e36dc654",
-                "StartboardPart-LogsDashboardPart-5f661255-7b67-43c0-9ef2-0d49e36dc658",
-                "StartboardPart-LogsDashboardPart-5f661255-7b67-43c0-9ef2-0d49e36dc65a",
-                "StartboardPart-LogsDashboardPart-5f661255-7b67-43c0-9ef2-0d49e36dc65e",
-                "StartboardPart-LogsDashboardPart-5f661255-7b67-43c0-9ef2-0d49e36dc660",
-                "StartboardPart-LogsDashboardPart-5f661255-7b67-43c0-9ef2-0d49e36dc662"
+                "StartboardPart-LogsDashboardPart-9fb65ba7-2a17-47dd-a4e1-11ead5a69009",
+                "StartboardPart-LogsDashboardPart-9fb65ba7-2a17-47dd-a4e1-11ead5a6900b",
+                "StartboardPart-LogsDashboardPart-9fb65ba7-2a17-47dd-a4e1-11ead5a6900d",
+                "StartboardPart-LogsDashboardPart-9fb65ba7-2a17-47dd-a4e1-11ead5a69011",
+                "StartboardPart-LogsDashboardPart-9fb65ba7-2a17-47dd-a4e1-11ead5a69013",
+                "StartboardPart-LogsDashboardPart-9fb65ba7-2a17-47dd-a4e1-11ead5a69015",
+                "StartboardPart-LogsDashboardPart-9fb65ba7-2a17-47dd-a4e1-11ead5a69019",
+                "StartboardPart-LogsDashboardPart-9fb65ba7-2a17-47dd-a4e1-11ead5a6901b",
+                "StartboardPart-LogsDashboardPart-9fb65ba7-2a17-47dd-a4e1-11ead5a6901f",
+                "StartboardPart-LogsDashboardPart-9fb65ba7-2a17-47dd-a4e1-11ead5a69021",
+                "StartboardPart-LogsDashboardPart-9fb65ba7-2a17-47dd-a4e1-11ead5a69023"
               ]
             },
             "dynamicFilter_clusterName": {
@@ -1631,21 +1645,19 @@
                 "value": "none"
               },
               "filteredPartIds": [
-                "StartboardPart-LogsDashboardPart-5f661255-7b67-43c0-9ef2-0d49e36dc648",
-                "StartboardPart-LogsDashboardPart-5f661255-7b67-43c0-9ef2-0d49e36dc64a",
-                "StartboardPart-LogsDashboardPart-5f661255-7b67-43c0-9ef2-0d49e36dc64c",
-                "StartboardPart-LogsDashboardPart-5f661255-7b67-43c0-9ef2-0d49e36dc650",
-                "StartboardPart-LogsDashboardPart-5f661255-7b67-43c0-9ef2-0d49e36dc652",
-                "StartboardPart-LogsDashboardPart-5f661255-7b67-43c0-9ef2-0d49e36dc654",
-                "StartboardPart-LogsDashboardPart-5f661255-7b67-43c0-9ef2-0d49e36dc658",
-                "StartboardPart-LogsDashboardPart-5f661255-7b67-43c0-9ef2-0d49e36dc65a",
-                "StartboardPart-LogsDashboardPart-5f661255-7b67-43c0-9ef2-0d49e36dc65e",
-                "StartboardPart-LogsDashboardPart-5f661255-7b67-43c0-9ef2-0d49e36dc660",
-                "StartboardPart-LogsDashboardPart-5f661255-7b67-43c0-9ef2-0d49e36dc662"
+                "StartboardPart-LogsDashboardPart-9fb65ba7-2a17-47dd-a4e1-11ead5a69009",
+                "StartboardPart-LogsDashboardPart-9fb65ba7-2a17-47dd-a4e1-11ead5a6900b",
+                "StartboardPart-LogsDashboardPart-9fb65ba7-2a17-47dd-a4e1-11ead5a69013",
+                "StartboardPart-LogsDashboardPart-9fb65ba7-2a17-47dd-a4e1-11ead5a69015",
+                "StartboardPart-LogsDashboardPart-9fb65ba7-2a17-47dd-a4e1-11ead5a69019",
+                "StartboardPart-LogsDashboardPart-9fb65ba7-2a17-47dd-a4e1-11ead5a6901b",
+                "StartboardPart-LogsDashboardPart-9fb65ba7-2a17-47dd-a4e1-11ead5a6901f",
+                "StartboardPart-LogsDashboardPart-9fb65ba7-2a17-47dd-a4e1-11ead5a69021",
+                "StartboardPart-LogsDashboardPart-9fb65ba7-2a17-47dd-a4e1-11ead5a69023"
               ]
             }
           }
         }
       }
     }
-  }
+}
