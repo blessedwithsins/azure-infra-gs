@@ -75,7 +75,7 @@
                 },
                 {
                   "name": "Query",
-                  "value": "let ContainerIdList = KubePodInventory\n| where Name has \"airflow-web\"\n| where strlen(ContainerID)>0\n| distinct ContainerID, PodLabel, Namespace, PodIp, Name;\nContainerLog\n| where ContainerID in (ContainerIdList)\n| where LogEntry contains \"HTTP/1.1\" and LogEntry !contains \"/airflow/health\"\n| lookup kind=leftouter (ContainerIdList) on ContainerID\n| project-away Image, ImageTag, Repository, Name, TimeOfCommand\n| project-rename PodName=Name1\n| parse kind=regex PodName with dataPartitionId \"-airflow-web-[[:graph:]]\"  \n| parse kind=regex LogEntry with '[[:graph:]] HTTP/1.1\" ' values\n| extend status = toint(split(values, \" \")[0]), timeTaken = toint(split(values, \" \")[1])\n| extend HTTPStatus = case(status between (200 .. 299), \"2XX\",\n                       status between (300 .. 399), \"3XX\",\n                       status between (400 .. 499), \"4XX\",\n                       status between (500 .. 599), \"5XX\",\n                       \"XX\")\n| where HTTPStatus == \"4XX\"\n| summarize count() by HTTPStatus, bin(TimeGenerated, 15m), dataPartitionId\n| render timechart\n\n",
+                  "value": "let ContainerIdList = KubePodInventory\n| where Name has \"airflow-web\"\n| where strlen(ContainerID)>0\n| distinct ContainerID, PodLabel, Namespace, PodIp, Name;\nContainerLog\n| where ContainerID in (ContainerIdList)\n| where LogEntry contains \"HTTP/1.1\" and LogEntry !contains \"/airflow/health\"\n| lookup kind=leftouter (ContainerIdList) on ContainerID\n| project-away Image, ImageTag, Repository, Name, TimeOfCommand\n| project-rename PodName=Name1\n| parse kind=regex PodName with clusterName \"-airflow-web-[[:graph:]]\"  \n| parse kind=regex LogEntry with '[[:graph:]] HTTP/1.1\" ' values\n| extend status = toint(split(values, \" \")[0]), timeTaken = toint(split(values, \" \")[1])\n| extend HTTPStatus = case(status between (200 .. 299), \"2XX\",\n                       status between (300 .. 399), \"3XX\",\n                       status between (400 .. 499), \"4XX\",\n                       status between (500 .. 599), \"5XX\",\n                       \"XX\")\n| where HTTPStatus == \"4XX\"\n| summarize ErrorCount = count() by HTTPStatus, bin(TimeGenerated, 1m), clusterName\n| render timechart\n\n",
                   "isOptional": true
                 },
                 {
@@ -138,7 +138,7 @@
               "type": "Extension/Microsoft_OperationsManagementSuite_Workspace/PartType/LogsDashboardPart",
               "settings": {
                 "content": {
-                  "Query": "let ContainerIdList = KubePodInventory\n| where Name has \"airflow-web\"\n| where strlen(ContainerID)>0\n| distinct ContainerID, PodLabel, Namespace, PodIp, Name;\nContainerLog\n| where ContainerID in (ContainerIdList)\n| where LogEntry contains \"HTTP/1.1\" and LogEntry !contains \"/airflow/health\"\n| lookup kind=leftouter (ContainerIdList) on ContainerID\n| project-away Image, ImageTag, Repository, Name, TimeOfCommand\n| project-rename PodName=Name1\n| parse kind=regex PodName with partitionId \"-airflow-web-[[:graph:]]\"\n| extend dataPartitionId = case(partitionId == \"\", \"common-cluster\",\n                       partitionId)\n| parse kind=regex LogEntry with '[[:graph:]] HTTP/1.1\" ' values\n| extend status = toint(split(values, \" \")[0]), timeTaken = toint(split(values, \" \")[1])\n| extend HTTPStatus = case(status between (200 .. 299), \"2XX\",\n                       status between (300 .. 399), \"3XX\",\n                       status between (400 .. 499), \"4XX\",\n                       status between (500 .. 599), \"5XX\",\n                       \"XX\")\n| where HTTPStatus == \"4XX\"\n| summarize count() by HTTPStatus, bin(TimeGenerated, 15m), dataPartitionId\n| render timechart\n\n",
+                  "Query": "let ContainerIdList = KubePodInventory\n| where Name has \"airflow-web\"\n| where strlen(ContainerID)>0\n| distinct ContainerID, PodLabel, Namespace, PodIp, Name;\nContainerLog\n| where ContainerID in (ContainerIdList)\n| where LogEntry contains \"HTTP/1.1\" and LogEntry !contains \"/airflow/health\"\n| lookup kind=leftouter (ContainerIdList) on ContainerID\n| project-away Image, ImageTag, Repository, Name, TimeOfCommand\n| project-rename PodName=Name1\n| parse kind=regex PodName with partitionId \"-airflow-web-[[:graph:]]\"\n| extend clusterName = case(partitionId == \"\", \"common-cluster\",\n                       partitionId)\n| parse kind=regex LogEntry with '[[:graph:]] HTTP/1.1\" ' values\n| extend status = toint(split(values, \" \")[0]), timeTaken = toint(split(values, \" \")[1])\n| extend HTTPStatus = case(status between (200 .. 299), \"2XX\",\n                       status between (300 .. 399), \"3XX\",\n                       status between (400 .. 499), \"4XX\",\n                       status between (500 .. 599), \"5XX\",\n                       \"XX\")\n| where HTTPStatus == \"4XX\"\n| summarize ErrorCount = count() by HTTPStatus, bin(TimeGenerated, 1m), clusterName\n| render timechart\n\n",
                   "PartTitle": "Number of 4XX Errors"
                 }
               },
@@ -199,7 +199,7 @@
                 },
                 {
                   "name": "Query",
-                  "value": "let ContainerIdList = KubePodInventory\n| where Name has \"airflow-web\"\n| where strlen(ContainerID)>0\n| distinct ContainerID, PodLabel, Namespace, PodIp, Name;\nContainerLog\n| where ContainerID in (ContainerIdList)\n| where LogEntry contains \"HTTP/1.1\" and LogEntry !contains \"/airflow/health\"\n| lookup kind=leftouter (ContainerIdList) on ContainerID\n| project-away Image, ImageTag, Repository, Name, TimeOfCommand\n| project-rename PodName=Name1\n| parse kind=regex PodName with dataPartitionId \"-airflow-web-[[:graph:]]\"  \n| parse kind=regex LogEntry with '[[:graph:]] HTTP/1.1\" ' values\n| extend status = toint(split(values, \" \")[0]), timeTaken = toint(split(values, \" \")[1])\n| extend HTTPStatus = case(status between (200 .. 299), \"2XX\",\n                       status between (300 .. 399), \"3XX\",\n                       status between (400 .. 499), \"4XX\",\n                       status between (500 .. 599), \"5XX\",\n                       \"XX\")\n| where HTTPStatus == \"5XX\"\n| summarize count() by HTTPStatus, bin(TimeGenerated, 15m), dataPartitionId\n| render timechart\n\n",
+                  "value": "let ContainerIdList = KubePodInventory\n| where Name has \"airflow-web\"\n| where strlen(ContainerID)>0\n| distinct ContainerID, PodLabel, Namespace, PodIp, Name;\nContainerLog\n| where ContainerID in (ContainerIdList)\n| where LogEntry contains \"HTTP/1.1\" and LogEntry !contains \"/airflow/health\"\n| lookup kind=leftouter (ContainerIdList) on ContainerID\n| project-away Image, ImageTag, Repository, Name, TimeOfCommand\n| project-rename PodName=Name1\n| parse kind=regex PodName with clusterName \"-airflow-web-[[:graph:]]\"  \n| parse kind=regex LogEntry with '[[:graph:]] HTTP/1.1\" ' values\n| extend status = toint(split(values, \" \")[0]), timeTaken = toint(split(values, \" \")[1])\n| extend HTTPStatus = case(status between (200 .. 299), \"2XX\",\n                       status between (300 .. 399), \"3XX\",\n                       status between (400 .. 499), \"4XX\",\n                       status between (500 .. 599), \"5XX\",\n                       \"XX\")\n| where HTTPStatus == \"5XX\"\n| summarize ErrorCount = count() by HTTPStatus, bin(TimeGenerated, 1m), clusterName\n| render timechart\n\n",
                   "isOptional": true
                 },
                 {
@@ -262,7 +262,7 @@
               "type": "Extension/Microsoft_OperationsManagementSuite_Workspace/PartType/LogsDashboardPart",
               "settings": {
                 "content": {
-                  "Query": "let ContainerIdList = KubePodInventory\n| where Name has \"airflow-web\"\n| where strlen(ContainerID)>0\n| distinct ContainerID, PodLabel, Namespace, PodIp, Name;\nContainerLog\n| where ContainerID in (ContainerIdList)\n| where LogEntry contains \"HTTP/1.1\" and LogEntry !contains \"/airflow/health\"\n| lookup kind=leftouter (ContainerIdList) on ContainerID\n| project-away Image, ImageTag, Repository, Name, TimeOfCommand\n| project-rename PodName=Name1\n| parse kind=regex PodName with partitionId \"-airflow-web-[[:graph:]]\"\n| extend dataPartitionId = case(partitionId == \"\", \"common-cluster\",\n                       partitionId)\n| parse kind=regex LogEntry with '[[:graph:]] HTTP/1.1\" ' values\n| extend status = toint(split(values, \" \")[0]), timeTaken = toint(split(values, \" \")[1])\n| extend HTTPStatus = case(status between (200 .. 299), \"2XX\",\n                       status between (300 .. 399), \"3XX\",\n                       status between (400 .. 499), \"4XX\",\n                       status between (500 .. 599), \"5XX\",\n                       \"XX\")\n| where HTTPStatus == \"5XX\"\n| summarize count() by HTTPStatus, bin(TimeGenerated, 15m), dataPartitionId\n| render timechart\n\n",
+                  "Query": "let ContainerIdList = KubePodInventory\n| where Name has \"airflow-web\"\n| where strlen(ContainerID)>0\n| distinct ContainerID, PodLabel, Namespace, PodIp, Name;\nContainerLog\n| where ContainerID in (ContainerIdList)\n| where LogEntry contains \"HTTP/1.1\" and LogEntry !contains \"/airflow/health\"\n| lookup kind=leftouter (ContainerIdList) on ContainerID\n| project-away Image, ImageTag, Repository, Name, TimeOfCommand\n| project-rename PodName=Name1\n| parse kind=regex PodName with partitionId \"-airflow-web-[[:graph:]]\"\n| extend clusterName = case(partitionId == \"\", \"common-cluster\",\n                       partitionId)\n| parse kind=regex LogEntry with '[[:graph:]] HTTP/1.1\" ' values\n| extend status = toint(split(values, \" \")[0]), timeTaken = toint(split(values, \" \")[1])\n| extend HTTPStatus = case(status between (200 .. 299), \"2XX\",\n                       status between (300 .. 399), \"3XX\",\n                       status between (400 .. 499), \"4XX\",\n                       status between (500 .. 599), \"5XX\",\n                       \"XX\")\n| where HTTPStatus == \"5XX\"\n| summarize ErrorCount = count() by HTTPStatus, bin(TimeGenerated, 1m), clusterName\n| render timechart\n\n",
                   "PartTitle": "Number of 5XX Errors"
                 }
               },
@@ -323,7 +323,7 @@
                 },
                 {
                   "name": "Query",
-                  "value": "let apiCall = \"POST /airflow/api/experimental/dags\";\nlet ContainerIdList = KubePodInventory\n| where Name has \"airflow-web\"\n| where strlen(ContainerID)>0\n| distinct ContainerID, PodLabel, Namespace, PodIp, Name;\nContainerLog\n| where ContainerID in (ContainerIdList)\n| where LogEntry contains \"HTTP/1.1\" and LogEntry contains apiCall \n| lookup kind=leftouter (ContainerIdList) on ContainerID\n| project-away Image, ImageTag, Repository, Name, TimeOfCommand\n| project-rename PodName=Name1\n| parse kind=regex PodName with dataPartitionId \"-airflow-web-[[:graph:]]\"  \n| parse kind=regex LogEntry with '[[:graph:]] HTTP/1.1\" ' values\n| extend timeTaken = toint(split(values, \" \")[1])\n| summarize TimeTaken = max(timeTaken) by bin(TimeGenerated, 15m), apiCall, dataPartitionId\n| render timechart\t\n\n",
+                  "value": "let apiCall = \"POST /airflow/api/experimental/dags\";\nlet ContainerIdList = KubePodInventory\n| where Name has \"airflow-web\"\n| where strlen(ContainerID)>0\n| distinct ContainerID, PodLabel, Namespace, PodIp, Name;\nContainerLog\n| where ContainerID in (ContainerIdList)\n| where LogEntry contains \"HTTP/1.1\" and LogEntry contains apiCall \n| lookup kind=leftouter (ContainerIdList) on ContainerID\n| project-away Image, ImageTag, Repository, Name, TimeOfCommand\n| project-rename PodName=Name1\n| parse kind=regex PodName with clusterName \"-airflow-web-[[:graph:]]\"  \n| parse kind=regex LogEntry with '[[:graph:]] HTTP/1.1\" ' values\n| extend timeTaken = toint(split(values, \" \")[1])\n| summarize TimeTaken = max(timeTaken) by TimeGenerated, apiCall, clusterName\n| render timechart\t\n\n",
                   "isOptional": true
                 },
                 {
@@ -386,7 +386,7 @@
               "type": "Extension/Microsoft_OperationsManagementSuite_Workspace/PartType/LogsDashboardPart",
               "settings": {
                 "content": {
-                  "Query": "let apiCall = \"POST /airflow/api/experimental/dags\";\nlet ContainerIdList = KubePodInventory\n| where Name has \"airflow-web\"\n| where strlen(ContainerID)>0\n| distinct ContainerID, PodLabel, Namespace, PodIp, Name;\nContainerLog\n| where ContainerID in (ContainerIdList)\n| where LogEntry contains \"HTTP/1.1\" and LogEntry contains apiCall \n| lookup kind=leftouter (ContainerIdList) on ContainerID\n| project-away Image, ImageTag, Repository, Name, TimeOfCommand\n| project-rename PodName=Name1\n| parse kind=regex PodName with partitionId \"-airflow-web-[[:graph:]]\"\n| extend dataPartitionId = case(partitionId == \"\", \"common-cluster\",\n                       partitionId)\n| parse kind=regex LogEntry with '[[:graph:]] HTTP/1.1\" ' values\n| extend timeTaken = toint(split(values, \" \")[1])\n| summarize TimeTaken = max(timeTaken) by bin(TimeGenerated, 15m), apiCall, dataPartitionId\n| render timechart\t\n\n",
+                  "Query": "let apiCall = \"POST /airflow/api/experimental/dags\";\nlet ContainerIdList = KubePodInventory\n| where Name has \"airflow-web\"\n| where strlen(ContainerID)>0\n| distinct ContainerID, PodLabel, Namespace, PodIp, Name;\nContainerLog\n| where ContainerID in (ContainerIdList)\n| where LogEntry contains \"HTTP/1.1\" and LogEntry contains apiCall \n| lookup kind=leftouter (ContainerIdList) on ContainerID\n| project-away Image, ImageTag, Repository, Name, TimeOfCommand\n| project-rename PodName=Name1\n| parse kind=regex PodName with partitionId \"-airflow-web-[[:graph:]]\"\n| extend clusterName = case(partitionId == \"\", \"common-cluster\",\n                       partitionId)\n| parse kind=regex LogEntry with '[[:graph:]] HTTP/1.1\" ' values\n| extend timeTaken = toint(split(values, \" \")[1])\n| summarize TimeTaken = max(timeTaken) by TimeGenerated, apiCall, clusterName\n| render timechart\t\n\n",
                   "PartTitle": "Latency of Trigger API"
                 }
               },
@@ -468,7 +468,7 @@
                 },
                 {
                   "name": "Query",
-                  "value": "customMetrics\n| where name has \"ti_failures\"\n| parse kind=regex name with \"([0-9a-zA-Z_])*.\" dataPartitionId \".ti_failures\" \n| summarize DagBagSize = max(value) by bin(timestamp, 15m), dataPartitionId\n| render timechart \n",
+                  "value": "customMetrics\n| where name has \"ti_failures\"\n| parse kind=regex name with \"([0-9a-zA-Z_])*.\" clusterName \".ti_failures\" \n| summarize DagBagSize = max(value) by timestamp, clusterName\n| render timechart \n",
                   "isOptional": true
                 },
                 {
@@ -506,7 +506,7 @@
                     ],
                     "splitBy": [
                       {
-                        "name": "dataPartitionId",
+                        "name": "clusterName",
                         "type": "string"
                       }
                     ],
@@ -531,7 +531,7 @@
               "type": "Extension/Microsoft_OperationsManagementSuite_Workspace/PartType/LogsDashboardPart",
               "settings": {
                 "content": {
-                  "Query": "customMetrics\n| where name has \"ti_failures\"\n| parse kind=regex name with @\"([0-9a-zA-Z_])*\\.\" partitionId @\"\\.ti_failures\" \n| extend dataPartitionId = case(partitionId == \"\", \"common-cluster\",\n                       partitionId)\n| summarize TaskInstanceFailures = max(value) by bin(timestamp, 15m), MetricName=\"TaskInstance Failures\", dataPartitionId\n| render timechart \n\n",
+                  "Query": "customMetrics\n| where name has \"ti_failures\"\n| parse kind=regex name with @\"([0-9a-zA-Z_])*\\.\" partitionId @\"\\.ti_failures\" \n| extend clusterName = case(partitionId == \"\", \"common-cluster\",\n                       partitionId)\n| summarize TaskInstanceFailures = max(value) by timestamp, MetricName=\"TaskInstance Failures\", clusterName\n| render timechart \n\n",
                   "PartTitle": "Total Task Failures",
                   "Dimensions": {
                     "xAxis": {
@@ -611,7 +611,7 @@
                 },
                 {
                   "name": "Query",
-                  "value": "customMetrics\n| where name has \"dagbag_size\"\n| parse kind=regex name with \"([0-9a-zA-Z_])*.\" dataPartitionId \".dagbag_size\" \n| summarize DagBagSize = max(value) by bin(timestamp, 15m), dataPartitionId\n| render timechart \n",
+                  "value": "customMetrics\n| where name has \"dagbag_size\"\n| parse kind=regex name with \"([0-9a-zA-Z_])*.\" clusterName \".dagbag_size\" \n| summarize DagBagSize = max(value) by timestamp, clusterName\n| render timechart \n",
                   "isOptional": true
                 },
                 {
@@ -649,7 +649,7 @@
                     ],
                     "splitBy": [
                       {
-                        "name": "dataPartitionId",
+                        "name": "clusterName",
                         "type": "string"
                       }
                     ],
@@ -674,7 +674,7 @@
               "type": "Extension/Microsoft_OperationsManagementSuite_Workspace/PartType/LogsDashboardPart",
               "settings": {
                 "content": {
-                  "Query": "customMetrics\n| where name has \"dagbag_size\"\n| parse kind=regex name with @\"([0-9a-zA-Z_])*\\.\" partitionId @\"\\.dagbag_size\" \n| extend dataPartitionId = case(partitionId == \"\", \"common-cluster\",\n                       partitionId)\n| summarize DagBagSize = max(value) by bin(timestamp, 15m), MetricName = \"dagbag_size\", dataPartitionId\n| render timechart \n\n",
+                  "Query": "customMetrics\n| where name has \"dagbag_size\"\n| parse kind=regex name with @\"([0-9a-zA-Z_])*\\.\" partitionId @\"\\.dagbag_size\" \n| extend clusterName = case(partitionId == \"\", \"common-cluster\",\n                       partitionId)\n| summarize DagBagSize = max(value) by timestamp, MetricName = \"dagbag_size\", clusterName\n| render timechart \n\n",
                   "PartTitle": "DagBag Size",
                   "Dimensions": {
                     "xAxis": {
@@ -754,7 +754,7 @@
                 },
                 {
                   "name": "Query",
-                  "value": "customMetrics\n| where name has \"dag_processing.import_errors\"\n| parse kind=regex name with \"([0-9a-zA-Z_])*.\" dataPartitionId \".dag_processing.import_errors\" \n| summarize DagBagSize = max(value) by bin(timestamp, 15m), dataPartitionId\n| render timechart \n",
+                  "value": "customMetrics\n| where name has \"dag_processing.import_errors\"\n| parse kind=regex name with \"([0-9a-zA-Z_])*.\" clusterName \".dag_processing.import_errors\" \n| summarize DagBagSize = max(value) by timestamp, clusterName\n| render timechart \n",
                   "isOptional": true
                 },
                 {
@@ -812,7 +812,7 @@
               "type": "Extension/Microsoft_OperationsManagementSuite_Workspace/PartType/LogsDashboardPart",
               "settings": {
                 "content": {
-                  "Query": "customMetrics\n| where name has \"dag_processing.import_errors\"\n| parse kind=regex name with @\"([0-9a-zA-Z_])*\\.\" partitionId @\"\\.dag_processing\\.import_errors\" \n| extend dataPartitionId = case(partitionId == \"\", \"common-cluster\",\n                       partitionId)\n| summarize ImportErrors = max(value) by bin(timestamp, 15m),MetricName = \"Import_Errors\", dataPartitionId\n| render timechart ",
+                  "Query": "customMetrics\n| where name has \"dag_processing.import_errors\"\n| parse kind=regex name with @\"([0-9a-zA-Z_])*\\.\" partitionId @\"\\.dag_processing\\.import_errors\" \n| extend clusterName = case(partitionId == \"\", \"common-cluster\",\n                       partitionId)\n| summarize ImportErrors = max(value) by timestamp,MetricName = \"Import_Errors\", clusterName\n| render timechart ",
                   "PartTitle": "Import Errors",
                   "Dimensions": {
                     "xAxis": {
@@ -913,7 +913,7 @@
                 },
                 {
                   "name": "Query",
-                  "value": "customMetrics\n| where name has \"dag_processing.processor_timeouts\"\n| parse kind=regex name with \"([0-9a-zA-Z_])*.\" dataPartitionId \".dag_processing.processor_timeouts\" \n| summarize ProcessorTimeouts = max(value) by bin(timestamp, 15m), dataPartitionId\n| render timechart \n",
+                  "value": "customMetrics\n| where name has \"dag_processing.processor_timeouts\"\n| parse kind=regex name with \"([0-9a-zA-Z_])*.\" clusterName \".dag_processing.processor_timeouts\" \n| summarize ProcessorTimeouts = max(value) by timestamp, clusterName\n| render timechart \n",
                   "isOptional": true
                 },
                 {
@@ -971,7 +971,7 @@
               "type": "Extension/Microsoft_OperationsManagementSuite_Workspace/PartType/LogsDashboardPart",
               "settings": {
                 "content": {
-                  "Query": "customMetrics\n| where name has \"dag_processing.processor_timeouts\"\n| parse kind=regex name with @\"([0-9a-zA-Z_])*\\.\" partitionId @\"\\.dag_processing\\.processor_timeouts\" \n| extend dataPartitionId = case(partitionId == \"\", \"common-cluster\",\n                       partitionId)\n| summarize ProcessorTimeouts = max(value) by bin(timestamp, 15m), MetricName = \"dag_processing.processor_timeouts\", dataPartitionId\n| render timechart \n",
+                  "Query": "customMetrics\n| where name has \"dag_processing.processor_timeouts\"\n| parse kind=regex name with @\"([0-9a-zA-Z_])*\\.\" partitionId @\"\\.dag_processing\\.processor_timeouts\" \n| extend clusterName = case(partitionId == \"\", \"common-cluster\",\n                       partitionId)\n| summarize ProcessorTimeouts = max(value) by timestamp, MetricName = \"dag_processing.processor_timeouts\", clusterName\n| render timechart \n",
                   "PartTitle": "Processor Timeouts",
                   "Dimensions": {
                     "xAxis": {
@@ -1051,7 +1051,7 @@
                 },
                 {
                   "name": "Query",
-                  "value": "customMetrics\n| where name has \"dag_processing.processes\"\n| parse kind=regex name with \"([0-9a-zA-Z_])*.\" dataPartitionId \".dag_processing.processes\" \n| summarize ConcurrentDagProcesses = max(value) by bin(timestamp, 15m), dataPartitionId\n| render timechart \n",
+                  "value": "customMetrics\n| where name has \"dag_processing.processes\"\n| parse kind=regex name with \"([0-9a-zA-Z_])*.\" clusterName \".dag_processing.processes\" \n| summarize ConcurrentDagProcesses = max(value) by timestamp, clusterName\n| render timechart \n",
                   "isOptional": true
                 },
                 {
@@ -1109,7 +1109,7 @@
               "type": "Extension/Microsoft_OperationsManagementSuite_Workspace/PartType/LogsDashboardPart",
               "settings": {
                 "content": {
-                  "Query": "customMetrics\n| where name has \"dag_processing.processes\"\n| parse kind=regex name with @\"([0-9a-zA-Z_])*\\.\" partitionId @\"\\.dag_processing\\.processes\" \n| extend dataPartitionId = case(partitionId == \"\", \"common-cluster\",\n                       partitionId)\n| summarize ConcurrentDagProcesses = max(value) by bin(timestamp, 15m), MetricName=\"dag_processing.processes\", dataPartitionId\n| render timechart \n\n",
+                  "Query": "customMetrics\n| where name has \"dag_processing.processes\"\n| parse kind=regex name with @\"([0-9a-zA-Z_])*\\.\" partitionId @\"\\.dag_processing\\.processes\" \n| extend clusterName = case(partitionId == \"\", \"common-cluster\",\n                       partitionId)\n| summarize ConcurrentDagProcesses = max(value) by timestamp, MetricName=\"dag_processing.processes\", clusterName\n| render timechart \n\n",
                   "PartTitle": "Concurrent Dag Processes",
                   "Dimensions": {
                     "xAxis": {
@@ -1210,7 +1210,7 @@
                 },
                 {
                   "name": "Query",
-                  "value": "customMetrics\n| where name has \"executor.running_tasks\"\n| parse kind=regex name with \"([0-9a-zA-Z_])*.\" dataPartitionId \".executor.running_tasks\" \n| summarize RunningTasks = max(value) by bin(timestamp, 15m), dataPartitionId\n| render timechart \n",
+                  "value": "customMetrics\n| where name has \"executor.running_tasks\"\n| parse kind=regex name with \"([0-9a-zA-Z_])*.\" clusterName \".executor.running_tasks\" \n| summarize RunningTasks = max(value) by timestamp, clusterName\n| render timechart \n",
                   "isOptional": true
                 },
                 {
@@ -1268,7 +1268,7 @@
               "type": "Extension/Microsoft_OperationsManagementSuite_Workspace/PartType/LogsDashboardPart",
               "settings": {
                 "content": {
-                  "Query": "customMetrics\n| where name has \"executor.running_tasks\"\n| parse kind=regex name with @\"([0-9a-zA-Z_])*\\.\" partitionId @\"\\.executor\\.running_tasks\" \n| extend dataPartitionId = case(partitionId == \"\", \"common-cluster\",\n                       partitionId)\n| summarize RunningTasks = max(value) by bin(timestamp, 15m), MetricName=\"executor.running_tasks\", dataPartitionId\n| render timechart \n",
+                  "Query": "customMetrics\n| where name has \"executor.running_tasks\"\n| parse kind=regex name with @\"([0-9a-zA-Z_])*\\.\" partitionId @\"\\.executor\\.running_tasks\" \n| extend clusterName = case(partitionId == \"\", \"common-cluster\",\n                       partitionId)\n| summarize RunningTasks = max(value) by timestamp, MetricName=\"executor.running_tasks\", clusterName\n| render timechart \n",
                   "PartTitle": "Running Tasks on Executor",
                   "Dimensions": {
                     "xAxis": {
@@ -1348,7 +1348,7 @@
                 },
                 {
                   "name": "Query",
-                  "value": "customMetrics\n| where name has \"executor.open_slots\"\n| parse kind=regex name with \"([0-9a-zA-Z_])*.\" dataPartitionId \".executor.open_slots\" \n| summarize RunningTasks = max(value) by bin(timestamp, 15m), dataPartitionId\n| render timechart \n",
+                  "value": "customMetrics\n| where name has \"executor.open_slots\"\n| parse kind=regex name with \"([0-9a-zA-Z_])*.\" clusterName \".executor.open_slots\" \n| summarize RunningTasks = max(value) by timestamp, clusterName\n| render timechart \n",
                   "isOptional": true
                 },
                 {
@@ -1386,7 +1386,7 @@
                     ],
                     "splitBy": [
                       {
-                        "name": "dataPartitionId",
+                        "name": "clusterName",
                         "type": "string"
                       }
                     ],
@@ -1411,7 +1411,7 @@
               "type": "Extension/Microsoft_OperationsManagementSuite_Workspace/PartType/LogsDashboardPart",
               "settings": {
                 "content": {
-                  "Query": "customMetrics\n| where name has \"executor.open_slots\"\n| parse kind=regex name with @\"([0-9a-zA-Z_])*\\.\" partitionId @\"\\.executor\\.open_slots\" \n| extend dataPartitionId = case(partitionId == \"\", \"common-cluster\",\n                       partitionId)\n| summarize OpenSlots = max(value) by bin(timestamp, 15m), MetricName=\"executor.open_slots\", dataPartitionId\n| render timechart \n\n",
+                  "Query": "customMetrics\n| where name has \"executor.open_slots\"\n| parse kind=regex name with @\"([0-9a-zA-Z_])*\\.\" partitionId @\"\\.executor\\.open_slots\" \n| extend clusterName = case(partitionId == \"\", \"common-cluster\",\n                       partitionId)\n| summarize OpenSlots = max(value) by timestamp, MetricName=\"executor.open_slots\", clusterName\n| render timechart \n\n",
                   "PartTitle": "Open Slots on Executor",
                   "Dimensions": {
                     "xAxis": {
@@ -1491,7 +1491,7 @@
                 },
                 {
                   "name": "Query",
-                  "value": "customMetrics\n| where name has \"executor.queued_tasks\"\n| parse kind=regex name with \"([0-9a-zA-Z_])*.\" dataPartitionId \".executor.queued_tasks\" \n| summarize QueuedTasks = max(value) by bin(timestamp, 15m), dataPartitionId\n| render timechart \n",
+                  "value": "customMetrics\n| where name has \"executor.queued_tasks\"\n| parse kind=regex name with \"([0-9a-zA-Z_])*.\" clusterName \".executor.queued_tasks\" \n| summarize QueuedTasks = max(value) by timestamp, clusterName\n| render timechart \n",
                   "isOptional": true
                 },
                 {
@@ -1549,7 +1549,7 @@
               "type": "Extension/Microsoft_OperationsManagementSuite_Workspace/PartType/LogsDashboardPart",
               "settings": {
                 "content": {
-                  "Query": "customMetrics\n| where name has \"executor.queued_tasks\"\n| parse kind=regex name with @\"([0-9a-zA-Z_])*\\.\" partitionId @\"\\.executor\\.queued_tasks\"\n| extend dataPartitionId = case(partitionId == \"\", \"common-cluster\",\n                       partitionId)\n| summarize QueuedTasks = max(value) by bin(timestamp, 15m), MetricName = \"executor.queued_tasks\", dataPartitionId\n| render timechart\n\n",
+                  "Query": "customMetrics\n| where name has \"executor.queued_tasks\"\n| parse kind=regex name with @\"([0-9a-zA-Z_])*\\.\" partitionId @\"\\.executor\\.queued_tasks\"\n| extend clusterName = case(partitionId == \"\", \"common-cluster\",\n                       partitionId)\n| summarize QueuedTasks = max(value) by timestamp, MetricName = \"executor.queued_tasks\", clusterName\n| render timechart\n\n",
                   "PartTitle": "Queued Tasks on Executor",
                   "Dimensions": {
                     "xAxis": {
@@ -1621,13 +1621,13 @@
                 "StartboardPart-LogsDashboardPart-5f661255-7b67-43c0-9ef2-0d49e36dc662"
               ]
             },
-            "dynamicFilter_dataPartitionId": {
+            "dynamicFilter_clusterName": {
               "model": {
                 "operator": "equals",
                 "values": []
               },
               "displayCache": {
-                "name": "dataPartitionId",
+                "name": "clusterName",
                 "value": "none"
               },
               "filteredPartIds": [
