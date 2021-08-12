@@ -75,7 +75,7 @@
                 },
                 {
                   "name": "Query",
-                  "value": "let ContainerIdList = KubePodInventory\n| where Name has \"airflow-web\"\n| where strlen(ContainerID)>0\n| distinct ContainerID, PodLabel, Namespace, PodIp, Name;\nContainerLog\n| where ContainerID in (ContainerIdList)\n| where LogEntry contains \"HTTP/1.1\" and LogEntry !contains \"/airflow/health\"\n| lookup kind=leftouter (ContainerIdList) on ContainerID\n| project-away Image, ImageTag, Repository, Name, TimeOfCommand\n| project-rename PodName=Name1\n| parse kind=regex PodName with clusterName \"-airflow-web-[[:graph:]]\"  \n| parse kind=regex LogEntry with '[[:graph:]] HTTP/1.1\" ' values\n| extend status = toint(split(values, \" \")[0]), timeTaken = toint(split(values, \" \")[1])\n| extend HTTPStatus = case(status between (200 .. 299), \"2XX\",\n                       status between (300 .. 399), \"3XX\",\n                       status between (400 .. 499), \"4XX\",\n                       status between (500 .. 599), \"5XX\",\n                       \"XX\")\n| where HTTPStatus == \"4XX\"\n| summarize ErrorCount = count() by HTTPStatus, bin(TimeGenerated, 1m), clusterName\n| render timechart\n\n",
+                  "value": "let ContainerIdList = KubePodInventory\n| where Name has \"airflow-web\"\n| where strlen(ContainerID)>0\n| distinct ContainerID, PodLabel, Namespace, PodIp, Name;\nContainerLog\n| where ContainerID in (ContainerIdList)\n| where LogEntry contains \"HTTP/1.1\" and LogEntry !contains \"/airflow/health\"\n| lookup kind=leftouter (ContainerIdList) on ContainerID\n| project-away Image, ImageTag, Repository, Name, TimeOfCommand\n| project-rename PodName=Name1\n| parse kind=regex PodName with clusterName \"-airflow-web-[[:graph:]]\"  \n| parse kind=regex LogEntry with '[[:graph:]] HTTP/1.1\" ' values\n| extend status = toint(split(values, \" \")[0]), timeTaken = toint(split(values, \" \")[1])\n| extend HTTPStatus = case(status between (200 .. 299), \"2XX\",\n                       status between (300 .. 399), \"3XX\",\n                       status between (400 .. 499), \"4XX\",\n                       status between (500 .. 599), \"5XX\",\n                       \"XX\")\n| where HTTPStatus == \"4XX\"\n| summarize ErrorCount = count() by clusterName, bin(TimeGenerated, 1m), HTTPStatus\n| render timechart\n\n",
                   "isOptional": true
                 },
                 {
@@ -104,7 +104,7 @@
                     "aggregation": "Sum",
                     "splitBy": [
                       {
-                        "name": "HTTPStatus",
+                        "name": "clusterName",
                         "type": "string"
                       }
                     ],
@@ -138,7 +138,7 @@
               "type": "Extension/Microsoft_OperationsManagementSuite_Workspace/PartType/LogsDashboardPart",
               "settings": {
                 "content": {
-                  "Query": "let ContainerIdList = KubePodInventory\n| where Name has \"airflow-web\"\n| where strlen(ContainerID)>0\n| distinct ContainerID, PodLabel, Namespace, PodIp, Name;\nContainerLog\n| where ContainerID in (ContainerIdList)\n| where LogEntry contains \"HTTP/1.1\" and LogEntry !contains \"/airflow/health\"\n| lookup kind=leftouter (ContainerIdList) on ContainerID\n| project-away Image, ImageTag, Repository, Name, TimeOfCommand\n| project-rename PodName=Name1\n| parse kind=regex PodName with partitionId \"-airflow-web-[[:graph:]]\"\n| extend clusterName = case(partitionId == \"\", \"common-cluster\",\n                       partitionId)\n| parse kind=regex LogEntry with '[[:graph:]] HTTP/1.1\" ' values\n| extend status = toint(split(values, \" \")[0]), timeTaken = toint(split(values, \" \")[1])\n| extend HTTPStatus = case(status between (200 .. 299), \"2XX\",\n                       status between (300 .. 399), \"3XX\",\n                       status between (400 .. 499), \"4XX\",\n                       status between (500 .. 599), \"5XX\",\n                       \"XX\")\n| where HTTPStatus == \"4XX\"\n| summarize ErrorCount = count() by HTTPStatus, bin(TimeGenerated, 1m), clusterName\n| render timechart\n\n",
+                  "Query": "let ContainerIdList = KubePodInventory\n| where Name has \"airflow-web\"\n| where strlen(ContainerID)>0\n| distinct ContainerID, PodLabel, Namespace, PodIp, Name;\nContainerLog\n| where ContainerID in (ContainerIdList)\n| where LogEntry contains \"HTTP/1.1\" and LogEntry !contains \"/airflow/health\"\n| lookup kind=leftouter (ContainerIdList) on ContainerID\n| project-away Image, ImageTag, Repository, Name, TimeOfCommand\n| project-rename PodName=Name1\n| parse kind=regex PodName with partitionId \"-airflow-web-[[:graph:]]\"\n| extend clusterName = case(partitionId == \"\", \"common-cluster\",\n                       partitionId)\n| parse kind=regex LogEntry with '[[:graph:]] HTTP/1.1\" ' values\n| extend status = toint(split(values, \" \")[0]), timeTaken = toint(split(values, \" \")[1])\n| extend HTTPStatus = case(status between (200 .. 299), \"2XX\",\n                       status between (300 .. 399), \"3XX\",\n                       status between (400 .. 499), \"4XX\",\n                       status between (500 .. 599), \"5XX\",\n                       \"XX\")\n| where HTTPStatus == \"4XX\"\n| summarize ErrorCount = count() by clusterName, bin(TimeGenerated, 1m), HTTPStatus\n| render timechart\n\n",
                   "ControlType": "FrameControlChart",
                   "PartTitle": "Number of 4XX Errors",
                   "Dimensions": {
@@ -154,7 +154,7 @@
                     ],
                     "splitBy": [
                       {
-                        "name": "HTTPStatus",
+                        "name": "clusterName",
                         "type": "string"
                       }
                     ],
@@ -215,7 +215,7 @@
                 },
                 {
                   "name": "Query",
-                  "value": "let ContainerIdList = KubePodInventory\n| where Name has \"airflow-web\"\n| where strlen(ContainerID)>0\n| distinct ContainerID, PodLabel, Namespace, PodIp, Name;\nContainerLog\n| where ContainerID in (ContainerIdList)\n| where LogEntry contains \"HTTP/1.1\" and LogEntry !contains \"/airflow/health\"\n| lookup kind=leftouter (ContainerIdList) on ContainerID\n| project-away Image, ImageTag, Repository, Name, TimeOfCommand\n| project-rename PodName=Name1\n| parse kind=regex PodName with clusterName \"-airflow-web-[[:graph:]]\"  \n| parse kind=regex LogEntry with '[[:graph:]] HTTP/1.1\" ' values\n| extend status = toint(split(values, \" \")[0]), timeTaken = toint(split(values, \" \")[1])\n| extend HTTPStatus = case(status between (200 .. 299), \"2XX\",\n                       status between (300 .. 399), \"3XX\",\n                       status between (400 .. 499), \"4XX\",\n                       status between (500 .. 599), \"5XX\",\n                       \"XX\")\n| where HTTPStatus == \"5XX\"\n| summarize ErrorCount = count() by HTTPStatus, bin(TimeGenerated, 1m), clusterName\n| render timechart\n\n",
+                  "value": "let ContainerIdList = KubePodInventory\n| where Name has \"airflow-web\"\n| where strlen(ContainerID)>0\n| distinct ContainerID, PodLabel, Namespace, PodIp, Name;\nContainerLog\n| where ContainerID in (ContainerIdList)\n| where LogEntry contains \"HTTP/1.1\" and LogEntry !contains \"/airflow/health\"\n| lookup kind=leftouter (ContainerIdList) on ContainerID\n| project-away Image, ImageTag, Repository, Name, TimeOfCommand\n| project-rename PodName=Name1\n| parse kind=regex PodName with clusterName \"-airflow-web-[[:graph:]]\"  \n| parse kind=regex LogEntry with '[[:graph:]] HTTP/1.1\" ' values\n| extend status = toint(split(values, \" \")[0]), timeTaken = toint(split(values, \" \")[1])\n| extend HTTPStatus = case(status between (200 .. 299), \"2XX\",\n                       status between (300 .. 399), \"3XX\",\n                       status between (400 .. 499), \"4XX\",\n                       status between (500 .. 599), \"5XX\",\n                       \"XX\")\n| where HTTPStatus == \"5XX\"\n| summarize ErrorCount = count() by clusterName, bin(TimeGenerated, 1m), HTTPStatus\n| render timechart\n\n",
                   "isOptional": true
                 },
                 {
@@ -244,7 +244,7 @@
                     "aggregation": "Sum",
                     "splitBy": [
                       {
-                        "name": "HTTPStatus",
+                        "name": "clusterName",
                         "type": "string"
                       }
                     ],
@@ -278,7 +278,7 @@
               "type": "Extension/Microsoft_OperationsManagementSuite_Workspace/PartType/LogsDashboardPart",
               "settings": {
                 "content": {
-                  "Query": "let ContainerIdList = KubePodInventory\n| where Name has \"airflow-web\"\n| where strlen(ContainerID)>0\n| distinct ContainerID, PodLabel, Namespace, PodIp, Name;\nContainerLog\n| where ContainerID in (ContainerIdList)\n| where LogEntry contains \"HTTP/1.1\" and LogEntry !contains \"/airflow/health\"\n| lookup kind=leftouter (ContainerIdList) on ContainerID\n| project-away Image, ImageTag, Repository, Name, TimeOfCommand\n| project-rename PodName=Name1\n| parse kind=regex PodName with partitionId \"-airflow-web-[[:graph:]]\"\n| extend clusterName = case(partitionId == \"\", \"common-cluster\",\n                       partitionId)\n| parse kind=regex LogEntry with '[[:graph:]] HTTP/1.1\" ' values\n| extend status = toint(split(values, \" \")[0]), timeTaken = toint(split(values, \" \")[1])\n| extend HTTPStatus = case(status between (200 .. 299), \"2XX\",\n                       status between (300 .. 399), \"3XX\",\n                       status between (400 .. 499), \"4XX\",\n                       status between (500 .. 599), \"5XX\",\n                       \"XX\")\n| where HTTPStatus == \"5XX\"\n| summarize ErrorCount = count() by HTTPStatus, bin(TimeGenerated, 1m), clusterName\n| render timechart\n\n",
+                  "Query": "let ContainerIdList = KubePodInventory\n| where Name has \"airflow-web\"\n| where strlen(ContainerID)>0\n| distinct ContainerID, PodLabel, Namespace, PodIp, Name;\nContainerLog\n| where ContainerID in (ContainerIdList)\n| where LogEntry contains \"HTTP/1.1\" and LogEntry !contains \"/airflow/health\"\n| lookup kind=leftouter (ContainerIdList) on ContainerID\n| project-away Image, ImageTag, Repository, Name, TimeOfCommand\n| project-rename PodName=Name1\n| parse kind=regex PodName with partitionId \"-airflow-web-[[:graph:]]\"\n| extend clusterName = case(partitionId == \"\", \"common-cluster\",\n                       partitionId)\n| parse kind=regex LogEntry with '[[:graph:]] HTTP/1.1\" ' values\n| extend status = toint(split(values, \" \")[0]), timeTaken = toint(split(values, \" \")[1])\n| extend HTTPStatus = case(status between (200 .. 299), \"2XX\",\n                       status between (300 .. 399), \"3XX\",\n                       status between (400 .. 499), \"4XX\",\n                       status between (500 .. 599), \"5XX\",\n                       \"XX\")\n| where HTTPStatus == \"5XX\"\n| summarize ErrorCount = count() by clusterName, bin(TimeGenerated, 1m), HTTPStatus\n| render timechart\n\n",
                   "PartTitle": "Number of 5XX Errors",
                   "Dimensions": {
                     "xAxis": {
@@ -293,7 +293,7 @@
                     ],
                     "splitBy": [
                       {
-                        "name": "HTTPStatus",
+                        "name": "clusterName",
                         "type": "string"
                       }
                     ],
@@ -354,7 +354,7 @@
                 },
                 {
                   "name": "Query",
-                  "value": "let apiCall = \"POST /airflow/api/experimental/dags\";\nlet ContainerIdList = KubePodInventory\n| where Name has \"airflow-web\"\n| where strlen(ContainerID)>0\n| distinct ContainerID, PodLabel, Namespace, PodIp, Name;\nContainerLog\n| where ContainerID in (ContainerIdList)\n| where LogEntry contains \"HTTP/1.1\" and LogEntry contains apiCall \n| lookup kind=leftouter (ContainerIdList) on ContainerID\n| project-away Image, ImageTag, Repository, Name, TimeOfCommand\n| project-rename PodName=Name1\n| parse kind=regex PodName with clusterName \"-airflow-web-[[:graph:]]\"  \n| parse kind=regex LogEntry with '[[:graph:]] HTTP/1.1\" ' values\n| extend timeTaken = toint(split(values, \" \")[1])\n| summarize TimeTaken = max(timeTaken) by TimeGenerated, apiCall, clusterName\n| render timechart\t\n\n",
+                  "value": "let apiCall = \"POST /airflow/api/experimental/dags\";\nlet ContainerIdList = KubePodInventory\n| where Name has \"airflow-web\"\n| where strlen(ContainerID)>0\n| distinct ContainerID, PodLabel, Namespace, PodIp, Name;\nContainerLog\n| where ContainerID in (ContainerIdList)\n| where LogEntry contains \"HTTP/1.1\" and LogEntry contains apiCall \n| lookup kind=leftouter (ContainerIdList) on ContainerID\n| project-away Image, ImageTag, Repository, Name, TimeOfCommand\n| project-rename PodName=Name1\n| parse kind=regex PodName with clusterName \"-airflow-web-[[:graph:]]\"  \n| parse kind=regex LogEntry with '[[:graph:]] HTTP/1.1\" ' values\n| extend timeTaken = toint(split(values, \" \")[1])\n| summarize TimeTaken = max(timeTaken) by clusterName, apiCall, TimeGenerated\n| render timechart\t\n\n",
                   "isOptional": true
                 },
                 {
@@ -417,7 +417,7 @@
               "type": "Extension/Microsoft_OperationsManagementSuite_Workspace/PartType/LogsDashboardPart",
               "settings": {
                 "content": {
-                  "Query": "let apiCall = \"POST /airflow/api/experimental/dags\";\nlet ContainerIdList = KubePodInventory\n| where Name has \"airflow-web\"\n| where strlen(ContainerID)>0\n| distinct ContainerID, PodLabel, Namespace, PodIp, Name;\nContainerLog\n| where ContainerID in (ContainerIdList)\n| where LogEntry contains \"HTTP/1.1\" and LogEntry contains apiCall \n| lookup kind=leftouter (ContainerIdList) on ContainerID\n| project-away Image, ImageTag, Repository, Name, TimeOfCommand\n| project-rename PodName=Name1\n| parse kind=regex PodName with partitionId \"-airflow-web-[[:graph:]]\"\n| extend clusterName = case(partitionId == \"\", \"common-cluster\",\n                       partitionId)\n| parse kind=regex LogEntry with '[[:graph:]] HTTP/1.1\" ' values\n| extend timeTaken = toint(split(values, \" \")[1])\n| summarize TimeTaken = max(timeTaken) by TimeGenerated, clusterName, apiCall\n| render timechart\t\n\n",
+                  "Query": "let apiCall = \"POST /airflow/api/experimental/dags\";\nlet ContainerIdList = KubePodInventory\n| where Name has \"airflow-web\"\n| where strlen(ContainerID)>0\n| distinct ContainerID, PodLabel, Namespace, PodIp, Name;\nContainerLog\n| where ContainerID in (ContainerIdList)\n| where LogEntry contains \"HTTP/1.1\" and LogEntry contains apiCall \n| lookup kind=leftouter (ContainerIdList) on ContainerID\n| project-away Image, ImageTag, Repository, Name, TimeOfCommand\n| project-rename PodName=Name1\n| parse kind=regex PodName with partitionId \"-airflow-web-[[:graph:]]\"\n| extend clusterName = case(partitionId == \"\", \"common-cluster\",\n                       partitionId)\n| parse kind=regex LogEntry with '[[:graph:]] HTTP/1.1\" ' values\n| extend timeTaken = toint(split(values, \" \")[1])\n| summarize TimeTaken = max(timeTaken) by clusterName, apiCall, TimeGenerated\n| render timechart\t\n\n",
                   "PartTitle": "Latency of Trigger API",
                   "Dimensions": {
                     "xAxis": {
@@ -597,7 +597,7 @@
                     ]
                   },
                   "PartTitle": "Total Task Failures",
-                  "Query": "customMetrics\n| where name has \"ti_failures\"\n| parse kind=regex name with @\"([0-9a-zA-Z_])*\\.\" partitionId @\"\\.ti_failures\" \n| extend clusterName = case(partitionId == \"\", \"common-cluster\",\n                       partitionId)\n| summarize TaskInstanceFailures = max(value) by timestamp, MetricName=\"TaskInstance Failures\", clusterName\n| render timechart \n\n"
+                  "Query": "customMetrics\n| where name has \"ti_failures\"\n| parse kind=regex name with @\"([0-9a-zA-Z_])*\\.\" partitionId @\"\\.ti_failures\" \n| extend clusterName = case(partitionId == \"\", \"common-cluster\",\n                       partitionId)\n| summarize TaskInstanceFailures = max(value) by timestamp, clusterName, MetricName=\"TaskInstance Failures\"\n| render timechart \n\n"
                 }
               }
             }
