@@ -12,17 +12,17 @@ It represents that currently osdu infra is currently using 1.5 version.
 
 
 Service deployment steps for manual users - 
-1. We've added a variable named isKedaV2Enabled in Values.yaml for following files in helm-charts-azure repo-
+1. We've added a variable named (keda.version_2_enabled: false) in Values.yaml for following files in helm-charts-azure repo-
     - osdu-airflow/values.yaml
     - osdu-azure/osdu-core_services/values.yaml 
     - osdu-azure/osdu-ingest_enrich/values.yaml 
     
-2. Override isKedaV2Enabled value to true.
+2. Override (keda.version_2_enabled: false) value to true.
 3. Make the deployment.
 
 Service deployment steps for automated pipeline users - 
-1. We've added a variable named isKedaV2Enabled in Values.yaml in indexer-queue repo.
-2. Override isKedaV2Enabled value here to true.
+1. We've added a variable named (keda.version_2_enabled: false) in Values.yaml in indexer-queue repo.
+2. Override (keda.version_2_enabled: false) value here to true.
 3. Make the deployment
    
     

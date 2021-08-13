@@ -98,10 +98,6 @@ export ARM_CLIENT_ID=$servicePrincipalId
 export ARM_SUBSCRIPTION_ID="$ARM_SUBSCRIPTION_ID"
 export TF_VAR_central_resources_workspace_name="$centralResourceTerraformWorkspace"
 
-#echo "Fetching ARM access key"
-
-#export ARM_ACCESS_KEY=$(az storage account keys list --subscription "$ARM_SUBSCRIPTION_ID" --account-name "$TF_VAR_remote_state_account" --query "[0].value" --output tsv)
-
 export ARM_ACCESS_KEY="$storageAccountArmAccessKey"
 
 disableFlux
@@ -145,9 +141,6 @@ done
 set -euo pipefail
 
 echo "terraform applying with keda version updated to 2.2.0"
-#curl -kLSs https://community.opengroup.org/osdu/platform/deployment-and-operations/infra-azure-provisioning/-/archive/${repoBranch}/infra-azure-provisioning-${repoBranch}.tar -o master.tar
-#tar xvf master.tar
-#cd infra-azure-provisioning-keda-upgrade-1/infra/templates/osdu-r3-mvp/service_resources
 
 git clone --branch $repoBranch $gitRepo
 
@@ -160,48 +153,3 @@ terraform state rm helm_release.keda
 
 echo "Terraform applying"
 terraform apply -var-file override.tfvars
-
-#cd ../../../../..
-#
-#if [ "$automatedDeployment" = "yes" ]; then
-#
-#  echo "Deploying keda scaled objects for airflow log processor"
-#  #TODO helm install airflow-log-processor-deployment.yaml
-#  #cd infra-azure-provisioning-keda-upgrade-1/charts/airflow/templates
-#
-#  echo "Deploying keda scaled objects for indexer queue"
-#  curl -kLSs https://community.opengroup.org/osdu/platform/system/indexer-queue/-/archive/keda-upgrade/indexer-queue-keda-upgrade.tar -o indexer-queue.tar
-#  tar xvf indexer-queue.tar
-#
-#  cd indexer-queue-keda-upgrade/devops/azure/chart
-#  helm install indexer-queue . -n "$namespace"
-#  cd ../../../..
-#else
-#  echo "Deploying keda scaled objects for ingest-services, logprocessor"
-#  curl -kLSs https://community.opengroup.org/osdu/platform/deployment-and-operations/helm-charts-azure/-/archive/keda-upgrade/helm-charts-azure-keda-upgrade.tar -o helm-charts-azure.tar
-#  tar xvf helm-charts-azure.tar
-#
-#  echo "Deploying osdu-airflow"
-#  cd helm-charts-azure-keda-upgrade/osdu-airflow/
-#  helm install osdu-airflow . -n "$namespace"
-#
-#  echo "Deploying osdu-core_services"
-#  cd ../osdu-azure/osdu-core_services
-#  helm install osdu-core_services . -n "$namespace"
-#
-#  echo "Deploying osdu-ingest_enrich"
-#  cd ../osdu-ingest_enrich/
-#  helm install osdu-ingest_enrich . -n "$namespace"
-#fi
-#
-#rm -rf master*
-#rm -rf indexer-queue*
-#rm -rf helm-charts*
-
-#echo "Enabling host based encryption for the AKS cluster by terraform applying"
-#curl -kLSs https://community.opengroup.org/osdu/platform/deployment-and-operations/infra-azure-provisioning/-/archive/keda-upgrade-2/infra-azure-provisioning-keda-upgrade-2.tar -o master.tar
-#tar xvf master.tar
-
-#cd infra-azure-provisioning-keda-upgrade-2/infra/templates/osdu-r3-mvp/service_resources
-#terraform init -upgrade -backend-config "storage_account_name=$TF_VAR_remote_state_account" -backend-config "container_name=$TF_VAR_remote_state_container"
-#terraform apply -auto-approve
