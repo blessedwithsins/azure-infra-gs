@@ -7,8 +7,8 @@ Airflow autoscaling feature enables autoscaling on airflow components which are 
 
 ## Prerequisites
 
-- Enable AKS cluster autoscaling by follwing instructions [here](docs/autoscaling.md)
-- Upgrade KEDA from 1.5.0 to 2.2.0
+- Enable AKS cluster autoscaling by following instructions [here](docs/autoscaling.md)
+- Upgrade KEDA from 1.5.0 to 2.2.0 by following instructions [here](docs/keda-upgrade.md)
 
 ## FAQ
 

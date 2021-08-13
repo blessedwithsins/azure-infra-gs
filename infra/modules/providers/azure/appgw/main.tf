@@ -108,38 +108,53 @@ resource "azurerm_application_gateway" "main" {
   ### Listener 1 http://mygateway.com
   ########
 
-  http_listener {
-    name                           = format("http-%s", local.listener_name)
-    frontend_ip_configuration_name = local.frontend_ip_configuration_name
-    frontend_port_name             = format("http-%s", local.frontend_port_name)
-    protocol                       = "Http"
+  dynamic "http_listener" {
+    for_each = var.http_enabled ? [1] : []
+    content {
+      name                           = format("http-%s", local.listener_name)
+      frontend_ip_configuration_name = local.frontend_ip_configuration_name
+      frontend_port_name             = format("http-%s", local.frontend_port_name)
+      protocol                       = "Http"
+    }
   }
 
-  frontend_port {
-    name = format("http-%s", local.frontend_port_name)
-    port = 80
+  dynamic "frontend_port" {
+    for_each = var.http_enabled ? [1] : []
+    content {
+      name = format("http-%s", local.frontend_port_name)
+      port = 80
+    }
   }
 
-  request_routing_rule {
-    name                       = format("http-%s", local.request_routing_rule_name)
-    rule_type                  = "Basic"
-    http_listener_name         = format("http-%s", local.listener_name)
-    backend_address_pool_name  = format("http-%s", local.backend_address_pool_name)
-    backend_http_settings_name = format("http-%s", local.backend_http_settings)
+  dynamic "request_routing_rule" {
+    for_each = var.http_enabled ? [1] : []
+    content {
+      name                       = format("http-%s", local.request_routing_rule_name)
+      rule_type                  = "Basic"
+      http_listener_name         = format("http-%s", local.listener_name)
+      backend_address_pool_name  = format("http-%s", local.backend_address_pool_name)
+      backend_http_settings_name = format("http-%s", local.backend_http_settings)
+    }
   }
 
-  backend_http_settings {
-    name                  = format("http-%s", local.backend_http_settings)
-    cookie_based_affinity = "Disabled"
-    port                  = 80
-    protocol              = "Http"
-    request_timeout       = 1
+  dynamic "backend_http_settings" {
+    for_each = var.http_enabled ? [1] : []
+    content {
+      name                  = format("http-%s", local.backend_http_settings)
+      cookie_based_affinity = "Disabled"
+      port                  = 80
+      protocol              = "Http"
+      request_timeout       = var.request_timeout
+    }
   }
 
-  backend_address_pool {
-    name         = format("http-%s", local.backend_address_pool_name)
-    fqdns        = length(var.backend_address_pool_fqdns) == 0 ? null : var.backend_address_pool_fqdns
-    ip_addresses = length(var.backend_address_pool_ips) == 0 ? null : var.backend_address_pool_ips
+  dynamic "backend_address_pool" {
+    for_each = var.http_enabled ? [1] : []
+    content {
+      name         = format("http-%s", local.backend_address_pool_name)
+      fqdns        = length(var.backend_address_pool_fqdns) == 0 ? null : var.backend_address_pool_fqdns
+      ip_addresses = length(var.backend_address_pool_ips) == 0 ? null : var.backend_address_pool_ips
+    }
   }
 
   ########
@@ -177,7 +192,7 @@ resource "azurerm_application_gateway" "main" {
     cookie_based_affinity = "Disabled"
     port                  = 443
     protocol              = "Https"
-    request_timeout       = 1
+    request_timeout       = var.request_timeout
     host_name             = length(var.host_name) == 0 ? null : var.host_name
   }
 

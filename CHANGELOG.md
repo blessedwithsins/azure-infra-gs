@@ -2,6 +2,17 @@
 
 # Current Master
 
+# v0.10.0 (2021-8-8)
+
+__Infra Changes__
+- [[Breaking Change] Zonal Redundancy for Airflow](https://community.opengroup.org/osdu/platform/deployment-and-operations/infra-azure-provisioning/-/issues/181)
+- [Zonal Redundancy for Redis](https://community.opengroup.org/osdu/platform/deployment-and-operations/infra-azure-provisioning/-/issues/180)
+- [Zonal redundancy for AKS and App Gateway](https://community.opengroup.org/osdu/platform/deployment-and-operations/infra-azure-provisioning/-/issues/179)
+
+__Feature Changes__
+- Added Retries and Logging for Legal Tags Cronjob
+- Added Node.js application for LegalTags Update CRON Job
+
 # v0.9.1 (2021-6-27)
 
 __Service Onboarded__
