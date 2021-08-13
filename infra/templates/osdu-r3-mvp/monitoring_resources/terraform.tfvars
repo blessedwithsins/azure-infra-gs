@@ -263,7 +263,7 @@ log-alerts = {
     action-group-name = ["ProdActionGroup", "DevActionGroup"],
     query             = "KubePodInventory\n| where Name has \"airflow\"\n| parse kind=regex Name with partitionId \"-airflow-[[:graph:]]\"\n| extend clusterName = case(partitionId == \"\", \"common-cluster\",\n    partitionId)\n| distinct clusterName \n| extend dummy=1 \n| join kind=inner \n    (AzureMetrics\n    | where ResourceProvider == \"MICROSOFT.DBFORPOSTGRESQL\" \n    | parse kind=regex _ResourceId with @\"\\/subscriptions\\/([0-9a-zA-Z\\-])*\\/resourcegroups\\/([0-9a-zA-Z\\-])*\\/providers\\/microsoft\\.dbforpostgresql\\/servers\\/\" ResourceName\n    | extend dummy=1)\n    on dummy\n| where ResourceName contains clusterName\n| project-away dummy, dummy1\n| where MetricName == \"cpu_percent\"\n| summarize AggregatedValue= avg(Average) by ResourceName, bin(TimeGenerated, 5m), MetricName, clusterName",
     # Threshold value for CPU usage which when exceeded will raise alert
-    trigger-threshold       = 85,
+    trigger-threshold       = 80,
     trigger-operator        = "GreaterThan",
     metric-trigger-operator = "Equal",
     # Number of times the threshold value is allowed to exceed
@@ -387,7 +387,7 @@ log-alerts = {
     # Threshold value for Error Rate of 5XX errors which when exceeded will raise alert
     trigger-threshold       = 20,
     trigger-operator        = "GreaterThan",
-    metric-trigger-operator = "GreaterThan",
+    metric-trigger-operator = "Equal",
     # Number of times the threshold value is allowed to exceed
     metric-trigger-threshold = 1,
     # Type can be based on total breaches or consecutive breaches of threshold.
