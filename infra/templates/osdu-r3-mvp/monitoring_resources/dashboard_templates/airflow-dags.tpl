@@ -138,9 +138,14 @@
 						"type": "Extension/Microsoft_OperationsManagementSuite_Workspace/PartType/LogsDashboardPart",
 						"settings": {
 							"content": {
-								"Query": "customMetrics\n| where name has \"dag_processing.last_runtime\" \n| parse kind=regex name with @\"([0-9a-zA-Z_])*\\.\" partitionId @\"\\.dag_processing\\.last_runtime\\.([0-9a-zA-Z_])*\"\n| extend clusterName = case(partitionId == \"\", \"common-cluster\",\n                       partitionId)\n| parse kind=regex name with @\"([0-9a-zA-Z_\\.])*\\.dag_processing\\.last_runtime\\.\" dagName\n| summarize DagProcessingTime = max(value) by timestamp, dagName, MetricName = \"dag_processing.last_runtime\", clusterName\n| render timechart \n\n",
-								"PartTitle": "Time taken for processing Dag File",
 								"Dimensions": {
+									"aggregation": "Sum",
+									"splitBy": [
+										{
+											"name": "dagName",
+											"type": "string"
+										}
+									],
 									"xAxis": {
 										"name": "timestamp",
 										"type": "datetime"
@@ -150,15 +155,10 @@
 											"name": "DagProcessingTime",
 											"type": "real"
 										}
-									],
-									"splitBy": [
-										{
-											"name": "dagName",
-											"type": "string"
-										}
-									],
-									"aggregation": "Sum"
-								}
+									]
+								},
+								"PartTitle": "Time taken for processing Dag File",
+								"Query": "customMetrics\n| where name has \"dag_processing.last_runtime\" \n| parse kind=regex name with @\"([0-9a-zA-Z_])*\\.\" partitionId @\"\\.dag_processing\\.last_runtime\\.([0-9a-zA-Z_])*\"\n| extend clusterName = case(partitionId == \"\", \"common-cluster\",\n                       partitionId)\n| parse kind=regex name with @\"([0-9a-zA-Z_\\.])*\\.dag_processing\\.last_runtime\\.\" dagName\n| summarize DagProcessingTime = max(value) by timestamp, dagName, MetricName = \"dag_processing.last_runtime\", clusterName\n| render timechart \n\n"
 							}
 						}
 					}
@@ -277,10 +277,18 @@
 						"type": "Extension/Microsoft_OperationsManagementSuite_Workspace/PartType/LogsDashboardPart",
 						"settings": {
 							"content": {
-								"Query": "customMetrics\n| where name has \"dagrun.duration.success\" or name has \"dagrun.duration.failed\"\n| parse kind=regex name with @\"([0-9a-zA-Z_])*\\.\" partitionId @\"\\.dagrun\\.duration\\.([0-9a-zA-Z_\\.])*\"\n| extend clusterName = case(partitionId == \"\", \"common-cluster\",\n                       partitionId)\n| parse kind=regex name with @\"([0-9a-zA-Z_])*\\.dagrun\\.duration\\.([0-9a-zA-Z_])*\\.\" dagName\n| extend duration = value/1000\n| summarize DagrunTime = max(duration) by timestamp, dagName, MetricName = \"dagrun.duration\", clusterName\n| render timechart \n\n",
+								"Query": "customMetrics\n| where name has \"dagrun.duration.success\" or name has \"dagrun.duration.failed\"\n| parse kind=regex name with @\"([0-9a-zA-Z_])*\\.\" partitionId @\"\\.dagrun\\.duration\\.([0-9a-zA-Z_\\.])*\"\n| extend clusterName = case(partitionId == \"\", \"common-cluster\",\n                       partitionId)\n| parse kind=regex name with @\"([0-9a-zA-Z_])*\\.dagrun\\.duration\\.([0-9a-zA-Z_])*\\.\" dagName\n| extend duration = value/1000\n| summarize DagrunTime = max(duration) by timestamp, dagName, MetricName = \"dagrun.duration\", clusterName\n| render columnchart  \n\n",
 								"ControlType": "FrameControlChart",
+								"SpecificChart": "StackedColumn",
 								"PartTitle": "Dagrun Duration",
 								"Dimensions": {
+									"aggregation": "Sum",
+									"splitBy": [
+										{
+											"name": "dagName",
+											"type": "string"
+										}
+									],
 									"xAxis": {
 										"name": "timestamp",
 										"type": "datetime"
@@ -290,14 +298,7 @@
 											"name": "DagrunTime",
 											"type": "real"
 										}
-									],
-									"splitBy": [
-										{
-											"name": "dagName",
-											"type": "string"
-										}
-									],
-									"aggregation": "Sum"
+									]
 								}
 							}
 						}
@@ -417,10 +418,18 @@
 						"type": "Extension/Microsoft_OperationsManagementSuite_Workspace/PartType/LogsDashboardPart",
 						"settings": {
 							"content": {
-								"Query": "customMetrics\n| where name matches regex @\"dag\\.([0-9a-zA-Z_])*\\.([0-9a-zA-Z_])*\\.duration\\z\" \n| parse kind=regex name with @\"([0-9a-zA-Z_])*\\.\" partitionId @\"\\.dag\\.([0-9a-zA-Z_\\.])*\\.duration\"\n| extend clusterName = case(partitionId == \"\", \"common-cluster\",\n                       partitionId)\n| parse kind=regex name with @\"([0-9a-zA-Z_])*\\.dag\\.\" dagIdTaskId @\"\\.duration\"\n| extend duration = value/1000\n| summarize TaskRunDuration = max(duration) by timestamp, taskId = tostring(dagIdTaskId), clusterName, MetricName = \"TaskRun Duration\"\n| render timechart \n\n",
+								"Query": "customMetrics\n| where name matches regex @\"dag\\.([0-9a-zA-Z_])*\\.([0-9a-zA-Z_])*\\.duration\\z\" \n| parse kind=regex name with @\"([0-9a-zA-Z_])*\\.\" partitionId @\"\\.dag\\.([0-9a-zA-Z_\\.])*\\.duration\"\n| extend clusterName = case(partitionId == \"\", \"common-cluster\",\n                       partitionId)\n| parse kind=regex name with @\"([0-9a-zA-Z_])*\\.dag\\.\" dagIdTaskId @\"\\.duration\"\n| extend duration = value\n| summarize TaskRunDuration = max(duration) by timestamp, taskId = tostring(dagIdTaskId), clusterName, MetricName = \"TaskRun Duration\"\n| render columnchart  \n\n",
 								"ControlType": "FrameControlChart",
+								"SpecificChart": "StackedColumn",
 								"PartTitle": "TaskRun Duration",
 								"Dimensions": {
+									"aggregation": "Sum",
+									"splitBy": [
+										{
+											"name": "taskId",
+											"type": "string"
+										}
+									],
 									"xAxis": {
 										"name": "timestamp",
 										"type": "datetime"
@@ -430,14 +439,7 @@
 											"name": "TaskRunDuration",
 											"type": "real"
 										}
-									],
-									"splitBy": [
-										{
-											"name": "taskId",
-											"type": "string"
-										}
-									],
-									"aggregation": "Sum"
+									]
 								}
 							}
 						}
@@ -473,9 +475,9 @@
 							"value": "Past 3 days"
 						},
 						"filteredPartIds": [
-							"StartboardPart-LogsDashboardPart-c875862f-6b48-4cb6-bc31-930249a611f2",
-							"StartboardPart-LogsDashboardPart-c875862f-6b48-4cb6-bc31-930249a611f4",
-							"StartboardPart-LogsDashboardPart-c875862f-6b48-4cb6-bc31-930249a611f6"
+							"StartboardPart-LogsDashboardPart-71118fe6-96f2-4bfe-bdff-41dde9ad700a",
+							"StartboardPart-LogsDashboardPart-71118fe6-96f2-4bfe-bdff-41dde9ad700c",
+							"StartboardPart-LogsDashboardPart-71118fe6-96f2-4bfe-bdff-41dde9ad700e"
 						]
 					},
 					"dynamicFilter_clusterName": {

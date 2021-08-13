@@ -358,7 +358,7 @@ log-alerts = {
     frequency         = 5,
     time-window       = 5,
     action-group-name = ["ProdActionGroup", "DevActionGroup"],
-    query             = "KubePodInventory\n| where Name has \"airflow\"\n| parse kind=regex Name with partitionId \"-airflow-[[:graph:]]\"\n| extend clusterName = case(partitionId == \"\", \"common-cluster\",\n    partitionId)\n| distinct clusterName \n| extend dummy=1 \n| join kind=inner \n    (AzureMetrics\n    | where ResourceProvider == \"MICROSOFT.CACHE\" \n    | parse kind=regex _ResourceId with @\"\\/subscriptions\\/([0-9a-zA-Z\\-])*\\/resourcegroups\\/([0-9a-zA-Z\\-])*\\/providers\\/microsoft\\.cache\\/redis\\/\" ResourceName\n    | extend dummy=1)\n    on dummy\n| where ResourceName contains clusterName\n| project-away dummy, dummy1\n| where MetricName == \"usedmemorypercentage\"\n| summarize AggregatedValue= avg(Average) by ResourceName, bin(TimeGenerated, 5m), MetricName, clusterName",
+    query             = "KubePodInventory\n| where Name has \"airflow\"\n| parse kind=regex Name with partitionId \"-airflow-[[:graph:]]\"\n| extend clusterName = case(partitionId == \"\", \"sr\",\n    partitionId)\n| distinct clusterName \n| extend dummy=1 \n| join kind=inner \n    (AzureMetrics\n    | where ResourceProvider == \"MICROSOFT.CACHE\" \n    | parse kind=regex _ResourceId with @\"\\/subscriptions\\/([0-9a-zA-Z\\-])*\\/resourcegroups\\/([0-9a-zA-Z\\-])*\\/providers\\/microsoft\\.cache\\/redis\\/\" ResourceName\n    | extend dummy=1)\n    on dummy\n| where ResourceName contains clusterName\n| where ResourceName contains \"queue\"\n| project-away dummy, dummy1\n| where MetricName == \"usedmemorypercentage\"\n| extend clusterName = case(clusterName == \"sr\", \"common-cluster\",\n    clusterName)\n| summarize AggregatedValue= max(Total) by ResourceName, bin(TimeGenerated, 5m), MetricName, clusterName",
     # Threshold value for Memory usage which when exceeded will raise alert
     trigger-threshold       = 80,
     trigger-operator        = "GreaterThan",
@@ -454,7 +454,7 @@ log-alerts = {
     frequency         = 5,
     time-window       = 5,
     action-group-name = ["ProdActionGroup", "DevActionGroup"],
-    query             = "customMetrics\n| where name has \"dag_processing.import_errors\"\n| parse kind=regex name with @\"([0-9a-zA-Z_])*\\.\" partitionId @\"\\.dag_processing\\.import_errors\" \n| extend clusterName = case(partitionId == \"\", \"common-cluster\",\n    partitionId)\n| summarize AggregatedValue = max(value) by bin(timestamp, 5m), Operation= strcat(\"MetricName: \", name, \" Data-Partition: \", clusterName )\n",
+    query             = "customMetrics\n| where name has \"dag_processing.import_errors\"\n| parse kind=regex name with @\"([0-9a-zA-Z_])*\\.\" partitionId @\"\\.dag_processing\\.import_errors\" \n| extend clusterName = case(partitionId == \"\", \"common-cluster\",\n    partitionId)\n| summarize AggregatedValue = sum(value) by bin(timestamp, 5m), Operation= strcat(\"MetricName: \", name, \" Data-Partition: \", clusterName )\n",
     # Threshold value for Import Error which when exceeded will raise alert
     trigger-threshold       = 0,
     trigger-operator        = "GreaterThan",
