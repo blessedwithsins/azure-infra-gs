@@ -117,3 +117,7 @@ spec:
               serviceName: policy-service
               servicePort: 80
             path: /api/policy/*
+          - backend:
+              serviceName: seismic-dms-file-metadata-service
+              servicePort: 80
+            path: /seismic-file-metadata/api/v1/*
