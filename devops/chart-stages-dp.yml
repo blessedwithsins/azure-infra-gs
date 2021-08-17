@@ -30,10 +30,9 @@ stages:
         variables:
           - group: '${{ provider.name }} Target Env Secrets - ${{ environment }}'
           - group: '${{ provider.name }} Target Env - ${{ environment }}'
-          - group: '${{ provider.name }} Target Env Data Partition ${{ parameters.DPName }} - ${{ environment }}'
           - group: '${{ provider.name }} Target Env Data Partition ${{ parameters.DPName }} Secrets - ${{ environment }}'
-
-
+          - group: '${{ provider.name }} Target Env Data Partition ${{ parameters.DPName }} - ${{ environment }}'
+          
         jobs:
         - deployment: Deploy
           pool:
