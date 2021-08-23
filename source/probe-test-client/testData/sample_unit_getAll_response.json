@@ -1,0 +1,2185 @@
+{
+    "totalCount": 3695,
+    "offset": 0,
+    "units": [
+      {
+        "essence": {
+          "scaleOffset": {
+            "scale": 1,
+            "offset": 0
+          },
+          "symbol": " ",
+          "baseMeasurement": {
+            "ancestry": "Dimensionless",
+            "type": "UM"
+          },
+          "type": "USO"
+        },
+        "displaySymbol": " ",
+        "name": "dimensionless",
+        "lastModified": "19920228",
+        "source": "APIRP661",
+        "namespace": "RP66",
+        "persistableReference": "{\"scaleOffset\":{\"scale\":1.0,\"offset\":0.0},\"symbol\":\" \",\"baseMeasurement\":{\"ancestry\":\"Dimensionless\",\"type\":\"UM\"},\"type\":\"USO\"}"
+      },
+      {
+        "essence": {
+          "scaleOffset": {
+            "scale": 0.0254,
+            "offset": 0
+          },
+          "symbol": "\"",
+          "baseMeasurement": {
+            "ancestry": "Length",
+            "type": "UM"
+          },
+          "type": "USO"
+        },
+        "deprecationInfo": {
+          "state": "identical",
+          "remarks": "inch",
+          "supersededByUnit": "{\"scaleOffset\":{\"scale\":0.0254,\"offset\":0.0},\"symbol\":\"in\",\"baseMeasurement\":{\"ancestry\":\"Length\",\"type\":\"UM\"},\"type\":\"USO\"}"
+        },
+        "displaySymbol": "\"",
+        "name": "inch",
+        "lastModified": "19920228",
+        "source": "",
+        "namespace": "LIS",
+        "persistableReference": "{\"scaleOffset\":{\"scale\":0.0254,\"offset\":0.0},\"symbol\":\"\\\"\",\"baseMeasurement\":{\"ancestry\":\"Length\",\"type\":\"UM\"},\"type\":\"USO\"}"
+      },
+      {
+        "essence": {
+          "scaleOffset": {
+            "scale": 1.488163943569554,
+            "offset": 0
+          },
+          "symbol": "#/FT",
+          "baseMeasurement": {
+            "ancestry": "Mass_Per_Length",
+            "type": "UM"
+          },
+          "type": "USO"
+        },
+        "deprecationInfo": {
+          "state": "identical",
+          "remarks": "pound mass per foot",
+          "supersededByUnit": "{\"scaleOffset\":{\"scale\":1.488163943569554,\"offset\":0.0},\"symbol\":\"lbm/ft\",\"baseMeasurement\":{\"ancestry\":\"Mass_Per_Length\",\"type\":\"UM\"},\"type\":\"USO\"}"
+        },
+        "displaySymbol": "#/FT",
+        "name": "pound mass per foot",
+        "lastModified": "19941008",
+        "source": "LOGDB",
+        "namespace": "LIS",
+        "persistableReference": "{\"scaleOffset\":{\"scale\":1.488163943569554,\"offset\":0.0},\"symbol\":\"#/FT\",\"baseMeasurement\":{\"ancestry\":\"Mass_Per_Length\",\"type\":\"UM\"},\"type\":\"USO\"}"
+      },
+      {
+        "essence": {
+          "scaleOffset": {
+            "scale": 0.01,
+            "offset": 0
+          },
+          "symbol": "%",
+          "baseMeasurement": {
+            "ancestry": "Dimensionless",
+            "type": "UM"
+          },
+          "type": "USO"
+        },
+        "displaySymbol": "%",
+        "name": "percent",
+        "lastModified": "19920228",
+        "source": "APIRP661",
+        "namespace": "RP66",
+        "persistableReference": "{\"scaleOffset\":{\"scale\":0.01,\"offset\":0.0},\"symbol\":\"%\",\"baseMeasurement\":{\"ancestry\":\"Dimensionless\",\"type\":\"UM\"},\"type\":\"USO\"}"
+      },
+      {
+        "essence": {
+          "abcd": {
+            "a": 0,
+            "b": 0.01,
+            "c": 1,
+            "d": 0
+          },
+          "symbol": "%",
+          "baseMeasurement": {
+            "ancestry": "1",
+            "type": "UM"
+          },
+          "type": "UAD"
+        },
+        "displaySymbol": "%",
+        "name": "percent",
+        "lastModified": "20160322",
+        "source": "Energistics",
+        "namespace": "Energistics_UoM",
+        "persistableReference": "{\"abcd\":{\"a\":0.0,\"b\":0.01,\"c\":1.0,\"d\":0.0},\"symbol\":\"%\",\"baseMeasurement\":{\"ancestry\":\"1\",\"type\":\"UM\"},\"type\":\"UAD\"}"
+      },
+      {
+        "essence": {
+          "scaleOffset": {
+            "scale": 0.01,
+            "offset": 0
+          },
+          "symbol": "% LS",
+          "baseMeasurement": {
+            "ancestry": "Dimensionless",
+            "type": "UM"
+          },
+          "type": "USO"
+        },
+        "deprecationInfo": {
+          "state": "identical",
+          "remarks": "limestone porosity unit",
+          "supersededByUnit": "{\"scaleOffset\":{\"scale\":0.01,\"offset\":0.0},\"symbol\":\"pu\",\"baseMeasurement\":{\"ancestry\":\"Dimensionless\",\"type\":\"UM\"},\"type\":\"USO\"}"
+        },
+        "displaySymbol": "% LS",
+        "name": "limestone porosity unit",
+        "lastModified": "19941008",
+        "source": "LOGDB",
+        "namespace": "LIS",
+        "persistableReference": "{\"scaleOffset\":{\"scale\":0.01,\"offset\":0.0},\"symbol\":\"% LS\",\"baseMeasurement\":{\"ancestry\":\"Dimensionless\",\"type\":\"UM\"},\"type\":\"USO\"}"
+      },
+      {
+        "essence": {
+          "scaleOffset": {
+            "scale": 1,
+            "offset": 0
+          },
+          "symbol": "%/CM",
+          "baseMeasurement": {
+            "ancestry": "Inverse_Length",
+            "type": "UM"
+          },
+          "type": "USO"
+        },
+        "deprecationInfo": {
+          "state": "identical",
+          "remarks": "percent per centimeter",
+          "supersededByUnit": "{\"scaleOffset\":{\"scale\":1.0,\"offset\":0.0},\"symbol\":\"%/cm\",\"baseMeasurement\":{\"ancestry\":\"Inverse_Length\",\"type\":\"UM\"},\"type\":\"USO\"}"
+        },
+        "displaySymbol": "%/CM",
+        "name": "percent per centimeter",
+        "lastModified": "19920228",
+        "source": "",
+        "namespace": "LIS",
+        "persistableReference": "{\"scaleOffset\":{\"scale\":1.0,\"offset\":0.0},\"symbol\":\"%/CM\",\"baseMeasurement\":{\"ancestry\":\"Inverse_Length\",\"type\":\"UM\"},\"type\":\"USO\"}"
+      },
+      {
+        "essence": {
+          "scaleOffset": {
+            "scale": 0.3937007874015748,
+            "offset": 0
+          },
+          "symbol": "%/IN",
+          "baseMeasurement": {
+            "ancestry": "Inverse_Length",
+            "type": "UM"
+          },
+          "type": "USO"
+        },
+        "deprecationInfo": {
+          "state": "identical",
+          "remarks": "percent per inch",
+          "supersededByUnit": "{\"scaleOffset\":{\"scale\":0.3937007874015748,\"offset\":0.0},\"symbol\":\"%/in\",\"baseMeasurement\":{\"ancestry\":\"Inverse_Length\",\"type\":\"UM\"},\"type\":\"USO\"}"
+        },
+        "displaySymbol": "%/IN",
+        "name": "percent per inch",
+        "lastModified": "19920228",
+        "source": "",
+        "namespace": "LIS",
+        "persistableReference": "{\"scaleOffset\":{\"scale\":0.3937007874015748,\"offset\":0.0},\"symbol\":\"%/IN\",\"baseMeasurement\":{\"ancestry\":\"Inverse_Length\",\"type\":\"UM\"},\"type\":\"USO\"}"
+      },
+      {
+        "essence": {
+          "scaleOffset": {
+            "scale": 3.168753554945395e-10,
+            "offset": 0
+          },
+          "symbol": "%/a",
+          "baseMeasurement": {
+            "ancestry": "Frequency",
+            "type": "UM"
+          },
+          "type": "USO"
+        },
+        "displaySymbol": "%/a",
+        "name": "percent per year",
+        "lastModified": "19940930",
+        "source": "APIRP661",
+        "namespace": "RP66",
+        "persistableReference": "{\"scaleOffset\":{\"scale\":3.168753554945395E-10,\"offset\":0.0},\"symbol\":\"%/a\",\"baseMeasurement\":{\"ancestry\":\"Frequency\",\"type\":\"UM\"},\"type\":\"USO\"}"
+      },
+      {
+        "essence": {
+          "scaleOffset": {
+            "scale": 1,
+            "offset": 0
+          },
+          "symbol": "%/cm",
+          "baseMeasurement": {
+            "ancestry": "Inverse_Length",
+            "type": "UM"
+          },
+          "type": "USO"
+        },
+        "displaySymbol": "%/cm",
+        "name": "percent per centimeter",
+        "lastModified": "19920228",
+        "source": "APIRP661",
+        "namespace": "RP66",
+        "persistableReference": "{\"scaleOffset\":{\"scale\":1.0,\"offset\":0.0},\"symbol\":\"%/cm\",\"baseMeasurement\":{\"ancestry\":\"Inverse_Length\",\"type\":\"UM\"},\"type\":\"USO\"}"
+      },
+      {
+        "essence": {
+          "scaleOffset": {
+            "scale": 0.3937007874015748,
+            "offset": 0
+          },
+          "symbol": "%/in",
+          "baseMeasurement": {
+            "ancestry": "Inverse_Length",
+            "type": "UM"
+          },
+          "type": "USO"
+        },
+        "displaySymbol": "%/in",
+        "name": "percent per inch",
+        "lastModified": "19920228",
+        "source": "APIRP661",
+        "namespace": "RP66",
+        "persistableReference": "{\"scaleOffset\":{\"scale\":0.3937007874015748,\"offset\":0.0},\"symbol\":\"%/in\",\"baseMeasurement\":{\"ancestry\":\"Inverse_Length\",\"type\":\"UM\"},\"type\":\"USO\"}"
+      },
+      {
+        "essence": {
+          "scaleOffset": {
+            "scale": 0.01,
+            "offset": 0
+          },
+          "symbol": "%DOL",
+          "baseMeasurement": {
+            "ancestry": "Dimensionless",
+            "type": "UM"
+          },
+          "type": "USO"
+        },
+        "deprecationInfo": {
+          "state": "identical",
+          "remarks": "dolomite porosity unit",
+          "supersededByUnit": "{\"scaleOffset\":{\"scale\":0.01,\"offset\":0.0},\"symbol\":\"pu\",\"baseMeasurement\":{\"ancestry\":\"Dimensionless\",\"type\":\"UM\"},\"type\":\"USO\"}"
+        },
+        "displaySymbol": "%DOL",
+        "name": "dolomite porosity unit",
+        "lastModified": "19941008",
+        "source": "LOGDB",
+        "namespace": "LIS",
+        "persistableReference": "{\"scaleOffset\":{\"scale\":0.01,\"offset\":0.0},\"symbol\":\"%DOL\",\"baseMeasurement\":{\"ancestry\":\"Dimensionless\",\"type\":\"UM\"},\"type\":\"USO\"}"
+      },
+      {
+        "essence": {
+          "scaleOffset": {
+            "scale": 0.01,
+            "offset": 0
+          },
+          "symbol": "%LIM",
+          "baseMeasurement": {
+            "ancestry": "Dimensionless",
+            "type": "UM"
+          },
+          "type": "USO"
+        },
+        "deprecationInfo": {
+          "state": "identical",
+          "remarks": "limestone porosity unit",
+          "supersededByUnit": "{\"scaleOffset\":{\"scale\":0.01,\"offset\":0.0},\"symbol\":\"pu\",\"baseMeasurement\":{\"ancestry\":\"Dimensionless\",\"type\":\"UM\"},\"type\":\"USO\"}"
+        },
+        "displaySymbol": "%LIM",
+        "name": "limestone porosity unit",
+        "lastModified": "19941008",
+        "source": "LOGDB",
+        "namespace": "LIS",
+        "persistableReference": "{\"scaleOffset\":{\"scale\":0.01,\"offset\":0.0},\"symbol\":\"%LIM\",\"baseMeasurement\":{\"ancestry\":\"Dimensionless\",\"type\":\"UM\"},\"type\":\"USO\"}"
+      },
+      {
+        "essence": {
+          "scaleOffset": {
+            "scale": 0.01,
+            "offset": 0
+          },
+          "symbol": "%SAN",
+          "baseMeasurement": {
+            "ancestry": "Dimensionless",
+            "type": "UM"
+          },
+          "type": "USO"
+        },
+        "deprecationInfo": {
+          "state": "identical",
+          "remarks": "sandstone porosity unit",
+          "supersededByUnit": "{\"scaleOffset\":{\"scale\":0.01,\"offset\":0.0},\"symbol\":\"pu\",\"baseMeasurement\":{\"ancestry\":\"Dimensionless\",\"type\":\"UM\"},\"type\":\"USO\"}"
+        },
+        "displaySymbol": "%SAN",
+        "name": "sandstone porosity unit",
+        "lastModified": "19941008",
+        "source": "LOGDB",
+        "namespace": "LIS",
+        "persistableReference": "{\"scaleOffset\":{\"scale\":0.01,\"offset\":0.0},\"symbol\":\"%SAN\",\"baseMeasurement\":{\"ancestry\":\"Dimensionless\",\"type\":\"UM\"},\"type\":\"USO\"}"
+      },
+      {
+        "essence": {
+          "abcd": {
+            "a": 0,
+            "b": 0.01,
+            "c": 1,
+            "d": 0
+          },
+          "symbol": "%[area]",
+          "baseMeasurement": {
+            "ancestry": "1",
+            "type": "UM"
+          },
+          "type": "UAD"
+        },
+        "displaySymbol": "%[area]",
+        "name": "percent [area basis]",
+        "lastModified": "20160322",
+        "source": "Energistics",
+        "namespace": "Energistics_UoM",
+        "persistableReference": "{\"abcd\":{\"a\":0.0,\"b\":0.01,\"c\":1.0,\"d\":0.0},\"symbol\":\"%[area]\",\"baseMeasurement\":{\"ancestry\":\"1\",\"type\":\"UM\"},\"type\":\"UAD\"}"
+      },
+      {
+        "essence": {
+          "abcd": {
+            "a": 0,
+            "b": 0.01,
+            "c": 1,
+            "d": 0
+          },
+          "symbol": "%[mass]",
+          "baseMeasurement": {
+            "ancestry": "1",
+            "type": "UM"
+          },
+          "type": "UAD"
+        },
+        "displaySymbol": "%[mass]",
+        "name": "percent [mass basis]",
+        "lastModified": "20160322",
+        "source": "Energistics",
+        "namespace": "Energistics_UoM",
+        "persistableReference": "{\"abcd\":{\"a\":0.0,\"b\":0.01,\"c\":1.0,\"d\":0.0},\"symbol\":\"%[mass]\",\"baseMeasurement\":{\"ancestry\":\"1\",\"type\":\"UM\"},\"type\":\"UAD\"}"
+      },
+      {
+        "essence": {
+          "abcd": {
+            "a": 0,
+            "b": 0.01,
+            "c": 1,
+            "d": 0
+          },
+          "symbol": "%[molar]",
+          "baseMeasurement": {
+            "ancestry": "1",
+            "type": "UM"
+          },
+          "type": "UAD"
+        },
+        "displaySymbol": "%[molar]",
+        "name": "percent [molar basis]",
+        "lastModified": "20160322",
+        "source": "Energistics",
+        "namespace": "Energistics_UoM",
+        "persistableReference": "{\"abcd\":{\"a\":0.0,\"b\":0.01,\"c\":1.0,\"d\":0.0},\"symbol\":\"%[molar]\",\"baseMeasurement\":{\"ancestry\":\"1\",\"type\":\"UM\"},\"type\":\"UAD\"}"
+      },
+      {
+        "essence": {
+          "abcd": {
+            "a": 0,
+            "b": 0.01,
+            "c": 1,
+            "d": 0
+          },
+          "symbol": "%[vol]",
+          "baseMeasurement": {
+            "ancestry": "1",
+            "type": "UM"
+          },
+          "type": "UAD"
+        },
+        "displaySymbol": "%[vol]",
+        "name": "percent [volume basis]",
+        "lastModified": "20160322",
+        "source": "Energistics",
+        "namespace": "Energistics_UoM",
+        "persistableReference": "{\"abcd\":{\"a\":0.0,\"b\":0.01,\"c\":1.0,\"d\":0.0},\"symbol\":\"%[vol]\",\"baseMeasurement\":{\"ancestry\":\"1\",\"type\":\"UM\"},\"type\":\"UAD\"}"
+      },
+      {
+        "essence": {
+          "scaleOffset": {
+            "scale": 0.3048,
+            "offset": 0
+          },
+          "symbol": "'",
+          "baseMeasurement": {
+            "ancestry": "Length",
+            "type": "UM"
+          },
+          "type": "USO"
+        },
+        "deprecationInfo": {
+          "state": "identical",
+          "remarks": "foot (international)",
+          "supersededByUnit": "{\"scaleOffset\":{\"scale\":0.3048,\"offset\":0.0},\"symbol\":\"ft\",\"baseMeasurement\":{\"ancestry\":\"Length\",\"type\":\"UM\"},\"type\":\"USO\"}"
+        },
+        "displaySymbol": "'",
+        "name": "foot (international)",
+        "lastModified": "19941008",
+        "source": "LOGDB",
+        "namespace": "LIS",
+        "persistableReference": "{\"scaleOffset\":{\"scale\":0.3048,\"offset\":0.0},\"symbol\":\"\\u0027\",\"baseMeasurement\":{\"ancestry\":\"Length\",\"type\":\"UM\"},\"type\":\"USO\"}"
+      },
+      {
+        "essence": {
+          "scaleOffset": {
+            "scale": 0.0000521616447672649,
+            "offset": 0
+          },
+          "symbol": "(MCF/d)/(rev/s)",
+          "baseMeasurement": {
+            "ancestry": "Volume_Per_Rotation",
+            "type": "UM"
+          },
+          "type": "USO"
+        },
+        "displaySymbol": "(MCF/d)/(rev/s)",
+        "name": "(thousand cubic feet per day) per (revolution per second)",
+        "lastModified": "19920716",
+        "source": "",
+        "namespace": "GF",
+        "persistableReference": "{\"scaleOffset\":{\"scale\":5.21616447672649E-5,\"offset\":0.0},\"symbol\":\"(MCF/d)/(rev/s)\",\"baseMeasurement\":{\"ancestry\":\"Volume_Per_Rotation\",\"type\":\"UM\"},\"type\":\"USO\"}"
+      },
+      {
+        "essence": {
+          "scaleOffset": {
+            "scale": 1.559542447900363e-7,
+            "offset": 0
+          },
+          "symbol": "(MSCF/d)/ft/psi",
+          "baseMeasurement": {
+            "ancestry": "Mobility",
+            "type": "UM"
+          },
+          "type": "USO"
+        },
+        "deprecationInfo": {
+          "state": "identical",
+          "remarks": "GeoFrame legacy unit",
+          "supersededByUnit": "{\"scaleOffset\":{\"scale\":1.559542447900363E-7,\"offset\":0.0},\"symbol\":\"1000 ft3/(d.ft.psi)\",\"baseMeasurement\":{\"ancestry\":\"Mobility\",\"type\":\"UM\"},\"type\":\"USO\"}"
+        },
+        "displaySymbol": "(MSCF/d)/ft/psi",
+        "name": "GeoFrame legacy unit",
+        "lastModified": "19930310",
+        "source": "",
+        "namespace": "GF",
+        "persistableReference": "{\"scaleOffset\":{\"scale\":1.559542447900363E-7,\"offset\":0.0},\"symbol\":\"(MSCF/d)/ft/psi\",\"baseMeasurement\":{\"ancestry\":\"Mobility\",\"type\":\"UM\"},\"type\":\"USO\"}"
+      },
+      {
+        "essence": {
+          "scaleOffset": {
+            "scale": 4.753485381200307e-8,
+            "offset": 0
+          },
+          "symbol": "(MSCF/d)/psi",
+          "baseMeasurement": {
+            "ancestry": "Flowrate_Per_Pressure",
+            "type": "UM"
+          },
+          "type": "USO"
+        },
+        "deprecationInfo": {
+          "state": "identical",
+          "remarks": "GeoFrame legacy unit",
+          "supersededByUnit": "{\"scaleOffset\":{\"scale\":4.753485381200307E-8,\"offset\":0.0},\"symbol\":\"1000 ft3/(d.psi)\",\"baseMeasurement\":{\"ancestry\":\"Flowrate_Per_Pressure\",\"type\":\"UM\"},\"type\":\"USO\"}"
+        },
+        "displaySymbol": "(MSCF/d)/psi",
+        "name": "GeoFrame legacy unit",
+        "lastModified": "19930310",
+        "source": "",
+        "namespace": "GF",
+        "persistableReference": "{\"scaleOffset\":{\"scale\":4.753485381200307E-8,\"offset\":0.0},\"symbol\":\"(MSCF/d)/psi\",\"baseMeasurement\":{\"ancestry\":\"Flowrate_Per_Pressure\",\"type\":\"UM\"},\"type\":\"USO\"}"
+      },
+      {
+        "essence": {
+          "scaleOffset": {
+            "scale": 1,
+            "offset": 0
+          },
+          "symbol": "(Pa/sm3/s)^2",
+          "baseMeasurement": {
+            "ancestry": "Jones_Gas_Coeff_A",
+            "type": "UM"
+          },
+          "type": "USO"
+        },
+        "displaySymbol": "(Pa/sm3/s)^2",
+        "lastModified": "20160921",
+        "source": "Petrel",
+        "namespace": "ECL",
+        "persistableReference": "{\"scaleOffset\":{\"scale\":1.0,\"offset\":0.0},\"symbol\":\"(Pa/sm3/s)^2\",\"baseMeasurement\":{\"ancestry\":\"Jones_Gas_Coeff_A\",\"type\":\"UM\"},\"type\":\"USO\"}"
+      },
+      {
+        "essence": {
+          "scaleOffset": {
+            "scale": 1.036409049923824e-8,
+            "offset": 0
+          },
+          "symbol": "(S/m)/(meq/cm3)",
+          "baseMeasurement": {
+            "ancestry": "Counterion_Conductivity",
+            "type": "UM"
+          },
+          "type": "USO"
+        },
+        "displaySymbol": "(S/m)/(meq/cm3)",
+        "name": "(siemen per meter) per (millieqivalent per cubic centimeter)",
+        "lastModified": "20040716",
+        "source": "",
+        "namespace": "GF",
+        "persistableReference": "{\"scaleOffset\":{\"scale\":1.036409049923824E-8,\"offset\":0.0},\"symbol\":\"(S/m)/(meq/cm3)\",\"baseMeasurement\":{\"ancestry\":\"Counterion_Conductivity\",\"type\":\"UM\"},\"type\":\"USO\"}"
+      },
+      {
+        "essence": {
+          "scaleOffset": {
+            "scale": 1.03640904992382e-8,
+            "offset": 0
+          },
+          "symbol": "(S/m)/(meq/cm3)",
+          "baseMeasurement": {
+            "ancestry": "Counterion_Conductivity",
+            "type": "UM"
+          },
+          "type": "USO"
+        },
+        "displaySymbol": "(S/m)/(meq/cm3)",
+        "lastModified": "20160921",
+        "source": "Ocean",
+        "namespace": "ECL",
+        "persistableReference": "{\"scaleOffset\":{\"scale\":1.03640904992382E-8,\"offset\":0.0},\"symbol\":\"(S/m)/(meq/cm3)\",\"baseMeasurement\":{\"ancestry\":\"Counterion_Conductivity\",\"type\":\"UM\"},\"type\":\"USO\"}"
+      },
+      {
+        "essence": {
+          "scaleOffset": {
+            "scale": 8.756181535245122e-10,
+            "offset": 0
+          },
+          "symbol": "(STB/d)/ft/psi",
+          "baseMeasurement": {
+            "ancestry": "Mobility",
+            "type": "UM"
+          },
+          "type": "USO"
+        },
+        "deprecationInfo": {
+          "state": "identical",
+          "remarks": "GeoFrame legacy unit",
+          "supersededByUnit": "{\"scaleOffset\":{\"scale\":8.756181535245122E-10,\"offset\":0.0},\"symbol\":\"bbl/(d.ft.psi)\",\"baseMeasurement\":{\"ancestry\":\"Mobility\",\"type\":\"UM\"},\"type\":\"USO\"}"
+        },
+        "displaySymbol": "(STB/d)/ft/psi",
+        "name": "GeoFrame legacy unit",
+        "lastModified": "19930310",
+        "source": "",
+        "namespace": "GF",
+        "persistableReference": "{\"scaleOffset\":{\"scale\":8.756181535245122E-10,\"offset\":0.0},\"symbol\":\"(STB/d)/ft/psi\",\"baseMeasurement\":{\"ancestry\":\"Mobility\",\"type\":\"UM\"},\"type\":\"USO\"}"
+      },
+      {
+        "essence": {
+          "scaleOffset": {
+            "scale": 2.668884131942713e-10,
+            "offset": 0
+          },
+          "symbol": "(STB/d)/psi",
+          "baseMeasurement": {
+            "ancestry": "Flowrate_Per_Pressure",
+            "type": "UM"
+          },
+          "type": "USO"
+        },
+        "deprecationInfo": {
+          "state": "identical",
+          "remarks": "GeoFrame legacy unit",
+          "supersededByUnit": "{\"scaleOffset\":{\"scale\":2.668884131942713E-10,\"offset\":0.0},\"symbol\":\"bbl/(d.psi)\",\"baseMeasurement\":{\"ancestry\":\"Flowrate_Per_Pressure\",\"type\":\"UM\"},\"type\":\"USO\"}"
+        },
+        "displaySymbol": "(STB/d)/psi",
+        "name": "GeoFrame legacy unit",
+        "lastModified": "19930310",
+        "source": "",
+        "namespace": "GF",
+        "persistableReference": "{\"scaleOffset\":{\"scale\":2.668884131942713E-10,\"offset\":0.0},\"symbol\":\"(STB/d)/psi\",\"baseMeasurement\":{\"ancestry\":\"Flowrate_Per_Pressure\",\"type\":\"UM\"},\"type\":\"USO\"}"
+      },
+      {
+        "essence": {
+          "scaleOffset": {
+            "scale": 74649600.48793,
+            "offset": 0
+          },
+          "symbol": "(bar/mmsm3/d)^2",
+          "baseMeasurement": {
+            "ancestry": "Jones_Gas_Coeff_A",
+            "type": "UM"
+          },
+          "type": "USO"
+        },
+        "displaySymbol": "(bar/mmsm3/d)^2",
+        "lastModified": "20160921",
+        "source": "Petrel",
+        "namespace": "ECL",
+        "persistableReference": "{\"scaleOffset\":{\"scale\":7.464960048793E7,\"offset\":0.0},\"symbol\":\"(bar/mmsm3/d)^2\",\"baseMeasurement\":{\"ancestry\":\"Jones_Gas_Coeff_A\",\"type\":\"UM\"},\"type\":\"USO\"}"
+      },
+      {
+        "essence": {
+          "scaleOffset": {
+            "scale": 74649600487928.5,
+            "offset": 0
+          },
+          "symbol": "(bar/msm3/d)^2",
+          "baseMeasurement": {
+            "ancestry": "Jones_Gas_Coeff_A",
+            "type": "UM"
+          },
+          "type": "USO"
+        },
+        "displaySymbol": "(bar/msm3/d)^2",
+        "lastModified": "20160921",
+        "source": "Petrel",
+        "namespace": "ECL",
+        "persistableReference": "{\"scaleOffset\":{\"scale\":7.46496004879285E13,\"offset\":0.0},\"symbol\":\"(bar/msm3/d)^2\",\"baseMeasurement\":{\"ancestry\":\"Jones_Gas_Coeff_A\",\"type\":\"UM\"},\"type\":\"USO\"}"
+      },
+      {
+        "essence": {
+          "abcd": {
+            "a": 0,
+            "b": 1,
+            "c": 1,
+            "d": 0
+          },
+          "symbol": "(bbl/d)/(bbl/d)",
+          "baseMeasurement": {
+            "ancestry": "1",
+            "type": "UM"
+          },
+          "type": "UAD"
+        },
+        "displaySymbol": "(bbl/d)/(bbl/d)",
+        "name": "(barrel per day) per (barrel per day)",
+        "lastModified": "20160322",
+        "source": "Energistics",
+        "namespace": "Energistics_UoM",
+        "persistableReference": "{\"abcd\":{\"a\":0.0,\"b\":1.0,\"c\":1.0,\"d\":0.0},\"symbol\":\"(bbl/d)/(bbl/d)\",\"baseMeasurement\":{\"ancestry\":\"1\",\"type\":\"UM\"},\"type\":\"UAD\"}"
+      },
+      {
+        "essence": {
+          "scaleOffset": {
+            "scale": 2.92865918060809e-7,
+            "offset": 0
+          },
+          "symbol": "(bbl/d)/(c/s)",
+          "baseMeasurement": {
+            "ancestry": "Volume_Per_Rotation",
+            "type": "UM"
+          },
+          "type": "USO"
+        },
+        "displaySymbol": "(bbl/d)/(c/s)",
+        "name": "(barrel per day) per (cycle per second)",
+        "lastModified": "19920819",
+        "source": "",
+        "namespace": "RP66",
+        "persistableReference": "{\"scaleOffset\":{\"scale\":2.92865918060809E-7,\"offset\":0.0},\"symbol\":\"(bbl/d)/(c/s)\",\"baseMeasurement\":{\"ancestry\":\"Volume_Per_Rotation\",\"type\":\"UM\"},\"type\":\"USO\"}"
+      },
+      {
+        "essence": {
+          "scaleOffset": {
+            "scale": 2.92865901349539e-7,
+            "offset": 0
+          },
+          "symbol": "(bbl/d)/(c/s)",
+          "baseMeasurement": {
+            "ancestry": "Volume_Per_Rotation",
+            "type": "UM"
+          },
+          "type": "USO"
+        },
+        "deprecationInfo": {
+          "state": "corrected",
+          "remarks": "(barrel per day) per (cycle per second)",
+          "supersededByUnit": "{\"scaleOffset\":{\"scale\":2.92865918060809E-7,\"offset\":0.0},\"symbol\":\"bbl.s/(d.c)\",\"baseMeasurement\":{\"ancestry\":\"Volume_Per_Rotation\",\"type\":\"UM\"},\"type\":\"USO\"}"
+        },
+        "displaySymbol": "(bbl/d)/(c/s)",
+        "name": "(barrel per day) per (cycle per second)",
+        "lastModified": "20160322",
+        "source": "",
+        "namespace": "NeedUpdate",
+        "persistableReference": "{\"scaleOffset\":{\"scale\":2.92865901349539E-7,\"offset\":0.0},\"symbol\":\"(bbl/d)/(c/s)\",\"baseMeasurement\":{\"ancestry\":\"Volume_Per_Rotation\",\"type\":\"UM\"},\"type\":\"USO\"}"
+      },
+      {
+        "essence": {
+          "scaleOffset": {
+            "scale": 2.92865918060809e-7,
+            "offset": 0
+          },
+          "symbol": "(bbl/d)/(rev/s)",
+          "baseMeasurement": {
+            "ancestry": "Volume_Per_Rotation",
+            "type": "UM"
+          },
+          "type": "USO"
+        },
+        "displaySymbol": "(bbl/d)/(rev/s)",
+        "name": "GeoFrame legacy unit",
+        "lastModified": "19930310",
+        "source": "",
+        "namespace": "GF",
+        "persistableReference": "{\"scaleOffset\":{\"scale\":2.92865918060809E-7,\"offset\":0.0},\"symbol\":\"(bbl/d)/(rev/s)\",\"baseMeasurement\":{\"ancestry\":\"Volume_Per_Rotation\",\"type\":\"UM\"},\"type\":\"USO\"}"
+      },
+      {
+        "essence": {
+          "scaleOffset": {
+            "scale": 2.92865901349539e-7,
+            "offset": 0
+          },
+          "symbol": "(bbl/d)/(rev/s)",
+          "baseMeasurement": {
+            "ancestry": "Volume_Per_Rotation",
+            "type": "UM"
+          },
+          "type": "USO"
+        },
+        "displaySymbol": "(bbl/d)/(rev/s)",
+        "name": "GeoFrame legacy unit",
+        "lastModified": "20160322",
+        "source": "",
+        "namespace": "NeedUpdate",
+        "persistableReference": "{\"scaleOffset\":{\"scale\":2.92865901349539E-7,\"offset\":0.0},\"symbol\":\"(bbl/d)/(rev/s)\",\"baseMeasurement\":{\"ancestry\":\"Volume_Per_Rotation\",\"type\":\"UM\"},\"type\":\"USO\"}"
+      },
+      {
+        "essence": {
+          "scaleOffset": {
+            "scale": 1236.8475014133,
+            "offset": 0
+          },
+          "symbol": "(c/s)/(ft/min)",
+          "baseMeasurement": {
+            "ancestry": "Rotation_Per_Length",
+            "type": "UM"
+          },
+          "type": "USO"
+        },
+        "displaySymbol": "(c/s)/(ft/min)",
+        "name": "(cycle per second) per (foot per minute)",
+        "lastModified": "19920819",
+        "source": "",
+        "namespace": "RP66",
+        "persistableReference": "{\"scaleOffset\":{\"scale\":1236.8475014133,\"offset\":0.0},\"symbol\":\"(c/s)/(ft/min)\",\"baseMeasurement\":{\"ancestry\":\"Rotation_Per_Length\",\"type\":\"UM\"},\"type\":\"USO\"}"
+      },
+      {
+        "essence": {
+          "scaleOffset": {
+            "scale": 376.991118430775,
+            "offset": 0
+          },
+          "symbol": "(c/s)/(m/min)",
+          "baseMeasurement": {
+            "ancestry": "Rotation_Per_Length",
+            "type": "UM"
+          },
+          "type": "USO"
+        },
+        "displaySymbol": "(c/s)/(m/min)",
+        "name": "(cycle per second) per (meter per minute)",
+        "lastModified": "19920819",
+        "source": "",
+        "namespace": "RP66",
+        "persistableReference": "{\"scaleOffset\":{\"scale\":376.991118430775,\"offset\":0.0},\"symbol\":\"(c/s)/(m/min)\",\"baseMeasurement\":{\"ancestry\":\"Rotation_Per_Length\",\"type\":\"UM\"},\"type\":\"USO\"}"
+      },
+      {
+        "essence": {
+          "scaleOffset": {
+            "scale": 6.28318530717959,
+            "offset": 0
+          },
+          "symbol": "(c/s)/(m/s)",
+          "baseMeasurement": {
+            "ancestry": "Rotation_Per_Length",
+            "type": "UM"
+          },
+          "type": "USO"
+        },
+        "displaySymbol": "(c/s)/(m/s)",
+        "name": "(cycle per second) per (meter per second)",
+        "lastModified": "19920819",
+        "source": "",
+        "namespace": "RP66",
+        "persistableReference": "{\"scaleOffset\":{\"scale\":6.28318530717959,\"offset\":0.0},\"symbol\":\"(c/s)/(m/s)\",\"baseMeasurement\":{\"ancestry\":\"Rotation_Per_Length\",\"type\":\"UM\"},\"type\":\"USO\"}"
+      },
+      {
+        "essence": {
+          "scaleOffset": {
+            "scale": 2.66888406479561e-13,
+            "offset": 0
+          },
+          "symbol": "(cP.RB)/(d.psi)",
+          "baseMeasurement": {
+            "ancestry": "Volume",
+            "type": "UM"
+          },
+          "type": "USO"
+        },
+        "displaySymbol": "(cP.RB)/(d.psi)",
+        "lastModified": "20160921",
+        "source": "Ocean",
+        "namespace": "ECL",
+        "persistableReference": "{\"scaleOffset\":{\"scale\":2.66888406479561E-13,\"offset\":0.0},\"symbol\":\"(cP.RB)/(d.psi)\",\"baseMeasurement\":{\"ancestry\":\"Volume\",\"type\":\"UM\"},\"type\":\"USO\"}"
+      },
+      {
+        "essence": {
+          "scaleOffset": {
+            "scale": 2.66888406479561e-13,
+            "offset": 0
+          },
+          "symbol": "(cP.bbl)/(d.psi)",
+          "baseMeasurement": {
+            "ancestry": "Volume",
+            "type": "UM"
+          },
+          "type": "USO"
+        },
+        "displaySymbol": "(cP.bbl)/(d.psi)",
+        "lastModified": "20160921",
+        "source": "Ocean",
+        "namespace": "ECL",
+        "persistableReference": "{\"scaleOffset\":{\"scale\":2.66888406479561E-13,\"offset\":0.0},\"symbol\":\"(cP.bbl)/(d.psi)\",\"baseMeasurement\":{\"ancestry\":\"Volume\",\"type\":\"UM\"},\"type\":\"USO\"}"
+      },
+      {
+        "essence": {
+          "scaleOffset": {
+            "scale": 2.74145351865559e-18,
+            "offset": 0
+          },
+          "symbol": "(cP.cm3)/(h.atm)",
+          "baseMeasurement": {
+            "ancestry": "Volume",
+            "type": "UM"
+          },
+          "type": "USO"
+        },
+        "displaySymbol": "(cP.cm3)/(h.atm)",
+        "lastModified": "20160921",
+        "source": "Ocean",
+        "namespace": "ECL",
+        "persistableReference": "{\"scaleOffset\":{\"scale\":2.74145351865559E-18,\"offset\":0.0},\"symbol\":\"(cP.cm3)/(h.atm)\",\"baseMeasurement\":{\"ancestry\":\"Volume\",\"type\":\"UM\"},\"type\":\"USO\"}"
+      },
+      {
+        "essence": {
+          "scaleOffset": {
+            "scale": 1.14227229943983e-13,
+            "offset": 0
+          },
+          "symbol": "(cP.m3)/(d.atm)",
+          "baseMeasurement": {
+            "ancestry": "Volume",
+            "type": "UM"
+          },
+          "type": "USO"
+        },
+        "displaySymbol": "(cP.m3)/(d.atm)",
+        "lastModified": "20160921",
+        "source": "Ocean",
+        "namespace": "ECL",
+        "persistableReference": "{\"scaleOffset\":{\"scale\":1.14227229943983E-13,\"offset\":0.0},\"symbol\":\"(cP.m3)/(d.atm)\",\"baseMeasurement\":{\"ancestry\":\"Volume\",\"type\":\"UM\"},\"type\":\"USO\"}"
+      },
+      {
+        "essence": {
+          "scaleOffset": {
+            "scale": 1.15740740740741e-13,
+            "offset": 0
+          },
+          "symbol": "(cP.m3)/(d.bar)",
+          "baseMeasurement": {
+            "ancestry": "Volume",
+            "type": "UM"
+          },
+          "type": "USO"
+        },
+        "displaySymbol": "(cP.m3)/(d.bar)",
+        "lastModified": "20160921",
+        "source": "Ocean",
+        "namespace": "ECL",
+        "persistableReference": "{\"scaleOffset\":{\"scale\":1.15740740740741E-13,\"offset\":0.0},\"symbol\":\"(cP.m3)/(d.bar)\",\"baseMeasurement\":{\"ancestry\":\"Volume\",\"type\":\"UM\"},\"type\":\"USO\"}"
+      },
+      {
+        "essence": {
+          "scaleOffset": {
+            "scale": 36,
+            "offset": 0
+          },
+          "symbol": "(cm.h.K)/J",
+          "baseMeasurement": {
+            "ancestry": "Thermal_Resistivity",
+            "type": "UM"
+          },
+          "type": "USO"
+        },
+        "displaySymbol": "(cm.h.K)/J",
+        "name": "degree kelvin per (joules per centimetre per hour)",
+        "lastModified": "20130807",
+        "source": "SIS/PETREL",
+        "namespace": "RP66",
+        "persistableReference": "{\"scaleOffset\":{\"scale\":36.0,\"offset\":0.0},\"symbol\":\"(cm.h.K)/J\",\"baseMeasurement\":{\"ancestry\":\"Thermal_Resistivity\",\"type\":\"UM\"},\"type\":\"USO\"}"
+      },
+      {
+        "essence": {
+          "scaleOffset": {
+            "scale": 0.0001,
+            "offset": 0
+          },
+          "symbol": "(cm/s)2",
+          "baseMeasurement": {
+            "ancestry": "Velocity_Squared",
+            "type": "UM"
+          },
+          "type": "USO"
+        },
+        "displaySymbol": "(cm/s)2",
+        "name": "squared centimeter per second",
+        "lastModified": "20130807",
+        "source": "SIS/PETREL",
+        "namespace": "RP66",
+        "persistableReference": "{\"scaleOffset\":{\"scale\":1.0E-4,\"offset\":0.0},\"symbol\":\"(cm/s)2\",\"baseMeasurement\":{\"ancestry\":\"Velocity_Squared\",\"type\":\"UM\"},\"type\":\"USO\"}"
+      },
+      {
+        "essence": {
+          "scaleOffset": {
+            "scale": 13.866943597032,
+            "offset": 0
+          },
+          "symbol": "(ft.d.degF)/Btu",
+          "baseMeasurement": {
+            "ancestry": "Thermal_Resistivity",
+            "type": "UM"
+          },
+          "type": "USO"
+        },
+        "displaySymbol": "(ft.d.degF)/Btu",
+        "name": "degree fahrenheit per (British thermal unit per foot per day)",
+        "lastModified": "20130807",
+        "source": "SIS/PETREL",
+        "namespace": "RP66",
+        "persistableReference": "{\"scaleOffset\":{\"scale\":13.866943597032,\"offset\":0.0},\"symbol\":\"(ft.d.degF)/Btu\",\"baseMeasurement\":{\"ancestry\":\"Thermal_Resistivity\",\"type\":\"UM\"},\"type\":\"USO\"}"
+      },
+      {
+        "essence": {
+          "scaleOffset": {
+            "scale": 0.00298906692,
+            "offset": 0
+          },
+          "symbol": "(ft.lbf)/lbm",
+          "baseMeasurement": {
+            "ancestry": "Energy_Per_Mass",
+            "type": "UM"
+          },
+          "type": "USO"
+        },
+        "displaySymbol": "(ft.lbf)/lbm",
+        "lastModified": "20160921",
+        "source": "Petrel",
+        "namespace": "ECL",
+        "persistableReference": "{\"scaleOffset\":{\"scale\":0.00298906692,\"offset\":0.0},\"symbol\":\"(ft.lbf)/lbm\",\"baseMeasurement\":{\"ancestry\":\"Energy_Per_Mass\",\"type\":\"UM\"},\"type\":\"USO\"}"
+      },
+      {
+        "essence": {
+          "scaleOffset": {
+            "scale": 0.09290304,
+            "offset": 0
+          },
+          "symbol": "(ft/s)2",
+          "baseMeasurement": {
+            "ancestry": "Velocity_Squared",
+            "type": "UM"
+          },
+          "type": "USO"
+        },
+        "displaySymbol": "(ft/s)2",
+        "name": "squared foot per second",
+        "lastModified": "20130807",
+        "source": "SIS/PETREL",
+        "namespace": "RP66",
+        "persistableReference": "{\"scaleOffset\":{\"scale\":0.09290304,\"offset\":0.0},\"symbol\":\"(ft/s)2\",\"baseMeasurement\":{\"ancestry\":\"Velocity_Squared\",\"type\":\"UM\"},\"type\":\"USO\"}"
+      },
+      {
+        "essence": {
+          "scaleOffset": {
+            "scale": 1,
+            "offset": 0
+          },
+          "symbol": "(m.K)/W",
+          "baseMeasurement": {
+            "ancestry": "Thermal_Resistivity",
+            "type": "UM"
+          },
+          "type": "USO"
+        },
+        "displaySymbol": "(m.K)/W",
+        "name": "meter degree kelvin per watt",
+        "lastModified": "20130807",
+        "source": "SIS/PETREL",
+        "namespace": "RP66",
+        "persistableReference": "{\"scaleOffset\":{\"scale\":1.0,\"offset\":0.0},\"symbol\":\"(m.K)/W\",\"baseMeasurement\":{\"ancestry\":\"Thermal_Resistivity\",\"type\":\"UM\"},\"type\":\"USO\"}"
+      },
+      {
+        "essence": {
+          "scaleOffset": {
+            "scale": 86.4,
+            "offset": 0
+          },
+          "symbol": "(m.d.K)/kJ",
+          "baseMeasurement": {
+            "ancestry": "Thermal_Resistivity",
+            "type": "UM"
+          },
+          "type": "USO"
+        },
+        "displaySymbol": "(m.d.K)/kJ",
+        "name": "degree kelvin per (kilojoules per metre per day)",
+        "lastModified": "20130807",
+        "source": "SIS/PETREL",
+        "namespace": "RP66",
+        "persistableReference": "{\"scaleOffset\":{\"scale\":86.4,\"offset\":0.0},\"symbol\":\"(m.d.K)/kJ\",\"baseMeasurement\":{\"ancestry\":\"Thermal_Resistivity\",\"type\":\"UM\"},\"type\":\"USO\"}"
+      },
+      {
+        "essence": {
+          "scaleOffset": {
+            "scale": 1,
+            "offset": 0
+          },
+          "symbol": "(m/s)2",
+          "baseMeasurement": {
+            "ancestry": "Velocity_Squared",
+            "type": "UM"
+          },
+          "type": "USO"
+        },
+        "displaySymbol": "(m/s)2",
+        "name": "squared meter per second",
+        "lastModified": "20130516",
+        "source": "",
+        "namespace": "RP66",
+        "persistableReference": "{\"scaleOffset\":{\"scale\":1.0,\"offset\":0.0},\"symbol\":\"(m/s)2\",\"baseMeasurement\":{\"ancestry\":\"Velocity_Squared\",\"type\":\"UM\"},\"type\":\"USO\"}"
+      },
+      {
+        "essence": {
+          "scaleOffset": {
+            "scale": 0.00000184207110060064,
+            "offset": 0
+          },
+          "symbol": "(m3/d)/(c/s)",
+          "baseMeasurement": {
+            "ancestry": "Volume_Per_Rotation",
+            "type": "UM"
+          },
+          "type": "USO"
+        },
+        "displaySymbol": "(m3/d)/(c/s)",
+        "name": "(cubic meter per day) per (cycle per second)",
+        "lastModified": "19920819",
+        "source": "",
+        "namespace": "RP66",
+        "persistableReference": "{\"scaleOffset\":{\"scale\":1.84207110060064E-6,\"offset\":0.0},\"symbol\":\"(m3/d)/(c/s)\",\"baseMeasurement\":{\"ancestry\":\"Volume_Per_Rotation\",\"type\":\"UM\"},\"type\":\"USO\"}"
+      },
+      {
+        "essence": {
+          "abcd": {
+            "a": 0,
+            "b": 1,
+            "c": 1,
+            "d": 0
+          },
+          "symbol": "(m3/d)/(m3/d)",
+          "baseMeasurement": {
+            "ancestry": "1",
+            "type": "UM"
+          },
+          "type": "UAD"
+        },
+        "displaySymbol": "(m3/d)/(m3/d)",
+        "name": "(cubic metre per day) per (cubic metre per day)",
+        "lastModified": "20160322",
+        "source": "Energistics",
+        "namespace": "Energistics_UoM",
+        "persistableReference": "{\"abcd\":{\"a\":0.0,\"b\":1.0,\"c\":1.0,\"d\":0.0},\"symbol\":\"(m3/d)/(m3/d)\",\"baseMeasurement\":{\"ancestry\":\"1\",\"type\":\"UM\"},\"type\":\"UAD\"}"
+      },
+      {
+        "essence": {
+          "scaleOffset": {
+            "scale": 0.00000184207110060064,
+            "offset": 0
+          },
+          "symbol": "(m3/d)/(rev/s)",
+          "baseMeasurement": {
+            "ancestry": "Volume_Per_Rotation",
+            "type": "UM"
+          },
+          "type": "USO"
+        },
+        "deprecationInfo": {
+          "state": "identical",
+          "remarks": "GeoFrame legacy unit",
+          "supersededByUnit": "{\"scaleOffset\":{\"scale\":1.84207110060064E-6,\"offset\":0.0},\"symbol\":\"m3.s/(d.c)\",\"baseMeasurement\":{\"ancestry\":\"Volume_Per_Rotation\",\"type\":\"UM\"},\"type\":\"USO\"}"
+        },
+        "displaySymbol": "(m3/d)/(rev/s)",
+        "name": "GeoFrame legacy unit",
+        "lastModified": "19930310",
+        "source": "",
+        "namespace": "GF",
+        "persistableReference": "{\"scaleOffset\":{\"scale\":1.84207110060064E-6,\"offset\":0.0},\"symbol\":\"(m3/d)/(rev/s)\",\"baseMeasurement\":{\"ancestry\":\"Volume_Per_Rotation\",\"type\":\"UM\"},\"type\":\"USO\"}"
+      },
+      {
+        "essence": {
+          "scaleOffset": {
+            "scale": 0.0000442097064144154,
+            "offset": 0
+          },
+          "symbol": "(m3/h)/(c/s)",
+          "baseMeasurement": {
+            "ancestry": "Volume_Per_Rotation",
+            "type": "UM"
+          },
+          "type": "USO"
+        },
+        "displaySymbol": "(m3/h)/(c/s)",
+        "name": "(cubic meter per hour) per (cycle per second)",
+        "lastModified": "19920819",
+        "source": "",
+        "namespace": "RP66",
+        "persistableReference": "{\"scaleOffset\":{\"scale\":4.42097064144154E-5,\"offset\":0.0},\"symbol\":\"(m3/h)/(c/s)\",\"baseMeasurement\":{\"ancestry\":\"Volume_Per_Rotation\",\"type\":\"UM\"},\"type\":\"USO\"}"
+      },
+      {
+        "essence": {
+          "scaleOffset": {
+            "scale": 0.0000442097064144154,
+            "offset": 0
+          },
+          "symbol": "(m3/h)/(rev/s)",
+          "baseMeasurement": {
+            "ancestry": "Volume_Per_Rotation",
+            "type": "UM"
+          },
+          "type": "USO"
+        },
+        "deprecationInfo": {
+          "state": "identical",
+          "remarks": "GeoFrame legacy unit",
+          "supersededByUnit": "{\"scaleOffset\":{\"scale\":4.42097064144154E-5,\"offset\":0.0},\"symbol\":\"m3.s/(h.c)\",\"baseMeasurement\":{\"ancestry\":\"Volume_Per_Rotation\",\"type\":\"UM\"},\"type\":\"USO\"}"
+        },
+        "displaySymbol": "(m3/h)/(rev/s)",
+        "name": "GeoFrame legacy unit",
+        "lastModified": "19930310",
+        "source": "",
+        "namespace": "GF",
+        "persistableReference": "{\"scaleOffset\":{\"scale\":4.42097064144154E-5,\"offset\":0.0},\"symbol\":\"(m3/h)/(rev/s)\",\"baseMeasurement\":{\"ancestry\":\"Volume_Per_Rotation\",\"type\":\"UM\"},\"type\":\"USO\"}"
+      },
+      {
+        "essence": {
+          "scaleOffset": {
+            "scale": 2.777777777777778e-7,
+            "offset": 0
+          },
+          "symbol": "(m3/h)/kPa",
+          "baseMeasurement": {
+            "ancestry": "Flowrate_Per_Pressure",
+            "type": "UM"
+          },
+          "type": "USO"
+        },
+        "displaySymbol": "(m3/h)/kPa",
+        "name": "(cubic meter per hour) per kilopascal",
+        "lastModified": "19920819",
+        "source": "",
+        "namespace": "RP66",
+        "persistableReference": "{\"scaleOffset\":{\"scale\":2.777777777777778E-7,\"offset\":0.0},\"symbol\":\"(m3/h)/kPa\",\"baseMeasurement\":{\"ancestry\":\"Flowrate_Per_Pressure\",\"type\":\"UM\"},\"type\":\"USO\"}"
+      },
+      {
+        "essence": {
+          "scaleOffset": {
+            "scale": 2.777777777777778e-7,
+            "offset": 0
+          },
+          "symbol": "(m3/h)/m/kPa",
+          "baseMeasurement": {
+            "ancestry": "Mobility",
+            "type": "UM"
+          },
+          "type": "USO"
+        },
+        "deprecationInfo": {
+          "state": "identical",
+          "remarks": "GeoFrame legacy unit",
+          "supersededByUnit": "{\"scaleOffset\":{\"scale\":2.777777777777778E-7,\"offset\":0.0},\"symbol\":\"m3/(h.m.kPa)\",\"baseMeasurement\":{\"ancestry\":\"Mobility\",\"type\":\"UM\"},\"type\":\"USO\"}"
+        },
+        "displaySymbol": "(m3/h)/m/kPa",
+        "name": "GeoFrame legacy unit",
+        "lastModified": "19930310",
+        "source": "",
+        "namespace": "GF",
+        "persistableReference": "{\"scaleOffset\":{\"scale\":2.777777777777778E-7,\"offset\":0.0},\"symbol\":\"(m3/h)/m/kPa\",\"baseMeasurement\":{\"ancestry\":\"Mobility\",\"type\":\"UM\"},\"type\":\"USO\"}"
+      },
+      {
+        "essence": {
+          "scaleOffset": {
+            "scale": 0.159154943091895,
+            "offset": 0
+          },
+          "symbol": "(m3/s)/(c/s)",
+          "baseMeasurement": {
+            "ancestry": "Volume_Per_Rotation",
+            "type": "UM"
+          },
+          "type": "USO"
+        },
+        "displaySymbol": "(m3/s)/(c/s)",
+        "name": "(cubic meter per second) per (cycle per second)",
+        "lastModified": "19920819",
+        "source": "",
+        "namespace": "RP66",
+        "persistableReference": "{\"scaleOffset\":{\"scale\":0.159154943091895,\"offset\":0.0},\"symbol\":\"(m3/s)/(c/s)\",\"baseMeasurement\":{\"ancestry\":\"Volume_Per_Rotation\",\"type\":\"UM\"},\"type\":\"USO\"}"
+      },
+      {
+        "essence": {
+          "scaleOffset": {
+            "scale": 1,
+            "offset": 0
+          },
+          "symbol": "(m3/s)/(m3/s)",
+          "baseMeasurement": {
+            "ancestry": "1",
+            "type": "UM"
+          },
+          "type": "USO"
+        },
+        "displaySymbol": "(m3/s)/(m3/s)",
+        "name": "(cubic metre per second) per (cubic metre per second)",
+        "lastModified": "20160322",
+        "source": "Energistics",
+        "namespace": "Energistics_UoM",
+        "persistableReference": "{\"scaleOffset\":{\"scale\":1.0,\"offset\":0.0},\"symbol\":\"(m3/s)/(m3/s)\",\"baseMeasurement\":{\"ancestry\":\"1\",\"type\":\"UM\"},\"type\":\"USO\"}"
+      },
+      {
+        "essence": {
+          "scaleOffset": {
+            "scale": 0.159154943091895,
+            "offset": 0
+          },
+          "symbol": "(m3/s)/(rev/s)",
+          "baseMeasurement": {
+            "ancestry": "Volume_Per_Rotation",
+            "type": "UM"
+          },
+          "type": "USO"
+        },
+        "deprecationInfo": {
+          "state": "identical",
+          "remarks": "GeoFrame legacy unit",
+          "supersededByUnit": "{\"scaleOffset\":{\"scale\":0.159154943091895,\"offset\":0.0},\"symbol\":\"m3.s/(s.c)\",\"baseMeasurement\":{\"ancestry\":\"Volume_Per_Rotation\",\"type\":\"UM\"},\"type\":\"USO\"}"
+        },
+        "displaySymbol": "(m3/s)/(rev/s)",
+        "name": "GeoFrame legacy unit",
+        "lastModified": "19930310",
+        "source": "",
+        "namespace": "GF",
+        "persistableReference": "{\"scaleOffset\":{\"scale\":0.159154943091895,\"offset\":0.0},\"symbol\":\"(m3/s)/(rev/s)\",\"baseMeasurement\":{\"ancestry\":\"Volume_Per_Rotation\",\"type\":\"UM\"},\"type\":\"USO\"}"
+      },
+      {
+        "essence": {
+          "scaleOffset": {
+            "scale": 1,
+            "offset": 0
+          },
+          "symbol": "(m3/s)/Pa",
+          "baseMeasurement": {
+            "ancestry": "Flowrate_Per_Pressure",
+            "type": "UM"
+          },
+          "type": "USO"
+        },
+        "displaySymbol": "(m3/s)/Pa",
+        "lastModified": "20160921",
+        "source": "Ocean",
+        "namespace": "ECL",
+        "persistableReference": "{\"scaleOffset\":{\"scale\":1.0,\"offset\":0.0},\"symbol\":\"(m3/s)/Pa\",\"baseMeasurement\":{\"ancestry\":\"Flowrate_Per_Pressure\",\"type\":\"UM\"},\"type\":\"USO\"}"
+      },
+      {
+        "essence": {
+          "scaleOffset": {
+            "scale": 1,
+            "offset": 0
+          },
+          "symbol": "(m3/s)/Pa2",
+          "baseMeasurement": {
+            "ancestry": "Flowrate_Per_Pressure_Per_Pressure",
+            "type": "UM"
+          },
+          "type": "USO"
+        },
+        "displaySymbol": "(m3/s)/Pa2",
+        "name": "(cubic meter per second) per pascal per pascal",
+        "lastModified": "20130807",
+        "source": "SIS/PETREL",
+        "namespace": "RP66",
+        "persistableReference": "{\"scaleOffset\":{\"scale\":1.0,\"offset\":0.0},\"symbol\":\"(m3/s)/Pa2\",\"baseMeasurement\":{\"ancestry\":\"Flowrate_Per_Pressure_Per_Pressure\",\"type\":\"UM\"},\"type\":\"USO\"}"
+      },
+      {
+        "essence": {
+          "scaleOffset": {
+            "scale": 0.000001,
+            "offset": 0
+          },
+          "symbol": "(mV/V)^2",
+          "baseMeasurement": {
+            "ancestry": "Dimensionless",
+            "type": "UM"
+          },
+          "type": "USO"
+        },
+        "displaySymbol": "(mV/V)^2",
+        "name": "(millivolt per volt) squared",
+        "lastModified": "19970424",
+        "source": "",
+        "namespace": "GF",
+        "persistableReference": "{\"scaleOffset\":{\"scale\":1.0E-6,\"offset\":0.0},\"symbol\":\"(mV/V)^2\",\"baseMeasurement\":{\"ancestry\":\"Dimensionless\",\"type\":\"UM\"},\"type\":\"USO\"}"
+      },
+      {
+        "essence": {
+          "scaleOffset": {
+            "scale": 442563545.584546,
+            "offset": 0
+          },
+          "symbol": "(psi/mmscf/d)^2",
+          "baseMeasurement": {
+            "ancestry": "Jones_Gas_Coeff_A",
+            "type": "UM"
+          },
+          "type": "USO"
+        },
+        "displaySymbol": "(psi/mmscf/d)^2",
+        "lastModified": "20160921",
+        "source": "Petrel",
+        "namespace": "ECL",
+        "persistableReference": "{\"scaleOffset\":{\"scale\":4.42563545584546E8,\"offset\":0.0},\"symbol\":\"(psi/mmscf/d)^2\",\"baseMeasurement\":{\"ancestry\":\"Jones_Gas_Coeff_A\",\"type\":\"UM\"},\"type\":\"USO\"}"
+      },
+      {
+        "essence": {
+          "scaleOffset": {
+            "scale": 1236.8475014133,
+            "offset": 0
+          },
+          "symbol": "(rev/s)/(ft/min)",
+          "baseMeasurement": {
+            "ancestry": "Rotation_Per_Length",
+            "type": "UM"
+          },
+          "type": "USO"
+        },
+        "displaySymbol": "(rev/s)/(ft/min)",
+        "name": "GeoFrame legacy unit",
+        "lastModified": "19930310",
+        "source": "",
+        "namespace": "GF",
+        "persistableReference": "{\"scaleOffset\":{\"scale\":1236.8475014133,\"offset\":0.0},\"symbol\":\"(rev/s)/(ft/min)\",\"baseMeasurement\":{\"ancestry\":\"Rotation_Per_Length\",\"type\":\"UM\"},\"type\":\"USO\"}"
+      },
+      {
+        "essence": {
+          "scaleOffset": {
+            "scale": 376.991118430775,
+            "offset": 0
+          },
+          "symbol": "(rev/s)/(m/min)",
+          "baseMeasurement": {
+            "ancestry": "Rotation_Per_Length",
+            "type": "UM"
+          },
+          "type": "USO"
+        },
+        "deprecationInfo": {
+          "state": "identical",
+          "remarks": "GeoFrame legacy unit",
+          "supersededByUnit": "{\"scaleOffset\":{\"scale\":376.991118430775,\"offset\":0.0},\"symbol\":\"c.min/(s.m)\",\"baseMeasurement\":{\"ancestry\":\"Rotation_Per_Length\",\"type\":\"UM\"},\"type\":\"USO\"}"
+        },
+        "displaySymbol": "(rev/s)/(m/min)",
+        "name": "GeoFrame legacy unit",
+        "lastModified": "19930310",
+        "source": "",
+        "namespace": "GF",
+        "persistableReference": "{\"scaleOffset\":{\"scale\":376.991118430775,\"offset\":0.0},\"symbol\":\"(rev/s)/(m/min)\",\"baseMeasurement\":{\"ancestry\":\"Rotation_Per_Length\",\"type\":\"UM\"},\"type\":\"USO\"}"
+      },
+      {
+        "essence": {
+          "scaleOffset": {
+            "scale": 6.28318530717959,
+            "offset": 0
+          },
+          "symbol": "(rev/s)/(m/s)",
+          "baseMeasurement": {
+            "ancestry": "Rotation_Per_Length",
+            "type": "UM"
+          },
+          "type": "USO"
+        },
+        "deprecationInfo": {
+          "state": "identical",
+          "remarks": "GeoFrame legacy unit",
+          "supersededByUnit": "{\"scaleOffset\":{\"scale\":6.28318530717959,\"offset\":0.0},\"symbol\":\"c.s/(s.m)\",\"baseMeasurement\":{\"ancestry\":\"Rotation_Per_Length\",\"type\":\"UM\"},\"type\":\"USO\"}"
+        },
+        "displaySymbol": "(rev/s)/(m/s)",
+        "name": "GeoFrame legacy unit",
+        "lastModified": "19930310",
+        "source": "",
+        "namespace": "GF",
+        "persistableReference": "{\"scaleOffset\":{\"scale\":6.28318530717959,\"offset\":0.0},\"symbol\":\"(rev/s)/(m/s)\",\"baseMeasurement\":{\"ancestry\":\"Rotation_Per_Length\",\"type\":\"UM\"},\"type\":\"USO\"}"
+      },
+      {
+        "essence": {
+          "scaleOffset": {
+            "scale": 1,
+            "offset": 0
+          },
+          "symbol": "---",
+          "baseMeasurement": {
+            "ancestry": "Dimensionless",
+            "type": "UM"
+          },
+          "type": "USO"
+        },
+        "deprecationInfo": {
+          "state": "identical",
+          "remarks": "none",
+          "supersededByUnit": "{\"scaleOffset\":{\"scale\":1.0,\"offset\":0.0},\"symbol\":\" \",\"baseMeasurement\":{\"ancestry\":\"Dimensionless\",\"type\":\"UM\"},\"type\":\"USO\"}"
+        },
+        "displaySymbol": "---",
+        "name": "none",
+        "lastModified": "19941008",
+        "source": "LOGDB",
+        "namespace": "LIS",
+        "persistableReference": "{\"scaleOffset\":{\"scale\":1.0,\"offset\":0.0},\"symbol\":\"---\",\"baseMeasurement\":{\"ancestry\":\"Dimensionless\",\"type\":\"UM\"},\"type\":\"USO\"}"
+      },
+      {
+        "essence": {
+          "scaleOffset": {
+            "scale": 1,
+            "offset": 0
+          },
+          "symbol": "----",
+          "baseMeasurement": {
+            "ancestry": "Dimensionless",
+            "type": "UM"
+          },
+          "type": "USO"
+        },
+        "deprecationInfo": {
+          "state": "identical",
+          "remarks": "dimensionless",
+          "supersededByUnit": "{\"scaleOffset\":{\"scale\":1.0,\"offset\":0.0},\"symbol\":\" \",\"baseMeasurement\":{\"ancestry\":\"Dimensionless\",\"type\":\"UM\"},\"type\":\"USO\"}"
+        },
+        "displaySymbol": "----",
+        "name": "dimensionless",
+        "lastModified": "19920228",
+        "source": "",
+        "namespace": "LIS",
+        "persistableReference": "{\"scaleOffset\":{\"scale\":1.0,\"offset\":0.0},\"symbol\":\"----\",\"baseMeasurement\":{\"ancestry\":\"Dimensionless\",\"type\":\"UM\"},\"type\":\"USO\"}"
+      },
+      {
+        "essence": {
+          "scaleOffset": {
+            "scale": 1,
+            "offset": 0
+          },
+          "symbol": "-DB",
+          "baseMeasurement": {
+            "ancestry": "Attenuation",
+            "type": "UM"
+          },
+          "type": "USO"
+        },
+        "deprecationInfo": {
+          "state": "identical",
+          "remarks": "decibel",
+          "supersededByUnit": "{\"scaleOffset\":{\"scale\":1.0,\"offset\":0.0},\"symbol\":\"dB\",\"baseMeasurement\":{\"ancestry\":\"Attenuation\",\"type\":\"UM\"},\"type\":\"USO\"}"
+        },
+        "displaySymbol": "-DB",
+        "name": "decibel",
+        "lastModified": "19970424",
+        "source": "",
+        "namespace": "GF",
+        "persistableReference": "{\"scaleOffset\":{\"scale\":1.0,\"offset\":0.0},\"symbol\":\"-DB\",\"baseMeasurement\":{\"ancestry\":\"Attenuation\",\"type\":\"UM\"},\"type\":\"USO\"}"
+      },
+      {
+        "essence": {
+          "scaleOffset": {
+            "scale": 1,
+            "offset": 0
+          },
+          "symbol": "-dB",
+          "baseMeasurement": {
+            "ancestry": "Attenuation",
+            "type": "UM"
+          },
+          "type": "USO"
+        },
+        "deprecationInfo": {
+          "state": "identical",
+          "remarks": "decibel",
+          "supersededByUnit": "{\"scaleOffset\":{\"scale\":1.0,\"offset\":0.0},\"symbol\":\"dB\",\"baseMeasurement\":{\"ancestry\":\"Attenuation\",\"type\":\"UM\"},\"type\":\"USO\"}"
+        },
+        "displaySymbol": "-dB",
+        "name": "decibel",
+        "lastModified": "19970424",
+        "source": "",
+        "namespace": "GF",
+        "persistableReference": "{\"scaleOffset\":{\"scale\":1.0,\"offset\":0.0},\"symbol\":\"-dB\",\"baseMeasurement\":{\"ancestry\":\"Attenuation\",\"type\":\"UM\"},\"type\":\"USO\"}"
+      },
+      {
+        "essence": {
+          "scaleOffset": {
+            "scale": 0.00254,
+            "offset": 0
+          },
+          "symbol": ".1IN",
+          "baseMeasurement": {
+            "ancestry": "Length",
+            "type": "UM"
+          },
+          "type": "USO"
+        },
+        "deprecationInfo": {
+          "state": "identical",
+          "remarks": "tenth inch",
+          "supersededByUnit": "{\"scaleOffset\":{\"scale\":0.00254,\"offset\":0.0},\"symbol\":\"0.1 in\",\"baseMeasurement\":{\"ancestry\":\"Length\",\"type\":\"UM\"},\"type\":\"USO\"}"
+        },
+        "displaySymbol": ".1IN",
+        "name": "tenth inch",
+        "lastModified": "19920228",
+        "source": "",
+        "namespace": "LIS",
+        "persistableReference": "{\"scaleOffset\":{\"scale\":0.00254,\"offset\":0.0},\"symbol\":\".1IN\",\"baseMeasurement\":{\"ancestry\":\"Length\",\"type\":\"UM\"},\"type\":\"USO\"}"
+      },
+      {
+        "essence": {
+          "scaleOffset": {
+            "scale": 0.00254,
+            "offset": 0
+          },
+          "symbol": ".1in.",
+          "baseMeasurement": {
+            "ancestry": "Length",
+            "type": "UM"
+          },
+          "type": "USO"
+        },
+        "deprecationInfo": {
+          "state": "identical",
+          "remarks": "GeoFrame legacy unit",
+          "supersededByUnit": "{\"scaleOffset\":{\"scale\":0.00254,\"offset\":0.0},\"symbol\":\"0.1 in\",\"baseMeasurement\":{\"ancestry\":\"Length\",\"type\":\"UM\"},\"type\":\"USO\"}"
+        },
+        "displaySymbol": ".1in.",
+        "name": "GeoFrame legacy unit",
+        "lastModified": "19930310",
+        "source": "",
+        "namespace": "GF",
+        "persistableReference": "{\"scaleOffset\":{\"scale\":0.00254,\"offset\":0.0},\"symbol\":\".1in.\",\"baseMeasurement\":{\"ancestry\":\"Length\",\"type\":\"UM\"},\"type\":\"USO\"}"
+      },
+      {
+        "essence": {
+          "scaleOffset": {
+            "scale": 0.0005,
+            "offset": 0
+          },
+          "symbol": ".5MM",
+          "baseMeasurement": {
+            "ancestry": "Length",
+            "type": "UM"
+          },
+          "type": "USO"
+        },
+        "displaySymbol": ".5MM",
+        "name": "0.5 millimeter",
+        "lastModified": "19941008",
+        "source": "LOGDB",
+        "namespace": "LIS",
+        "persistableReference": "{\"scaleOffset\":{\"scale\":5.0E-4,\"offset\":0.0},\"symbol\":\".5MM\",\"baseMeasurement\":{\"ancestry\":\"Length\",\"type\":\"UM\"},\"type\":\"USO\"}"
+      },
+      {
+        "essence": {
+          "scaleOffset": {
+            "scale": 0.0005,
+            "offset": 0
+          },
+          "symbol": ".5MS",
+          "baseMeasurement": {
+            "ancestry": "Time",
+            "type": "UM"
+          },
+          "type": "USO"
+        },
+        "deprecationInfo": {
+          "state": "identical",
+          "remarks": "half millisecond",
+          "supersededByUnit": "{\"scaleOffset\":{\"scale\":5.0E-4,\"offset\":0.0},\"symbol\":\"0.5 ms\",\"baseMeasurement\":{\"ancestry\":\"Time\",\"type\":\"UM\"},\"type\":\"USO\"}"
+        },
+        "displaySymbol": ".5MS",
+        "name": "half millisecond",
+        "lastModified": "19920228",
+        "source": "",
+        "namespace": "LIS",
+        "persistableReference": "{\"scaleOffset\":{\"scale\":5.0E-4,\"offset\":0.0},\"symbol\":\".5MS\",\"baseMeasurement\":{\"ancestry\":\"Time\",\"type\":\"UM\"},\"type\":\"USO\"}"
+      },
+      {
+        "essence": {
+          "scaleOffset": {
+            "scale": 0.0005,
+            "offset": 0
+          },
+          "symbol": ".5ms.",
+          "baseMeasurement": {
+            "ancestry": "Time",
+            "type": "UM"
+          },
+          "type": "USO"
+        },
+        "deprecationInfo": {
+          "state": "identical",
+          "remarks": "GeoFrame legacy unit",
+          "supersededByUnit": "{\"scaleOffset\":{\"scale\":5.0E-4,\"offset\":0.0},\"symbol\":\"0.5 ms\",\"baseMeasurement\":{\"ancestry\":\"Time\",\"type\":\"UM\"},\"type\":\"USO\"}"
+        },
+        "displaySymbol": ".5ms.",
+        "name": "GeoFrame legacy unit",
+        "lastModified": "19930310",
+        "source": "",
+        "namespace": "GF",
+        "persistableReference": "{\"scaleOffset\":{\"scale\":5.0E-4,\"offset\":0.0},\"symbol\":\".5ms.\",\"baseMeasurement\":{\"ancestry\":\"Time\",\"type\":\"UM\"},\"type\":\"USO\"}"
+      },
+      {
+        "essence": {
+          "scaleOffset": {
+            "scale": 0.00079375,
+            "offset": 0
+          },
+          "symbol": "/32",
+          "baseMeasurement": {
+            "ancestry": "Length",
+            "type": "UM"
+          },
+          "type": "USO"
+        },
+        "deprecationInfo": {
+          "state": "identical",
+          "remarks": "32nd inch",
+          "supersededByUnit": "{\"scaleOffset\":{\"scale\":7.9375E-4,\"offset\":0.0},\"symbol\":\"1/32 in\",\"baseMeasurement\":{\"ancestry\":\"Length\",\"type\":\"UM\"},\"type\":\"USO\"}"
+        },
+        "displaySymbol": "/32",
+        "name": "32nd inch",
+        "lastModified": "20010524",
+        "source": "Finder",
+        "namespace": "FND",
+        "persistableReference": "{\"scaleOffset\":{\"scale\":7.9375E-4,\"offset\":0.0},\"symbol\":\"/32\",\"baseMeasurement\":{\"ancestry\":\"Length\",\"type\":\"UM\"},\"type\":\"USO\"}"
+      },
+      {
+        "essence": {
+          "scaleOffset": {
+            "scale": 0.000396875,
+            "offset": 0
+          },
+          "symbol": "/64",
+          "baseMeasurement": {
+            "ancestry": "Length",
+            "type": "UM"
+          },
+          "type": "USO"
+        },
+        "deprecationInfo": {
+          "state": "identical",
+          "remarks": "64th inch",
+          "supersededByUnit": "{\"scaleOffset\":{\"scale\":3.96875E-4,\"offset\":0.0},\"symbol\":\"1/64 in\",\"baseMeasurement\":{\"ancestry\":\"Length\",\"type\":\"UM\"},\"type\":\"USO\"}"
+        },
+        "displaySymbol": "/64",
+        "name": "64th inch",
+        "lastModified": "20010524",
+        "source": "",
+        "namespace": "FND",
+        "persistableReference": "{\"scaleOffset\":{\"scale\":3.96875E-4,\"offset\":0.0},\"symbol\":\"/64\",\"baseMeasurement\":{\"ancestry\":\"Length\",\"type\":\"UM\"},\"type\":\"USO\"}"
+      },
+      {
+        "essence": {
+          "scaleOffset": {
+            "scale": 0.00001019716212977928,
+            "offset": 0
+          },
+          "symbol": "0.0001 m5/kgf",
+          "baseMeasurement": {
+            "ancestry": "Volume_Per_Pressure",
+            "type": "UM"
+          },
+          "type": "USO"
+        },
+        "displaySymbol": "0.0001 m5/kgf",
+        "name": "(cubic meter) per (kilogram per square centimeter)",
+        "lastModified": "19920228",
+        "source": "APIRP661",
+        "namespace": "RP66",
+        "persistableReference": "{\"scaleOffset\":{\"scale\":1.019716212977928E-5,\"offset\":0.0},\"symbol\":\"0.0001 m5/kgf\",\"baseMeasurement\":{\"ancestry\":\"Volume_Per_Pressure\",\"type\":\"UM\"},\"type\":\"USO\"}"
+      },
+      {
+        "essence": {
+          "scaleOffset": {
+            "scale": 6.49836054681635e-8,
+            "offset": 0
+          },
+          "symbol": "0.001 bbl/(ft3.d)",
+          "baseMeasurement": {
+            "ancestry": "Frequency",
+            "type": "UM"
+          },
+          "type": "USO"
+        },
+        "displaySymbol": "0.001 bbl/(ft3.d)",
+        "lastModified": "20160921",
+        "source": "Ocean",
+        "namespace": "ECL",
+        "persistableReference": "{\"scaleOffset\":{\"scale\":6.49836054681635E-8,\"offset\":0.0},\"symbol\":\"0.001 bbl/(ft3.d)\",\"baseMeasurement\":{\"ancestry\":\"Frequency\",\"type\":\"UM\"},\"type\":\"USO\"}"
+      },
+      {
+        "essence": {
+          "scaleOffset": {
+            "scale": 0.005614583653707989,
+            "offset": 0
+          },
+          "symbol": "0.001 bbl/ft3",
+          "baseMeasurement": {
+            "ancestry": "Dimensionless",
+            "type": "UM"
+          },
+          "type": "USO"
+        },
+        "displaySymbol": "0.001 bbl/ft3",
+        "name": "barrel per thousand cubic feet",
+        "lastModified": "19960626",
+        "source": "APIRP661",
+        "namespace": "RP66",
+        "persistableReference": "{\"scaleOffset\":{\"scale\":0.005614583653707989,\"offset\":0.0},\"symbol\":\"0.001 bbl/ft3\",\"baseMeasurement\":{\"ancestry\":\"Dimensionless\",\"type\":\"UM\"},\"type\":\"USO\"}"
+      },
+      {
+        "essence": {
+          "abcd": {
+            "a": 0,
+            "b": 0.000158987294928,
+            "c": 0.028316846592,
+            "d": 0
+          },
+          "symbol": "0.001 bbl/ft3",
+          "baseMeasurement": {
+            "ancestry": "1",
+            "type": "UM"
+          },
+          "type": "UAD"
+        },
+        "displaySymbol": "0.001 bbl/ft3",
+        "name": "barrel per thousand cubic foot",
+        "lastModified": "20160322",
+        "source": "Energistics",
+        "namespace": "Energistics_UoM",
+        "persistableReference": "{\"abcd\":{\"a\":0.0,\"b\":1.58987294928E-4,\"c\":0.028316846592,\"d\":0.0},\"symbol\":\"0.001 bbl/ft3\",\"baseMeasurement\":{\"ancestry\":\"1\",\"type\":\"UM\"},\"type\":\"UAD\"}"
+      },
+      {
+        "essence": {
+          "abcd": {
+            "a": 0,
+            "b": 0.000158987294928,
+            "c": 1,
+            "d": 0
+          },
+          "symbol": "0.001 bbl/m3",
+          "baseMeasurement": {
+            "ancestry": "1",
+            "type": "UM"
+          },
+          "type": "UAD"
+        },
+        "displaySymbol": "0.001 bbl/m3",
+        "name": "barrel per thousand cubic metre",
+        "lastModified": "20160322",
+        "source": "Energistics",
+        "namespace": "Energistics_UoM",
+        "persistableReference": "{\"abcd\":{\"a\":0.0,\"b\":1.58987294928E-4,\"c\":1.0,\"d\":0.0},\"symbol\":\"0.001 bbl/m3\",\"baseMeasurement\":{\"ancestry\":\"1\",\"type\":\"UM\"},\"type\":\"UAD\"}"
+      },
+      {
+        "essence": {
+          "scaleOffset": {
+            "scale": 0.0206141250235551,
+            "offset": 0
+          },
+          "symbol": "0.001 c/ft",
+          "baseMeasurement": {
+            "ancestry": "Rotation_Per_Length",
+            "type": "UM"
+          },
+          "type": "USO"
+        },
+        "displaySymbol": "0.001 c/ft",
+        "name": "revolution per thousand feet",
+        "lastModified": "19920228",
+        "source": "APIRP661",
+        "namespace": "RP66",
+        "persistableReference": "{\"scaleOffset\":{\"scale\":0.0206141250235551,\"offset\":0.0},\"symbol\":\"0.001 c/ft\",\"baseMeasurement\":{\"ancestry\":\"Rotation_Per_Length\",\"type\":\"UM\"},\"type\":\"USO\"}"
+      },
+      {
+        "essence": {
+          "scaleOffset": {
+            "scale": 3051.187204736614,
+            "offset": 0
+          },
+          "symbol": "0.001 d/ft3",
+          "baseMeasurement": {
+            "ancestry": "Time_Per_Volume",
+            "type": "UM"
+          },
+          "type": "USO"
+        },
+        "displaySymbol": "0.001 d/ft3",
+        "name": "day per thousand cubic feet",
+        "lastModified": "19920615",
+        "source": "APIRP661",
+        "namespace": "RP66",
+        "persistableReference": "{\"scaleOffset\":{\"scale\":3051.187204736614,\"offset\":0.0},\"symbol\":\"0.001 d/ft3\",\"baseMeasurement\":{\"ancestry\":\"Time_Per_Volume\",\"type\":\"UM\"},\"type\":\"USO\"}"
+      },
+      {
+        "essence": {
+          "abcd": {
+            "a": 0,
+            "b": 86400,
+            "c": 28.316846592,
+            "d": 0
+          },
+          "symbol": "0.001 d/ft3",
+          "baseMeasurement": {
+            "ancestry": "T/L3",
+            "type": "UM"
+          },
+          "type": "UAD"
+        },
+        "displaySymbol": "0.001 d/ft3",
+        "name": "day per thousand cubic foot",
+        "lastModified": "20160322",
+        "source": "Energistics",
+        "namespace": "Energistics_UoM",
+        "persistableReference": "{\"abcd\":{\"a\":0.0,\"b\":86400.0,\"c\":28.316846592,\"d\":0.0},\"symbol\":\"0.001 d/ft3\",\"baseMeasurement\":{\"ancestry\":\"T/L3\",\"type\":\"UM\"},\"type\":\"UAD\"}"
+      },
+      {
+        "essence": {
+          "scaleOffset": {
+            "scale": 0.001,
+            "offset": 0
+          },
+          "symbol": "0.001 gal/gal",
+          "baseMeasurement": {
+            "ancestry": "Dimensionless",
+            "type": "UM"
+          },
+          "type": "USO"
+        },
+        "displaySymbol": "0.001 gal/gal",
+        "name": "gallon per thousand gallons",
+        "lastModified": "19920520",
+        "source": "APIRP661",
+        "namespace": "RP66",
+        "persistableReference": "{\"scaleOffset\":{\"scale\":0.001,\"offset\":0.0},\"symbol\":\"0.001 gal/gal\",\"baseMeasurement\":{\"ancestry\":\"Dimensionless\",\"type\":\"UM\"},\"type\":\"USO\"}"
+      },
+      {
+        "essence": {
+          "abcd": {
+            "a": 0,
+            "b": 0.00000454609,
+            "c": 0.158987294928,
+            "d": 0
+          },
+          "symbol": "0.001 gal[UK]/bbl",
+          "baseMeasurement": {
+            "ancestry": "1",
+            "type": "UM"
+          },
+          "type": "UAD"
+        },
+        "displaySymbol": "0.001 gal[UK]/bbl",
+        "name": "UK gallon per thousand barrel",
+        "lastModified": "20160322",
+        "source": "Energistics",
+        "namespace": "Energistics_UoM",
+        "persistableReference": "{\"abcd\":{\"a\":0.0,\"b\":4.54609E-6,\"c\":0.158987294928,\"d\":0.0},\"symbol\":\"0.001 gal[UK]/bbl\",\"baseMeasurement\":{\"ancestry\":\"1\",\"type\":\"UM\"},\"type\":\"UAD\"}"
+      },
+      {
+        "essence": {
+          "abcd": {
+            "a": 0,
+            "b": 0.001,
+            "c": 1,
+            "d": 0
+          },
+          "symbol": "0.001 gal[UK]/gal[UK]",
+          "baseMeasurement": {
+            "ancestry": "1",
+            "type": "UM"
+          },
+          "type": "UAD"
+        },
+        "displaySymbol": "0.001 gal[UK]/gal[UK]",
+        "name": "UK gallon per thousand UK gallon",
+        "lastModified": "20160322",
+        "source": "Energistics",
+        "namespace": "Energistics_UoM",
+        "persistableReference": "{\"abcd\":{\"a\":0.0,\"b\":0.001,\"c\":1.0,\"d\":0.0},\"symbol\":\"0.001 gal[UK]/gal[UK]\",\"baseMeasurement\":{\"ancestry\":\"1\",\"type\":\"UM\"},\"type\":\"UAD\"}"
+      },
+      {
+        "essence": {
+          "abcd": {
+            "a": 0,
+            "b": 0.000003785411784,
+            "c": 0.158987294928,
+            "d": 0
+          },
+          "symbol": "0.001 gal[US]/bbl",
+          "baseMeasurement": {
+            "ancestry": "1",
+            "type": "UM"
+          },
+          "type": "UAD"
+        },
+        "displaySymbol": "0.001 gal[US]/bbl",
+        "name": "US gallon per thousand barrel",
+        "lastModified": "20160322",
+        "source": "Energistics",
+        "namespace": "Energistics_UoM",
+        "persistableReference": "{\"abcd\":{\"a\":0.0,\"b\":3.785411784E-6,\"c\":0.158987294928,\"d\":0.0},\"symbol\":\"0.001 gal[US]/bbl\",\"baseMeasurement\":{\"ancestry\":\"1\",\"type\":\"UM\"},\"type\":\"UAD\"}"
+      },
+      {
+        "essence": {
+          "abcd": {
+            "a": 0,
+            "b": 0.000003785411784,
+            "c": 0.028316846592,
+            "d": 0
+          },
+          "symbol": "0.001 gal[US]/ft3",
+          "baseMeasurement": {
+            "ancestry": "1",
+            "type": "UM"
+          },
+          "type": "UAD"
+        },
+        "displaySymbol": "0.001 gal[US]/ft3",
+        "name": "US gallon per thousand cubic foot",
+        "lastModified": "20160322",
+        "source": "Energistics",
+        "namespace": "Energistics_UoM",
+        "persistableReference": "{\"abcd\":{\"a\":0.0,\"b\":3.785411784E-6,\"c\":0.028316846592,\"d\":0.0},\"symbol\":\"0.001 gal[US]/ft3\",\"baseMeasurement\":{\"ancestry\":\"1\",\"type\":\"UM\"},\"type\":\"UAD\"}"
+      },
+      {
+        "essence": {
+          "abcd": {
+            "a": 0,
+            "b": 0.001,
+            "c": 1,
+            "d": 0
+          },
+          "symbol": "0.001 gal[US]/gal[US]",
+          "baseMeasurement": {
+            "ancestry": "1",
+            "type": "UM"
+          },
+          "type": "UAD"
+        },
+        "displaySymbol": "0.001 gal[US]/gal[US]",
+        "name": "US gallon per thousand US gallon",
+        "lastModified": "20160322",
+        "source": "Energistics",
+        "namespace": "Energistics_UoM",
+        "persistableReference": "{\"abcd\":{\"a\":0.0,\"b\":0.001,\"c\":1.0,\"d\":0.0},\"symbol\":\"0.001 gal[US]/gal[US]\",\"baseMeasurement\":{\"ancestry\":\"1\",\"type\":\"UM\"},\"type\":\"UAD\"}"
+      },
+      {
+        "essence": {
+          "abcd": {
+            "a": 0,
+            "b": 3600,
+            "c": 304.8,
+            "d": 0
+          },
+          "symbol": "0.001 h/ft",
+          "baseMeasurement": {
+            "ancestry": "T/L",
+            "type": "UM"
+          },
+          "type": "UAD"
+        },
+        "displaySymbol": "0.001 h/ft",
+        "name": "hour per thousand foot",
+        "lastModified": "20160322",
+        "source": "Energistics",
+        "namespace": "Energistics_UoM",
+        "persistableReference": "{\"abcd\":{\"a\":0.0,\"b\":3600.0,\"c\":304.8,\"d\":0.0},\"symbol\":\"0.001 h/ft\",\"baseMeasurement\":{\"ancestry\":\"T/L\",\"type\":\"UM\"},\"type\":\"UAD\"}"
+      },
+      {
+        "essence": {
+          "scaleOffset": {
+            "scale": 0.0000254,
+            "offset": 0
+          },
+          "symbol": "0.001 in",
+          "baseMeasurement": {
+            "ancestry": "Length",
+            "type": "UM"
+          },
+          "type": "USO"
+        },
+        "displaySymbol": "0.001 in",
+        "name": "thousandth inch",
+        "lastModified": "19920520",
+        "source": "APIRP661",
+        "namespace": "RP66",
+        "persistableReference": "{\"scaleOffset\":{\"scale\":2.54E-5,\"offset\":0.0},\"symbol\":\"0.001 in\",\"baseMeasurement\":{\"ancestry\":\"Length\",\"type\":\"UM\"},\"type\":\"USO\"}"
+      },
+      {
+        "essence": {
+          "scaleOffset": {
+            "scale": 8.04877404720258e-13,
+            "offset": 0
+          },
+          "symbol": "0.001 in/a",
+          "baseMeasurement": {
+            "ancestry": "Velocity",
+            "type": "UM"
+          },
+          "type": "USO"
+        },
+        "displaySymbol": "0.001 in/a",
+        "lastModified": "20160921",
+        "source": "Petrel",
+        "namespace": "ECL",
+        "persistableReference": "{\"scaleOffset\":{\"scale\":8.04877404720258E-13,\"offset\":0.0},\"symbol\":\"0.001 in/a\",\"baseMeasurement\":{\"ancestry\":\"Velocity\",\"type\":\"UM\"},\"type\":\"USO\"}"
+      },
+      {
+        "essence": {
+          "scaleOffset": {
+            "scale": 1000000,
+            "offset": 0
+          },
+          "symbol": "0.001 kPa2/cP",
+          "baseMeasurement": {
+            "ancestry": "Pressure_Per_Time",
+            "type": "UM"
+          },
+          "type": "USO"
+        },
+        "displaySymbol": "0.001 kPa2/cP",
+        "name": "kilopascal squared per thousand centipoise",
+        "lastModified": "19920615",
+        "source": "APIRP661",
+        "namespace": "RP66",
+        "persistableReference": "{\"scaleOffset\":{\"scale\":1000000.0,\"offset\":0.0},\"symbol\":\"0.001 kPa2/cP\",\"baseMeasurement\":{\"ancestry\":\"Pressure_Per_Time\",\"type\":\"UM\"},\"type\":\"USO\"}"
+      },
+      {
+        "essence": {
+          "abcd": {
+            "a": 0,
+            "b": 1000000,
+            "c": 1,
+            "d": 0
+          },
+          "symbol": "0.001 kPa2/cP",
+          "baseMeasurement": {
+            "ancestry": "M/LT3",
+            "type": "UM"
+          },
+          "type": "UAD"
+        },
+        "displaySymbol": "0.001 kPa2/cP",
+        "name": "kilopascal squared per thousand centipoise",
+        "lastModified": "20160322",
+        "source": "Energistics",
+        "namespace": "Energistics_UoM",
+        "persistableReference": "{\"abcd\":{\"a\":0.0,\"b\":1000000.0,\"c\":1.0,\"d\":0.0},\"symbol\":\"0.001 kPa2/cP\",\"baseMeasurement\":{\"ancestry\":\"M/LT3\",\"type\":\"UM\"},\"type\":\"UAD\"}"
+      },
+      {
+        "essence": {
+          "abcd": {
+            "a": 0,
+            "b": 0.45359237,
+            "c": 158.987294928,
+            "d": 0
+          },
+          "symbol": "0.001 lbm/bbl",
+          "baseMeasurement": {
+            "ancestry": "M/L3",
+            "type": "UM"
+          },
+          "type": "UAD"
+        },
+        "displaySymbol": "0.001 lbm/bbl",
+        "name": "pound-mass per thousand barrel",
+        "lastModified": "20160322",
+        "source": "Energistics",
+        "namespace": "Energistics_UoM",
+        "persistableReference": "{\"abcd\":{\"a\":0.0,\"b\":0.45359237,\"c\":158.987294928,\"d\":0.0},\"symbol\":\"0.001 lbm/bbl\",\"baseMeasurement\":{\"ancestry\":\"M/L3\",\"type\":\"UM\"},\"type\":\"UAD\"}"
+      },
+      {
+        "essence": {
+          "scaleOffset": {
+            "scale": 0.1198264204794617,
+            "offset": 0
+          },
+          "symbol": "0.001 lbm/gal",
+          "baseMeasurement": {
+            "ancestry": "Mass_Per_Volume",
+            "type": "UM"
+          },
+          "type": "USO"
+        },
+        "displaySymbol": "0.001 lbm/gal",
+        "name": "pound per thousand gallons",
+        "lastModified": "19920520",
+        "source": "APIRP661",
+        "namespace": "RP66",
+        "persistableReference": "{\"scaleOffset\":{\"scale\":0.1198264204794617,\"offset\":0.0},\"symbol\":\"0.001 lbm/gal\",\"baseMeasurement\":{\"ancestry\":\"Mass_Per_Volume\",\"type\":\"UM\"},\"type\":\"USO\"}"
+      },
+      {
+        "essence": {
+          "abcd": {
+            "a": 0,
+            "b": 0.45359237,
+            "c": 4.54609,
+            "d": 0
+          },
+          "symbol": "0.001 lbm/gal[UK]",
+          "baseMeasurement": {
+            "ancestry": "M/L3",
+            "type": "UM"
+          },
+          "type": "UAD"
+        },
+        "displaySymbol": "0.001 lbm/gal[UK]",
+        "name": "pound-mass per thousand UK gallon",
+        "lastModified": "20160322",
+        "source": "Energistics",
+        "namespace": "Energistics_UoM",
+        "persistableReference": "{\"abcd\":{\"a\":0.0,\"b\":0.45359237,\"c\":4.54609,\"d\":0.0},\"symbol\":\"0.001 lbm/gal[UK]\",\"baseMeasurement\":{\"ancestry\":\"M/L3\",\"type\":\"UM\"},\"type\":\"UAD\"}"
+      }
+    ],
+    "measurements": [],
+    "unitMapItems": [],
+    "measurementMapItems": [],
+    "mapStates": [],
+    "count": 100
+  }
