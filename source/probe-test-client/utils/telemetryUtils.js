@@ -1,8 +1,8 @@
 "use strict";
 
 const request = require("supertest");
-const config = require("../config");
-const testUtils = require("../utils/testUtils");
+const config = require(`${__dirname}/../config`);
+const testUtils = require(`${__dirname}/../utils/testUtils`);
 let appInsights = require("applicationinsights");
 
 // Configure AI
@@ -11,9 +11,9 @@ if (process.env.VERSION !== undefined) {
   version = process.env.VERSION;
 }
 
-let probeId_majorVersion = testUtils.between(1, 100000);
-let probeId_minorVersion = testUtils.between(1, 100000);
-const probeId = `${probeId_majorVersion}.${probeId_minorVersion}`;
+let probeRunId_majorVersion = testUtils.between(1, 100000);
+let probeRunId_minorVersion = testUtils.between(1, 100000);
+const probeRunId = `${probeRunId_majorVersion}.${probeRunId_minorVersion}`;
 
 appInsights.setup(process.env.APPINSIGHTS_INSTRUMENTATIONKEY).start();
 const client = appInsights.defaultClient;
@@ -22,7 +22,7 @@ appInsights.defaultClient.context.tags[
 ] = `osdu-probe:${version}`;
 appInsights.defaultClient.context.tags[
   appInsights.defaultClient.context.keys.sessionId
-] = probeId;
+] = probeRunId;
 
 const results = {
   SUCCESS: 1,
@@ -31,43 +31,42 @@ const results = {
 
 const failApiRequest = (test, errorResponse) => {
   client.trackMetric({
-    name: `${test.scenario}.${test.service}.${test.api}:${test.runId}:api-metric`,
+    name: `${test.scenario}.${test.service.name}.${test.api.name}:${test.runId}:api-metric`,
     value: results.FAIL
   });
   client.trackEvent({
-    name: `${test.scenario}.${test.service}.${test.api}:${test.runId}:api-event`,
+    name: `${test.scenario}.${test.service.name}.${test.api.name}:${test.runId}:api-event`,
     properties: {
       success: false,
-      probeId: probeId,
+      probeRunId: probeRunId,
       runId: test.runId,
-      scenario: test.scenario,
+      scenario: test.scenario.name,
       service: test.service,
-      api: test.api,
+      api: test.api.name,
       expectedResponse: test.expectedResponse,
       errorResponse: errorResponse,
     },
   });
   client.flush();
 
-  console.log(
-    `Failed API ${test.api}!, Run ID: ${test.runId}, Expected response code(s) ${test.expectedResponse}, but got error \"${errorResponse}\"`
+  console.log(`Failed API ${JSON.stringify(test.api)}!, Run ID: ${test.runId}, Expected response code(s) ${test.expectedResponse}, but got error \"${errorResponse}\"`
   );
 };
 
 const passApiRequest = (test) => {
   client.trackMetric({
-    name: `${test.scenario}.${test.service}.${test.api}:${test.runId}:api-metric`,
+    name: `${test.scenario}.${test.service.name}.${test.api.name}:${test.runId}:api-metric`,
     value: results.SUCCESS
   });
   client.trackEvent({
-    name: `${test.scenario}.${test.service}.${test.api}:${test.runId}:api-event`,
+    name: `${test.scenario}.${test.service.name}.${test.api.name}:${test.runId}:api-event`,
     properties: {
       success: true,
-      probeId: probeId,
+      probeRunId: probeRunId,
       runId: test.runId,
       scenario: test.scenario,
-      service: test.service,
-      api: test.api,
+      service: test.service.name,
+      api: test.api.name,
       expectedResponses: test.expectedResponses,
     },
   });
@@ -79,17 +78,18 @@ const scenarioRequest = (runId, service, scenarioName, failedTests) => {
   let resultStatus = successStatus ? results.SUCCESS : results.FAIL;
 
   client.trackMetric({
-    name: `${service}.${scenarioName}:${runId}:scenario-metric`,
+    name: `${service.name}.${scenarioName}:${runId}:scenario-metric`,
     value: resultStatus
   });
   client.trackEvent({
-    name: `${service}.${scenarioName}:${runId}:scenario-event`,
+    name: `${service.name}.${scenarioName}:${runId}:scenario-event`,
     properties: {
       success: successStatus,
-      probeId: probeId,
+      probeRunId: probeRunId,
       runId: runId,
       scenario: scenarioName,
-      service: service,
+      service: service.name,
+      serviceHost: service.host,
       failedTests: failedTests,
     },
   });
@@ -105,7 +105,7 @@ const logScenarioResults = (scenarioName, passed) => {
 };
 
 module.exports = {
-  probeId: probeId,
+  probeRunId: probeRunId,
   failApiRequest: failApiRequest,
   passApiRequest: passApiRequest,
   scenarioRequest: scenarioRequest,
