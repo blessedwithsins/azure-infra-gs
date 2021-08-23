@@ -1,0 +1,27 @@
+[
+    {
+        "id": "2425",
+        "eventType": "recordInserted",
+        "subject": "subject",
+        "data": {
+            "data": [
+                {
+                    "id": "opendes:doc:12345",
+                    "kind": "opendes:at:wellbore:1.0.0",
+                    "op": "create"
+                },
+                {
+                    "id": "opendes:doc:12345",
+                    "kind": "opendes:at:wellbore:1.0.0",
+                    "op": "create"
+                }
+            ],
+            "correlation-id": "39137f49-67d6-4001-a6aa-15521ef4f49e",
+            "data-partition-id": "opendes"
+        },
+        "dataVersion": "1.0",
+        "metadataVersion": "1",
+        "eventTime": "2020-08-14T18:04:12+00:00",
+        "topic": "topic"
+    }
+]
