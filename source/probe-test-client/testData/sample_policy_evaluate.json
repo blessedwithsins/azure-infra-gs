@@ -1,0 +1,21 @@
+{
+    "policyId" : "search",
+    "input": {
+    "groups" : [
+        {
+            "name": "service.legal.user",
+            "description": "Datalake Legal users",
+            "email": "service.legal.user@opendes.contoso.com"
+        }
+    ],
+    "operation" : "view",
+    "record" :
+        {
+            "id" : "123",
+            "acl": "dummy",
+            "legal": "123",
+            "kind": "123.123service.legal.user",
+            "tags": "123"
+        }
+    }
+}

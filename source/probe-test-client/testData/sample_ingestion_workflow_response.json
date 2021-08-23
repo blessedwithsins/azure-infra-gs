@@ -1,0 +1,15 @@
+{
+    "workflowId": "Default_ingest",
+    "workflowName": "Default_ingest",
+    "description": "Test Register a Workflow",
+    "createdBy": "a38fdd7b-f209-4552-96cd-126ec2494605",
+    "creationTimestamp": "",
+    "version": 1,
+    "registrationInstructions": {
+      "active": true,
+      "concurrentWorkflowRun": 5,
+      "concurrentTaskRun": 5,
+      "workflowDetailContent": "",
+      "dagType": "private"
+    }
+  }
