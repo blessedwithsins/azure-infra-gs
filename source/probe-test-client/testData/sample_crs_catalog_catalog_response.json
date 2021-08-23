@@ -1,0 +1,19 @@
+{
+    "lateBoundCRSes": [],
+    "lateBoundCRSesCount": 1151,
+    "earlyBoundCRSes": [],
+    "earlyBoundCRSesCount": 1059,
+    "compoundCRSesCount": 60,
+    "singleCTs": [],
+    "singleCTsCount": 227,
+    "compoundCTs": [],
+    "compoundCTsCount": 1,
+    "areaOfUseCount": 953,
+    "areasOfUse": [],
+    "compoundCRSes": [],
+    "attributes": {
+      "name": "Minimal EPSG standard catalog",
+      "description": "Catalog containing selected ESRI's standard EPSG coordinate reference systems and cartographic transforms, and limited early-bound coordinate reference systems where the CRS and TRF area-of-use intersect; augmented by Ocean factory catalog standard definitions",
+      "lastModified": "2020-05-18T07:45:41Z"
+    }
+  }
