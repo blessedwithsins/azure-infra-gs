@@ -2,3 +2,4 @@ CHANGELOG.md
 (.*/)?\.envoy-airflow-authentication$
 .*\.http$
 charts/airflow/charts/CHANGELOG.md
+source/probe-test-client/testData/sample_register_subscription_create.json
