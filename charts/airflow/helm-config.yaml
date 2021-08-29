@@ -338,8 +338,7 @@ airflow:
         "pyyaml==5.4.1",
         "requests==2.25.1",
         "tenacity==8.0.1",
-        "https://azglobalosdutestlake.blob.core.windows.net/pythonsdk/osdu_api-0.10.1.dev0+987cff77.tar.gz",
-        "osdu-airflow==0.0.1 --extra-index-url=https://community.opengroup.org/api/v4/projects/668/packages/pypi/simple/"
+        "https://azglobalosdutestlake.blob.core.windows.net/pythonsdk/osdu_api-0.10.1.dev0+987cff77.tar.gz"
     ]
     extraVolumeMounts:
         - name: azure-keyvault
