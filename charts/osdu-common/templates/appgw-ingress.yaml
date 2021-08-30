@@ -121,3 +121,7 @@ spec:
               serviceName: dataset
               servicePort: 80
               path: /api/dataset/v1/*
+          - backend:
+              serviceName: seismic-dms-file-metadata-service
+              servicePort: 80
+              path: /seismic-file-metadata/api/v1/*    
