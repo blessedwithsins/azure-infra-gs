@@ -3,9 +3,6 @@
 currentStatus=""
 currentMessage=""
 
-set HTTP_PROXY=
-set HTTPS_PROXY=
-
 az login --identity
 ENV_AKS=$(az aks list --resource-group $RESOURCE_GROUP_NAME --query [].name -otsv)
 az aks get-credentials --resource-group $RESOURCE_GROUP_NAME --name $ENV_AKS
