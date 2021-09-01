@@ -53,11 +53,11 @@ else
         continue
       fi
   
-      # Status code check. succeed only if 2xx
+      # Status code check. succeed only if 2xx, or 409
       # quit for partition if 404 or 400.
       # 401 or 403, then retry after getting access token.
       # else sleep for 1min and retry
-      if [[ ${init_response} != *"Http_Status_Code:2"* ]];then
+      if [[ ${init_response} != *"Http_Status_Code:2"* ]] && [[ ${init_response} != *"Http_Status_Code:409"* ]];then
         if [[ ${init_response} == *"Http_Status_Code:400"* ]] || [[ ${init_response} == *"Http_Status_Code:404"* ]];then
           currentStatus="failure"
           currentMessage="${currentMessage}. Partition Init for partition ${partitions_array[index]} failed with response $init_response. "
@@ -82,6 +82,10 @@ else
   
         continue
       else
+        if [[ ${init_response} == *"Http_Status_Code:409"* ]];then
+          currentMessage="${currentMessage}. HTTP Status Code: 409 -> Partition ${partitions_array[index]} Already Exists. "
+          echo "HTTP Status Code: 409 -> Partition ${partitions_array[index]} Already Exists."
+        fi
         currentMessage="${currentMessage}. Partition ${partitions_array[index]} Initialized successfully. "
         echo "Partition ${partitions_array[index]} Initialized successfully."
         partition_initialized_count=$(expr $partition_initialized_count + 1)
@@ -118,7 +122,7 @@ if [ ! -z "$CONFIG_MAP_NAME" -a "$CONFIG_MAP_NAME" != " " ]; then
     Status=$(kubectl get configmap $CONFIG_MAP_NAME -o jsonpath='{.data.status}')
     Message=$(kubectl get configmap $CONFIG_MAP_NAME -o jsonpath='{.data.message}')
 
-    if [[ ${Status} == *"success"* ]]; then # If status is already failed, do not over-write in any case.
+    if [ -z "$Status" -a "$Status" == " " ] || [[ ${Status} == *"success"* ]]; then # If status is already failed, do not over-write in any case.
         Status="${currentStatus}"
     fi
     Message="${Message}. Partition Data Initialization: ${currentMessage}. "

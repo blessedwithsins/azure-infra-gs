@@ -198,7 +198,7 @@ if [ ! -z "$CONFIG_MAP_NAME" -a "$CONFIG_MAP_NAME" != " " ]; then
     Status=$(kubectl get configmap $CONFIG_MAP_NAME -o jsonpath='{.data.status}')
     Message=$(kubectl get configmap $CONFIG_MAP_NAME -o jsonpath='{.data.message}')
 
-    if [[ ${Status} == *"success"* ]]; then # If status is already failed, do not over-write in any case.
+    if [ -z "$Status" -a "$Status" == " " ] || [[ ${Status} == *"success"* ]]; then # If status is already failed, do not over-write in any case.
         Status="${currentStatus}"
     fi
     Message="${Message}. Entitlements Data Initialization: ${currentMessage}. "
