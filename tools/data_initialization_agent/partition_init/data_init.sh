@@ -3,7 +3,7 @@
 currentStatus=""
 currentMessage=""
 
-az login --identity
+az login --identity --username $OSDU_IDENTITY_ID
 ENV_AKS=$(az aks list --resource-group $RESOURCE_GROUP_NAME --query [].name -otsv)
 az aks get-credentials --resource-group $RESOURCE_GROUP_NAME --name $ENV_AKS
 kubectl config set-context $RESOURCE_GROUP_NAME --cluster $ENV_AKS

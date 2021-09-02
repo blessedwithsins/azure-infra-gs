@@ -6,7 +6,7 @@ currentMessage=""
 # This logs the Azure CLI in using the configured service principal.
 # az login --service-principal -u $ARM_CLIENT_ID -p $ARM_CLIENT_SECRET --tenant $ARM_TENANT_ID
 # az account set -s $ARM_SUBSCRIPTION_ID
-az login --identity
+az login --identity --username $OSDU_IDENTITY_ID
 
 # Merge AKS context with current k8s cluster
 ENV_AKS=$(az aks list --resource-group $RESOURCE_GROUP_NAME --query [].name -otsv)
