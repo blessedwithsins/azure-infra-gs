@@ -4,8 +4,9 @@ currentStatus=""
 currentMessage=""
 
 # This logs the Azure CLI in using the configured service principal.
-az login --service-principal -u $ARM_CLIENT_ID -p $ARM_CLIENT_SECRET --tenant $ARM_TENANT_ID
-az account set -s $ARM_SUBSCRIPTION_ID
+# az login --service-principal -u $ARM_CLIENT_ID -p $ARM_CLIENT_SECRET --tenant $ARM_TENANT_ID
+# az account set -s $ARM_SUBSCRIPTION_ID
+az login --identity
 
 # Merge AKS context with current k8s cluster
 ENV_AKS=$(az aks list --resource-group $RESOURCE_GROUP_NAME --query [].name -otsv)
@@ -106,13 +107,14 @@ if [ ! -z "$CONFIG_MAP_NAME" -a "$CONFIG_MAP_NAME" != " " ]; then
     Status=$(kubectl get configmap $CONFIG_MAP_NAME -o jsonpath='{.data.status}')
     Message=$(kubectl get configmap $CONFIG_MAP_NAME -o jsonpath='{.data.message}')
 
-    if [ -z "$Status" -a "$Status" == " " ] || [[ ${Status} == *"success"* ]]; then # If status is already failed, do not over-write in any case.
-        Status="${currentStatus}"
-    fi
     Message="${Message}. Data Seeding Message: ${currentMessage}. "
 
     ## Update ConfigMap
-    kubectl create configmap $CONFIG_MAP_NAME --from-literal=status="$Status" --from-literal=message="$Message" -o yaml --dry-run=client | kubectl replace -f -
+    kubectl create configmap $CONFIG_MAP_NAME \
+        --from-literal=status="$Status" \
+        --from-literal=seedingStatus="$currentStatus" \
+        --from-literal=message="$Message" \
+        -o yaml --dry-run=client | kubectl replace -f -
 fi
 
 if [[ ${currentStatus} == "success" ]]; then

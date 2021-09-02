@@ -196,15 +196,18 @@ echo "Current Message: ${currentMessage}"
 
 if [ ! -z "$CONFIG_MAP_NAME" -a "$CONFIG_MAP_NAME" != " " ]; then
     Status=$(kubectl get configmap $CONFIG_MAP_NAME -o jsonpath='{.data.status}')
+    PartStatus=$(kubectl get configmap $CONFIG_MAP_NAME -o jsonpath='{.data.partitionInitStatus}')
     Message=$(kubectl get configmap $CONFIG_MAP_NAME -o jsonpath='{.data.message}')
 
-    if [ -z "$Status" -a "$Status" == " " ] || [[ ${Status} == *"success"* ]]; then # If status is already failed, do not over-write in any case.
-        Status="${currentStatus}"
-    fi
     Message="${Message}. Entitlements Data Initialization: ${currentMessage}. "
 
     ## Update ConfigMap
-    kubectl create configmap $CONFIG_MAP_NAME --from-literal=status="$Status" --from-literal=message="$Message" -o yaml --dry-run=client | kubectl replace -f -
+    kubectl create configmap $CONFIG_MAP_NAME \
+      --from-literal=status="$Status" \
+      --from-literal=partitionInitStatus="$PartStatus" \
+      --from-literal=entitlementsInitStatus="$currentStatus" \
+      --from-literal=message="$Message" \
+      -o yaml --dry-run=client | kubectl replace -f -
 fi
 
 if [[ ${currentStatus} == "success" ]]; then
