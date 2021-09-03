@@ -122,14 +122,13 @@ if [ ! -z "$CONFIG_MAP_NAME" -a "$CONFIG_MAP_NAME" != " " ]; then
     Status=$(kubectl get configmap $CONFIG_MAP_NAME -o jsonpath='{.data.status}')
     Message=$(kubectl get configmap $CONFIG_MAP_NAME -o jsonpath='{.data.message}')
 
-    Message="${Message}. Partition Data Initialization: ${currentMessage}. "
+    Message="${Message}Partition Init Message: ${currentMessage}. "
 
     ## Update ConfigMap
     kubectl create configmap $CONFIG_MAP_NAME \
-      --from-literal=status="$Status" \
-      --from-literal=partitionInitStatus="$currentStatus" \
-      --from-literal=message="$Message" \
-      -o yaml --dry-run=client | kubectl replace -f -
+        --from-literal=status="$currentStatus" \
+        --from-literal=message="$Message" \
+        -o yaml --dry-run=client | kubectl replace -f -
 fi
 
 if [[ ${currentStatus} == "success" ]]; then

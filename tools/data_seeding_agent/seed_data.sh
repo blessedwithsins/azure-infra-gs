@@ -107,12 +107,11 @@ if [ ! -z "$CONFIG_MAP_NAME" -a "$CONFIG_MAP_NAME" != " " ]; then
     Status=$(kubectl get configmap $CONFIG_MAP_NAME -o jsonpath='{.data.status}')
     Message=$(kubectl get configmap $CONFIG_MAP_NAME -o jsonpath='{.data.message}')
 
-    Message="${Message}. Data Seeding Message: ${currentMessage}. "
+    Message="${Message}Data Seeding Message: ${currentMessage}. "
 
     ## Update ConfigMap
     kubectl create configmap $CONFIG_MAP_NAME \
-        --from-literal=status="$Status" \
-        --from-literal=seedingStatus="$currentStatus" \
+        --from-literal=status="$currentStatus" \
         --from-literal=message="$Message" \
         -o yaml --dry-run=client | kubectl replace -f -
 fi
