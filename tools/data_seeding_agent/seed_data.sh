@@ -3,6 +3,11 @@
 currentStatus=""
 currentMessage=""
 
+# This logs the Azure CLI in using the configured service principal.
+# az login --service-principal -u $ARM_CLIENT_ID -p $ARM_CLIENT_SECRET --tenant $ARM_TENANT_ID
+# az account set -s $ARM_SUBSCRIPTION_ID
+az login --identity --username $OSDU_IDENTITY_ID
+
 # The Legal_COO.json file needs to be loaded into the Data Partition Storage Account,
 # in the container  legal-service-azure-configuration.
 ENV_VAULT=$(az keyvault list --resource-group $RESOURCE_GROUP_NAME --query [].name -otsv)
