@@ -39,7 +39,8 @@ else
     i=0
     partition_initialized=false
     while [[ $i -lt 3 ]]; do
-  
+      i=$(expr $i + 1)
+      
       init_response=$(curl -s -w " Http_Status_Code:%{http_code} " \
         -X POST \
         -H 'Content-Type: application/json' \
@@ -90,8 +91,6 @@ else
   
         break
       fi
-
-      i=$(expr $i + 1)
     done
 
     if [[ $i -ge 3 ]]; then
@@ -113,7 +112,8 @@ else
   
     i=0
     while [[ $i -lt 3 ]]; do
-  
+      i=$(expr $i + 1)
+
       init_response=$(curl -s -w " Http_Status_Code:%{http_code} " \
         -X POST \
         -H 'Content-Type: application/json' \
@@ -164,8 +164,6 @@ else
   
         break
       fi
-
-      i=$(expr $i + 1)
     done
 
     if [[ $i -ge 3 ]]; then
