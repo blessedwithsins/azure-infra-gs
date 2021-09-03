@@ -119,7 +119,7 @@ else
         -H 'Content-Type: application/json' \
         -H "Authorization: Bearer $ACCESS_TOKEN" \
         -H "data-partition-id: ${partitions_array[index]}" \
-        -d "{"email":"$ADMIN_ID", "role": "MEMBER"}" \
+        -d "{\"email\":\"$ADMIN_ID\", \"role\": \"MEMBER\"}" \
         $OSDU_ENTITLEMENTS_ADD_OPS_URI)
       
       echo "Init Reponse: $init_response"
