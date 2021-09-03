@@ -3,11 +3,6 @@
 currentStatus=""
 currentMessage=""
 
-az login --identity --username $OSDU_IDENTITY_ID
-ENV_AKS=$(az aks list --resource-group $RESOURCE_GROUP_NAME --query [].name -otsv)
-az aks get-credentials --resource-group $RESOURCE_GROUP_NAME --name $ENV_AKS
-kubectl config set-context $RESOURCE_GROUP_NAME --cluster $ENV_AKS
-
 OSDU_URI=${OSDU_HOST}
 
 if [[ ${OSDU_HOST} != "https://"* ]] || [[ ${OSDU_HOST} != "http://"* ]]; then
@@ -193,16 +188,21 @@ echo "Current Status: ${currentStatus}"
 echo "Current Message: ${currentMessage}"
 
 if [ ! -z "$CONFIG_MAP_NAME" -a "$CONFIG_MAP_NAME" != " " ]; then
-    Status=$(kubectl get configmap $CONFIG_MAP_NAME -o jsonpath='{.data.status}')
-    Message=$(kubectl get configmap $CONFIG_MAP_NAME -o jsonpath='{.data.message}')
+  az login --identity --username $OSDU_IDENTITY_ID
+  ENV_AKS=$(az aks list --resource-group $RESOURCE_GROUP_NAME --query [].name -otsv)
+  az aks get-credentials --resource-group $RESOURCE_GROUP_NAME --name $ENV_AKS
+  kubectl config set-context $RESOURCE_GROUP_NAME --cluster $ENV_AKS
 
-    Message="${Message}Entitlements Init Message: ${currentMessage}. "
+  Status=$(kubectl get configmap $CONFIG_MAP_NAME -o jsonpath='{.data.status}')
+  Message=$(kubectl get configmap $CONFIG_MAP_NAME -o jsonpath='{.data.message}')
 
-    ## Update ConfigMap
-    kubectl create configmap $CONFIG_MAP_NAME \
-        --from-literal=status="$currentStatus" \
-        --from-literal=message="$Message" \
-        -o yaml --dry-run=client | kubectl replace -f -
+  Message="${Message}Entitlements Init Message: ${currentMessage}. "
+
+  ## Update ConfigMap
+  kubectl create configmap $CONFIG_MAP_NAME \
+    --from-literal=status="$currentStatus" \
+    --from-literal=message="$Message" \
+    -o yaml --dry-run=client | kubectl replace -f -
 fi
 
 if [[ ${currentStatus} == "success" ]]; then
