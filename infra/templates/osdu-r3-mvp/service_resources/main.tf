@@ -234,31 +234,31 @@ module "storage_account" {
 }
 
 // Add Contributor Role Access
-//resource "azurerm_role_assignment" "storage_access" {
-//  count = length(local.rbac_principals)
-//
-//  role_definition_name = local.role
-//  principal_id         = local.rbac_principals[count.index]
-//  scope                = module.storage_account.id
-//}
+resource "azurerm_role_assignment" "storage_access" {
+  count = length(local.rbac_principals)
+
+  role_definition_name = local.role
+  principal_id         = local.rbac_principals[count.index]
+  scope                = module.storage_account.id
+}
 
 // Add Storage Queue Data Reader Role Access
-//resource "azurerm_role_assignment" "queue_reader" {
-//  count = length(local.rbac_principals)
-//
-//  role_definition_name = "Storage Queue Data Reader"
-//  principal_id         = local.rbac_principals[count.index]
-//  scope                = module.storage_account.id
-//}
+resource "azurerm_role_assignment" "queue_reader" {
+  count = length(local.rbac_principals)
+
+  role_definition_name = "Storage Queue Data Reader"
+  principal_id         = local.rbac_principals[count.index]
+  scope                = module.storage_account.id
+}
 
 // Add Storage Queue Data Message Processor Role Access
-//resource "azurerm_role_assignment" "airflow_log_queue_processor_roles" {
-//  count = length(local.rbac_principals)
-//
-//  role_definition_name = "Storage Queue Data Message Processor"
-//  principal_id         = local.rbac_principals[count.index]
-//  scope                = module.storage_account.id
-//}
+resource "azurerm_role_assignment" "airflow_log_queue_processor_roles" {
+  count = length(local.rbac_principals)
+
+  role_definition_name = "Storage Queue Data Message Processor"
+  principal_id         = local.rbac_principals[count.index]
+  scope                = module.storage_account.id
+}
 
 module "system_storage_account" {
   source = "../../../modules/providers/azure/storage-account"
@@ -274,23 +274,23 @@ module "system_storage_account" {
 }
 
 // Add Contributor Role Access
-//resource "azurerm_role_assignment" "system_storage_access" {
-//  count = length(local.rbac_principals)
-//
-//  role_definition_name = local.role
-//  principal_id         = local.rbac_principals[count.index]
-//  scope                = module.system_storage_account.id
-//}
+resource "azurerm_role_assignment" "system_storage_access" {
+  count = length(local.rbac_principals)
+
+  role_definition_name = local.role
+  principal_id         = local.rbac_principals[count.index]
+  scope                = module.system_storage_account.id
+}
 
 // Add Data Contributor Role to Principal
-//resource "azurerm_role_assignment" "system_storage_data_contributor" {
-//  count      = length(local.rbac_principals)
-//  depends_on = [azurerm_role_assignment.system_storage_access]
-//
-//  role_definition_name = "Storage Blob Data Contributor"
-//  principal_id         = local.rbac_principals[count.index]
-//  scope                = module.system_storage_account.id
-//}
+resource "azurerm_role_assignment" "system_storage_data_contributor" {
+  count      = length(local.rbac_principals)
+  depends_on = [azurerm_role_assignment.system_storage_access]
+
+  role_definition_name = "Storage Blob Data Contributor"
+  principal_id         = local.rbac_principals[count.index]
+  scope                = module.system_storage_account.id
+}
 
 
 #-------------------------------
@@ -310,7 +310,7 @@ module "network" {
       "Microsoft.AzureCosmosDB",
       "Microsoft.KeyVault",
       "Microsoft.ServiceBus",
-    "Microsoft.EventHub"]
+      "Microsoft.EventHub"]
   }
 
   resource_tags = var.resource_tags
@@ -367,26 +367,26 @@ module "istio_appgateway" {
 }
 
 // Give AGIC Identity Access rights to Change the Application Gateway
-//resource "azurerm_role_assignment" "appgwcontributor" {
-//  principal_id         = azurerm_user_assigned_identity.agicidentity.principal_id
-//  scope                = module.appgateway.id
-//  role_definition_name = "Contributor"
-//
-//}
+resource "azurerm_role_assignment" "appgwcontributor" {
+  principal_id         = azurerm_user_assigned_identity.agicidentity.principal_id
+  scope                = module.appgateway.id
+  role_definition_name = "Contributor"
+
+}
 
 // Give AGIC Identity the rights to look at the Resource Group
-//resource "azurerm_role_assignment" "agic_resourcegroup_reader" {
-//  principal_id         = azurerm_user_assigned_identity.agicidentity.principal_id
-//  scope                = azurerm_resource_group.main.id
-//  role_definition_name = "Reader"
-//}
+resource "azurerm_role_assignment" "agic_resourcegroup_reader" {
+  principal_id         = azurerm_user_assigned_identity.agicidentity.principal_id
+  scope                = azurerm_resource_group.main.id
+  role_definition_name = "Reader"
+}
 
 // Give AGIC Identity rights to Operate the Gateway Identity
-//resource "azurerm_role_assignment" "agic_app_gw_mi" {
-//  principal_id         = azurerm_user_assigned_identity.agicidentity.principal_id
-//  scope                = module.appgateway.managed_identity_resource_id
-//  role_definition_name = "Managed Identity Operator"
-//}
+resource "azurerm_role_assignment" "agic_app_gw_mi" {
+  principal_id         = azurerm_user_assigned_identity.agicidentity.principal_id
+  scope                = module.appgateway.managed_identity_resource_id
+  role_definition_name = "Managed Identity Operator"
+}
 
 #-------------------------------
 # Azure AKS
@@ -442,8 +442,6 @@ data "azurerm_resource_group" "aks_node_resource_group" {
 }
 
 // Give AKS Access rights to Operate the Node Resource Group
-// @komakkar Nodepool
-
 resource "azurerm_role_assignment" "all_mi_operator" {
   principal_id         = module.aks.kubelet_object_id
   scope                = data.azurerm_resource_group.aks_node_resource_group.id
@@ -451,62 +449,57 @@ resource "azurerm_role_assignment" "all_mi_operator" {
 }
 
 // Give AKS Access to Create and Remove VM's in Node Resource Group
-// @komakkar Nodepool
-
-//resource "azurerm_role_assignment" "vm_contributor" {
-//  principal_id         = module.aks.kubelet_object_id
-//  scope                = data.azurerm_resource_group.aks_node_resource_group.id
-//  role_definition_name = "Virtual Machine Contributor"
-//}
+resource "azurerm_role_assignment" "vm_contributor" {
+  principal_id         = module.aks.kubelet_object_id
+  scope                = data.azurerm_resource_group.aks_node_resource_group.id
+  role_definition_name = "Virtual Machine Contributor"
+}
 
 // Give AKS Access to Operate the Network
-// @komakkar for autoscale
-//resource "azurerm_role_assignment" "subnet_contributor" {
-//  count = var.feature_flag.autoscaling ? 1 : 0
-//
-//  principal_id         = module.aks.principal_id
-//  scope                = module.network.subnets.1
-//  role_definition_name = "Contributor"
-//}
+resource "azurerm_role_assignment" "subnet_contributor" {
+  count = var.feature_flag.autoscaling ? 1 : 0
+
+  principal_id         = module.aks.principal_id
+  scope                = module.network.subnets.1
+  role_definition_name = "Contributor"
+}
 
 // Give AKS Access to Pull from ACR
-//resource "azurerm_role_assignment" "acr_reader" {
-//  principal_id         = module.aks.kubelet_object_id
-//  scope                = data.terraform_remote_state.central_resources.outputs.container_registry_id
-//  role_definition_name = "AcrPull"
-//}
+resource "azurerm_role_assignment" "acr_reader" {
+  principal_id         = module.aks.kubelet_object_id
+  scope                = data.terraform_remote_state.central_resources.outputs.container_registry_id
+  role_definition_name = "AcrPull"
+}
 
 // Give AKS Rights to operate the AGIC Identity
-//resource "azurerm_role_assignment" "mi_ag_operator" {
-//  principal_id         = module.aks.kubelet_object_id
-//  scope                = azurerm_user_assigned_identity.agicidentity.id
-//  role_definition_name = "Managed Identity Operator"
-//}
+resource "azurerm_role_assignment" "mi_ag_operator" {
+  principal_id         = module.aks.kubelet_object_id
+  scope                = azurerm_user_assigned_identity.agicidentity.id
+  role_definition_name = "Managed Identity Operator"
+}
 
 // Give AKS Access Rights to operate the Pod Identity
-//resource "azurerm_role_assignment" "mi_operator" {
-//  principal_id         = module.aks.kubelet_object_id
-//  scope                = azurerm_user_assigned_identity.podidentity.id
-//  role_definition_name = "Managed Identity Operator"
-//}
-//
-//// Give AKS Access Rights to operate the OSDU Identity
-//resource "azurerm_role_assignment" "osdu_identity_mi_operator" {
-//  principal_id         = module.aks.kubelet_object_id
-//  scope                = data.terraform_remote_state.central_resources.outputs.osdu_identity_id
-//  role_definition_name = "Managed Identity Operator"
-//}
+resource "azurerm_role_assignment" "mi_operator" {
+  principal_id         = module.aks.kubelet_object_id
+  scope                = azurerm_user_assigned_identity.podidentity.id
+  role_definition_name = "Managed Identity Operator"
+}
 
+// Give AKS Access Rights to operate the OSDU Identity
+resource "azurerm_role_assignment" "osdu_identity_mi_operator" {
+  principal_id         = module.aks.kubelet_object_id
+  scope                = data.terraform_remote_state.central_resources.outputs.osdu_identity_id
+  role_definition_name = "Managed Identity Operator"
+}
 
-// @komakkar
 # // Give AD Principal Access rights to AKS cluster
-//resource "azurerm_role_assignment" "aks_contributor" {
-//  count = var.feature_flag.autoscaling ? 1 : 0
-//
-//  principal_id         = data.terraform_remote_state.central_resources.outputs.osdu_service_principal_id
-//  scope                = module.aks.id
-//  role_definition_name = "Contributor"
-//}
+resource "azurerm_role_assignment" "aks_contributor" {
+  count = var.feature_flag.autoscaling ? 1 : 0
+
+  principal_id         = data.terraform_remote_state.central_resources.outputs.osdu_service_principal_id
+  scope                = module.aks.id
+  role_definition_name = "Contributor"
+}
 
 #-------------------------------
 # PostgreSQL
@@ -551,13 +544,13 @@ module "postgreSQL" {
 }
 
 // Add Contributor Role Access
-//resource "azurerm_role_assignment" "postgres_access" {
-//  count = length(local.rbac_principals)
-//
-//  role_definition_name = local.role
-//  principal_id         = local.rbac_principals[count.index]
-//  scope                = module.postgreSQL.server_id
-//}
+resource "azurerm_role_assignment" "postgres_access" {
+  count = length(local.rbac_principals)
+
+  role_definition_name = local.role
+  principal_id         = local.rbac_principals[count.index]
+  scope                = module.postgreSQL.server_id
+}
 
 
 #-------------------------------
@@ -577,13 +570,13 @@ module "redis_cache" {
 }
 
 // Add Contributor Role Access
-//resource "azurerm_role_assignment" "redis_cache" {
-//  count = length(local.rbac_principals)
-//
-//  role_definition_name = local.role
-//  principal_id         = local.rbac_principals[count.index]
-//  scope                = module.redis_cache.id
-//}
+resource "azurerm_role_assignment" "redis_cache" {
+  count = length(local.rbac_principals)
+
+  role_definition_name = local.role
+  principal_id         = local.rbac_principals[count.index]
+  scope                = module.redis_cache.id
+}
 
 module "redis_queue" {
   source = "../../../modules/providers/azure/redis-cache"
@@ -601,13 +594,13 @@ module "redis_queue" {
 }
 
 // Add Contributor Role Access
-//resource "azurerm_role_assignment" "redis_queue" {
-//  count = length(local.rbac_principals)
-//
-//  role_definition_name = local.role
-//  principal_id         = local.rbac_principals[count.index]
-//  scope                = module.redis_queue.id
-//}
+resource "azurerm_role_assignment" "redis_queue" {
+  count = length(local.rbac_principals)
+
+  role_definition_name = local.role
+  principal_id         = local.rbac_principals[count.index]
+  scope                = module.redis_queue.id
+}
 
 #-------------------------------
 # CosmosDB
@@ -627,13 +620,13 @@ module "cosmosdb_account" {
 }
 
 // Add Access Control to Principal
-//resource "azurerm_role_assignment" "cosmos_access" {
-//  count = length(local.rbac_principals)
-//
-//  role_definition_name = "Contributor"
-//  principal_id         = local.rbac_principals[count.index]
-//  scope                = module.cosmosdb_account.account_id
-//}
+resource "azurerm_role_assignment" "cosmos_access" {
+  count = length(local.rbac_principals)
+
+  role_definition_name = "Contributor"
+  principal_id         = local.rbac_principals[count.index]
+  scope                = module.cosmosdb_account.account_id
+}
 
 #-------------------------------
 # Locks

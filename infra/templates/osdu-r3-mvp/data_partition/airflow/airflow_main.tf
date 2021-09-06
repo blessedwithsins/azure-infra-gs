@@ -52,8 +52,6 @@ locals {
   airflow_log_queue_name = "airflowlogqueue"
 }
 
-
-// komakkar
 resource "random_password" "airflow_admin_password" {
 
   length           = 8
@@ -65,8 +63,6 @@ resource "random_password" "airflow_admin_password" {
   min_special      = 1
 }
 
-
-// komakkar
 resource "random_string" "airflow_fernete_key_rnd" {
   keepers = {
     postgresql_name = local.postgresql_name
@@ -136,15 +132,13 @@ resource "azurerm_eventgrid_event_subscription" "airflow_log_event_subscription"
     queue_name         = local.airflow_log_queue_name
   }
 
-  #included_event_types = ["Microsoft.Storage.BlobCreated"]
+  included_event_types = ["Microsoft.Storage.BlobCreated"]
 
-  /*subject_filter {
+  subject_filter {
     subject_begins_with = "/blobServices/default/containers/airflow-logs/blobs"
-  }*/
+  }
 
-/*
   depends_on = [azurerm_storage_queue.main]
-*/
 }
 
 // Add Contributor Role Access

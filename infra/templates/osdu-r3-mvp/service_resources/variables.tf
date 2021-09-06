@@ -106,13 +106,13 @@ variable "system_storage_containers" {
 
 variable "blob_cors_rule" {
   type = list(
-    object(
-      {
-        allowed_origins    = list(string)
-        allowed_methods    = list(string)
-        allowed_headers    = list(string)
-        exposed_headers    = list(string)
-        max_age_in_seconds = number
+  object(
+  {
+    allowed_origins    = list(string)
+    allowed_methods    = list(string)
+    allowed_headers    = list(string)
+    exposed_headers    = list(string)
+    max_age_in_seconds = number
   }))
   default     = []
   description = "List of CORS Rules to be applied on the Blob Service."
@@ -315,7 +315,6 @@ variable "flux_recreate" {
 
 variable "gitops_ssh_url" {
   type        = string
-  default     = "git@ssh.dev.azure.com:v3/msazure/One/AzureGlobal-AGE-Energy"
   description = "(Required) ssh git clone repository URL with Kubernetes manifests including services which runs in the cluster. Flux monitors this repo for Kubernetes manifest additions/changes periodically and apply them in the cluster."
 }
 
@@ -327,13 +326,13 @@ variable "gitops_ssh_key_file" {
 variable "gitops_branch" {
   type        = string
   description = "(Optional) The branch for flux to watch"
-  default     = "osdu-mvp-idc-env"
+  default     = "master"
 }
 
 variable "gitops_path" {
   type        = string
   description = "(Optional) The path for flux to watch"
-  default     = "src/k8-gitops-manifests/providers/azure/hld-registry"
+  default     = "providers/azure/hld-registry"
 }
 
 variable "ssl_policy_type" {
