@@ -296,6 +296,9 @@ Follow the steps in the [link](https://community.opengroup.org/osdu/platform/sys
 
 1. To onboard new services follow the process located [here](./docs/service-onboarding.md).
 
+## How to set Notification Service for a new Topic (optional)
+Follow the steps in the [link](https://community.opengroup.org/osdu/platform/system/notification/-/tree/master/provider/notification-azure/docs).
+
 
 ## Configure Back Up
 Back is enabled by default. To set the backup policies, utilize the script

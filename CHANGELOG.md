@@ -2,6 +2,8 @@
 
 # Current Master
 
+- [[Notification loss, if migration not done] Notification Service to use Service Bus](https://community.opengroup.org/osdu/platform/system/notification/-/blob/master/provider/notification-azure/docs/MIGRATION.md)
+The Notification service has started functioning on Service Buys as the underlying PubSub. Starting v0.12.0, Event Grid will be deprecated. In v0.11.0, the service will have two deployments - one using Event Grid and one uses Service Bus.
 # v0.10.0 (2021-8-8)
 
 __Infra Changes__
