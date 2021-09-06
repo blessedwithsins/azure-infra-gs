@@ -313,6 +313,7 @@ airflow:
       AIRFLOW_VAR_CORE__SERVICE__STORAGE__URL: "http://storage.osdu.svc.cluster.local/api/storage/v2/records"
       AIRFLOW_VAR_CORE__SERVICE__FILE__HOST: "http://file.osdu.svc.cluster.local/api/file/v2"
       AIRFLOW_VAR_CORE__SERVICE__WORKFLOW__HOST: "http://ingestion-workflow.osdu.svc.cluster.local/api/workflow"
+      AIRFLOW_VAR_CORE__SERVICE__DATASET__HOST: "http://dataset.osdu.svc.cluster.local/api/dataset/v1"
       AIRFLOW__WEBSERVER__WORKERS: 15
       AIRFLOW__WEBSERVER__WORKER_REFRESH_BATCH_SIZE: 0
       AIRFLOW__CORE__STORE_SERIALIZED_DAGS: True #This flag decides whether to serialise DAGs and persist them in DB
@@ -405,6 +406,7 @@ git clone https://community.opengroup.org/osdu/platform/system/reference/crs-cat
 git clone https://community.opengroup.org/osdu/platform/system/reference/crs-conversion-service.git $SRC_DIR/crs-conversion-service
 git clone https://community.opengroup.org/osdu/platform/system/notification.git $SRC_DIR/notification
 git clone https://community.opengroup.org/osdu/platform/data-flow/enrichment/wks.git $SRC_DIR/wks
+git clone https://community.opengroup.org/osdu/platform/system/dataset.git $SRC_DIR/dataset
 git clone https://community.opengroup.org/osdu/platform/system/register.git $SRC_DIR/register
 git clone https://community.opengroup.org/osdu/platform/system/schema-service.git $SRC_DIR/schema-service
 git clonehttps://community.opengroup.org/osdu/platform/data-flow/ingestion/ingestion-workflow.git $SRC_DIR/ingestion-workflow
@@ -515,7 +517,8 @@ SERVICE_LIST="infra-azure-provisioning \
               notification \
               schema-service \
               ingestion-workflow \
-              ingestion-service"
+              ingestion-service \
+              dataset"
 
 for SERVICE in $SERVICE_LIST;
 do

@@ -35,7 +35,6 @@ variable "feature_flag" {
     flux           = bool
     sa_lock        = bool
     autoscaling    = bool
-
   })
   default = {
     osdu_namespace = true
@@ -43,6 +42,12 @@ variable "feature_flag" {
     sa_lock        = true
     autoscaling    = false
   }
+}
+
+variable "keda_v2_enabled" {
+  description = "Feature flag for kuda v2. Needs to be true if keda v2 is installed else false"
+  type        = bool
+  default     = false
 }
 
 variable "randomization_level" {
@@ -131,8 +136,8 @@ variable "redis_config_schedule" {
     cache_shard_count = number
   })
   default = {
-    server_patch_day  = "Friday"
-    server_patch_hour = 17
+    server_patch_day  = "Saturday"
+    server_patch_hour = 11
     cache_shard_count = 0
   }
 }
@@ -357,6 +362,18 @@ variable "appgw_min_capacity" {
 
 variable "appgw_max_capacity" {
   description = "Maximum number of instances to run in the App Gateway"
+  type        = number
+  default     = 10
+}
+
+variable "istio_appgw_min_capacity" {
+  description = "Minimum number of instances to run in the Istio App Gateway"
+  type        = number
+  default     = 2
+}
+
+variable "istio_appgw_max_capacity" {
+  description = "Maximum number of instances to run in the Istio App Gateway"
   type        = number
   default     = 10
 }

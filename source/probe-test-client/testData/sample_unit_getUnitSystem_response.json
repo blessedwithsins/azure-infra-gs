@@ -1,0 +1,91 @@
+{
+    "unitSystemInfoList": [
+      {
+        "name": "AWS_Decimetric",
+        "description": "AWS decimetric units",
+        "ancestry": "Metric.AWS_Decimetric",
+        "persistableReference": "{\"ancestry\":\"Metric.AWS_Decimetric\"}"
+      },
+      {
+        "name": "AWS_English",
+        "description": "AWS English units",
+        "ancestry": "Metric.English.AWS_English",
+        "persistableReference": "{\"ancestry\":\"Metric.English.AWS_English\"}"
+      },
+      {
+        "name": "AWS_Metric",
+        "description": "AWS metric units",
+        "ancestry": "Metric.AWS_Metric",
+        "persistableReference": "{\"ancestry\":\"Metric.AWS_Metric\"}"
+      },
+      {
+        "name": "As_Is",
+        "description": "GeoFrame Unit System in which all data are stored in the same units as received (no conversions applied).",
+        "ancestry": "As_Is",
+        "persistableReference": "{\"ancestry\":\"As_Is\"}"
+      },
+      {
+        "name": "Canadian",
+        "description": "Canadian metric units",
+        "ancestry": "Metric.Canadian",
+        "persistableReference": "{\"ancestry\":\"Metric.Canadian\"}"
+      },
+      {
+        "name": "Canonical",
+        "description": "Unit is the Canonical Form for the Unit_Dimension corresponding to each Unit_Quantity",
+        "ancestry": "Canonical",
+        "persistableReference": "{\"ancestry\":\"Canonical\"}"
+      },
+      {
+        "name": "English",
+        "description": "Conventional oilfield units in areas where English units are used",
+        "ancestry": "Metric.English",
+        "persistableReference": "{\"ancestry\":\"Metric.English\"}"
+      },
+      {
+        "name": "GF_Storage",
+        "description": "Geoframe internal storage units",
+        "ancestry": "Metric.GF_Storage",
+        "persistableReference": "{\"ancestry\":\"Metric.GF_Storage\"}"
+      },
+      {
+        "name": "Metric",
+        "description": "Conventional oilfield units in areas where metric units are used",
+        "ancestry": "Metric",
+        "persistableReference": "{\"ancestry\":\"Metric\"}"
+      },
+      {
+        "name": "ProductionEnglish",
+        "description": "Non-standard production units based on English",
+        "ancestry": "Metric.English.ProductionEnglish",
+        "persistableReference": "{\"ancestry\":\"Metric.English.ProductionEnglish\"}"
+      },
+      {
+        "name": "ProductionMetric",
+        "description": "Non-standard production units based on Metric",
+        "ancestry": "Metric.ProductionMetric",
+        "persistableReference": "{\"ancestry\":\"Metric.ProductionMetric\"}"
+      },
+      {
+        "name": "WITS_FPS",
+        "description": "WITS FPS (English) units",
+        "ancestry": "Metric.English.WITS_FPS",
+        "persistableReference": "{\"ancestry\":\"Metric.English.WITS_FPS\"}"
+      },
+      {
+        "name": "WITS_Metric",
+        "description": "WITS Metric units",
+        "ancestry": "Metric.WITS_Metric",
+        "persistableReference": "{\"ancestry\":\"Metric.WITS_Metric\"}"
+      },
+      {
+        "name": "Seabed_Storage",
+        "description": "Seabed internal storage units",
+        "ancestry": "Metric.Seabed_Storage",
+        "persistableReference": "{\"ancestry\":\"Metric.Seabed_Storage\"}"
+      }
+    ],
+    "totalCount": 14,
+    "offset": 0,
+    "count": 14
+  }

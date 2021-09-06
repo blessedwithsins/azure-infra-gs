@@ -1,0 +1,79 @@
+{
+    "executionContext": {
+      "Payload": {
+        "AppKey": "test-app",
+        "data-partition-id": "##PARTITION##"
+      },
+      "manifest": {
+        "kind": "##KIND##",
+        "MasterData": [
+          {
+            "id": "##PARTITION##:master-data--Well:1111",
+            "kind": "##PARTITION##:##SOURCE##:master-data--Well:1.0.0",
+            "acl": {
+              "viewers": [
+                "data.default.viewers@##PARTITION##.contoso.com"
+              ],
+              "owners": [
+                "data.default.owners@##PARTITION##.contoso.com"
+              ]
+            },
+            "legal": {
+              "legaltags": [
+                "##TAG##"
+              ],
+              "otherRelevantDataCountries": [
+                "US"
+              ]
+            },
+            "data": {
+              "Source": "NL_TNO",
+              "SpatialLocation": {
+                "Wgs84Coordinates": {
+                  "type": "FeatureCollection",
+                  "features": [
+                    {
+                      "type": "Feature",
+                      "geometry": {
+                        "type": "Point",
+                        "coordinates": [
+                          3.51906683,
+                          55.68101428
+                        ]
+                      },
+                      "properties": {}
+                    }
+                  ]
+                }
+              },
+              "FacilityID": "10110909",
+              "FacilityOperator": [
+                {
+                  "FacilityOperatorID": "410464"
+                }
+              ],
+              "FacilityName": "A05-01",
+              "FacilityNameAlias": [
+                {
+                  "AliasName": "A05-01"
+                }
+              ],
+              "FacilityEvent": [
+                {
+                  "EffectiveDateTime": "1999-06-03T00:00:00"
+                }
+              ],
+              "VerticalMeasurements": [
+                {
+                  "VerticalMeasurementID": "Kelly Bushing",
+                  "VerticalMeasurement": 36.6
+                }
+              ],
+              "NameAliases": [],
+              "GeoContexts": []
+            }
+          }
+        ]
+      }
+    }
+  }

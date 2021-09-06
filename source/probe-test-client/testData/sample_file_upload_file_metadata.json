@@ -1,0 +1,32 @@
+{
+    "kind": "##KIND##",
+    "acl": {
+        "viewers": [
+            "data.default.viewers@##PARTITION##.contoso.com"
+        ],
+        "owners": [
+            "data.default.viewers@##PARTITION##.contoso.com"
+        ]
+    },
+    "legal": {
+        "legaltags": [
+            "##TAG##"
+        ],
+        "otherRelevantDataCountries": [
+            "US"
+        ],
+        "status": "compliant"
+    },
+    "data": {
+        "Endian": "BIG",
+        "ResourceSecurityClassification": "osdu:reference-data--ResourceSecurityClassification:RESTRICTED:",
+        "SchemaFormatTypeID": "osdu:reference-data--SchemaFormatType:LAS2:",
+        "DatasetProperties": {
+            "FileSourceInfo": {
+                "FileSource": "##FILE_SOURCE##",
+                "Name": "sample.las"
+            }
+        },
+        "Name": "sample.las"
+    }
+}

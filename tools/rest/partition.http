@@ -150,6 +150,22 @@ data-partition-id: {{data_partition_id}}
          "eventgrid-gsmtopic-accesskey": {
             "sensitive": true,
             "value": "eventgrid-statuschangedtopic-accesskey"
+        },
+        "eventgrid-statuschangedtopic": {
+            "sensitive": true,
+            "value": "eventgrid-statuschangedtopic"
+        },
+         "eventgrid-statuschangedtopic-accesskey": {
+            "sensitive": true,
+            "value": "eventgrid-statuschangedtopic-accesskey"
+        },
+        "eventgrid-schemachangedtopic": {
+            "sensitive": true,
+            "value": "eventgrid-schemachangedtopic"
+        },
+         "eventgrid-schemachangedtopic-accesskey": {
+            "sensitive": true,
+            "value": "eventgrid-schemachangedtopic-accesskey"
         }
     }
 }

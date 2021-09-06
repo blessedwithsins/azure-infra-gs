@@ -28,6 +28,7 @@ Empty repositories need to be created that will be used by a pipeline to mirror 
 | seismic-store-service     | https://community.opengroup.org/osdu/platform/domain-data-mgmt-services/seismic/seismic-dms-suite/seismic-store-service.git |
 | wellbore-domain-services  | https://community.opengroup.org/osdu/platform/domain-data-mgmt-services/wellbore/wellbore-domain-services.git |
 | ingestion-service         | https://community.opengroup.org/osdu/platform/data-flow/ingestion/ingestion-service.git |
+| dataset                   | https://community.opengroup.org/osdu/platform/system/dataset.git |
 | policy                    | https://community.opengroup.org/osdu/platform/security-and-compliance/policy.git |
 ```bash
 export ADO_ORGANIZATION=<organization_name>
@@ -58,6 +59,7 @@ SERVICE_LIST="infra-azure-provisioning \
               seismic-store-service \
               wellbore-domain-services \
               ingestion-service \
+              dataset \
               policy"
 
 
@@ -99,6 +101,7 @@ Variable Group Name:  `Mirror Variables`
 | SEISMIC_STORE_SERVICE_REPO | https://dev.azure.com/osdu-demo/osdu/_git/seismic-store-service |
 | WELLBORE_DOMAIN_SERVICSE_REPO | https://dev.azure.com/osdu-demo/osdu/_git/wellbore-domain-services |
 | INGESTION_SERVICE_REPO | https://dev.azure.com/osdu-demo/osdu/_git/ingestion-service |
+| DATASET_REPO | https://dev.azure.com/osdu-demo/osdu/_git/dataset |
 | POLICY_REPO | https://dev.azure.com/osdu-demo/osdu/_git/policy |
 | ACCESS_TOKEN | <your_personal_access_token> |
 
@@ -135,6 +138,7 @@ az pipelines variable-group create \
   SEISMIC_STORE_SERVICE_REPO=https://dev.azure.com/${ADO_ORGANIZATION}/$ADO_PROJECT/_git/seismic-store-service \
   WELLBORE_DOMAIN_SERVICSE_REPO=https://dev.azure.com/${ADO_ORGANIZATION}/$ADO_PROJECT/_git/wellbore-domain-services \
   INGESTION_SERVICE_REPO=https://dev.azure.com/${ADO_ORGANIZATION}/$ADO_PROJECT/_git/ingestion-service \
+  DATASET_REPO=https://dev.azure.com/${ADO_ORGANIZATION}/$ADO_PROJECT/_git/dataset \
   POLICY_REPO=https://dev.azure.com/${ADO_ORGANIZATION}/$ADO_PROJECT/_git/policy \
   ACCESS_TOKEN=$ACCESS_TOKEN \
   -ojson
@@ -336,6 +340,13 @@ jobs:
       inputs:
         sourceGitRepositoryUri: 'https://community.opengroup.org/osdu/platform/data-flow/ingestion/ingestion-service.git'
         destinationGitRepositoryUri: '$(INGESTION_SERVICE_REPO)'
+        destinationGitRepositoryPersonalAccessToken: $(ACCESS_TOKEN)
+        
+    - task: swellaby.mirror-git-repository.mirror-git-repository-vsts-task.mirror-git-repository-vsts-task@1
+      displayName: 'dataset'
+      inputs:
+        sourceGitRepositoryUri: 'https://community.opengroup.org/osdu/platform/system/dataset.git'
+        destinationGitRepositoryUri: '$(DATASET_REPO)'
         destinationGitRepositoryPersonalAccessToken: $(ACCESS_TOKEN)
     
     - task: swellaby.mirror-git-repository.mirror-git-repository-vsts-task.mirror-git-repository-vsts-task@1

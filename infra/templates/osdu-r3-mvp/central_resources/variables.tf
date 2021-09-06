@@ -40,6 +40,12 @@ variable "feature_flag" {
   }
 }
 
+variable "enable_bring_your_own_ad_app" {
+  description = "Feature flag for BYOA"
+  default     = false
+  type        = bool
+}
+
 variable "randomization_level" {
   description = "Number of additional random characters to include in resource names to insulate against unexpected resource name collisions."
   type        = number

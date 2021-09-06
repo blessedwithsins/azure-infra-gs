@@ -1,0 +1,16 @@
+{
+    "name": "placeholder_tag",
+    "description": "This tag is used by Data Upload Scripts",
+    "properties": {
+      "countryOfOrigin": [
+        "US"
+      ],
+      "contractId": "A1234",
+      "expirationDate": "2023-12-31",
+      "originator": "MyCompany",
+      "dataType": "Transferred Data",
+      "securityClassification": "Public",
+      "personalData": "No Personal Data",
+      "exportClassification": "EAR99"
+    }
+  }

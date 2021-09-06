@@ -33,6 +33,7 @@ This variable group will be used to hold the common values for the services to b
 | UNIT_URL                                      | `https://<your_fqdn>/api/unit/v2`           |
 | CRS_CATALOG_URL                               | `https://<your_fqdn>/api/crs/catalog/v2/`   |
 | CRS_CONVERSION_URL                            | `https://<your_fqdn>/api/crs/converter/v2/` |
+| DATASET_URL                                   | `https://<your_fqdn>/api/dataset/v1`           |
 | REGISTER_BASE_URL                             | `https://<your_fqdn>/`                      |
 | ACL_OWNERS                                    | `data.test1`                                |
 | ACL_VIEWERS                                   | `data.test1`                                |
@@ -86,6 +87,7 @@ az pipelines variable-group create \
   UNIT_URL="https://${DNS_HOST}/api/unit/v2/" \
   CRS_CATALOG_URL="https://${DNS_HOST}/api/crs/catalog/v2/" \
   CRS_CONVERSION_URL="https://${DNS_HOST}/api/crs/converter/v2/" \
+  DATASET_URL="https://${DNS_HOST}/api/dataset/v1" \
   REGISTER_BASE_URL="https://${DNS_HOST}/" \
   ACL_OWNERS="data.test1" \
   ACL_VIEWERS="data.test1" \
@@ -673,6 +675,28 @@ az pipelines variable-group create \
   -ojson
 ```
 
+__Setup and Configure the ADO Library `Azure Service Release - dataset`__
+
+This variable group is the service specific variables necessary for testing and deploying the `dataset` service.
+
+| Variable | Value |
+|----------|-------|
+| MAVEN_DEPLOY_POM_FILE_PATH | `drop/provider/dataset-azure` |
+| MAVEN_INTEGRATION_TEST_OPTIONS | `-DDATASET_HOST=$(DATASET_URL) -DAZURE_AD_TENANT_ID=$(AZURE_TENANT_ID) -DINTEGRATION_TESTER=$(INTEGRATION_TESTER) -DTESTER_SERVICEPRINCIPAL_SECRET=$(AZURE_TESTER_SERVICEPRINCIPAL_SECRET) -DAZURE_AD_APP_RESOURCE_ID=$(AZURE_AD_APP_RESOURCE_ID) -DSTAGING_CONTAINER_NAME=dataset-staging-area -DNO_DATA_ACCESS_TESTER=$(NO_DATA_ACCESS_TESTER) -DNO_DATA_ACCESS_TESTER_SERVICEPRINCIPAL_SECRET=$(NO_DATA_ACCESS_TESTER_SERVICEPRINCIPAL_SECRET) -DAZURE_STORAGE_ACCOUNT=$(STORAGE_ACCOUNT) -DUSER_ID=osdu-user -DEXIST_FILE_ID=8900a83f-18c6-4b1d-8f38-309a208779cc -DTIME_ZONE="UTC+0" -DDATA_PARTITION_ID=$(MY_TENANT)` |
+| MAVEN_INTEGRATION_TEST_POM_FILE_PATH | `drop/deploy/testing/dataset-test-azure` |
+| SERVICE_RESOURCE_NAME | `$(AZURE_DATASET_NAME)` |
+
+```bash
+az pipelines variable-group create \
+  --name "Azure Service Release - dataset" \
+  --authorize true \
+  --variables \
+  MAVEN_DEPLOY_POM_FILE_PATH="drop/provider/dataset-azure" \
+  MAVEN_INTEGRATION_TEST_OPTIONS='-DDATASET_HOST=$(DATASET_URL) -DAZURE_AD_TENANT_ID=$(AZURE_TENANT_ID) -DINTEGRATION_TESTER=$(INTEGRATION_TESTER) -DTESTER_SERVICEPRINCIPAL_SECRET=$(AZURE_TESTER_SERVICEPRINCIPAL_SECRET) -DAZURE_AD_APP_RESOURCE_ID=$(AZURE_AD_APP_RESOURCE_ID) -DSTAGING_CONTAINER_NAME=dataset-staging-area -DNO_DATA_ACCESS_TESTER=$(NO_DATA_ACCESS_TESTER) -DNO_DATA_ACCESS_TESTER_SERVICEPRINCIPAL_SECRET=$(NO_DATA_ACCESS_TESTER_SERVICEPRINCIPAL_SECRET) -DAZURE_STORAGE_ACCOUNT=$(STORAGE_ACCOUNT) -DUSER_ID=osdu-user -DEXIST_FILE_ID=8900a83f-18c6-4b1d-8f38-309a208779cc -DTIME_ZONE="UTC+0" -DDATA_PARTITION_ID=$(MY_TENANT)' \
+  MAVEN_INTEGRATION_TEST_POM_FILE_PATH="drop/deploy/testing/dataset-test-azure" \
+  SERVICE_RESOURCE_NAME='$(AZURE_DATASET_NAME)' \
+  -ojson
+
 __Setup and Configure the ADO Library `Azure Service Release - seismic-store-service`__
 
 This variable group is the service specific variables necessary for testing and deploying the `seismic-store-service` service.
@@ -1180,8 +1204,23 @@ az pipelines create \
   --yaml-path /devops/azure/pipeline.yml  \
   -ojson
 ```
+22. Add a Pipeline for __dataset__  to deploy the Dataset Service.
 
-21. Add a Pipeline for __policy-service__  to deploy the Policy Service.
+   _Repo:_ `dataset`
+   _Path:_ `/devops/azure/pipeline.yml`
+   _Validate:_ https://<your_dns_name>/api/dataset/v1/swagger-ui.html is alive.
+
+```bash
+az pipelines create \
+  --name 'dataset'  \
+  --repository dataset  \
+  --branch master  \
+  --repository-type tfsgit  \
+  --yaml-path /devops/azure/pipeline.yml  \
+  -ojson
+```
+
+23. Add a Pipeline for __policy-service__  to deploy the Policy Service.
 
     _Repo:_ `policy`
     _Path:_ `/devops/azure/pipeline.yml`

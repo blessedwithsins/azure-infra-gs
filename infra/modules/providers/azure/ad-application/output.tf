@@ -13,23 +13,23 @@
 //  limitations under the License.
 
 output "name" {
-  value       = azuread_application.main.name
+  value       = var.enable_bring_your_own_ad_app ? null : azuread_application.main[0].name
   description = "The display name of the application."
 }
 
 output "id" {
-  value       = azuread_application.main.application_id
+  value       = var.enable_bring_your_own_ad_app ? null : azuread_application.main[0].application_id
   description = "The ID of the application."
 }
 
 output "object_id" {
-  value       = azuread_application.main.object_id
+  value       = var.enable_bring_your_own_ad_app ? null : azuread_application.main[0].object_id
   description = "The object ID of the application."
 }
 
 output "roles" {
-  value = {
-    for r in azuread_application.main.app_role :
+  value = var.enable_bring_your_own_ad_app ? null : {
+    for r in azuread_application.main[0].app_role :
     r.display_name => {
       id          = r.id
       name        = r.display_name
@@ -42,7 +42,7 @@ output "roles" {
 }
 
 output "password" {
-  value       = azuread_application_password.main.0.value
+  value       = var.enable_bring_your_own_ad_app ? null : azuread_application_password.main.0.value
   sensitive   = true
   description = "The password for the application."
 }

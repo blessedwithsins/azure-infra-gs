@@ -1,0 +1,106 @@
+{
+    "ingest-storage-account-key": {
+      "sensitive": true,
+      "value": "##partition##-ingest-storage-key"
+    },
+    "sdms-storage-account-name": {
+      "sensitive": true,
+      "value": "##partition##-sdms-storage"
+    },
+    "elastic-endpoint": {
+      "sensitive": true,
+      "value": "##partition##-elastic-endpoint"
+    },
+    "sb-connection": {
+      "sensitive": true,
+      "value": "##partition##-sb-connection"
+    },
+    "eventgrid-legaltagschangedtopic": {
+      "sensitive": true,
+      "value": "##partition##-eventgrid-legaltagschangedtopic"
+    },
+    "cosmos-primary-key": {
+      "sensitive": true,
+      "value": "##partition##-cosmos-primary-key"
+    },
+    "storage-account-name": {
+      "sensitive": true,
+      "value": "##partition##-storage"
+    },
+    "sdms-storage-account-key": {
+      "sensitive": true,
+      "value": "##partition##-sdms-storage-key"
+    },
+    "eventgrid-legaltagschangedtopic-accesskey": {
+      "sensitive": true,
+      "value": "##partition##-eventgrid-legaltagschangedtopic-accesskey"
+    },
+    "elastic-password": {
+      "sensitive": true,
+      "value": "##partition##-elastic-password"
+    },
+    "eventgrid-gsmtopic-accesskey": {
+      "sensitive": true,
+      "value": "##partition##-eventgrid-statuschangedtopic-accesskey"
+    },
+    "eventgrid-schemanotificationtopic-accesskey": {
+      "sensitive": true,
+      "value": "##partition##-eventgrid-schemachangedtopic-accesskey"
+    },
+    "ingest-storage-account-name": {
+      "sensitive": true,
+      "value": "##partition##-ingest-storage"
+    },
+    "id": {
+      "sensitive": false,
+      "value": "##partition##"
+    },
+    "cosmos-endpoint": {
+      "sensitive": true,
+      "value": "##partition##-cosmos-endpoint"
+    },
+    "eventgrid-schemanotificationtopic": {
+      "sensitive": true,
+      "value": "##partition##-eventgrid-schemachangedtopic"
+    },
+    "eventgrid-recordstopic-accesskey": {
+      "sensitive": true,
+      "value": "##partition##-eventgrid-recordstopic-accesskey"
+    },
+    "cosmos-connection": {
+      "sensitive": true,
+      "value": "##partition##-cosmos-connection"
+    },
+    "elastic-username": {
+      "sensitive": true,
+      "value": "##partition##-elastic-username"
+    },
+    "eventgrid-recordstopic": {
+      "sensitive": true,
+      "value": "##partition##-eventgrid-recordstopic"
+    },
+    "compliance-ruleset": {
+      "sensitive": false,
+      "value": "shared"
+    },
+    "encryption-key-identifier": {
+      "sensitive": true,
+      "value": "##partition##-encryption-key-identifier"
+    },
+    "storage-account-key": {
+      "sensitive": true,
+      "value": "##partition##-storage-key"
+    },
+    "eventgrid-gsmtopic": {
+      "sensitive": true,
+      "value": "##partition##-eventgrid-statuschangedtopic"
+    },
+    "sb-namespace": {
+      "sensitive": true,
+      "value": "##partition##-sb-namespace"
+    },
+    "eventgrid-resourcegroup": {
+      "sensitive": true,
+      "value": "##partition##-eventgrid-resourcegroup"
+    }
+  }

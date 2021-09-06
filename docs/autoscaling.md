@@ -54,7 +54,7 @@ In this approach, we use certificate uploaded by customer to Keyvault.
    
 3. Once you have view and update permission on Certificate, click Certificates on left subsections.
 
-4. Select Certificate named **`appgw-ssl-cert`**. 
+4. Select Certificate named **`istio-appgw-ssl-cert`**. 
 
 5. Click `+ New Version`. Select `Generate` or `Import` based on your preference and certificate you want to provision/upload.
    Follow  the link  [Keyvault certificates](https://docs.microsoft.com/en-us/azure/key-vault/certificates/certificate-scenarios) to know more about certificate generation/upload.
@@ -64,7 +64,7 @@ In this approach, we use certificate uploaded by customer to Keyvault.
 ###  Use uploaded certificate
 
 1. Once upload is complete, Go to Azure Devops Project that you have set up for code mirroring.
-2. Setup library variable `ENABLE_KEYVAULT_CERT` in Variable group **Azure - OSDU**
+2. Setup library variable `ENABLE_ISTIO_KEYVAULT_CERT` in Variable group **Azure - OSDU**
    to `true`.
 3. Run the pipeline following pipeline manually for master branch:
    - `osdu-istio` 

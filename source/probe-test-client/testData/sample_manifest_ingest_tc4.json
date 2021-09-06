@@ -1,0 +1,203 @@
+{
+    "executionContext": {
+      "Payload": {
+        "AppKey": "test-app",
+        "data-partition-id": "##PARTITION##"
+      },
+      "manifest": {
+        "kind": "##KIND##",
+        "ReferenceData": [],
+        "MasterData": [],
+        "Data": {
+          "WorkProduct": {
+            "id": "##PARTITION##:work-product--WorkProduct:feb2-1",
+            "kind": "##PARTITION##:##SOURCE##:work-product--WorkProduct:1.0.0",
+            "acl": {
+              "viewers": [
+                "data.default.viewers@##PARTITION##.contoso.com"
+              ],
+              "owners": [
+                "data.default.owners@##PARTITION##.contoso.com"
+              ]
+            },
+            "legal": {
+              "legaltags": [
+                "##TAG##"
+              ],
+              "otherRelevantDataCountries": [
+                "US"
+              ]
+            },
+            "data": {
+              "Name": "69_D_CH_11",
+              "Description": "Document",
+              "Components": [
+                "osdu:work-product-component--WellboreMarkerSet:feb2:1:"
+              ]
+            }
+          },
+          "WorkProductComponents": [
+            {
+              "id": "##PARTITION##:work-product-component--WellboreMarkerSet:feb2:1",
+              "kind": "##PARTITION##:##SOURCE##:work-product-component--WellboreMarkerSet:1.0.0",
+              "acl": {
+                "viewers": [
+                  "data.default.viewers@##PARTITION##.contoso.com"
+                ],
+                "owners": [
+                  "data.default.owners@##PARTITION##.contoso.com"
+                ]
+              },
+              "legal": {
+                "legaltags": [
+                  "##TAG##"
+                ],
+                "otherRelevantDataCountries": [
+                  "US"
+                ]
+              },
+              "data": {
+                "Name": "7587.csv",
+                "Description": "Wellbore Marker",
+                "Datasets": [
+                  "##PARTITION##:dataset--File.Generic:*:"
+                ],
+                "Markers": [
+                  {
+                    "MarkerName": "North Sea Supergroup",
+                    "MarkerMeasuredDepth": 0
+                  },
+                  {
+                    "MarkerName": "Ommelanden Formation",
+                    "MarkerMeasuredDepth": 1555
+                  },
+                  {
+                    "MarkerName": "Texel Marlstone Member",
+                    "MarkerMeasuredDepth": 2512.5
+                  },
+                  {
+                    "MarkerName": "Upper Holland Marl Member",
+                    "MarkerMeasuredDepth": 2606
+                  },
+                  {
+                    "MarkerName": "Middle Holland Claystone Member",
+                    "MarkerMeasuredDepth": 2723
+                  },
+                  {
+                    "MarkerName": "Vlieland Claystone Formation",
+                    "MarkerMeasuredDepth": 2758
+                  },
+                  {
+                    "MarkerName": "Lower Volpriehausen Sandstone Member",
+                    "MarkerMeasuredDepth": 2977.5
+                  },
+                  {
+                    "MarkerName": "Rogenstein Member",
+                    "MarkerMeasuredDepth": 3018
+                  },
+                  {
+                    "MarkerName": "FAULT",
+                    "MarkerMeasuredDepth": 3043
+                  },
+                  {
+                    "MarkerName": "Upper Zechstein salt",
+                    "MarkerMeasuredDepth": 3043
+                  },
+                  {
+                    "MarkerName": "FAULT",
+                    "MarkerMeasuredDepth": 3544
+                  },
+                  {
+                    "MarkerName": "Z3 Carbonate Member",
+                    "MarkerMeasuredDepth": 3544
+                  },
+                  {
+                    "MarkerName": "Z3 Main Anhydrite Member",
+                    "MarkerMeasuredDepth": 3587
+                  },
+                  {
+                    "MarkerName": "FAULT",
+                    "MarkerMeasuredDepth": 3622
+                  },
+                  {
+                    "MarkerName": "Z3 Salt Member",
+                    "MarkerMeasuredDepth": 3622
+                  },
+                  {
+                    "MarkerName": "Z3 Main Anhydrite Member",
+                    "MarkerMeasuredDepth": 3666.5
+                  },
+                  {
+                    "MarkerName": "Z3 Carbonate Member",
+                    "MarkerMeasuredDepth": 3688
+                  },
+                  {
+                    "MarkerName": "Z2 Salt Member",
+                    "MarkerMeasuredDepth": 3709
+                  },
+                  {
+                    "MarkerName": "Z2 Basal Anhydrite Member",
+                    "MarkerMeasuredDepth": 3985
+                  },
+                  {
+                    "MarkerName": "Z2 Carbonate Member",
+                    "MarkerMeasuredDepth": 3996
+                  },
+                  {
+                    "MarkerName": "Z1 (Werra) Formation",
+                    "MarkerMeasuredDepth": 4022.5
+                  },
+                  {
+                    "MarkerName": "Ten Boer Member",
+                    "MarkerMeasuredDepth": 4070
+                  },
+                  {
+                    "MarkerName": "Upper Slochteren Member",
+                    "MarkerMeasuredDepth": 4128.5
+                  },
+                  {
+                    "MarkerName": "Ameland Member",
+                    "MarkerMeasuredDepth": 4231
+                  },
+                  {
+                    "MarkerName": "Lower Slochteren Member",
+                    "MarkerMeasuredDepth": 4283.5
+                  }
+                ]
+              }
+            }
+          ],
+          "Datasets": [
+            {
+              "id": "##PARTITION##:dataset--File.Generic:*",
+              "kind": "##PARTITION##:##SOURCE##:dataset--File.Generic:1.0.0",
+              "acl": {
+                "viewers": [
+                  "data.default.viewers@##PARTITION##.contoso.com"
+                ],
+                "owners": [
+                  "data.default.owners@##PARTITION##.contoso.com"
+                ]
+              },
+              "legal": {
+                "legaltags": [
+                  "##TAG##"
+                ],
+                "otherRelevantDataCountries": [
+                  "US"
+                ]
+              },
+              "data": {
+                "Endian": "BIG",
+                "DatasetProperties": {
+                  "FileSourceInfo": {
+                    "FileSource": "This would be a valid file source in the future"
+                  }
+                }
+              }
+            }
+          ]
+        }
+      }
+    }
+  }

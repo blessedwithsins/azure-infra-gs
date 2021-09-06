@@ -1,0 +1,10 @@
+{
+  "workflowName": "workflow_name",
+  "description": "Test Register a Workflow",
+  "registrationInstructions": {
+    "active": true,
+    "concurrentWorkflowRun": 5,
+    "concurrentTaskRun": 5,
+    "workflowDetailContent": ""
+  }
+}

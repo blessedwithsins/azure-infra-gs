@@ -1,0 +1,39 @@
+{
+    "executionContext": {
+      "Payload": {
+        "AppKey": "test-app",
+        "data-partition-id": "##PARTITION##"
+      },
+      "manifest": {
+        "kind": "##KIND##",
+        "ReferenceData": [
+          {
+            "id": "##PARTITION##:reference-data--ProcessingParameterType:3D%20Kirchhoff%20Depth%20Migration",
+            "kind": "##PARTITION##:##SOURCE##:reference-data--ProcessingParameterType:1.0.0",
+            "acl": {
+              "viewers": [
+                "data.default.viewers@##PARTITION##.contoso.com"
+              ],
+              "owners": [
+                "data.default.owners@##PARTITION##.contoso.com"
+              ]
+            },
+            "legal": {
+              "legaltags": [
+                "##TAG##"
+              ],
+              "otherRelevantDataCountries": [
+                "US"
+              ]
+            },
+            "data": {
+              "Name": "3D Kirchhoff Depth Migration",
+              "ID": "3D%20Kirchhoff%20Depth%20Migration",
+              "Code": "3D Kirchhoff Depth Migration",
+              "Source": "Workbook Published/ProcessingParameterType.1.0.0.xlsx; commit SHA 0b4db59a."
+            }
+          }
+        ]
+      }
+    }
+  }

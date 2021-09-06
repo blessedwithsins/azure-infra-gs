@@ -1,0 +1,1007 @@
+{
+    "offset": 0,
+    "count": 100,
+    "totalCount": 953,
+    "areasOfUse": [
+      {
+        "description": "Philippines - onshore west of 118°E.",
+        "lastModified": "20140501",
+        "aliasNames": [],
+        "namedReference": {
+          "name": "Philippines - zone I onshore",
+          "persistableReference": "{\"boundBox\":{\"lonMin\":116.89,\"latMin\":7.75,\"lonMax\":118.0,\"latMax\":9.32},\"authCode\":{\"auth\":\"EPSG\",\"code\":\"3958\"},\"type\":\"AOU\"}"
+        },
+        "name": "Philippines - zone I onshore"
+      },
+      {
+        "description": "Between 150°W and 144°W, northern hemisphere between equator and 84°N, onshore and offshore. United States (USA) - Alaska (AK).",
+        "lastModified": "20110509",
+        "aliasNames": [],
+        "namedReference": {
+          "name": "World - N hemisphere - 150°W to 144°W - by country",
+          "persistableReference": "{\"boundBox\":{\"lonMin\":-150.0,\"latMin\":0.0,\"lonMax\":-144.0,\"latMax\":84.0},\"authCode\":{\"auth\":\"EPSG\",\"code\":\"2010\"},\"type\":\"AOU\"}"
+        },
+        "name": "World - N hemisphere - 150°W to 144°W - by country"
+      },
+      {
+        "description": "Between 150°W and 144°W, southern hemisphere between 80°S and equator, onshore and offshore.",
+        "lastModified": "20110509",
+        "aliasNames": [],
+        "namedReference": {
+          "name": "World - S hemisphere - 150°W to 144°W - by country",
+          "persistableReference": "{\"boundBox\":{\"lonMin\":-150.0,\"latMin\":-80.0,\"lonMax\":-144.0,\"latMax\":0.0},\"authCode\":{\"auth\":\"EPSG\",\"code\":\"2011\"},\"type\":\"AOU\"}"
+        },
+        "name": "World - S hemisphere - 150°W to 144°W - by country"
+      },
+      {
+        "description": "Between 144°W and 138°W, northern hemisphere between equator and 84°N, onshore and offshore. Canada - British Columbia (BC); Yukon. United States (USA) - Alaska (AK).",
+        "lastModified": "20110509",
+        "aliasNames": [],
+        "namedReference": {
+          "name": "World - N hemisphere - 144°W to 138°W - by country",
+          "persistableReference": "{\"boundBox\":{\"lonMin\":-144.0,\"latMin\":0.0,\"lonMax\":-138.0,\"latMax\":84.0},\"authCode\":{\"auth\":\"EPSG\",\"code\":\"2012\"},\"type\":\"AOU\"}"
+        },
+        "name": "World - N hemisphere - 144°W to 138°W - by country"
+      },
+      {
+        "description": "Austria; Belgium; Denmark; Finland; Faroe islands; France; Germany (west); Gibraltar; Greece; Italy; Luxembourg; Netherlands; Norway; Portugal; Spain; Sweden; Switzerland.",
+        "lastModified": "20140501",
+        "aliasNames": [],
+        "namedReference": {
+          "name": "Europe - west (DMA ED50 mean)",
+          "persistableReference": "{\"boundBox\":{\"lonMin\":-9.56,\"latMin\":34.88,\"lonMax\":31.59,\"latMax\":71.21},\"authCode\":{\"auth\":\"EPSG\",\"code\":\"2420\"},\"type\":\"AOU\"}"
+        },
+        "name": "Europe - west (DMA ED50 mean)"
+      },
+      {
+        "description": "Austria; Denmark; France; Germany (west); Netherlands; Switzerland.",
+        "lastModified": "20120105",
+        "aliasNames": [],
+        "namedReference": {
+          "name": "Europe - west central (by country)",
+          "persistableReference": "{\"boundBox\":{\"lonMin\":-4.87,\"latMin\":42.33,\"lonMax\":17.17,\"latMax\":57.8},\"authCode\":{\"auth\":\"EPSG\",\"code\":\"2421\"},\"type\":\"AOU\"}"
+        },
+        "name": "Europe - west central (by country)"
+      },
+      {
+        "description": "Libya - between 12°E and 18°E, onshore and offshore.",
+        "lastModified": "20140501",
+        "aliasNames": [],
+        "namedReference": {
+          "name": "Libya - 12°E to 18°E",
+          "persistableReference": "{\"boundBox\":{\"lonMin\":12.0,\"latMin\":22.51,\"lonMax\":18.0,\"latMax\":35.23},\"authCode\":{\"auth\":\"EPSG\",\"code\":\"3950\"},\"type\":\"AOU\"}"
+        },
+        "name": "Libya - 12°E to 18°E"
+      },
+      {
+        "description": "Armenia; Azerbaijan; Belarus; Estonia - onshore; Georgia - onshore; Kazakhstan; Kyrgyzstan; Latvia - onshore; Lithuania - onshore; Moldova; Russian Federation - onshore; Tajikistan; Turkmenistan; Ukraine - onshore; Uzbekistan.",
+        "lastModified": "20140501",
+        "aliasNames": [],
+        "namedReference": {
+          "name": "Europe - FSU onshore",
+          "persistableReference": "{\"boundBox\":{\"lonMin\":19.57,\"latMin\":35.14,\"lonMax\":-168.97,\"latMax\":81.91},\"authCode\":{\"auth\":\"EPSG\",\"code\":\"2423\"},\"type\":\"AOU\"}"
+        },
+        "name": "Europe - FSU onshore"
+      },
+      {
+        "description": "Algeria - between 6°W and 0°W (of Greenwich), onshore and offshore.",
+        "lastModified": "20140501",
+        "aliasNames": [],
+        "namedReference": {
+          "name": "Algeria - 6°W to 0°W",
+          "persistableReference": "{\"boundBox\":{\"lonMin\":-6.0,\"latMin\":21.82,\"lonMax\":0.0,\"latMax\":37.01},\"authCode\":{\"auth\":\"EPSG\",\"code\":\"3952\"},\"type\":\"AOU\"}"
+        },
+        "name": "Algeria - 6°W to 0°W"
+      },
+      {
+        "description": "Between 126°W and 120°W, northern hemisphere between equator and 84°N, onshore and offshore. Canada - British Columbia (BC); Northwest Territories (NWT); Nunavut; Yukon. United States (USA) - Alaska (AK).",
+        "lastModified": "20110509",
+        "aliasNames": [],
+        "namedReference": {
+          "name": "World - N hemisphere - 126°W to 120°W - by country",
+          "persistableReference": "{\"boundBox\":{\"lonMin\":-126.0,\"latMin\":0.0,\"lonMax\":-120.0,\"latMax\":84.0},\"authCode\":{\"auth\":\"EPSG\",\"code\":\"2018\"},\"type\":\"AOU\"}"
+        },
+        "name": "World - N hemisphere - 126°W to 120°W - by country"
+      },
+      {
+        "description": "Between 126°W and 120°W, southern hemisphere between 80°S and equator, onshore and offshore.",
+        "lastModified": "20110509",
+        "aliasNames": [],
+        "namedReference": {
+          "name": "World - S hemisphere - 126°W to 120°W - by country",
+          "persistableReference": "{\"boundBox\":{\"lonMin\":-126.0,\"latMin\":-80.0,\"lonMax\":-120.0,\"latMax\":0.0},\"authCode\":{\"auth\":\"EPSG\",\"code\":\"2019\"},\"type\":\"AOU\"}"
+        },
+        "name": "World - S hemisphere - 126°W to 120°W - by country"
+      },
+      {
+        "description": "Between 72°W and 66°W, northern hemisphere between equator and 84°N, onshore and offshore. Aruba. Bahamas. Brazil. Canada - New Brunswick (NB); Labrador; Nunavut; Nova Scotia (NS); Quebec. Colombia. Dominican Republic. Greenland. Netherlands Antilles. Puerto Rico. Turks and Caicos Islands. United States. Venezuela.",
+        "lastModified": "20110509",
+        "aliasNames": [],
+        "namedReference": {
+          "name": "World - N hemisphere - 72°W to 66°W - by country",
+          "persistableReference": "{\"boundBox\":{\"lonMin\":-72.0,\"latMin\":0.0,\"lonMax\":-66.0,\"latMax\":84.0},\"authCode\":{\"auth\":\"EPSG\",\"code\":\"2036\"},\"type\":\"AOU\"}"
+        },
+        "name": "World - N hemisphere - 72°W to 66°W - by country"
+      },
+      {
+        "description": "Bangladesh - onshore east of 90°E.",
+        "lastModified": "20170319",
+        "aliasNames": [],
+        "namedReference": {
+          "name": "Bangladesh - onshore east of 90°E",
+          "persistableReference": "{\"boundBox\":{\"lonMin\":90.0,\"latMin\":20.52,\"lonMax\":92.67,\"latMax\":25.29},\"authCode\":{\"auth\":\"EPSG\",\"code\":\"1675\"},\"type\":\"AOU\"}"
+        },
+        "name": "Bangladesh - onshore east of 90°E"
+      },
+      {
+        "description": "South America (Bolivia; Chile - north of 45°S; Peru) between 72°W and 66°W, southern hemisphere, onshore.",
+        "lastModified": "20140501",
+        "aliasNames": [],
+        "namedReference": {
+          "name": "South America - 72°W to 66°W, S hemisphere and PSAD56 by country",
+          "persistableReference": "{\"boundBox\":{\"lonMin\":-72.0,\"latMin\":-45.0,\"lonMax\":-66.0,\"latMax\":-2.14},\"authCode\":{\"auth\":\"EPSG\",\"code\":\"1759\"},\"type\":\"AOU\"}"
+        },
+        "name": "South America - 72°W to 66°W, S hemisphere and PSAD56 by country"
+      },
+      {
+        "description": "South America (Aruba; Bonaire; Curacao; Venezuela) between 72°W and 66°W, northern hemisphere, onshore.",
+        "lastModified": "20130721",
+        "aliasNames": [],
+        "namedReference": {
+          "name": "South America - 72°W to 66°W, N hemisphere and PSAD56 by country",
+          "persistableReference": "{\"boundBox\":{\"lonMin\":-72.0,\"latMin\":0.73,\"lonMax\":-66.0,\"latMax\":12.68},\"authCode\":{\"auth\":\"EPSG\",\"code\":\"1758\"},\"type\":\"AOU\"}"
+        },
+        "name": "South America - 72°W to 66°W, N hemisphere and PSAD56 by country"
+      },
+      {
+        "description": "Intersection of Philippines - zone V onshore [3967] and Philippines - onshore excluding Mindanao [2364]",
+        "lastModified": "20180611",
+        "aliasNames": [],
+        "namedReference": {
+          "name": "Philippines - zone V onshore, Philippines - onshore excluding Mindanao",
+          "persistableReference": "{\"boundBox\":{\"lonMin\":123.73,\"latMin\":7.75,\"lonMax\":125.88,\"latMax\":14.15},\"authCode\":{\"auth\":\"SLB\",\"code\":\"39672364\"},\"type\":\"AOU\"}"
+        },
+        "name": "Philippines - zone V onshore, Philippines - onshore excluding Mindanao"
+      },
+      {
+        "description": "Intersection of Australasia - Australia and PNG - 144°E to 150°E [1568] and Australia - onshore [2575]",
+        "lastModified": "20180611",
+        "aliasNames": [],
+        "namedReference": {
+          "name": "Australasia - Australia and PNG - 144°E to 150°E, Australia - onshore",
+          "persistableReference": "{\"boundBox\":{\"lonMin\":144.0,\"latMin\":-43.7,\"lonMax\":150.01,\"latMax\":-9.86},\"authCode\":{\"auth\":\"SLB\",\"code\":\"15682575\"},\"type\":\"AOU\"}"
+        },
+        "name": "Australasia - Australia and PNG - 144°E to 150°E, Australia - onshore"
+      },
+      {
+        "description": "Cameroon - coastal area.",
+        "lastModified": "20140501",
+        "aliasNames": [],
+        "namedReference": {
+          "name": "Cameroon - coastal area",
+          "persistableReference": "{\"boundBox\":{\"lonMin\":8.45,\"latMin\":2.16,\"lonMax\":10.4,\"latMax\":4.99},\"authCode\":{\"auth\":\"EPSG\",\"code\":\"2555\"},\"type\":\"AOU\"}"
+        },
+        "name": "Cameroon - coastal area"
+      },
+      {
+        "description": "Gabon - west of 12°E - onshore and offshore.",
+        "lastModified": "20151125",
+        "aliasNames": [],
+        "namedReference": {
+          "name": "Gabon - west of 12°E",
+          "persistableReference": "{\"boundBox\":{\"lonMin\":7.03,\"latMin\":-6.37,\"lonMax\":12.01,\"latMax\":2.32},\"authCode\":{\"auth\":\"EPSG\",\"code\":\"1697\"},\"type\":\"AOU\"}"
+        },
+        "name": "Gabon - west of 12°E"
+      },
+      {
+        "description": "Canada - Alberta.",
+        "lastModified": "20140501",
+        "aliasNames": [],
+        "namedReference": {
+          "name": "Canada - Alberta",
+          "persistableReference": "{\"boundBox\":{\"lonMin\":-120.0,\"latMin\":48.99,\"lonMax\":-109.98,\"latMax\":60.0},\"authCode\":{\"auth\":\"EPSG\",\"code\":\"2376\"},\"type\":\"AOU\"}"
+        },
+        "name": "Canada - Alberta"
+      },
+      {
+        "description": "United States (USA) - CONUS including EEZ -onshore and offshore - Alabama; Arizona; Arkansas; California; Colorado; Connecticut; Delaware; Florida; Georgia; Idaho; Illinois; Indiana; Iowa; Kansas; Kentucky; Louisiana; Maine; Maryland; Massachusetts; Michigan; Minnesota; Mississippi; Missouri; Montana; Nebraska; Nevada; New Hampshire; New Jersey; New Mexico; New York; North Carolina; North Dakota; Ohio; Oklahoma; Oregon; Pennsylvania; Rhode Island; South Carolina; South Dakota; Tennessee; Texas; Utah; Vermont; Virginia; Washington; West Virginia; Wisconsin; Wyoming. US Gulf of Mexico (GoM) OCS.",
+        "lastModified": "20140501",
+        "aliasNames": [],
+        "namedReference": {
+          "name": "USA - CONUS including EEZ",
+          "persistableReference": "{\"boundBox\":{\"lonMin\":-129.17,\"latMin\":23.81,\"lonMax\":-65.69,\"latMax\":49.38},\"authCode\":{\"auth\":\"EPSG\",\"code\":\"2374\"},\"type\":\"AOU\"}"
+        },
+        "name": "USA - CONUS including EEZ"
+      },
+      {
+        "description": "Venezuela - west of 72°W.",
+        "lastModified": "20140501",
+        "aliasNames": [],
+        "namedReference": {
+          "name": "Venezuela - west of 72°W",
+          "persistableReference": "{\"boundBox\":{\"lonMin\":-73.38,\"latMin\":7.02,\"lonMax\":-71.99,\"latMax\":11.62},\"authCode\":{\"auth\":\"EPSG\",\"code\":\"1693\"},\"type\":\"AOU\"}"
+        },
+        "name": "Venezuela - west of 72°W"
+      },
+      {
+        "description": "Intersection of Europe - 6°W to 0°W and ED50 by country [1633] and Europe - west (DMA ED50 mean) [2420]",
+        "lastModified": "20180611",
+        "aliasNames": [],
+        "namedReference": {
+          "name": "Europe - 6°W to 0°W and ED50 by country, Europe - west (DMA ED50 mean)",
+          "persistableReference": "{\"boundBox\":{\"lonMin\":-6.0,\"latMin\":35.26,\"lonMax\":0.0,\"latMax\":71.21},\"authCode\":{\"auth\":\"SLB\",\"code\":\"16332420\"},\"type\":\"AOU\"}"
+        },
+        "name": "Europe - 6°W to 0°W and ED50 by country, Europe - west (DMA ED50 mean)"
+      },
+      {
+        "description": "Malaysia - West Malaysia onshore west of 102°E.",
+        "lastModified": "20140501",
+        "aliasNames": [],
+        "namedReference": {
+          "name": "Malaysia - West Malaysia - onshore west of 102°E",
+          "persistableReference": "{\"boundBox\":{\"lonMin\":99.59,\"latMin\":2.29,\"lonMax\":102.01,\"latMax\":6.72},\"authCode\":{\"auth\":\"EPSG\",\"code\":\"1691\"},\"type\":\"AOU\"}"
+        },
+        "name": "Malaysia - West Malaysia - onshore west of 102°E"
+      },
+      {
+        "description": "Malaysia - West Malaysia onshore and offshore east coast; Singapore - onshore and offshore.",
+        "lastModified": "20141113",
+        "aliasNames": [],
+        "namedReference": {
+          "name": "Asia - Malaysia (west including SCS) and Singapore",
+          "persistableReference": "{\"boundBox\":{\"lonMin\":99.59,\"latMin\":1.13,\"lonMax\":105.82,\"latMax\":7.81},\"authCode\":{\"auth\":\"EPSG\",\"code\":\"4223\"},\"type\":\"AOU\"}"
+        },
+        "name": "Asia - Malaysia (west including SCS) and Singapore"
+      },
+      {
+        "description": "Angola - offshore blocks 3, 7,15 and 17.",
+        "lastModified": "20140501",
+        "aliasNames": [],
+        "namedReference": {
+          "name": "Angola - offshore blocks 3  7  15 and 17",
+          "persistableReference": "{\"boundBox\":{\"lonMin\":10.83,\"latMin\":-10.09,\"lonMax\":13.39,\"latMax\":-6.03},\"authCode\":{\"auth\":\"EPSG\",\"code\":\"2322\"},\"type\":\"AOU\"}"
+        },
+        "name": "Angola - offshore blocks 3  7  15 and 17"
+      },
+      {
+        "description": "Philippines - west of 118°E onshore and offshore.",
+        "lastModified": "20140501",
+        "aliasNames": [],
+        "namedReference": {
+          "name": "Philippines - zone I",
+          "persistableReference": "{\"boundBox\":{\"lonMin\":116.04,\"latMin\":6.21,\"lonMax\":118.0,\"latMax\":18.64},\"authCode\":{\"auth\":\"EPSG\",\"code\":\"1698\"},\"type\":\"AOU\"}"
+        },
+        "name": "Philippines - zone I"
+      },
+      {
+        "description": "Philippines - approximately between 118°E and 120°E - Palawan; Calamian Islands - onshore and offshore.",
+        "lastModified": "20140501",
+        "aliasNames": [],
+        "namedReference": {
+          "name": "Philippines - zone II",
+          "persistableReference": "{\"boundBox\":{\"lonMin\":118.0,\"latMin\":3.02,\"lonMax\":120.07,\"latMax\":20.42},\"authCode\":{\"auth\":\"EPSG\",\"code\":\"1699\"},\"type\":\"AOU\"}"
+        },
+        "name": "Philippines - zone II"
+      },
+      {
+        "description": "Intersection of Europe - 0°E to 6°E and ED50 by country [1634] and Norway - offshore north of 62°N; Svalbard [2601]",
+        "lastModified": "20180611",
+        "aliasNames": [],
+        "namedReference": {
+          "name": "Europe - 0°E to 6°E and ED50 by country, Norway - offshore north of 62°N; Svalbard",
+          "persistableReference": "{\"boundBox\":{\"lonMin\":0.0,\"latMin\":62.0,\"lonMax\":6.01,\"latMax\":82.41},\"authCode\":{\"auth\":\"SLB\",\"code\":\"16342601\"},\"type\":\"AOU\"}"
+        },
+        "name": "Europe - 0°E to 6°E and ED50 by country, Norway - offshore north of 62°N; Svalbard"
+      },
+      {
+        "description": "Germany - states of former West Germany onshore - Baden-Wurtemberg, Bayern, Bremen, Hamburg, Hessen, Niedersachsen, Nordrhein-Westfalen, Rheinland-Pfalz, Saarland, Schleswig-Holstein.",
+        "lastModified": "20140501",
+        "aliasNames": [],
+        "namedReference": {
+          "name": "Germany - West Germany all states",
+          "persistableReference": "{\"boundBox\":{\"lonMin\":5.87,\"latMin\":47.27,\"lonMax\":13.84,\"latMax\":55.09},\"authCode\":{\"auth\":\"EPSG\",\"code\":\"2326\"},\"type\":\"AOU\"}"
+        },
+        "name": "Germany - West Germany all states"
+      },
+      {
+        "description": "Intersection of Malaysia - East Malaysia onshore [1851] and Malaysia - East Malaysia - offshore SCS [2780]",
+        "lastModified": "20180611",
+        "aliasNames": [],
+        "namedReference": {
+          "name": "Malaysia - East Malaysia onshore, Malaysia - East Malaysia - offshore SCS",
+          "persistableReference": "{\"boundBox\":{\"lonMin\":109.54,\"latMin\":1.56,\"lonMax\":117.31,\"latMax\":7.41},\"authCode\":{\"auth\":\"SLB\",\"code\":\"18512780\"},\"type\":\"AOU\"}"
+        },
+        "name": "Malaysia - East Malaysia onshore, Malaysia - East Malaysia - offshore SCS"
+      },
+      {
+        "description": "Angola - offshore blocks 2, 3, 17, 18, 31, 32 and 33.",
+        "lastModified": "20140501",
+        "aliasNames": [],
+        "namedReference": {
+          "name": "Angola - offshore blocks 2  3 17-18 and 31-33",
+          "persistableReference": "{\"boundBox\":{\"lonMin\":10.41,\"latMin\":-8.59,\"lonMax\":12.84,\"latMax\":-6.01},\"authCode\":{\"auth\":\"EPSG\",\"code\":\"2324\"},\"type\":\"AOU\"}"
+        },
+        "name": "Angola - offshore blocks 2  3 17-18 and 31-33"
+      },
+      {
+        "description": "Syria - Deir area (35°22'N, 40°06'E)",
+        "lastModified": "20140501",
+        "aliasNames": [],
+        "namedReference": {
+          "name": "Syria - Deir area",
+          "persistableReference": "{\"boundBox\":{\"lonMin\":39.3,\"latMin\":34.49,\"lonMax\":40.81,\"latMax\":35.9},\"authCode\":{\"auth\":\"EPSG\",\"code\":\"2329\"},\"type\":\"AOU\"}"
+        },
+        "name": "Syria - Deir area"
+      },
+      {
+        "description": "Egypt - west of 29°E; south of approximately 28°11'N.",
+        "lastModified": "20140501",
+        "aliasNames": [],
+        "namedReference": {
+          "name": "Egypt - west of 29°E; south of 28°11'N",
+          "persistableReference": "{\"boundBox\":{\"lonMin\":24.99,\"latMin\":21.99,\"lonMax\":29.01,\"latMax\":28.19},\"authCode\":{\"auth\":\"EPSG\",\"code\":\"1645\"},\"type\":\"AOU\"}"
+        },
+        "name": "Egypt - west of 29°E; south of 28°11'N"
+      },
+      {
+        "description": "Intersection of Colombia - west of 75°35'W [1598] and Colombia region 5 [3086]",
+        "lastModified": "20180611",
+        "aliasNames": [],
+        "namedReference": {
+          "name": "Colombia - west of 75°35'W, Colombia region 5",
+          "persistableReference": "{\"boundBox\":{\"lonMin\":-77.92,\"latMin\":5.0,\"lonMax\":-75.58,\"latMax\":8.01},\"authCode\":{\"auth\":\"SLB\",\"code\":\"15983086\"},\"type\":\"AOU\"}"
+        },
+        "name": "Colombia - west of 75°35'W, Colombia region 5"
+      },
+      {
+        "description": "Intersection of North America - 114°W to 108°W and NAD83 by country [3405] and Canada - Alberta [2376]",
+        "lastModified": "20180611",
+        "aliasNames": [],
+        "namedReference": {
+          "name": "North America - 114°W to 108°W and NAD83 by country, Canada - Alberta",
+          "persistableReference": "{\"boundBox\":{\"lonMin\":-114.0,\"latMin\":48.99,\"lonMax\":-109.98,\"latMax\":60.0},\"authCode\":{\"auth\":\"SLB\",\"code\":\"34052376\"},\"type\":\"AOU\"}"
+        },
+        "name": "North America - 114°W to 108°W and NAD83 by country, Canada - Alberta"
+      },
+      {
+        "description": "China - onshore between 120°E and 126°E.",
+        "lastModified": "20140501",
+        "aliasNames": [],
+        "namedReference": {
+          "name": "China - 120°E to 126°E onshore",
+          "persistableReference": "{\"boundBox\":{\"lonMin\":120.0,\"latMin\":26.34,\"lonMax\":126.0,\"latMax\":53.56},\"authCode\":{\"auth\":\"EPSG\",\"code\":\"1595\"},\"type\":\"AOU\"}"
+        },
+        "name": "China - 120°E to 126°E onshore"
+      },
+      {
+        "description": "China - onshore between 114°E and 120°E.",
+        "lastModified": "20120418",
+        "aliasNames": [],
+        "namedReference": {
+          "name": "China - 114°E to 120°E onshore",
+          "persistableReference": "{\"boundBox\":{\"lonMin\":114.0,\"latMin\":22.14,\"lonMax\":120.0,\"latMax\":51.52},\"authCode\":{\"auth\":\"EPSG\",\"code\":\"1594\"},\"type\":\"AOU\"}"
+        },
+        "name": "China - 114°E to 120°E onshore"
+      },
+      {
+        "description": "China - east of 132°E.",
+        "lastModified": "20140501",
+        "aliasNames": [],
+        "namedReference": {
+          "name": "China - east of 132°E",
+          "persistableReference": "{\"boundBox\":{\"lonMin\":132.0,\"latMin\":45.02,\"lonMax\":134.77,\"latMax\":48.4},\"authCode\":{\"auth\":\"EPSG\",\"code\":\"1597\"},\"type\":\"AOU\"}"
+        },
+        "name": "China - east of 132°E"
+      },
+      {
+        "description": "China - onshore between 126°E and 132°E.",
+        "lastModified": "20140501",
+        "aliasNames": [],
+        "namedReference": {
+          "name": "China - 126°E to 132°E onshore",
+          "persistableReference": "{\"boundBox\":{\"lonMin\":126.0,\"latMin\":40.89,\"lonMax\":132.0,\"latMax\":52.79},\"authCode\":{\"auth\":\"EPSG\",\"code\":\"1596\"},\"type\":\"AOU\"}"
+        },
+        "name": "China - 126°E to 132°E onshore"
+      },
+      {
+        "description": "China - between 96°E and 102°E.",
+        "lastModified": "20170319",
+        "aliasNames": [],
+        "namedReference": {
+          "name": "China - 96°E to 102°E",
+          "persistableReference": "{\"boundBox\":{\"lonMin\":96.0,\"latMin\":21.13,\"lonMax\":102.01,\"latMax\":43.18},\"authCode\":{\"auth\":\"EPSG\",\"code\":\"1591\"},\"type\":\"AOU\"}"
+        },
+        "name": "China - 96°E to 102°E"
+      },
+      {
+        "description": "China - between 90°E and 96°E.",
+        "lastModified": "20170319",
+        "aliasNames": [],
+        "namedReference": {
+          "name": "China - 90°E to 96°E",
+          "persistableReference": "{\"boundBox\":{\"lonMin\":90.0,\"latMin\":27.71,\"lonMax\":96.01,\"latMax\":47.9},\"authCode\":{\"auth\":\"EPSG\",\"code\":\"1590\"},\"type\":\"AOU\"}"
+        },
+        "name": "China - 90°E to 96°E"
+      },
+      {
+        "description": "China - onshore between 108°E and 114°E.",
+        "lastModified": "20140501",
+        "aliasNames": [],
+        "namedReference": {
+          "name": "China - 108°E to 114°E onshore",
+          "persistableReference": "{\"boundBox\":{\"lonMin\":108.0,\"latMin\":18.11,\"lonMax\":114.0,\"latMax\":45.11},\"authCode\":{\"auth\":\"EPSG\",\"code\":\"1593\"},\"type\":\"AOU\"}"
+        },
+        "name": "China - 108°E to 114°E onshore"
+      },
+      {
+        "description": "China - onshore between 102°E and 108°E.",
+        "lastModified": "20140501",
+        "aliasNames": [],
+        "namedReference": {
+          "name": "China - 102°E to 108°E onshore",
+          "persistableReference": "{\"boundBox\":{\"lonMin\":102.0,\"latMin\":21.53,\"lonMax\":108.0,\"latMax\":42.47},\"authCode\":{\"auth\":\"EPSG\",\"code\":\"1592\"},\"type\":\"AOU\"}"
+        },
+        "name": "China - 102°E to 108°E onshore"
+      },
+      {
+        "description": "Intersection of South America - 72°W to 66°W, S hemisphere and PSAD56 by country [1759] and Bolivia [1049]",
+        "lastModified": "20180611",
+        "aliasNames": [],
+        "namedReference": {
+          "name": "South America - 72°W to 66°W, S hemisphere and PSAD56 by country, Bolivia",
+          "persistableReference": "{\"boundBox\":{\"lonMin\":-69.66,\"latMin\":-22.91,\"lonMax\":-66.0,\"latMax\":-9.67},\"authCode\":{\"auth\":\"SLB\",\"code\":\"17591049\"},\"type\":\"AOU\"}"
+        },
+        "name": "South America - 72°W to 66°W, S hemisphere and PSAD56 by country, Bolivia"
+      },
+      {
+        "description": "United States (USA) - Wyoming - counties of Albany; Campbell; Converse; Crook; Goshen; Laramie; Niobrara; Platte; Weston.",
+        "lastModified": "20140501",
+        "aliasNames": [],
+        "namedReference": {
+          "name": "USA - Wyoming - SPCS - E",
+          "persistableReference": "{\"boundBox\":{\"lonMin\":-106.33,\"latMin\":40.99,\"lonMax\":-104.05,\"latMax\":45.01},\"authCode\":{\"auth\":\"EPSG\",\"code\":\"2269\"},\"type\":\"AOU\"}"
+        },
+        "name": "USA - Wyoming - SPCS - E"
+      },
+      {
+        "description": "Colombia - onshore between 1°30'W and 1°30'E of Bogota (75°35'W and 72°35'W of Greenwich).",
+        "lastModified": "20140501",
+        "aliasNames": [],
+        "namedReference": {
+          "name": "Colombia - 75°35'W to 72°35'W",
+          "persistableReference": "{\"boundBox\":{\"lonMin\":-75.59,\"latMin\":-2.51,\"lonMax\":-72.58,\"latMax\":11.82},\"authCode\":{\"auth\":\"EPSG\",\"code\":\"1599\"},\"type\":\"AOU\"}"
+        },
+        "name": "Colombia - 75°35'W to 72°35'W"
+      },
+      {
+        "description": "Intersection of Australia - 108°E to 114°E (EEZ) [1557] and Australia - onshore [2575]",
+        "lastModified": "20180611",
+        "aliasNames": [],
+        "namedReference": {
+          "name": "Australia - 108°E to 114°E (EEZ), Australia - onshore",
+          "persistableReference": "{\"boundBox\":{\"lonMin\":112.85,\"latMin\":-37.84,\"lonMax\":114.0,\"latMax\":-17.19},\"authCode\":{\"auth\":\"SLB\",\"code\":\"15572575\"},\"type\":\"AOU\"}"
+        },
+        "name": "Australia - 108°E to 114°E (EEZ), Australia - onshore"
+      },
+      {
+        "description": "Libya - onshore and offshore.",
+        "lastModified": "20120418",
+        "aliasNames": [],
+        "namedReference": {
+          "name": "Libya",
+          "persistableReference": "{\"boundBox\":{\"lonMin\":9.31,\"latMin\":19.5,\"lonMax\":26.21,\"latMax\":35.23},\"authCode\":{\"auth\":\"EPSG\",\"code\":\"1143\"},\"type\":\"AOU\"}"
+        },
+        "name": "Libya"
+      },
+      {
+        "description": "Between 54°E and 60°E, northern hemisphere between equator and 84°N, onshore and offshore. Islamic Republic of Iran. kazakhstan. Oman. Russian Federation. Saudi Arabia. Turkmenistan. United Arab Emirates. Uzbekistan.",
+        "lastModified": "20110509",
+        "aliasNames": [],
+        "namedReference": {
+          "name": "World - N hemisphere - 54°E to 60°E - by country",
+          "persistableReference": "{\"boundBox\":{\"lonMin\":54.0,\"latMin\":0.0,\"lonMax\":60.0,\"latMax\":84.0},\"authCode\":{\"auth\":\"EPSG\",\"code\":\"2078\"},\"type\":\"AOU\"}"
+        },
+        "name": "World - N hemisphere - 54°E to 60°E - by country"
+      },
+      {
+        "description": "Peru - between 79°W and 73°W, onshore.",
+        "lastModified": "20140501",
+        "aliasNames": [],
+        "namedReference": {
+          "name": "Peru - 79°W to 73°W",
+          "persistableReference": "{\"boundBox\":{\"lonMin\":-79.0,\"latMin\":-16.57,\"lonMax\":-73.0,\"latMax\":-0.03},\"authCode\":{\"auth\":\"EPSG\",\"code\":\"1752\"},\"type\":\"AOU\"}"
+        },
+        "name": "Peru - 79°W to 73°W"
+      },
+      {
+        "description": "Indonesia - north of equator and between 102°E and 108°E - onshore and offshore.",
+        "lastModified": "20120418",
+        "aliasNames": [],
+        "namedReference": {
+          "name": "Indonesia - 102°E to 108°E, N hemisphere",
+          "persistableReference": "{\"boundBox\":{\"lonMin\":102.0,\"latMin\":0.0,\"lonMax\":108.0,\"latMax\":6.94},\"authCode\":{\"auth\":\"EPSG\",\"code\":\"1651\"},\"type\":\"AOU\"}"
+        },
+        "name": "Indonesia - 102°E to 108°E, N hemisphere"
+      },
+      {
+        "description": "North America - between 120°W and 114°W - onshore. Canada - Alberta; British Columbia; Northwest Territories; Nunavut. Mexico. United States (USA) - California; Idaho; Nevada; Oregon; Washington.",
+        "lastModified": "20140501",
+        "aliasNames": [],
+        "namedReference": {
+          "name": "North America - 120°W to 114°W and NAD27 by country - onshore",
+          "persistableReference": "{\"boundBox\":{\"lonMin\":-120.0,\"latMin\":26.93,\"lonMax\":-114.0,\"latMax\":78.13},\"authCode\":{\"auth\":\"EPSG\",\"code\":\"2141\"},\"type\":\"AOU\"}"
+        },
+        "name": "North America - 120°W to 114°W and NAD27 by country - onshore"
+      },
+      {
+        "description": "Intersection of North America - 120°W to 114°W and NAD83 by country [3404] and Canada - Alberta [2376]",
+        "lastModified": "20180611",
+        "aliasNames": [],
+        "namedReference": {
+          "name": "North America - 120°W to 114°W and NAD83 by country, Canada - Alberta",
+          "persistableReference": "{\"boundBox\":{\"lonMin\":-120.0,\"latMin\":48.99,\"lonMax\":-114.0,\"latMax\":60.0},\"authCode\":{\"auth\":\"SLB\",\"code\":\"34042376\"},\"type\":\"AOU\"}"
+        },
+        "name": "North America - 120°W to 114°W and NAD83 by country, Canada - Alberta"
+      },
+      {
+        "description": "Indonesia - south of equator and between 102°E and 108°E - onshore and offshore.",
+        "lastModified": "20161215",
+        "aliasNames": [],
+        "namedReference": {
+          "name": "Indonesia - 102°E to 108°E, S hemisphere",
+          "persistableReference": "{\"boundBox\":{\"lonMin\":102.0,\"latMin\":-10.73,\"lonMax\":108.01,\"latMax\":0.0},\"authCode\":{\"auth\":\"EPSG\",\"code\":\"1652\"},\"type\":\"AOU\"}"
+        },
+        "name": "Indonesia - 102°E to 108°E, S hemisphere"
+      },
+      {
+        "description": "Australia - Australian Capital Territory; New South Wales; Northern Territory; Queensland; South Australia; Tasmania; Western Australia; Victoria.",
+        "lastModified": "20180216",
+        "aliasNames": [],
+        "namedReference": {
+          "name": "Australia - onshore",
+          "persistableReference": "{\"boundBox\":{\"lonMin\":112.85,\"latMin\":-43.7,\"lonMax\":153.69,\"latMax\":-9.86},\"authCode\":{\"auth\":\"EPSG\",\"code\":\"2575\"},\"type\":\"AOU\"}"
+        },
+        "name": "Australia - onshore"
+      },
+      {
+        "description": "Indonesia - southern Java Sea offshore northwest Java.",
+        "lastModified": "20140501",
+        "aliasNames": [],
+        "namedReference": {
+          "name": "Indonesia - Java Sea - offshore northwest Java",
+          "persistableReference": "{\"boundBox\":{\"lonMin\":105.77,\"latMin\":-6.89,\"lonMax\":110.01,\"latMax\":-4.07},\"authCode\":{\"auth\":\"EPSG\",\"code\":\"2577\"},\"type\":\"AOU\"}"
+        },
+        "name": "Indonesia - Java Sea - offshore northwest Java"
+      },
+      {
+        "description": "Australia - Queensland, South Australia, Western Australia, federal areas offshore west of 129°E.",
+        "lastModified": "20180216",
+        "aliasNames": [],
+        "namedReference": {
+          "name": "Australia - AGD84",
+          "persistableReference": "{\"boundBox\":{\"lonMin\":109.23,\"latMin\":-38.53,\"lonMax\":153.61,\"latMax\":-9.37},\"authCode\":{\"auth\":\"EPSG\",\"code\":\"2576\"},\"type\":\"AOU\"}"
+        },
+        "name": "Australia - AGD84"
+      },
+      {
+        "description": "Argentina - between 61°30'W and 58°30'W onshore.",
+        "lastModified": "20140501",
+        "aliasNames": [],
+        "namedReference": {
+          "name": "Argentina - 61.5°W to 58.5°W onshore",
+          "persistableReference": "{\"boundBox\":{\"lonMin\":-61.51,\"latMin\":-39.06,\"lonMax\":-58.5,\"latMax\":-23.37},\"authCode\":{\"auth\":\"EPSG\",\"code\":\"1612\"},\"type\":\"AOU\"}"
+        },
+        "name": "Argentina - 61.5°W to 58.5°W onshore"
+      },
+      {
+        "description": "Argentina - between 58°30'W and 55°30'W, onshore.",
+        "lastModified": "20140501",
+        "aliasNames": [],
+        "namedReference": {
+          "name": "Argentina - 58.5°W to 55.5°W onshore",
+          "persistableReference": "{\"boundBox\":{\"lonMin\":-58.5,\"latMin\":-38.59,\"lonMax\":-55.49,\"latMax\":-24.84},\"authCode\":{\"auth\":\"EPSG\",\"code\":\"1613\"},\"type\":\"AOU\"}"
+        },
+        "name": "Argentina - 58.5°W to 55.5°W onshore"
+      },
+      {
+        "description": "Argentina - between 67°30'W and 64°30'W, onshore.",
+        "lastModified": "20140501",
+        "aliasNames": [],
+        "namedReference": {
+          "name": "Argentina - 67.5°W to 64.5°W onshore",
+          "persistableReference": "{\"boundBox\":{\"lonMin\":-67.5,\"latMin\":-55.11,\"lonMax\":-64.49,\"latMax\":-21.78},\"authCode\":{\"auth\":\"EPSG\",\"code\":\"1610\"},\"type\":\"AOU\"}"
+        },
+        "name": "Argentina - 67.5°W to 64.5°W onshore"
+      },
+      {
+        "description": "Argentina - between 64°30'W and 61°30'W, onshore.",
+        "lastModified": "20140501",
+        "aliasNames": [],
+        "namedReference": {
+          "name": "Argentina - 64.5°W to 61.5°W onshore",
+          "persistableReference": "{\"boundBox\":{\"lonMin\":-64.5,\"latMin\":-54.91,\"lonMax\":-61.5,\"latMax\":-21.99},\"authCode\":{\"auth\":\"EPSG\",\"code\":\"1611\"},\"type\":\"AOU\"}"
+        },
+        "name": "Argentina - 64.5°W to 61.5°W onshore"
+      },
+      {
+        "description": "Between 144°E and 150°E, northern hemisphere between equator and 84°N, onshore and offshore. Japan. Russian Federation.",
+        "lastModified": "20110509",
+        "aliasNames": [],
+        "namedReference": {
+          "name": "World - N hemisphere - 144°E to 150°E - by country",
+          "persistableReference": "{\"boundBox\":{\"lonMin\":144.0,\"latMin\":0.0,\"lonMax\":150.0,\"latMax\":84.0},\"authCode\":{\"auth\":\"EPSG\",\"code\":\"2108\"},\"type\":\"AOU\"}"
+        },
+        "name": "World - N hemisphere - 144°E to 150°E - by country"
+      },
+      {
+        "description": "Tunisia - onshore north of 38.5 grads North (34°39'N).",
+        "lastModified": "20140501",
+        "aliasNames": [],
+        "namedReference": {
+          "name": "Tunisia - north of 34°39'N",
+          "persistableReference": "{\"boundBox\":{\"lonMin\":8.18,\"latMin\":34.65,\"lonMax\":11.37,\"latMax\":37.4},\"authCode\":{\"auth\":\"EPSG\",\"code\":\"1619\"},\"type\":\"AOU\"}"
+        },
+        "name": "Tunisia - north of 34°39'N"
+      },
+      {
+        "description": "Between 150°E and 156°E, southern hemisphere between 80°S and equator, onshore and offshore. Australia. Papua New Guinea.",
+        "lastModified": "20110509",
+        "aliasNames": [],
+        "namedReference": {
+          "name": "World - S hemisphere - 150°E to 156°E - by country",
+          "persistableReference": "{\"boundBox\":{\"lonMin\":150.0,\"latMin\":-80.0,\"lonMax\":156.0,\"latMax\":0.0},\"authCode\":{\"auth\":\"EPSG\",\"code\":\"2111\"},\"type\":\"AOU\"}"
+        },
+        "name": "World - S hemisphere - 150°E to 156°E - by country"
+      },
+      {
+        "description": "Between 150°E and 156°E, northern hemisphere between equator and 84°N, onshore and offshore. Russian Federation.",
+        "lastModified": "20110509",
+        "aliasNames": [],
+        "namedReference": {
+          "name": "World - N hemisphere - 150°E to 156°E - by country",
+          "persistableReference": "{\"boundBox\":{\"lonMin\":150.0,\"latMin\":0.0,\"lonMax\":156.0,\"latMax\":84.0},\"authCode\":{\"auth\":\"EPSG\",\"code\":\"2110\"},\"type\":\"AOU\"}"
+        },
+        "name": "World - N hemisphere - 150°E to 156°E - by country"
+      },
+      {
+        "description": "Between 156°E and 162°E, southern hemisphere between 80°S and equator, onshore and offshore.",
+        "lastModified": "20110509",
+        "aliasNames": [],
+        "namedReference": {
+          "name": "World - S hemisphere - 156°E to 162°E - by country",
+          "persistableReference": "{\"boundBox\":{\"lonMin\":156.0,\"latMin\":-80.0,\"lonMax\":162.0,\"latMax\":0.0},\"authCode\":{\"auth\":\"EPSG\",\"code\":\"2113\"},\"type\":\"AOU\"}"
+        },
+        "name": "World - S hemisphere - 156°E to 162°E - by country"
+      },
+      {
+        "description": "Between 156°E and 162°E, northern hemisphere between equator and 84°N, onshore and offshore. Russian Federation.",
+        "lastModified": "20110509",
+        "aliasNames": [],
+        "namedReference": {
+          "name": "World - N hemisphere - 156°E to 162°E - by country",
+          "persistableReference": "{\"boundBox\":{\"lonMin\":156.0,\"latMin\":0.0,\"lonMax\":162.0,\"latMax\":84.0},\"authCode\":{\"auth\":\"EPSG\",\"code\":\"2112\"},\"type\":\"AOU\"}"
+        },
+        "name": "World - N hemisphere - 156°E to 162°E - by country"
+      },
+      {
+        "description": "Between 162°E and 168°E, southern hemisphere between 80°S and equator, onshore and offshore.",
+        "lastModified": "20110509",
+        "aliasNames": [],
+        "namedReference": {
+          "name": "World - S hemisphere - 162°E to 168°E - by country",
+          "persistableReference": "{\"boundBox\":{\"lonMin\":162.0,\"latMin\":-80.0,\"lonMax\":168.0,\"latMax\":0.0},\"authCode\":{\"auth\":\"EPSG\",\"code\":\"2115\"},\"type\":\"AOU\"}"
+        },
+        "name": "World - S hemisphere - 162°E to 168°E - by country"
+      },
+      {
+        "description": "Between 162°E and 168°E, northern hemisphere between equator and 84°N, onshore and offshore. Russian Federation.",
+        "lastModified": "20110509",
+        "aliasNames": [],
+        "namedReference": {
+          "name": "World - N hemisphere - 162°E to 168°E - by country",
+          "persistableReference": "{\"boundBox\":{\"lonMin\":162.0,\"latMin\":0.0,\"lonMax\":168.0,\"latMax\":84.0},\"authCode\":{\"auth\":\"EPSG\",\"code\":\"2114\"},\"type\":\"AOU\"}"
+        },
+        "name": "World - N hemisphere - 162°E to 168°E - by country"
+      },
+      {
+        "description": "Between 168°E and 174°E, southern hemisphere between 80°S and equator, onshore and offshore. New Zealand.",
+        "lastModified": "20110509",
+        "aliasNames": [],
+        "namedReference": {
+          "name": "World - S hemisphere - 168°E to 174°E - by country",
+          "persistableReference": "{\"boundBox\":{\"lonMin\":168.0,\"latMin\":-80.0,\"lonMax\":174.0,\"latMax\":0.0},\"authCode\":{\"auth\":\"EPSG\",\"code\":\"2117\"},\"type\":\"AOU\"}"
+        },
+        "name": "World - S hemisphere - 168°E to 174°E - by country"
+      },
+      {
+        "description": "Between 168°E and 174°E, northern hemisphere between equator and 84°N, onshore and offshore. Russian Federation; United States (USA) - Alaska.",
+        "lastModified": "20110509",
+        "aliasNames": [],
+        "namedReference": {
+          "name": "World - N hemisphere - 168°E to 174°E - by country",
+          "persistableReference": "{\"boundBox\":{\"lonMin\":168.0,\"latMin\":0.0,\"lonMax\":174.0,\"latMax\":84.0},\"authCode\":{\"auth\":\"EPSG\",\"code\":\"2116\"},\"type\":\"AOU\"}"
+        },
+        "name": "World - N hemisphere - 168°E to 174°E - by country"
+      },
+      {
+        "description": "Between 174°E and 180°E, southern hemisphere between 80°S and equator, onshore and offshore. New Zealand.",
+        "lastModified": "20110509",
+        "aliasNames": [],
+        "namedReference": {
+          "name": "World - S hemisphere - 174°E to 180°E - by country",
+          "persistableReference": "{\"boundBox\":{\"lonMin\":174.0,\"latMin\":-80.0,\"lonMax\":180.0,\"latMax\":0.0},\"authCode\":{\"auth\":\"EPSG\",\"code\":\"2119\"},\"type\":\"AOU\"}"
+        },
+        "name": "World - S hemisphere - 174°E to 180°E - by country"
+      },
+      {
+        "description": "Between 174°E and 180°E, northern hemisphere between equator and 84°N, onshore and offshore. Russian Federation; United States (USA) - Alaska (AK).",
+        "lastModified": "20110509",
+        "aliasNames": [],
+        "namedReference": {
+          "name": "World - N hemisphere - 174°E to 180°E - by country",
+          "persistableReference": "{\"boundBox\":{\"lonMin\":174.0,\"latMin\":0.0,\"lonMax\":180.0,\"latMax\":84.0},\"authCode\":{\"auth\":\"EPSG\",\"code\":\"2118\"},\"type\":\"AOU\"}"
+        },
+        "name": "World - N hemisphere - 174°E to 180°E - by country"
+      },
+      {
+        "description": "Intersection of Europe - 6°W to 0°W and ED50 by country [1633] and Europe - common offshore [2342]",
+        "lastModified": "20180611",
+        "aliasNames": [],
+        "namedReference": {
+          "name": "Europe - 6°W to 0°W and ED50 by country, Europe - common offshore",
+          "persistableReference": "{\"boundBox\":{\"lonMin\":-6.0,\"latMin\":47.42,\"lonMax\":0.0,\"latMax\":63.89},\"authCode\":{\"auth\":\"SLB\",\"code\":\"16332342\"},\"type\":\"AOU\"}"
+        },
+        "name": "Europe - 6°W to 0°W and ED50 by country, Europe - common offshore"
+      },
+      {
+        "description": "Indonesia - north of equator and between 126°E and 132°E - onshore and offshore.",
+        "lastModified": "20140501",
+        "aliasNames": [],
+        "namedReference": {
+          "name": "Indonesia - 126°E to 132°E, N hemisphere",
+          "persistableReference": "{\"boundBox\":{\"lonMin\":126.0,\"latMin\":0.0,\"lonMax\":132.0,\"latMax\":6.68},\"authCode\":{\"auth\":\"EPSG\",\"code\":\"1659\"},\"type\":\"AOU\"}"
+        },
+        "name": "Indonesia - 126°E to 132°E, N hemisphere"
+      },
+      {
+        "description": "Between 30°W and 24°W, northern hemisphere between equator and 84°N, onshore and offshore. Greenland. Iceland.",
+        "lastModified": "20110509",
+        "aliasNames": [],
+        "namedReference": {
+          "name": "World - N hemisphere - 30°W to 24°W - by country",
+          "persistableReference": "{\"boundBox\":{\"lonMin\":-30.0,\"latMin\":0.0,\"lonMax\":-24.0,\"latMax\":84.0},\"authCode\":{\"auth\":\"EPSG\",\"code\":\"2050\"},\"type\":\"AOU\"}"
+        },
+        "name": "World - N hemisphere - 30°W to 24°W - by country"
+      },
+      {
+        "description": "Iran - onshore and offshore.",
+        "lastModified": "20140501",
+        "aliasNames": [],
+        "namedReference": {
+          "name": "Iran",
+          "persistableReference": "{\"boundBox\":{\"lonMin\":44.03,\"latMin\":23.34,\"lonMax\":63.34,\"latMax\":39.78},\"authCode\":{\"auth\":\"EPSG\",\"code\":\"1123\"},\"type\":\"AOU\"}"
+        },
+        "name": "Iran"
+      },
+      {
+        "description": "Indonesia - onshore and offshore.",
+        "lastModified": "20161215",
+        "aliasNames": [],
+        "namedReference": {
+          "name": "Indonesia",
+          "persistableReference": "{\"boundBox\":{\"lonMin\":92.01,\"latMin\":-13.95,\"lonMax\":141.46,\"latMax\":7.79},\"authCode\":{\"auth\":\"EPSG\",\"code\":\"1122\"},\"type\":\"AOU\"}"
+        },
+        "name": "Indonesia"
+      },
+      {
+        "description": "Between 24°W and 18°W, southern hemisphere between 80°S and equator, onshore and offshore.",
+        "lastModified": "20110509",
+        "aliasNames": [],
+        "namedReference": {
+          "name": "World - S hemisphere - 24°W to 18°W - by country",
+          "persistableReference": "{\"boundBox\":{\"lonMin\":-24.0,\"latMin\":-80.0,\"lonMax\":-18.0,\"latMax\":0.0},\"authCode\":{\"auth\":\"EPSG\",\"code\":\"2053\"},\"type\":\"AOU\"}"
+        },
+        "name": "World - S hemisphere - 24°W to 18°W - by country"
+      },
+      {
+        "description": "Between 18°W and 12°W, northern hemisphere between equator and 84°N, onshore and offshore. Gambia. Greenland. Guinea. Guinea-Bissau. Iceland. Ireland - offshore Porcupine Basin. Mauritania. Morocco. Senegal. Sierra Leone. Western Sahara.",
+        "lastModified": "20110509",
+        "aliasNames": [],
+        "namedReference": {
+          "name": "World - N hemisphere - 18°W to 12°W - by country",
+          "persistableReference": "{\"boundBox\":{\"lonMin\":-18.0,\"latMin\":0.0,\"lonMax\":-12.0,\"latMax\":84.0},\"authCode\":{\"auth\":\"EPSG\",\"code\":\"2054\"},\"type\":\"AOU\"}"
+        },
+        "name": "World - N hemisphere - 18°W to 12°W - by country"
+      },
+      {
+        "description": "Between 18°W and 12°W, southern hemisphere between 80°S and equator, onshore and offshore.",
+        "lastModified": "20110509",
+        "aliasNames": [],
+        "namedReference": {
+          "name": "World - S hemisphere - 18°W to 12°W - by country",
+          "persistableReference": "{\"boundBox\":{\"lonMin\":-18.0,\"latMin\":-80.0,\"lonMax\":-12.0,\"latMax\":0.0},\"authCode\":{\"auth\":\"EPSG\",\"code\":\"2055\"},\"type\":\"AOU\"}"
+        },
+        "name": "World - S hemisphere - 18°W to 12°W - by country"
+      },
+      {
+        "description": "Between 12°W and 6°W, northern hemisphere between equator and 84°N, onshore and offshore. Algeria. Côte D'Ivoire (Ivory Coast). Faroe Islands. Guinea. Ireland. Jan Mayen. Mali. Mauritania. Morocco. Portugal. Sierra Leone. Spain. United Kingdom (UK). Western Sahara.",
+        "lastModified": "20110509",
+        "aliasNames": [],
+        "namedReference": {
+          "name": "World - N hemisphere - 12°W to 6°W - by country",
+          "persistableReference": "{\"boundBox\":{\"lonMin\":-12.0,\"latMin\":0.0,\"lonMax\":-6.0,\"latMax\":84.0},\"authCode\":{\"auth\":\"EPSG\",\"code\":\"2056\"},\"type\":\"AOU\"}"
+        },
+        "name": "World - N hemisphere - 12°W to 6°W - by country"
+      },
+      {
+        "description": "Between 12°W and 6°W, southern hemisphere between 80°S and equator, onshore and offshore.",
+        "lastModified": "20110509",
+        "aliasNames": [],
+        "namedReference": {
+          "name": "World - S hemisphere - 12°W to 6°W - by country",
+          "persistableReference": "{\"boundBox\":{\"lonMin\":-12.0,\"latMin\":-80.0,\"lonMax\":-6.0,\"latMax\":0.0},\"authCode\":{\"auth\":\"EPSG\",\"code\":\"2057\"},\"type\":\"AOU\"}"
+        },
+        "name": "World - S hemisphere - 12°W to 6°W - by country"
+      },
+      {
+        "description": "Between 6°W and 0°W, northern hemisphere between equator and 84°N, onshore and offshore. Algeria. Burkina Faso. Côte' Ivoire (Ivory Coast). Faroe Islands - offshore. France. Ghana. Gibraltar. Ireland - offshore Irish Sea. Mali. Mauritania. Morocco. Spain. United Kingdom (UK).",
+        "lastModified": "20110509",
+        "aliasNames": [],
+        "namedReference": {
+          "name": "World - N hemisphere - 6°W to 0°W - by country",
+          "persistableReference": "{\"boundBox\":{\"lonMin\":-6.0,\"latMin\":0.0,\"lonMax\":0.0,\"latMax\":84.0},\"authCode\":{\"auth\":\"EPSG\",\"code\":\"2058\"},\"type\":\"AOU\"}"
+        },
+        "name": "World - N hemisphere - 6°W to 0°W - by country"
+      },
+      {
+        "description": "Between 6°W and 0°W, southern hemisphere between 80°S and equator, onshore and offshore.",
+        "lastModified": "20110509",
+        "aliasNames": [],
+        "namedReference": {
+          "name": "World - S hemisphere - 6°W to 0°W - by country",
+          "persistableReference": "{\"boundBox\":{\"lonMin\":-6.0,\"latMin\":-80.0,\"lonMax\":0.0,\"latMax\":0.0},\"authCode\":{\"auth\":\"EPSG\",\"code\":\"2059\"},\"type\":\"AOU\"}"
+        },
+        "name": "World - S hemisphere - 6°W to 0°W - by country"
+      },
+      {
+        "description": "Oman - mainland onshore.",
+        "lastModified": "20140501",
+        "aliasNames": [],
+        "namedReference": {
+          "name": "Oman - mainland",
+          "persistableReference": "{\"boundBox\":{\"lonMin\":51.99,\"latMin\":16.59,\"lonMax\":59.91,\"latMax\":26.42},\"authCode\":{\"auth\":\"EPSG\",\"code\":\"4009\"},\"type\":\"AOU\"}"
+        },
+        "name": "Oman - mainland"
+      },
+      {
+        "description": "Between 180°W and 174°W, northern hemisphere between equator and 84°N, onshore and offshore. Russian Federation; United States (USA) - Alaska (AK).",
+        "lastModified": "20110509",
+        "aliasNames": [],
+        "namedReference": {
+          "name": "World - N hemisphere - 180°W to 174°W - by country",
+          "persistableReference": "{\"boundBox\":{\"lonMin\":-180.0,\"latMin\":0.0,\"lonMax\":-174.0,\"latMax\":84.0},\"authCode\":{\"auth\":\"EPSG\",\"code\":\"2000\"},\"type\":\"AOU\"}"
+        },
+        "name": "World - N hemisphere - 180°W to 174°W - by country"
+      },
+      {
+        "description": "Azerbaijan - east of 48°E; Kazakhstan - 48°E to 54°E; Russian Federation - 48°E to 54°E; Turkmenistan - west of 54°E. Includes Caspian Sea (considered a lake rather than offshore).",
+        "lastModified": "20120105",
+        "aliasNames": [],
+        "namedReference": {
+          "name": "Asia - FSU onshore 48°E to 54°E",
+          "persistableReference": "{\"boundBox\":{\"lonMin\":48.0,\"latMin\":37.34,\"lonMax\":54.0,\"latMax\":81.4},\"authCode\":{\"auth\":\"EPSG\",\"code\":\"1798\"},\"type\":\"AOU\"}"
+        },
+        "name": "Asia - FSU onshore 48°E to 54°E"
+      },
+      {
+        "description": "Between 174°W and 168°W, northern hemisphere between equator and 84°N, onshore and offshore. Russian Federation; United States (USA) - Alaska (AK).",
+        "lastModified": "20110509",
+        "aliasNames": [],
+        "namedReference": {
+          "name": "World - N hemisphere - 174°W to 168°W - by country",
+          "persistableReference": "{\"boundBox\":{\"lonMin\":-174.0,\"latMin\":0.0,\"lonMax\":-168.0,\"latMax\":84.0},\"authCode\":{\"auth\":\"EPSG\",\"code\":\"2002\"},\"type\":\"AOU\"}"
+        },
+        "name": "World - N hemisphere - 174°W to 168°W - by country"
+      },
+      {
+        "description": "Canada - onshore and offshore - Alberta; British Columbia; Manitoba; New Brunswick; Newfoundland and Labrador; Northwest Territories; Nova Scotia; Nunavut; Ontario; Prince Edward Island; Quebec; Saskatchewan; Yukon.",
+        "lastModified": "20180420",
+        "aliasNames": [],
+        "namedReference": {
+          "name": "Canada",
+          "persistableReference": "{\"boundBox\":{\"lonMin\":-141.01,\"latMin\":40.04,\"lonMax\":-47.74,\"latMax\":86.46},\"authCode\":{\"auth\":\"EPSG\",\"code\":\"1061\"},\"type\":\"AOU\"}"
+        },
+        "name": "Canada"
+      },
+      {
+        "description": "Between 168°W and 162°W, northern hemisphere between equator and 84°N, onshore and offshore. United States (USA) - Alaska (AK).",
+        "lastModified": "20110509",
+        "aliasNames": [],
+        "namedReference": {
+          "name": "World - N hemisphere - 168°W to 162°W - by country",
+          "persistableReference": "{\"boundBox\":{\"lonMin\":-168.0,\"latMin\":0.0,\"lonMax\":-162.0,\"latMax\":84.0},\"authCode\":{\"auth\":\"EPSG\",\"code\":\"2004\"},\"type\":\"AOU\"}"
+        },
+        "name": "World - N hemisphere - 168°W to 162°W - by country"
+      },
+      {
+        "description": "Between 168°W and 162°W, southern hemisphere between 80°S and equator, onshore and offshore.",
+        "lastModified": "20110509",
+        "aliasNames": [],
+        "namedReference": {
+          "name": "World - S hemisphere - 168°W to 162°W - by country",
+          "persistableReference": "{\"boundBox\":{\"lonMin\":-168.0,\"latMin\":-80.0,\"lonMax\":-162.0,\"latMax\":0.0},\"authCode\":{\"auth\":\"EPSG\",\"code\":\"2005\"},\"type\":\"AOU\"}"
+        },
+        "name": "World - S hemisphere - 168°W to 162°W - by country"
+      },
+      {
+        "description": "Between 162°W and 156°W, northern hemisphere between equator and 84°N, onshore and offshore. United States (USA) - Alaska (AK).",
+        "lastModified": "20110509",
+        "aliasNames": [],
+        "namedReference": {
+          "name": "World - N hemisphere - 162°W to 156°W - by country",
+          "persistableReference": "{\"boundBox\":{\"lonMin\":-162.0,\"latMin\":0.0,\"lonMax\":-156.0,\"latMax\":84.0},\"authCode\":{\"auth\":\"EPSG\",\"code\":\"2006\"},\"type\":\"AOU\"}"
+        },
+        "name": "World - N hemisphere - 162°W to 156°W - by country"
+      },
+      {
+        "description": "Between 162°W and 156°W, southern hemisphere between 80°S and equator, onshore and offshore.",
+        "lastModified": "20110509",
+        "aliasNames": [],
+        "namedReference": {
+          "name": "World - S hemisphere - 162°W to 156°W - by country",
+          "persistableReference": "{\"boundBox\":{\"lonMin\":-162.0,\"latMin\":-80.0,\"lonMax\":-156.0,\"latMax\":0.0},\"authCode\":{\"auth\":\"EPSG\",\"code\":\"2007\"},\"type\":\"AOU\"}"
+        },
+        "name": "World - S hemisphere - 162°W to 156°W - by country"
+      },
+      {
+        "description": "Between 156°W and 150°W, northern hemisphere between equator and 84°N, onshore and offshore. United States (USA) - Alaska (AK).",
+        "lastModified": "20110509",
+        "aliasNames": [],
+        "namedReference": {
+          "name": "World - N hemisphere - 156°W to 150°W - by country",
+          "persistableReference": "{\"boundBox\":{\"lonMin\":-156.0,\"latMin\":0.0,\"lonMax\":-150.0,\"latMax\":84.0},\"authCode\":{\"auth\":\"EPSG\",\"code\":\"2008\"},\"type\":\"AOU\"}"
+        },
+        "name": "World - N hemisphere - 156°W to 150°W - by country"
+      },
+      {
+        "description": "China - onshore and offshore.",
+        "lastModified": "20170319",
+        "aliasNames": [],
+        "namedReference": {
+          "name": "China",
+          "persistableReference": "{\"boundBox\":{\"lonMin\":73.62,\"latMin\":16.7,\"lonMax\":134.77,\"latMax\":53.56},\"authCode\":{\"auth\":\"EPSG\",\"code\":\"1067\"},\"type\":\"AOU\"}"
+        },
+        "name": "China"
+      },
+      {
+        "description": "Thailand - onshore west of 102°E plus offshore Gulf of Thailand west of 102°E.",
+        "lastModified": "20140501",
+        "aliasNames": [],
+        "namedReference": {
+          "name": "Thailand - onshore and GoT 96°E to102°E",
+          "persistableReference": "{\"boundBox\":{\"lonMin\":97.34,\"latMin\":5.63,\"lonMax\":102.01,\"latMax\":20.46},\"authCode\":{\"auth\":\"EPSG\",\"code\":\"1667\"},\"type\":\"AOU\"}"
+        },
+        "name": "Thailand - onshore and GoT 96°E to102°E"
+      },
+      {
+        "description": "Indonesia - Sumatra.",
+        "lastModified": "20140501",
+        "aliasNames": [],
+        "namedReference": {
+          "name": "Indonesia - Sumatra",
+          "persistableReference": "{\"boundBox\":{\"lonMin\":95.16,\"latMin\":-5.99,\"lonMax\":106.13,\"latMax\":5.97},\"authCode\":{\"auth\":\"EPSG\",\"code\":\"1355\"},\"type\":\"AOU\"}"
+        },
+        "name": "Indonesia - Sumatra"
+      },
+      {
+        "description": "North America - onshore and offshore: Canada - Alberta; British Columbia; Manitoba; New Brunswick; Newfoundland and Labrador; Northwest Territories; Nova Scotia; Nunavut; Ontario; Prince Edward Island; Quebec; Saskatchewan; Yukon. Puerto Rico. United States (USA) - Alabama; Alaska; Arizona; Arkansas; California; Colorado; Connecticut; Delaware; Florida; Georgia; Hawaii; Idaho; Illinois; Indiana; Iowa; Kansas; Kentucky; Louisiana; Maine; Maryland; Massachusetts; Michigan; Minnesota; Mississippi; Missouri; Montana; Nebraska; Nevada; New Hampshire; New Jersey; New Mexico; New York; North Carolina; North Dakota; Ohio; Oklahoma; Oregon; Pennsylvania; Rhode Island; South Carolina; South Dakota; Tennessee; Texas; Utah; Vermont; Virginia; Washington; West Virginia; Wisconsin; Wyoming. US Virgin Islands.  British Virgin Islands.",
+        "lastModified": "20140501",
+        "aliasNames": [],
+        "namedReference": {
+          "name": "North America - NAD83",
+          "persistableReference": "{\"boundBox\":{\"lonMin\":167.65,\"latMin\":14.92,\"lonMax\":-47.74,\"latMax\":86.46},\"authCode\":{\"auth\":\"EPSG\",\"code\":\"1350\"},\"type\":\"AOU\"}"
+        },
+        "name": "North America - NAD83"
+      }
+    ]
+  }

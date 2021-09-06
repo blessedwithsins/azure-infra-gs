@@ -1,0 +1,4801 @@
+{
+    "totalCount": 1393,
+    "offset": 0,
+    "units": [],
+    "measurements": [],
+    "unitMapItems": [
+      {
+        "state": "identical",
+        "note": "",
+        "fromUnit": {
+          "essence": {
+            "scaleOffset": {
+              "scale": 1,
+              "offset": 0
+            },
+            "symbol": "K/s",
+            "baseMeasurement": {
+              "ancestry": "Temperature_Per_Time",
+              "type": "UM"
+            },
+            "type": "USO"
+          },
+          "displaySymbol": "K/s",
+          "name": "degree kelvin per second",
+          "lastModified": "20151203",
+          "source": "BGC",
+          "namespace": "POSC",
+          "persistableReference": "{\"scaleOffset\":{\"scale\":1.0,\"offset\":0.0},\"symbol\":\"K/s\",\"baseMeasurement\":{\"ancestry\":\"Temperature_Per_Time\",\"type\":\"UM\"},\"type\":\"USO\"}"
+        },
+        "toUnit": {
+          "essence": {
+            "scaleOffset": {
+              "scale": 1,
+              "offset": 0
+            },
+            "symbol": "deltaK/s",
+            "baseMeasurement": {
+              "ancestry": "D/T",
+              "type": "UM"
+            },
+            "type": "USO"
+          },
+          "displaySymbol": "deltaK/s",
+          "name": "delta kelvin per second",
+          "lastModified": "20160322",
+          "source": "Energistics",
+          "namespace": "Energistics_UoM",
+          "persistableReference": "{\"scaleOffset\":{\"scale\":1.0,\"offset\":0.0},\"symbol\":\"deltaK/s\",\"baseMeasurement\":{\"ancestry\":\"D/T\",\"type\":\"UM\"},\"type\":\"USO\"}"
+        },
+        "fromNamespace": "POSC",
+        "toNamespace": "Energistics_UoM"
+      },
+      {
+        "state": "identical",
+        "note": "",
+        "fromUnit": {
+          "essence": {
+            "scaleOffset": {
+              "scale": 304.8,
+              "offset": 0
+            },
+            "symbol": "1000 ft/s",
+            "baseMeasurement": {
+              "ancestry": "Velocity",
+              "type": "UM"
+            },
+            "type": "USO"
+          },
+          "displaySymbol": "1000 ft/s",
+          "name": "thousand feet per second",
+          "lastModified": "19920228",
+          "source": "APIRP661",
+          "namespace": "RP66",
+          "persistableReference": "{\"scaleOffset\":{\"scale\":304.8,\"offset\":0.0},\"symbol\":\"1000 ft/s\",\"baseMeasurement\":{\"ancestry\":\"Velocity\",\"type\":\"UM\"},\"type\":\"USO\"}"
+        },
+        "toUnit": {
+          "essence": {
+            "abcd": {
+              "a": 0,
+              "b": 304.8,
+              "c": 1,
+              "d": 0
+            },
+            "symbol": "1000 ft/s",
+            "baseMeasurement": {
+              "ancestry": "L/T",
+              "type": "UM"
+            },
+            "type": "UAD"
+          },
+          "displaySymbol": "1000 ft/s",
+          "name": "thousand foot per second",
+          "lastModified": "20160322",
+          "source": "Energistics",
+          "namespace": "Energistics_UoM",
+          "persistableReference": "{\"abcd\":{\"a\":0.0,\"b\":304.8,\"c\":1.0,\"d\":0.0},\"symbol\":\"1000 ft/s\",\"baseMeasurement\":{\"ancestry\":\"L/T\",\"type\":\"UM\"},\"type\":\"UAD\"}"
+        },
+        "fromNamespace": "RP66",
+        "toNamespace": "Energistics_UoM"
+      },
+      {
+        "state": "identical",
+        "note": "",
+        "fromUnit": {
+          "essence": {
+            "scaleOffset": {
+              "scale": 28.316846592,
+              "offset": 0
+            },
+            "symbol": "1000 ft3",
+            "baseMeasurement": {
+              "ancestry": "Volume",
+              "type": "UM"
+            },
+            "type": "USO"
+          },
+          "displaySymbol": "1000 ft3",
+          "name": "thousand cubic feet",
+          "lastModified": "20130705",
+          "source": "APIRP661",
+          "namespace": "RP66",
+          "persistableReference": "{\"scaleOffset\":{\"scale\":28.316846592,\"offset\":0.0},\"symbol\":\"1000 ft3\",\"baseMeasurement\":{\"ancestry\":\"Volume\",\"type\":\"UM\"},\"type\":\"USO\"}"
+        },
+        "toUnit": {
+          "essence": {
+            "abcd": {
+              "a": 0,
+              "b": 28.316846592,
+              "c": 1,
+              "d": 0
+            },
+            "symbol": "1000 ft3",
+            "baseMeasurement": {
+              "ancestry": "L3",
+              "type": "UM"
+            },
+            "type": "UAD"
+          },
+          "displaySymbol": "1000 ft3",
+          "name": "thousand cubic foot",
+          "lastModified": "20160322",
+          "source": "Energistics",
+          "namespace": "Energistics_UoM",
+          "persistableReference": "{\"abcd\":{\"a\":0.0,\"b\":28.316846592,\"c\":1.0,\"d\":0.0},\"symbol\":\"1000 ft3\",\"baseMeasurement\":{\"ancestry\":\"L3\",\"type\":\"UM\"},\"type\":\"UAD\"}"
+        },
+        "fromNamespace": "RP66",
+        "toNamespace": "Energistics_UoM"
+      },
+      {
+        "state": "identical",
+        "note": "",
+        "fromUnit": {
+          "essence": {
+            "scaleOffset": {
+              "scale": 0.00032774128,
+              "offset": 0
+            },
+            "symbol": "1000 ft3/d",
+            "baseMeasurement": {
+              "ancestry": "Flowrate",
+              "type": "UM"
+            },
+            "type": "USO"
+          },
+          "displaySymbol": "1000 ft3/d",
+          "name": "thousand cubic feet per day",
+          "lastModified": "19920228",
+          "source": "APIRP661",
+          "namespace": "RP66",
+          "persistableReference": "{\"scaleOffset\":{\"scale\":3.2774128E-4,\"offset\":0.0},\"symbol\":\"1000 ft3/d\",\"baseMeasurement\":{\"ancestry\":\"Flowrate\",\"type\":\"UM\"},\"type\":\"USO\"}"
+        },
+        "toUnit": {
+          "essence": {
+            "abcd": {
+              "a": 0,
+              "b": 28.316846592,
+              "c": 86400,
+              "d": 0
+            },
+            "symbol": "1000 ft3/d",
+            "baseMeasurement": {
+              "ancestry": "L3/T",
+              "type": "UM"
+            },
+            "type": "UAD"
+          },
+          "displaySymbol": "1000 ft3/d",
+          "name": "thousand cubic foot per day",
+          "lastModified": "20160322",
+          "source": "Energistics",
+          "namespace": "Energistics_UoM",
+          "persistableReference": "{\"abcd\":{\"a\":0.0,\"b\":28.316846592,\"c\":86400.0,\"d\":0.0},\"symbol\":\"1000 ft3/d\",\"baseMeasurement\":{\"ancestry\":\"L3/T\",\"type\":\"UM\"},\"type\":\"UAD\"}"
+        },
+        "fromNamespace": "RP66",
+        "toNamespace": "Energistics_UoM"
+      },
+      {
+        "state": "identical",
+        "note": "",
+        "fromUnit": {
+          "essence": {
+            "scaleOffset": {
+              "scale": 1000,
+              "offset": 0
+            },
+            "symbol": "1000 m3",
+            "baseMeasurement": {
+              "ancestry": "Volume",
+              "type": "UM"
+            },
+            "type": "USO"
+          },
+          "displaySymbol": "1000 m3",
+          "name": "thousand cubic meters",
+          "lastModified": "19920520",
+          "source": "APIRP661",
+          "namespace": "RP66",
+          "persistableReference": "{\"scaleOffset\":{\"scale\":1000.0,\"offset\":0.0},\"symbol\":\"1000 m3\",\"baseMeasurement\":{\"ancestry\":\"Volume\",\"type\":\"UM\"},\"type\":\"USO\"}"
+        },
+        "toUnit": {
+          "essence": {
+            "abcd": {
+              "a": 0,
+              "b": 1000,
+              "c": 1,
+              "d": 0
+            },
+            "symbol": "1000 m3",
+            "baseMeasurement": {
+              "ancestry": "L3",
+              "type": "UM"
+            },
+            "type": "UAD"
+          },
+          "displaySymbol": "1000 m3",
+          "name": "thousand cubic metre",
+          "lastModified": "20160322",
+          "source": "Energistics",
+          "namespace": "Energistics_UoM",
+          "persistableReference": "{\"abcd\":{\"a\":0.0,\"b\":1000.0,\"c\":1.0,\"d\":0.0},\"symbol\":\"1000 m3\",\"baseMeasurement\":{\"ancestry\":\"L3\",\"type\":\"UM\"},\"type\":\"UAD\"}"
+        },
+        "fromNamespace": "RP66",
+        "toNamespace": "Energistics_UoM"
+      },
+      {
+        "state": "identical",
+        "note": "",
+        "fromUnit": {
+          "essence": {
+            "scaleOffset": {
+              "scale": 28316.846592,
+              "offset": 0
+            },
+            "symbol": "1E6 ft3",
+            "baseMeasurement": {
+              "ancestry": "Volume",
+              "type": "UM"
+            },
+            "type": "USO"
+          },
+          "displaySymbol": "1E6 ft3",
+          "name": "million cubic feet",
+          "lastModified": "19920520",
+          "source": "APIRP661",
+          "namespace": "RP66",
+          "persistableReference": "{\"scaleOffset\":{\"scale\":28316.846592,\"offset\":0.0},\"symbol\":\"1E6 ft3\",\"baseMeasurement\":{\"ancestry\":\"Volume\",\"type\":\"UM\"},\"type\":\"USO\"}"
+        },
+        "toUnit": {
+          "essence": {
+            "abcd": {
+              "a": 0,
+              "b": 28316.846592,
+              "c": 1,
+              "d": 0
+            },
+            "symbol": "1E6 ft3",
+            "baseMeasurement": {
+              "ancestry": "L3",
+              "type": "UM"
+            },
+            "type": "UAD"
+          },
+          "displaySymbol": "1E6 ft3",
+          "name": "million cubic foot",
+          "lastModified": "20160322",
+          "source": "Energistics",
+          "namespace": "Energistics_UoM",
+          "persistableReference": "{\"abcd\":{\"a\":0.0,\"b\":28316.846592,\"c\":1.0,\"d\":0.0},\"symbol\":\"1E6 ft3\",\"baseMeasurement\":{\"ancestry\":\"L3\",\"type\":\"UM\"},\"type\":\"UAD\"}"
+        },
+        "fromNamespace": "RP66",
+        "toNamespace": "Energistics_UoM"
+      },
+      {
+        "state": "identical",
+        "note": "",
+        "fromUnit": {
+          "essence": {
+            "scaleOffset": {
+              "scale": 22.9567493113866,
+              "offset": 0
+            },
+            "symbol": "1E6 ft3/(acre.ft)",
+            "baseMeasurement": {
+              "ancestry": "Dimensionless",
+              "type": "UM"
+            },
+            "type": "USO"
+          },
+          "displaySymbol": "1E6 ft3/(acre.ft)",
+          "name": "million cubic feet per acre-foot",
+          "lastModified": "19920615",
+          "source": "APIRP661",
+          "namespace": "RP66",
+          "persistableReference": "{\"scaleOffset\":{\"scale\":22.9567493113866,\"offset\":0.0},\"symbol\":\"1E6 ft3/(acre.ft)\",\"baseMeasurement\":{\"ancestry\":\"Dimensionless\",\"type\":\"UM\"},\"type\":\"USO\"}"
+        },
+        "toUnit": {
+          "essence": {
+            "abcd": {
+              "a": 0,
+              "b": 1439994240005.76,
+              "c": 62726400000,
+              "d": 0
+            },
+            "symbol": "1E6 ft3/(acre.ft)",
+            "baseMeasurement": {
+              "ancestry": "1",
+              "type": "UM"
+            },
+            "type": "UAD"
+          },
+          "displaySymbol": "1E6 ft3/(acre.ft)",
+          "name": "million cubic foot per acre foot",
+          "lastModified": "20160322",
+          "source": "Energistics",
+          "namespace": "Energistics_UoM",
+          "persistableReference": "{\"abcd\":{\"a\":0.0,\"b\":1.43999424000576E12,\"c\":6.27264E10,\"d\":0.0},\"symbol\":\"1E6 ft3/(acre.ft)\",\"baseMeasurement\":{\"ancestry\":\"1\",\"type\":\"UM\"},\"type\":\"UAD\"}"
+        },
+        "fromNamespace": "RP66",
+        "toNamespace": "Energistics_UoM"
+      },
+      {
+        "state": "identical",
+        "note": "",
+        "fromUnit": {
+          "essence": {
+            "scaleOffset": {
+              "scale": 0.32774128,
+              "offset": 0
+            },
+            "symbol": "1E6 ft3/d",
+            "baseMeasurement": {
+              "ancestry": "Flowrate",
+              "type": "UM"
+            },
+            "type": "USO"
+          },
+          "displaySymbol": "1E6 ft3/d",
+          "name": "million cubic feet per day",
+          "lastModified": "19920228",
+          "source": "APIRP661",
+          "namespace": "RP66",
+          "persistableReference": "{\"scaleOffset\":{\"scale\":0.32774128,\"offset\":0.0},\"symbol\":\"1E6 ft3/d\",\"baseMeasurement\":{\"ancestry\":\"Flowrate\",\"type\":\"UM\"},\"type\":\"USO\"}"
+        },
+        "toUnit": {
+          "essence": {
+            "abcd": {
+              "a": 0,
+              "b": 28316.846592,
+              "c": 86400,
+              "d": 0
+            },
+            "symbol": "1E6 ft3/d",
+            "baseMeasurement": {
+              "ancestry": "L3/T",
+              "type": "UM"
+            },
+            "type": "UAD"
+          },
+          "displaySymbol": "1E6 ft3/d",
+          "name": "million cubic foot per day",
+          "lastModified": "20160322",
+          "source": "Energistics",
+          "namespace": "Energistics_UoM",
+          "persistableReference": "{\"abcd\":{\"a\":0.0,\"b\":28316.846592,\"c\":86400.0,\"d\":0.0},\"symbol\":\"1E6 ft3/d\",\"baseMeasurement\":{\"ancestry\":\"L3/T\",\"type\":\"UM\"},\"type\":\"UAD\"}"
+        },
+        "fromNamespace": "RP66",
+        "toNamespace": "Energistics_UoM"
+      },
+      {
+        "state": "identical",
+        "note": "",
+        "fromUnit": {
+          "essence": {
+            "scaleOffset": {
+              "scale": 1000000,
+              "offset": 0
+            },
+            "symbol": "1E6 m3",
+            "baseMeasurement": {
+              "ancestry": "Volume",
+              "type": "UM"
+            },
+            "type": "USO"
+          },
+          "displaySymbol": "1E6 m3",
+          "name": "million cubic meters",
+          "lastModified": "19920520",
+          "source": "APIRP661",
+          "namespace": "RP66",
+          "persistableReference": "{\"scaleOffset\":{\"scale\":1000000.0,\"offset\":0.0},\"symbol\":\"1E6 m3\",\"baseMeasurement\":{\"ancestry\":\"Volume\",\"type\":\"UM\"},\"type\":\"USO\"}"
+        },
+        "toUnit": {
+          "essence": {
+            "abcd": {
+              "a": 0,
+              "b": 1000000,
+              "c": 1,
+              "d": 0
+            },
+            "symbol": "1E6 m3",
+            "baseMeasurement": {
+              "ancestry": "L3",
+              "type": "UM"
+            },
+            "type": "UAD"
+          },
+          "displaySymbol": "1E6 m3",
+          "name": "million cubic metre",
+          "lastModified": "20160322",
+          "source": "Energistics",
+          "namespace": "Energistics_UoM",
+          "persistableReference": "{\"abcd\":{\"a\":0.0,\"b\":1000000.0,\"c\":1.0,\"d\":0.0},\"symbol\":\"1E6 m3\",\"baseMeasurement\":{\"ancestry\":\"L3\",\"type\":\"UM\"},\"type\":\"UAD\"}"
+        },
+        "fromNamespace": "RP66",
+        "toNamespace": "Energistics_UoM"
+      },
+      {
+        "state": "identical",
+        "note": "",
+        "fromUnit": {
+          "essence": {
+            "scaleOffset": {
+              "scale": 28316846.592,
+              "offset": 0
+            },
+            "symbol": "1E9 ft3",
+            "baseMeasurement": {
+              "ancestry": "Volume",
+              "type": "UM"
+            },
+            "type": "USO"
+          },
+          "displaySymbol": "1E9 ft3",
+          "name": "billion (10**9) cubic feet",
+          "lastModified": "20011102",
+          "source": "APIRP661",
+          "namespace": "RP66",
+          "persistableReference": "{\"scaleOffset\":{\"scale\":2.8316846592E7,\"offset\":0.0},\"symbol\":\"1E9 ft3\",\"baseMeasurement\":{\"ancestry\":\"Volume\",\"type\":\"UM\"},\"type\":\"USO\"}"
+        },
+        "toUnit": {
+          "essence": {
+            "abcd": {
+              "a": 0,
+              "b": 28316846.592,
+              "c": 1,
+              "d": 0
+            },
+            "symbol": "1E9 ft3",
+            "baseMeasurement": {
+              "ancestry": "L3",
+              "type": "UM"
+            },
+            "type": "UAD"
+          },
+          "displaySymbol": "1E9 ft3",
+          "name": "thousand million cubic foot",
+          "lastModified": "20160322",
+          "source": "Energistics",
+          "namespace": "Energistics_UoM",
+          "persistableReference": "{\"abcd\":{\"a\":0.0,\"b\":2.8316846592E7,\"c\":1.0,\"d\":0.0},\"symbol\":\"1E9 ft3\",\"baseMeasurement\":{\"ancestry\":\"L3\",\"type\":\"UM\"},\"type\":\"UAD\"}"
+        },
+        "fromNamespace": "RP66",
+        "toNamespace": "Energistics_UoM"
+      },
+      {
+        "state": "identical",
+        "note": "",
+        "fromUnit": {
+          "essence": {
+            "scaleOffset": {
+              "scale": 0.028316846592,
+              "offset": 0
+            },
+            "symbol": "ft3/rad",
+            "baseMeasurement": {
+              "ancestry": "Volume_Per_Rotation",
+              "type": "UM"
+            },
+            "type": "USO"
+          },
+          "displaySymbol": "ft3/rad",
+          "name": "cubic foot per radian",
+          "lastModified": "19920610",
+          "source": "APIRP661",
+          "namespace": "RP66",
+          "persistableReference": "{\"scaleOffset\":{\"scale\":0.028316846592,\"offset\":0.0},\"symbol\":\"ft3/rad\",\"baseMeasurement\":{\"ancestry\":\"Volume_Per_Rotation\",\"type\":\"UM\"},\"type\":\"USO\"}"
+        },
+        "toUnit": {
+          "essence": {
+            "abcd": {
+              "a": 0,
+              "b": 0.028316846592,
+              "c": 1,
+              "d": 0
+            },
+            "symbol": "ft3/rad",
+            "baseMeasurement": {
+              "ancestry": "L3/A",
+              "type": "UM"
+            },
+            "type": "UAD"
+          },
+          "displaySymbol": "ft3/rad",
+          "name": "cubic foot per radian",
+          "lastModified": "20160322",
+          "source": "Energistics",
+          "namespace": "Energistics_UoM",
+          "persistableReference": "{\"abcd\":{\"a\":0.0,\"b\":0.028316846592,\"c\":1.0,\"d\":0.0},\"symbol\":\"ft3/rad\",\"baseMeasurement\":{\"ancestry\":\"L3/A\",\"type\":\"UM\"},\"type\":\"UAD\"}"
+        },
+        "fromNamespace": "RP66",
+        "toNamespace": "Energistics_UoM"
+      },
+      {
+        "state": "identical",
+        "note": "",
+        "fromUnit": {
+          "essence": {
+            "scaleOffset": {
+              "scale": 304.8,
+              "offset": 0
+            },
+            "symbol": "g.ft/(cm3.s)",
+            "baseMeasurement": {
+              "ancestry": "Mass_Per_Area_Per_Time",
+              "type": "UM"
+            },
+            "type": "USO"
+          },
+          "displaySymbol": "g.ft/(cm3.s)",
+          "name": "(gram per cubic centimeter)-(foot per second)",
+          "lastModified": "19920228",
+          "source": "APIRP661",
+          "namespace": "RP66",
+          "persistableReference": "{\"scaleOffset\":{\"scale\":304.8,\"offset\":0.0},\"symbol\":\"g.ft/(cm3.s)\",\"baseMeasurement\":{\"ancestry\":\"Mass_Per_Area_Per_Time\",\"type\":\"UM\"},\"type\":\"USO\"}"
+        },
+        "toUnit": {
+          "essence": {
+            "abcd": {
+              "a": 0,
+              "b": 304.8,
+              "c": 1,
+              "d": 0
+            },
+            "symbol": "g.ft/(cm3.s)",
+            "baseMeasurement": {
+              "ancestry": "M/L2T",
+              "type": "UM"
+            },
+            "type": "UAD"
+          },
+          "displaySymbol": "g.ft/(cm3.s)",
+          "name": "gram foot per cubic centimetre second",
+          "lastModified": "20160322",
+          "source": "Energistics",
+          "namespace": "Energistics_UoM",
+          "persistableReference": "{\"abcd\":{\"a\":0.0,\"b\":304.8,\"c\":1.0,\"d\":0.0},\"symbol\":\"g.ft/(cm3.s)\",\"baseMeasurement\":{\"ancestry\":\"M/L2T\",\"type\":\"UM\"},\"type\":\"UAD\"}"
+        },
+        "fromNamespace": "RP66",
+        "toNamespace": "Energistics_UoM"
+      },
+      {
+        "state": "identical",
+        "note": "",
+        "fromUnit": {
+          "essence": {
+            "scaleOffset": {
+              "scale": 1000,
+              "offset": 0
+            },
+            "symbol": "kS/m",
+            "baseMeasurement": {
+              "ancestry": "Conductivity",
+              "type": "UM"
+            },
+            "type": "USO"
+          },
+          "displaySymbol": "kS/m",
+          "name": "kilosiemens per meter",
+          "lastModified": "19920228",
+          "source": "APIRP661",
+          "namespace": "RP66",
+          "persistableReference": "{\"scaleOffset\":{\"scale\":1000.0,\"offset\":0.0},\"symbol\":\"kS/m\",\"baseMeasurement\":{\"ancestry\":\"Conductivity\",\"type\":\"UM\"},\"type\":\"USO\"}"
+        },
+        "toUnit": {
+          "essence": {
+            "abcd": {
+              "a": 0,
+              "b": 1000,
+              "c": 1,
+              "d": 0
+            },
+            "symbol": "kS/m",
+            "baseMeasurement": {
+              "ancestry": "I2T3/L3M",
+              "type": "UM"
+            },
+            "type": "UAD"
+          },
+          "displaySymbol": "kS/m",
+          "name": "kilosiemens per metre",
+          "lastModified": "20160322",
+          "source": "Energistics",
+          "namespace": "Energistics_UoM",
+          "persistableReference": "{\"abcd\":{\"a\":0.0,\"b\":1000.0,\"c\":1.0,\"d\":0.0},\"symbol\":\"kS/m\",\"baseMeasurement\":{\"ancestry\":\"I2T3/L3M\",\"type\":\"UM\"},\"type\":\"UAD\"}"
+        },
+        "fromNamespace": "RP66",
+        "toNamespace": "Energistics_UoM"
+      },
+      {
+        "state": "identical",
+        "note": "",
+        "fromUnit": {
+          "essence": {
+            "scaleOffset": {
+              "scale": 1,
+              "offset": 0
+            },
+            "symbol": "kg/(m2.s)",
+            "baseMeasurement": {
+              "ancestry": "Mass_Per_Area_Per_Time",
+              "type": "UM"
+            },
+            "type": "USO"
+          },
+          "displaySymbol": "kg/(m2.s)",
+          "name": "kilogram per square meter per second",
+          "lastModified": "19920807",
+          "source": "APIRP661",
+          "namespace": "RP66",
+          "persistableReference": "{\"scaleOffset\":{\"scale\":1.0,\"offset\":0.0},\"symbol\":\"kg/(m2.s)\",\"baseMeasurement\":{\"ancestry\":\"Mass_Per_Area_Per_Time\",\"type\":\"UM\"},\"type\":\"USO\"}"
+        },
+        "toUnit": {
+          "essence": {
+            "scaleOffset": {
+              "scale": 1,
+              "offset": 0
+            },
+            "symbol": "kg/(m2.s)",
+            "baseMeasurement": {
+              "ancestry": "M/L2T",
+              "type": "UM"
+            },
+            "type": "USO"
+          },
+          "displaySymbol": "kg/(m2.s)",
+          "name": "kilogram per square metre second",
+          "lastModified": "20160322",
+          "source": "Energistics",
+          "namespace": "Energistics_UoM",
+          "persistableReference": "{\"scaleOffset\":{\"scale\":1.0,\"offset\":0.0},\"symbol\":\"kg/(m2.s)\",\"baseMeasurement\":{\"ancestry\":\"M/L2T\",\"type\":\"UM\"},\"type\":\"USO\"}"
+        },
+        "fromNamespace": "RP66",
+        "toNamespace": "Energistics_UoM"
+      },
+      {
+        "state": "identical",
+        "note": "",
+        "fromUnit": {
+          "essence": {
+            "scaleOffset": {
+              "scale": 1,
+              "offset": 0
+            },
+            "symbol": "kg/mol",
+            "baseMeasurement": {
+              "ancestry": "Molar_Mass",
+              "type": "UM"
+            },
+            "type": "USO"
+          },
+          "displaySymbol": "kg/mol",
+          "name": "kilogram per mole",
+          "lastModified": "20091202",
+          "source": "SLB",
+          "namespace": "RP66",
+          "persistableReference": "{\"scaleOffset\":{\"scale\":1.0,\"offset\":0.0},\"symbol\":\"kg/mol\",\"baseMeasurement\":{\"ancestry\":\"Molar_Mass\",\"type\":\"UM\"},\"type\":\"USO\"}"
+        },
+        "toUnit": {
+          "essence": {
+            "scaleOffset": {
+              "scale": 1,
+              "offset": 0
+            },
+            "symbol": "kg/mol",
+            "baseMeasurement": {
+              "ancestry": "M/N",
+              "type": "UM"
+            },
+            "type": "USO"
+          },
+          "displaySymbol": "kg/mol",
+          "name": "kilogram per mole",
+          "lastModified": "20160322",
+          "source": "Energistics",
+          "namespace": "Energistics_UoM",
+          "persistableReference": "{\"scaleOffset\":{\"scale\":1.0,\"offset\":0.0},\"symbol\":\"kg/mol\",\"baseMeasurement\":{\"ancestry\":\"M/N\",\"type\":\"UM\"},\"type\":\"USO\"}"
+        },
+        "fromNamespace": "RP66",
+        "toNamespace": "Energistics_UoM"
+      },
+      {
+        "state": "identical",
+        "note": "",
+        "fromUnit": {
+          "essence": {
+            "scaleOffset": {
+              "scale": 4.88242763638305,
+              "offset": 0
+            },
+            "symbol": "lbm/(ft2.s)",
+            "baseMeasurement": {
+              "ancestry": "Mass_Per_Area_Per_Time",
+              "type": "UM"
+            },
+            "type": "USO"
+          },
+          "displaySymbol": "lbm/(ft2.s)",
+          "name": "pound mass per square foot per second",
+          "lastModified": "19920807",
+          "source": "APIRP661",
+          "namespace": "RP66",
+          "persistableReference": "{\"scaleOffset\":{\"scale\":4.88242763638305,\"offset\":0.0},\"symbol\":\"lbm/(ft2.s)\",\"baseMeasurement\":{\"ancestry\":\"Mass_Per_Area_Per_Time\",\"type\":\"UM\"},\"type\":\"USO\"}"
+        },
+        "toUnit": {
+          "essence": {
+            "abcd": {
+              "a": 0,
+              "b": 0.45359237,
+              "c": 0.09290304,
+              "d": 0
+            },
+            "symbol": "lbm/(ft2.s)",
+            "baseMeasurement": {
+              "ancestry": "M/L2T",
+              "type": "UM"
+            },
+            "type": "UAD"
+          },
+          "displaySymbol": "lbm/(ft2.s)",
+          "name": "pound-mass per square foot second",
+          "lastModified": "20160322",
+          "source": "Energistics",
+          "namespace": "Energistics_UoM",
+          "persistableReference": "{\"abcd\":{\"a\":0.0,\"b\":0.45359237,\"c\":0.09290304,\"d\":0.0},\"symbol\":\"lbm/(ft2.s)\",\"baseMeasurement\":{\"ancestry\":\"M/L2T\",\"type\":\"UM\"},\"type\":\"UAD\"}"
+        },
+        "fromNamespace": "RP66",
+        "toNamespace": "Energistics_UoM"
+      },
+      {
+        "state": "identical",
+        "note": "",
+        "fromUnit": {
+          "essence": {
+            "scaleOffset": {
+              "scale": 0.001,
+              "offset": 0
+            },
+            "symbol": "m/kPa",
+            "baseMeasurement": {
+              "ancestry": "Length_Per_Pressure",
+              "type": "UM"
+            },
+            "type": "USO"
+          },
+          "displaySymbol": "m/kPa",
+          "name": "meter per kilopascal",
+          "lastModified": "19920615",
+          "source": "APIRP661",
+          "namespace": "RP66",
+          "persistableReference": "{\"scaleOffset\":{\"scale\":0.001,\"offset\":0.0},\"symbol\":\"m/kPa\",\"baseMeasurement\":{\"ancestry\":\"Length_Per_Pressure\",\"type\":\"UM\"},\"type\":\"USO\"}"
+        },
+        "toUnit": {
+          "essence": {
+            "abcd": {
+              "a": 0,
+              "b": 0.001,
+              "c": 1,
+              "d": 0
+            },
+            "symbol": "m/kPa",
+            "baseMeasurement": {
+              "ancestry": "L2T2/M",
+              "type": "UM"
+            },
+            "type": "UAD"
+          },
+          "displaySymbol": "m/kPa",
+          "name": "metre per kilopascal",
+          "lastModified": "20160322",
+          "source": "Energistics",
+          "namespace": "Energistics_UoM",
+          "persistableReference": "{\"abcd\":{\"a\":0.0,\"b\":0.001,\"c\":1.0,\"d\":0.0},\"symbol\":\"m/kPa\",\"baseMeasurement\":{\"ancestry\":\"L2T2/M\",\"type\":\"UM\"},\"type\":\"UAD\"}"
+        },
+        "fromNamespace": "RP66",
+        "toNamespace": "Energistics_UoM"
+      },
+      {
+        "state": "identical",
+        "note": "",
+        "fromUnit": {
+          "essence": {
+            "scaleOffset": {
+              "scale": 1,
+              "offset": 0
+            },
+            "symbol": "m3/(s.m)",
+            "baseMeasurement": {
+              "ancestry": "Area_Per_Time",
+              "type": "UM"
+            },
+            "type": "USO"
+          },
+          "displaySymbol": "m3/(s.m)",
+          "name": "cubic meter per second per meter",
+          "lastModified": "19920228",
+          "source": "APIRP661",
+          "namespace": "RP66",
+          "persistableReference": "{\"scaleOffset\":{\"scale\":1.0,\"offset\":0.0},\"symbol\":\"m3/(s.m)\",\"baseMeasurement\":{\"ancestry\":\"Area_Per_Time\",\"type\":\"UM\"},\"type\":\"USO\"}"
+        },
+        "toUnit": {
+          "essence": {
+            "scaleOffset": {
+              "scale": 1,
+              "offset": 0
+            },
+            "symbol": "m3/(s.m)",
+            "baseMeasurement": {
+              "ancestry": "L2/T",
+              "type": "UM"
+            },
+            "type": "USO"
+          },
+          "displaySymbol": "m3/(s.m)",
+          "name": "cubic metre per second metre",
+          "lastModified": "20160322",
+          "source": "Energistics",
+          "namespace": "Energistics_UoM",
+          "persistableReference": "{\"scaleOffset\":{\"scale\":1.0,\"offset\":0.0},\"symbol\":\"m3/(s.m)\",\"baseMeasurement\":{\"ancestry\":\"L2/T\",\"type\":\"UM\"},\"type\":\"USO\"}"
+        },
+        "fromNamespace": "RP66",
+        "toNamespace": "Energistics_UoM"
+      },
+      {
+        "state": "identical",
+        "note": "",
+        "fromUnit": {
+          "essence": {
+            "scaleOffset": {
+              "scale": 0.001,
+              "offset": 0
+            },
+            "symbol": "m3/kPa",
+            "baseMeasurement": {
+              "ancestry": "Volume_Per_Pressure",
+              "type": "UM"
+            },
+            "type": "USO"
+          },
+          "displaySymbol": "m3/kPa",
+          "name": "cubic meter per kilopascal",
+          "lastModified": "19920228",
+          "source": "APIRP661",
+          "namespace": "RP66",
+          "persistableReference": "{\"scaleOffset\":{\"scale\":0.001,\"offset\":0.0},\"symbol\":\"m3/kPa\",\"baseMeasurement\":{\"ancestry\":\"Volume_Per_Pressure\",\"type\":\"UM\"},\"type\":\"USO\"}"
+        },
+        "toUnit": {
+          "essence": {
+            "abcd": {
+              "a": 0,
+              "b": 0.001,
+              "c": 1,
+              "d": 0
+            },
+            "symbol": "m3/kPa",
+            "baseMeasurement": {
+              "ancestry": "L4T2/M",
+              "type": "UM"
+            },
+            "type": "UAD"
+          },
+          "displaySymbol": "m3/kPa",
+          "name": "cubic metre per kilopascal",
+          "lastModified": "20160322",
+          "source": "Energistics",
+          "namespace": "Energistics_UoM",
+          "persistableReference": "{\"abcd\":{\"a\":0.0,\"b\":0.001,\"c\":1.0,\"d\":0.0},\"symbol\":\"m3/kPa\",\"baseMeasurement\":{\"ancestry\":\"L4T2/M\",\"type\":\"UM\"},\"type\":\"UAD\"}"
+        },
+        "fromNamespace": "RP66",
+        "toNamespace": "Energistics_UoM"
+      },
+      {
+        "state": "identical",
+        "note": "",
+        "fromUnit": {
+          "essence": {
+            "scaleOffset": {
+              "scale": 3.280839895013123,
+              "offset": 0
+            },
+            "symbol": "1/ft",
+            "baseMeasurement": {
+              "ancestry": "Inverse_Length",
+              "type": "UM"
+            },
+            "type": "USO"
+          },
+          "displaySymbol": "1/ft",
+          "name": "inverse foot",
+          "lastModified": "19920228",
+          "source": "APIRP661",
+          "namespace": "RP66",
+          "persistableReference": "{\"scaleOffset\":{\"scale\":3.280839895013123,\"offset\":0.0},\"symbol\":\"1/ft\",\"baseMeasurement\":{\"ancestry\":\"Inverse_Length\",\"type\":\"UM\"},\"type\":\"USO\"}"
+        },
+        "toUnit": {
+          "essence": {
+            "abcd": {
+              "a": 0,
+              "b": 1,
+              "c": 0.3048,
+              "d": 0
+            },
+            "symbol": "1/ft",
+            "baseMeasurement": {
+              "ancestry": "1/L",
+              "type": "UM"
+            },
+            "type": "UAD"
+          },
+          "displaySymbol": "1/ft",
+          "name": "per foot",
+          "lastModified": "20160322",
+          "source": "Energistics",
+          "namespace": "Energistics_UoM",
+          "persistableReference": "{\"abcd\":{\"a\":0.0,\"b\":1.0,\"c\":0.3048,\"d\":0.0},\"symbol\":\"1/ft\",\"baseMeasurement\":{\"ancestry\":\"1/L\",\"type\":\"UM\"},\"type\":\"UAD\"}"
+        },
+        "fromNamespace": "RP66",
+        "toNamespace": "Energistics_UoM"
+      },
+      {
+        "state": "identical",
+        "note": "",
+        "fromUnit": {
+          "essence": {
+            "scaleOffset": {
+              "scale": 35.31466672148859,
+              "offset": 0
+            },
+            "symbol": "1/ft3",
+            "baseMeasurement": {
+              "ancestry": "Inverse_Volume",
+              "type": "UM"
+            },
+            "type": "USO"
+          },
+          "displaySymbol": "1/ft3",
+          "name": "inverse cubic foot",
+          "lastModified": "19920615",
+          "source": "APIRP661",
+          "namespace": "RP66",
+          "persistableReference": "{\"scaleOffset\":{\"scale\":35.31466672148859,\"offset\":0.0},\"symbol\":\"1/ft3\",\"baseMeasurement\":{\"ancestry\":\"Inverse_Volume\",\"type\":\"UM\"},\"type\":\"USO\"}"
+        },
+        "toUnit": {
+          "essence": {
+            "abcd": {
+              "a": 0,
+              "b": 1,
+              "c": 0.028316846592,
+              "d": 0
+            },
+            "symbol": "1/ft3",
+            "baseMeasurement": {
+              "ancestry": "1/L3",
+              "type": "UM"
+            },
+            "type": "UAD"
+          },
+          "displaySymbol": "1/ft3",
+          "name": "per cubic foot",
+          "lastModified": "20160322",
+          "source": "Energistics",
+          "namespace": "Energistics_UoM",
+          "persistableReference": "{\"abcd\":{\"a\":0.0,\"b\":1.0,\"c\":0.028316846592,\"d\":0.0},\"symbol\":\"1/ft3\",\"baseMeasurement\":{\"ancestry\":\"1/L3\",\"type\":\"UM\"},\"type\":\"UAD\"}"
+        },
+        "fromNamespace": "RP66",
+        "toNamespace": "Energistics_UoM"
+      },
+      {
+        "state": "identical",
+        "note": "",
+        "fromUnit": {
+          "essence": {
+            "scaleOffset": {
+              "scale": 39.37007874015748,
+              "offset": 0
+            },
+            "symbol": "1/in",
+            "baseMeasurement": {
+              "ancestry": "Inverse_Length",
+              "type": "UM"
+            },
+            "type": "USO"
+          },
+          "displaySymbol": "1/in",
+          "name": "inverse inch",
+          "lastModified": "20040728",
+          "source": "APIRP661",
+          "namespace": "RP66",
+          "persistableReference": "{\"scaleOffset\":{\"scale\":39.37007874015748,\"offset\":0.0},\"symbol\":\"1/in\",\"baseMeasurement\":{\"ancestry\":\"Inverse_Length\",\"type\":\"UM\"},\"type\":\"USO\"}"
+        },
+        "toUnit": {
+          "essence": {
+            "abcd": {
+              "a": 0,
+              "b": 1,
+              "c": 0.0254,
+              "d": 0
+            },
+            "symbol": "1/in",
+            "baseMeasurement": {
+              "ancestry": "1/L",
+              "type": "UM"
+            },
+            "type": "UAD"
+          },
+          "displaySymbol": "1/in",
+          "name": "per inch",
+          "lastModified": "20160322",
+          "source": "Energistics",
+          "namespace": "Energistics_UoM",
+          "persistableReference": "{\"abcd\":{\"a\":0.0,\"b\":1.0,\"c\":0.0254,\"d\":0.0},\"symbol\":\"1/in\",\"baseMeasurement\":{\"ancestry\":\"1/L\",\"type\":\"UM\"},\"type\":\"UAD\"}"
+        },
+        "fromNamespace": "RP66",
+        "toNamespace": "Energistics_UoM"
+      },
+      {
+        "state": "identical",
+        "note": "",
+        "fromUnit": {
+          "essence": {
+            "scaleOffset": {
+              "scale": 0.2248089430997105,
+              "offset": 0
+            },
+            "symbol": "1/lbf",
+            "baseMeasurement": {
+              "ancestry": "Inverse_Force",
+              "type": "UM"
+            },
+            "type": "USO"
+          },
+          "displaySymbol": "1/lbf",
+          "name": "inverse pound force",
+          "lastModified": "19920228",
+          "source": "APIRP661",
+          "namespace": "RP66",
+          "persistableReference": "{\"scaleOffset\":{\"scale\":0.2248089430997105,\"offset\":0.0},\"symbol\":\"1/lbf\",\"baseMeasurement\":{\"ancestry\":\"Inverse_Force\",\"type\":\"UM\"},\"type\":\"USO\"}"
+        },
+        "toUnit": {
+          "essence": {
+            "abcd": {
+              "a": 0,
+              "b": 1,
+              "c": 4.4482216152605,
+              "d": 0
+            },
+            "symbol": "1/lbf",
+            "baseMeasurement": {
+              "ancestry": "T2/LM",
+              "type": "UM"
+            },
+            "type": "UAD"
+          },
+          "displaySymbol": "1/lbf",
+          "name": "per pound-force",
+          "lastModified": "20160322",
+          "source": "Energistics",
+          "namespace": "Energistics_UoM",
+          "persistableReference": "{\"abcd\":{\"a\":0.0,\"b\":1.0,\"c\":4.4482216152605,\"d\":0.0},\"symbol\":\"1/lbf\",\"baseMeasurement\":{\"ancestry\":\"T2/LM\",\"type\":\"UM\"},\"type\":\"UAD\"}"
+        },
+        "fromNamespace": "RP66",
+        "toNamespace": "Energistics_UoM"
+      },
+      {
+        "state": "identical",
+        "note": "",
+        "fromUnit": {
+          "essence": {
+            "scaleOffset": {
+              "scale": 2.204622621848776,
+              "offset": 0
+            },
+            "symbol": "1/lbm",
+            "baseMeasurement": {
+              "ancestry": "Inverse_Mass",
+              "type": "UM"
+            },
+            "type": "USO"
+          },
+          "displaySymbol": "1/lbm",
+          "name": "inverse pound",
+          "lastModified": "19920228",
+          "source": "APIRP661",
+          "namespace": "RP66",
+          "persistableReference": "{\"scaleOffset\":{\"scale\":2.204622621848776,\"offset\":0.0},\"symbol\":\"1/lbm\",\"baseMeasurement\":{\"ancestry\":\"Inverse_Mass\",\"type\":\"UM\"},\"type\":\"USO\"}"
+        },
+        "toUnit": {
+          "essence": {
+            "abcd": {
+              "a": 0,
+              "b": 1,
+              "c": 0.45359237,
+              "d": 0
+            },
+            "symbol": "1/lbm",
+            "baseMeasurement": {
+              "ancestry": "1/M",
+              "type": "UM"
+            },
+            "type": "UAD"
+          },
+          "displaySymbol": "1/lbm",
+          "name": "per pound",
+          "lastModified": "20160322",
+          "source": "Energistics",
+          "namespace": "Energistics_UoM",
+          "persistableReference": "{\"abcd\":{\"a\":0.0,\"b\":1.0,\"c\":0.45359237,\"d\":0.0},\"symbol\":\"1/lbm\",\"baseMeasurement\":{\"ancestry\":\"1/M\",\"type\":\"UM\"},\"type\":\"UAD\"}"
+        },
+        "fromNamespace": "RP66",
+        "toNamespace": "Energistics_UoM"
+      },
+      {
+        "state": "identical",
+        "note": "",
+        "fromUnit": {
+          "essence": {
+            "scaleOffset": {
+              "scale": 0.01666666666666667,
+              "offset": 0
+            },
+            "symbol": "1/min",
+            "baseMeasurement": {
+              "ancestry": "Frequency",
+              "type": "UM"
+            },
+            "type": "USO"
+          },
+          "displaySymbol": "1/min",
+          "name": "items per minute",
+          "lastModified": "19940819",
+          "source": "APIRP661",
+          "namespace": "RP66",
+          "persistableReference": "{\"scaleOffset\":{\"scale\":0.01666666666666667,\"offset\":0.0},\"symbol\":\"1/min\",\"baseMeasurement\":{\"ancestry\":\"Frequency\",\"type\":\"UM\"},\"type\":\"USO\"}"
+        },
+        "toUnit": {
+          "essence": {
+            "abcd": {
+              "a": 0,
+              "b": 1,
+              "c": 60,
+              "d": 0
+            },
+            "symbol": "1/min",
+            "baseMeasurement": {
+              "ancestry": "1/T",
+              "type": "UM"
+            },
+            "type": "UAD"
+          },
+          "displaySymbol": "1/min",
+          "name": "per minute",
+          "lastModified": "20160322",
+          "source": "Energistics",
+          "namespace": "Energistics_UoM",
+          "persistableReference": "{\"abcd\":{\"a\":0.0,\"b\":1.0,\"c\":60.0,\"d\":0.0},\"symbol\":\"1/min\",\"baseMeasurement\":{\"ancestry\":\"1/T\",\"type\":\"UM\"},\"type\":\"UAD\"}"
+        },
+        "fromNamespace": "RP66",
+        "toNamespace": "Energistics_UoM"
+      },
+      {
+        "state": "identical",
+        "note": "",
+        "fromUnit": {
+          "essence": {
+            "scaleOffset": {
+              "scale": 0.0001450377377302092,
+              "offset": 0
+            },
+            "symbol": "1/psi",
+            "baseMeasurement": {
+              "ancestry": "Inverse_Pressure",
+              "type": "UM"
+            },
+            "type": "USO"
+          },
+          "displaySymbol": "1/psi",
+          "name": "inverse psi",
+          "lastModified": "19920520",
+          "source": "APIRP661",
+          "namespace": "RP66",
+          "persistableReference": "{\"scaleOffset\":{\"scale\":1.450377377302092E-4,\"offset\":0.0},\"symbol\":\"1/psi\",\"baseMeasurement\":{\"ancestry\":\"Inverse_Pressure\",\"type\":\"UM\"},\"type\":\"USO\"}"
+        },
+        "toUnit": {
+          "essence": {
+            "abcd": {
+              "a": 0,
+              "b": 0.00064516,
+              "c": 4.4482216152605,
+              "d": 0
+            },
+            "symbol": "1/psi",
+            "baseMeasurement": {
+              "ancestry": "LT2/M",
+              "type": "UM"
+            },
+            "type": "UAD"
+          },
+          "displaySymbol": "1/psi",
+          "name": "per psi",
+          "lastModified": "20160322",
+          "source": "Energistics",
+          "namespace": "Energistics_UoM",
+          "persistableReference": "{\"abcd\":{\"a\":0.0,\"b\":6.4516E-4,\"c\":4.4482216152605,\"d\":0.0},\"symbol\":\"1/psi\",\"baseMeasurement\":{\"ancestry\":\"LT2/M\",\"type\":\"UM\"},\"type\":\"UAD\"}"
+        },
+        "fromNamespace": "RP66",
+        "toNamespace": "Energistics_UoM"
+      },
+      {
+        "state": "identical",
+        "note": "",
+        "fromUnit": {
+          "essence": {
+            "scaleOffset": {
+              "scale": 145.0377377302092,
+              "offset": 0
+            },
+            "symbol": "1/upsi",
+            "baseMeasurement": {
+              "ancestry": "Inverse_Pressure",
+              "type": "UM"
+            },
+            "type": "USO"
+          },
+          "displaySymbol": "1/upsi",
+          "name": "inverse micro pound per square inch",
+          "lastModified": "19920615",
+          "source": "APIRP661",
+          "namespace": "RP66",
+          "persistableReference": "{\"scaleOffset\":{\"scale\":145.0377377302092,\"offset\":0.0},\"symbol\":\"1/upsi\",\"baseMeasurement\":{\"ancestry\":\"Inverse_Pressure\",\"type\":\"UM\"},\"type\":\"USO\"}"
+        },
+        "toUnit": {
+          "essence": {
+            "abcd": {
+              "a": 0,
+              "b": 645.16,
+              "c": 4.4482216152605,
+              "d": 0
+            },
+            "symbol": "1/upsi",
+            "baseMeasurement": {
+              "ancestry": "LT2/M",
+              "type": "UM"
+            },
+            "type": "UAD"
+          },
+          "displaySymbol": "1/upsi",
+          "name": "per millionth of psi",
+          "lastModified": "20160322",
+          "source": "Energistics",
+          "namespace": "Energistics_UoM",
+          "persistableReference": "{\"abcd\":{\"a\":0.0,\"b\":645.16,\"c\":4.4482216152605,\"d\":0.0},\"symbol\":\"1/upsi\",\"baseMeasurement\":{\"ancestry\":\"LT2/M\",\"type\":\"UM\"},\"type\":\"UAD\"}"
+        },
+        "fromNamespace": "RP66",
+        "toNamespace": "Energistics_UoM"
+      },
+      {
+        "state": "identical",
+        "note": "",
+        "fromUnit": {
+          "essence": {
+            "scaleOffset": {
+              "scale": 10.76391041670972,
+              "offset": 0
+            },
+            "symbol": "A/ft2",
+            "baseMeasurement": {
+              "ancestry": "Current_Density",
+              "type": "UM"
+            },
+            "type": "USO"
+          },
+          "displaySymbol": "A/ft2",
+          "name": "ampere per square foot",
+          "lastModified": "19920228",
+          "source": "APIRP661",
+          "namespace": "RP66",
+          "persistableReference": "{\"scaleOffset\":{\"scale\":10.76391041670972,\"offset\":0.0},\"symbol\":\"A/ft2\",\"baseMeasurement\":{\"ancestry\":\"Current_Density\",\"type\":\"UM\"},\"type\":\"USO\"}"
+        },
+        "toUnit": {
+          "essence": {
+            "abcd": {
+              "a": 0,
+              "b": 1,
+              "c": 0.09290304,
+              "d": 0
+            },
+            "symbol": "A/ft2",
+            "baseMeasurement": {
+              "ancestry": "I/L2",
+              "type": "UM"
+            },
+            "type": "UAD"
+          },
+          "displaySymbol": "A/ft2",
+          "name": "ampere per square foot",
+          "lastModified": "20160322",
+          "source": "Energistics",
+          "namespace": "Energistics_UoM",
+          "persistableReference": "{\"abcd\":{\"a\":0.0,\"b\":1.0,\"c\":0.09290304,\"d\":0.0},\"symbol\":\"A/ft2\",\"baseMeasurement\":{\"ancestry\":\"I/L2\",\"type\":\"UM\"},\"type\":\"UAD\"}"
+        },
+        "fromNamespace": "RP66",
+        "toNamespace": "Energistics_UoM"
+      },
+      {
+        "state": "different",
+        "note": "",
+        "fromUnit": {
+          "essence": {
+            "scaleOffset": {
+              "scale": 10,
+              "offset": 0
+            },
+            "symbol": "B",
+            "baseMeasurement": {
+              "ancestry": "Attenuation",
+              "type": "UM"
+            },
+            "type": "USO"
+          },
+          "displaySymbol": "B",
+          "name": "bel",
+          "lastModified": "19920228",
+          "source": "APIRP661",
+          "namespace": "RP66",
+          "persistableReference": "{\"scaleOffset\":{\"scale\":10.0,\"offset\":0.0},\"symbol\":\"B\",\"baseMeasurement\":{\"ancestry\":\"Attenuation\",\"type\":\"UM\"},\"type\":\"USO\"}"
+        },
+        "toUnit": {
+          "essence": {
+            "scaleOffset": {
+              "scale": 1,
+              "offset": 0
+            },
+            "symbol": "B",
+            "baseMeasurement": {
+              "ancestry": "none",
+              "type": "UM"
+            },
+            "type": "USO"
+          },
+          "displaySymbol": "B",
+          "name": "bel",
+          "lastModified": "20160322",
+          "source": "Energistics",
+          "namespace": "Energistics_UoM",
+          "persistableReference": "{\"scaleOffset\":{\"scale\":1.0,\"offset\":0.0},\"symbol\":\"B\",\"baseMeasurement\":{\"ancestry\":\"none\",\"type\":\"UM\"},\"type\":\"USO\"}"
+        },
+        "fromNamespace": "RP66",
+        "toNamespace": "Energistics_UoM"
+      },
+      {
+        "state": "precision",
+        "note": "",
+        "fromUnit": {
+          "essence": {
+            "scaleOffset": {
+              "scale": 9.869233e-13,
+              "offset": 0
+            },
+            "symbol": "D",
+            "baseMeasurement": {
+              "ancestry": "Area",
+              "type": "UM"
+            },
+            "type": "USO"
+          },
+          "displaySymbol": "D",
+          "name": "darcy",
+          "lastModified": "19920228",
+          "source": "APIRP661",
+          "namespace": "RP66",
+          "persistableReference": "{\"scaleOffset\":{\"scale\":9.869233E-13,\"offset\":0.0},\"symbol\":\"D\",\"baseMeasurement\":{\"ancestry\":\"Area\",\"type\":\"UM\"},\"type\":\"USO\"}"
+        },
+        "toUnit": {
+          "essence": {
+            "abcd": {
+              "a": 0,
+              "b": 1e-12,
+              "c": 1.01325,
+              "d": 0
+            },
+            "symbol": "D",
+            "baseMeasurement": {
+              "ancestry": "L2",
+              "type": "UM"
+            },
+            "type": "UAD"
+          },
+          "displaySymbol": "D",
+          "name": "darcy",
+          "lastModified": "20160322",
+          "source": "Energistics",
+          "namespace": "Energistics_UoM",
+          "persistableReference": "{\"abcd\":{\"a\":0.0,\"b\":1.0E-12,\"c\":1.01325,\"d\":0.0},\"symbol\":\"D\",\"baseMeasurement\":{\"ancestry\":\"L2\",\"type\":\"UM\"},\"type\":\"UAD\"}"
+        },
+        "fromNamespace": "RP66",
+        "toNamespace": "Energistics_UoM"
+      },
+      {
+        "state": "precision",
+        "note": "",
+        "fromUnit": {
+          "essence": {
+            "scaleOffset": {
+              "scale": 9.869233e-13,
+              "offset": 0
+            },
+            "symbol": "D.m",
+            "baseMeasurement": {
+              "ancestry": "Volume",
+              "type": "UM"
+            },
+            "type": "USO"
+          },
+          "displaySymbol": "D.m",
+          "name": "darcy-meter",
+          "lastModified": "19920228",
+          "source": "APIRP661",
+          "namespace": "RP66",
+          "persistableReference": "{\"scaleOffset\":{\"scale\":9.869233E-13,\"offset\":0.0},\"symbol\":\"D.m\",\"baseMeasurement\":{\"ancestry\":\"Volume\",\"type\":\"UM\"},\"type\":\"USO\"}"
+        },
+        "toUnit": {
+          "essence": {
+            "abcd": {
+              "a": 0,
+              "b": 1e-12,
+              "c": 1.01325,
+              "d": 0
+            },
+            "symbol": "D.m",
+            "baseMeasurement": {
+              "ancestry": "L3",
+              "type": "UM"
+            },
+            "type": "UAD"
+          },
+          "displaySymbol": "D.m",
+          "name": "darcy metre",
+          "lastModified": "20160322",
+          "source": "Energistics",
+          "namespace": "Energistics_UoM",
+          "persistableReference": "{\"abcd\":{\"a\":0.0,\"b\":1.0E-12,\"c\":1.01325,\"d\":0.0},\"symbol\":\"D.m\",\"baseMeasurement\":{\"ancestry\":\"L3\",\"type\":\"UM\"},\"type\":\"UAD\"}"
+        },
+        "fromNamespace": "RP66",
+        "toNamespace": "Energistics_UoM"
+      },
+      {
+        "state": "precision",
+        "note": "",
+        "fromUnit": {
+          "essence": {
+            "scaleOffset": {
+              "scale": 1.60219e-10,
+              "offset": 0
+            },
+            "symbol": "GeV",
+            "baseMeasurement": {
+              "ancestry": "Energy",
+              "type": "UM"
+            },
+            "type": "USO"
+          },
+          "displaySymbol": "GeV",
+          "name": "gigaelectronvolt",
+          "lastModified": "19920228",
+          "source": "APIRP661",
+          "namespace": "RP66",
+          "persistableReference": "{\"scaleOffset\":{\"scale\":1.60219E-10,\"offset\":0.0},\"symbol\":\"GeV\",\"baseMeasurement\":{\"ancestry\":\"Energy\",\"type\":\"UM\"},\"type\":\"USO\"}"
+        },
+        "toUnit": {
+          "essence": {
+            "abcd": {
+              "a": 0,
+              "b": 1.602176487e-10,
+              "c": 1,
+              "d": 0
+            },
+            "symbol": "GeV",
+            "baseMeasurement": {
+              "ancestry": "L2M/T2",
+              "type": "UM"
+            },
+            "type": "UAD"
+          },
+          "displaySymbol": "GeV",
+          "name": "gigaelectronvolt",
+          "lastModified": "20160322",
+          "source": "Energistics",
+          "namespace": "Energistics_UoM",
+          "persistableReference": "{\"abcd\":{\"a\":0.0,\"b\":1.602176487E-10,\"c\":1.0,\"d\":0.0},\"symbol\":\"GeV\",\"baseMeasurement\":{\"ancestry\":\"L2M/T2\",\"type\":\"UM\"},\"type\":\"UAD\"}"
+        },
+        "fromNamespace": "RP66",
+        "toNamespace": "Energistics_UoM"
+      },
+      {
+        "state": "identical",
+        "note": "",
+        "fromUnit": {
+          "essence": {
+            "scaleOffset": {
+              "scale": 2.777777777777778e-7,
+              "offset": 0
+            },
+            "symbol": "L/h",
+            "baseMeasurement": {
+              "ancestry": "Flowrate",
+              "type": "UM"
+            },
+            "type": "USO"
+          },
+          "displaySymbol": "L/h",
+          "name": "liter per hour",
+          "lastModified": "19990601",
+          "source": "APIRP661",
+          "namespace": "RP66",
+          "persistableReference": "{\"scaleOffset\":{\"scale\":2.777777777777778E-7,\"offset\":0.0},\"symbol\":\"L/h\",\"baseMeasurement\":{\"ancestry\":\"Flowrate\",\"type\":\"UM\"},\"type\":\"USO\"}"
+        },
+        "toUnit": {
+          "essence": {
+            "abcd": {
+              "a": 0,
+              "b": 0.001,
+              "c": 3600,
+              "d": 0
+            },
+            "symbol": "L/h",
+            "baseMeasurement": {
+              "ancestry": "L3/T",
+              "type": "UM"
+            },
+            "type": "UAD"
+          },
+          "displaySymbol": "L/h",
+          "name": "litre per hour",
+          "lastModified": "20160322",
+          "source": "Energistics",
+          "namespace": "Energistics_UoM",
+          "persistableReference": "{\"abcd\":{\"a\":0.0,\"b\":0.001,\"c\":3600.0,\"d\":0.0},\"symbol\":\"L/h\",\"baseMeasurement\":{\"ancestry\":\"L3/T\",\"type\":\"UM\"},\"type\":\"UAD\"}"
+        },
+        "fromNamespace": "RP66",
+        "toNamespace": "Energistics_UoM"
+      },
+      {
+        "state": "identical",
+        "note": "",
+        "fromUnit": {
+          "essence": {
+            "scaleOffset": {
+              "scale": 0.00001666666666666667,
+              "offset": 0
+            },
+            "symbol": "L/min",
+            "baseMeasurement": {
+              "ancestry": "Flowrate",
+              "type": "UM"
+            },
+            "type": "USO"
+          },
+          "displaySymbol": "L/min",
+          "name": "liter per minute",
+          "lastModified": "19920228",
+          "source": "APIRP661",
+          "namespace": "RP66",
+          "persistableReference": "{\"scaleOffset\":{\"scale\":1.666666666666667E-5,\"offset\":0.0},\"symbol\":\"L/min\",\"baseMeasurement\":{\"ancestry\":\"Flowrate\",\"type\":\"UM\"},\"type\":\"USO\"}"
+        },
+        "toUnit": {
+          "essence": {
+            "abcd": {
+              "a": 0,
+              "b": 0.001,
+              "c": 60,
+              "d": 0
+            },
+            "symbol": "L/min",
+            "baseMeasurement": {
+              "ancestry": "L3/T",
+              "type": "UM"
+            },
+            "type": "UAD"
+          },
+          "displaySymbol": "L/min",
+          "name": "litre per minute",
+          "lastModified": "20160322",
+          "source": "Energistics",
+          "namespace": "Energistics_UoM",
+          "persistableReference": "{\"abcd\":{\"a\":0.0,\"b\":0.001,\"c\":60.0,\"d\":0.0},\"symbol\":\"L/min\",\"baseMeasurement\":{\"ancestry\":\"L3/T\",\"type\":\"UM\"},\"type\":\"UAD\"}"
+        },
+        "fromNamespace": "RP66",
+        "toNamespace": "Energistics_UoM"
+      },
+      {
+        "state": "different",
+        "note": "",
+        "fromUnit": {
+          "essence": {
+            "scaleOffset": {
+              "scale": 0.03168753554945395,
+              "offset": 0
+            },
+            "symbol": "MJ/a",
+            "baseMeasurement": {
+              "ancestry": "Power",
+              "type": "UM"
+            },
+            "type": "USO"
+          },
+          "displaySymbol": "MJ/a",
+          "name": "megajoule per year",
+          "lastModified": "20010524",
+          "source": "APIRP661",
+          "namespace": "RP66",
+          "persistableReference": "{\"scaleOffset\":{\"scale\":0.03168753554945395,\"offset\":0.0},\"symbol\":\"MJ/a\",\"baseMeasurement\":{\"ancestry\":\"Power\",\"type\":\"UM\"},\"type\":\"USO\"}"
+        },
+        "toUnit": {
+          "essence": {
+            "abcd": {
+              "a": 0,
+              "b": 1000000,
+              "c": 31557600,
+              "d": 0
+            },
+            "symbol": "MJ/a",
+            "baseMeasurement": {
+              "ancestry": "L2M/T3",
+              "type": "UM"
+            },
+            "type": "UAD"
+          },
+          "displaySymbol": "MJ/a",
+          "name": "megajoule per julian-year",
+          "lastModified": "20160322",
+          "source": "Energistics",
+          "namespace": "Energistics_UoM",
+          "persistableReference": "{\"abcd\":{\"a\":0.0,\"b\":1000000.0,\"c\":3.15576E7,\"d\":0.0},\"symbol\":\"MJ/a\",\"baseMeasurement\":{\"ancestry\":\"L2M/T3\",\"type\":\"UM\"},\"type\":\"UAD\"}"
+        },
+        "fromNamespace": "RP66",
+        "toNamespace": "Energistics_UoM"
+      },
+      {
+        "state": "identical",
+        "note": "",
+        "fromUnit": {
+          "essence": {
+            "scaleOffset": {
+              "scale": 277.7777777777778,
+              "offset": 0
+            },
+            "symbol": "MPa/h",
+            "baseMeasurement": {
+              "ancestry": "Pressure_Per_Time",
+              "type": "UM"
+            },
+            "type": "USO"
+          },
+          "displaySymbol": "MPa/h",
+          "name": "megapascal per hour",
+          "lastModified": "19920228",
+          "source": "APIRP661",
+          "namespace": "RP66",
+          "persistableReference": "{\"scaleOffset\":{\"scale\":277.7777777777778,\"offset\":0.0},\"symbol\":\"MPa/h\",\"baseMeasurement\":{\"ancestry\":\"Pressure_Per_Time\",\"type\":\"UM\"},\"type\":\"USO\"}"
+        },
+        "toUnit": {
+          "essence": {
+            "abcd": {
+              "a": 0,
+              "b": 1000000,
+              "c": 3600,
+              "d": 0
+            },
+            "symbol": "MPa/h",
+            "baseMeasurement": {
+              "ancestry": "M/LT3",
+              "type": "UM"
+            },
+            "type": "UAD"
+          },
+          "displaySymbol": "MPa/h",
+          "name": "megapascal per hour",
+          "lastModified": "20160322",
+          "source": "Energistics",
+          "namespace": "Energistics_UoM",
+          "persistableReference": "{\"abcd\":{\"a\":0.0,\"b\":1000000.0,\"c\":3600.0,\"d\":0.0},\"symbol\":\"MPa/h\",\"baseMeasurement\":{\"ancestry\":\"M/LT3\",\"type\":\"UM\"},\"type\":\"UAD\"}"
+        },
+        "fromNamespace": "RP66",
+        "toNamespace": "Energistics_UoM"
+      },
+      {
+        "state": "different",
+        "note": "",
+        "fromUnit": {
+          "essence": {
+            "scaleOffset": {
+              "scale": 31558150000000,
+              "offset": 0
+            },
+            "symbol": "Ma",
+            "baseMeasurement": {
+              "ancestry": "Time",
+              "type": "UM"
+            },
+            "type": "USO"
+          },
+          "displaySymbol": "Ma",
+          "name": "million years",
+          "lastModified": "19920228",
+          "source": "APIRP661",
+          "namespace": "RP66",
+          "persistableReference": "{\"scaleOffset\":{\"scale\":3.155815E13,\"offset\":0.0},\"symbol\":\"Ma\",\"baseMeasurement\":{\"ancestry\":\"Time\",\"type\":\"UM\"},\"type\":\"USO\"}"
+        },
+        "toUnit": {
+          "essence": {
+            "abcd": {
+              "a": 0,
+              "b": 31556925445000,
+              "c": 1,
+              "d": 0
+            },
+            "symbol": "Ma[t]",
+            "baseMeasurement": {
+              "ancestry": "T",
+              "type": "UM"
+            },
+            "type": "UAD"
+          },
+          "displaySymbol": "Ma[t]",
+          "name": "million tropical-year",
+          "lastModified": "20160322",
+          "source": "Energistics",
+          "namespace": "Energistics_UoM",
+          "persistableReference": "{\"abcd\":{\"a\":0.0,\"b\":3.1556925445E13,\"c\":1.0,\"d\":0.0},\"symbol\":\"Ma[t]\",\"baseMeasurement\":{\"ancestry\":\"T\",\"type\":\"UM\"},\"type\":\"UAD\"}"
+        },
+        "fromNamespace": "RP66",
+        "toNamespace": "Energistics_UoM"
+      },
+      {
+        "state": "precision",
+        "note": "",
+        "fromUnit": {
+          "essence": {
+            "scaleOffset": {
+              "scale": 1.60219e-13,
+              "offset": 0
+            },
+            "symbol": "MeV",
+            "baseMeasurement": {
+              "ancestry": "Energy",
+              "type": "UM"
+            },
+            "type": "USO"
+          },
+          "displaySymbol": "MeV",
+          "name": "megaelectronvolt",
+          "lastModified": "19920228",
+          "source": "APIRP661",
+          "namespace": "RP66",
+          "persistableReference": "{\"scaleOffset\":{\"scale\":1.60219E-13,\"offset\":0.0},\"symbol\":\"MeV\",\"baseMeasurement\":{\"ancestry\":\"Energy\",\"type\":\"UM\"},\"type\":\"USO\"}"
+        },
+        "toUnit": {
+          "essence": {
+            "abcd": {
+              "a": 0,
+              "b": 1.602176487e-13,
+              "c": 1,
+              "d": 0
+            },
+            "symbol": "MeV",
+            "baseMeasurement": {
+              "ancestry": "L2M/T2",
+              "type": "UM"
+            },
+            "type": "UAD"
+          },
+          "displaySymbol": "MeV",
+          "name": "megaelectronvolt",
+          "lastModified": "20160322",
+          "source": "Energistics",
+          "namespace": "Energistics_UoM",
+          "persistableReference": "{\"abcd\":{\"a\":0.0,\"b\":1.602176487E-13,\"c\":1.0,\"d\":0.0},\"symbol\":\"MeV\",\"baseMeasurement\":{\"ancestry\":\"L2M/T2\",\"type\":\"UM\"},\"type\":\"UAD\"}"
+        },
+        "fromNamespace": "RP66",
+        "toNamespace": "Energistics_UoM"
+      },
+      {
+        "state": "identical",
+        "note": "",
+        "fromUnit": {
+          "essence": {
+            "scaleOffset": {
+              "scale": 39370.07874015749,
+              "offset": 0
+            },
+            "symbol": "Mg/in",
+            "baseMeasurement": {
+              "ancestry": "Mass_Per_Length",
+              "type": "UM"
+            },
+            "type": "USO"
+          },
+          "displaySymbol": "Mg/in",
+          "name": "thousand kilograms per inch",
+          "lastModified": "19920228",
+          "source": "APIRP661",
+          "namespace": "RP66",
+          "persistableReference": "{\"scaleOffset\":{\"scale\":39370.07874015749,\"offset\":0.0},\"symbol\":\"Mg/in\",\"baseMeasurement\":{\"ancestry\":\"Mass_Per_Length\",\"type\":\"UM\"},\"type\":\"USO\"}"
+        },
+        "toUnit": {
+          "essence": {
+            "abcd": {
+              "a": 0,
+              "b": 1000,
+              "c": 0.0254,
+              "d": 0
+            },
+            "symbol": "Mg/in",
+            "baseMeasurement": {
+              "ancestry": "M/L",
+              "type": "UM"
+            },
+            "type": "UAD"
+          },
+          "displaySymbol": "Mg/in",
+          "name": "megagram per inch",
+          "lastModified": "20160322",
+          "source": "Energistics",
+          "namespace": "Energistics_UoM",
+          "persistableReference": "{\"abcd\":{\"a\":0.0,\"b\":1000.0,\"c\":0.0254,\"d\":0.0},\"symbol\":\"Mg/in\",\"baseMeasurement\":{\"ancestry\":\"M/L\",\"type\":\"UM\"},\"type\":\"UAD\"}"
+        },
+        "fromNamespace": "RP66",
+        "toNamespace": "Energistics_UoM"
+      },
+      {
+        "state": "identical",
+        "note": "",
+        "fromUnit": {
+          "essence": {
+            "scaleOffset": {
+              "scale": 6894757293.168361,
+              "offset": 0
+            },
+            "symbol": "Mpsi",
+            "baseMeasurement": {
+              "ancestry": "Pressure",
+              "type": "UM"
+            },
+            "type": "USO"
+          },
+          "displaySymbol": "Mpsi",
+          "name": "million pounds per square inch",
+          "lastModified": "19920228",
+          "source": "APIRP661",
+          "namespace": "RP66",
+          "persistableReference": "{\"scaleOffset\":{\"scale\":6.894757293168361E9,\"offset\":0.0},\"symbol\":\"Mpsi\",\"baseMeasurement\":{\"ancestry\":\"Pressure\",\"type\":\"UM\"},\"type\":\"USO\"}"
+        },
+        "toUnit": {
+          "essence": {
+            "abcd": {
+              "a": 0,
+              "b": 4448221.6152605,
+              "c": 0.00064516,
+              "d": 0
+            },
+            "symbol": "Mpsi",
+            "baseMeasurement": {
+              "ancestry": "M/LT2",
+              "type": "UM"
+            },
+            "type": "UAD"
+          },
+          "displaySymbol": "Mpsi",
+          "name": "million psi",
+          "lastModified": "20160322",
+          "source": "Energistics",
+          "namespace": "Energistics_UoM",
+          "persistableReference": "{\"abcd\":{\"a\":0.0,\"b\":4448221.6152605,\"c\":6.4516E-4,\"d\":0.0},\"symbol\":\"Mpsi\",\"baseMeasurement\":{\"ancestry\":\"M/LT2\",\"type\":\"UM\"},\"type\":\"UAD\"}"
+        },
+        "fromNamespace": "RP66",
+        "toNamespace": "Energistics_UoM"
+      },
+      {
+        "state": "precision",
+        "note": "",
+        "fromUnit": {
+          "essence": {
+            "scaleOffset": {
+              "scale": 79.57747,
+              "offset": 0
+            },
+            "symbol": "Oe",
+            "baseMeasurement": {
+              "ancestry": "Magnetic_Field_Strength",
+              "type": "UM"
+            },
+            "type": "USO"
+          },
+          "displaySymbol": "Oe",
+          "name": "oersted",
+          "lastModified": "19920228",
+          "source": "APIRP661",
+          "namespace": "RP66",
+          "persistableReference": "{\"scaleOffset\":{\"scale\":79.57747,\"offset\":0.0},\"symbol\":\"Oe\",\"baseMeasurement\":{\"ancestry\":\"Magnetic_Field_Strength\",\"type\":\"UM\"},\"type\":\"USO\"}"
+        },
+        "toUnit": {
+          "essence": {
+            "abcd": {
+              "a": 0,
+              "b": 1000,
+              "c": 12.5663706143592,
+              "d": 0
+            },
+            "symbol": "Oe",
+            "baseMeasurement": {
+              "ancestry": "I/L",
+              "type": "UM"
+            },
+            "type": "UAD"
+          },
+          "displaySymbol": "Oe",
+          "name": "oersted",
+          "lastModified": "20160322",
+          "source": "Energistics",
+          "namespace": "Energistics_UoM",
+          "persistableReference": "{\"abcd\":{\"a\":0.0,\"b\":1000.0,\"c\":12.5663706143592,\"d\":0.0},\"symbol\":\"Oe\",\"baseMeasurement\":{\"ancestry\":\"I/L\",\"type\":\"UM\"},\"type\":\"UAD\"}"
+        },
+        "fromNamespace": "RP66",
+        "toNamespace": "Energistics_UoM"
+      },
+      {
+        "state": "identical",
+        "note": "",
+        "fromUnit": {
+          "essence": {
+            "scaleOffset": {
+              "scale": 0.0002777777777777778,
+              "offset": 0
+            },
+            "symbol": "Pa/h",
+            "baseMeasurement": {
+              "ancestry": "Pressure_Per_Time",
+              "type": "UM"
+            },
+            "type": "USO"
+          },
+          "displaySymbol": "Pa/h",
+          "name": "pascal per hour",
+          "lastModified": "19920228",
+          "source": "APIRP661",
+          "namespace": "RP66",
+          "persistableReference": "{\"scaleOffset\":{\"scale\":2.777777777777778E-4,\"offset\":0.0},\"symbol\":\"Pa/h\",\"baseMeasurement\":{\"ancestry\":\"Pressure_Per_Time\",\"type\":\"UM\"},\"type\":\"USO\"}"
+        },
+        "toUnit": {
+          "essence": {
+            "abcd": {
+              "a": 0,
+              "b": 1,
+              "c": 3600,
+              "d": 0
+            },
+            "symbol": "Pa/h",
+            "baseMeasurement": {
+              "ancestry": "M/LT3",
+              "type": "UM"
+            },
+            "type": "UAD"
+          },
+          "displaySymbol": "Pa/h",
+          "name": "pascal per hour",
+          "lastModified": "20160322",
+          "source": "Energistics",
+          "namespace": "Energistics_UoM",
+          "persistableReference": "{\"abcd\":{\"a\":0.0,\"b\":1.0,\"c\":3600.0,\"d\":0.0},\"symbol\":\"Pa/h\",\"baseMeasurement\":{\"ancestry\":\"M/LT3\",\"type\":\"UM\"},\"type\":\"UAD\"}"
+        },
+        "fromNamespace": "RP66",
+        "toNamespace": "Energistics_UoM"
+      },
+      {
+        "state": "precision",
+        "note": "",
+        "fromUnit": {
+          "essence": {
+            "scaleOffset": {
+              "scale": 1.60219e-7,
+              "offset": 0
+            },
+            "symbol": "TeV",
+            "baseMeasurement": {
+              "ancestry": "Energy",
+              "type": "UM"
+            },
+            "type": "USO"
+          },
+          "displaySymbol": "TeV",
+          "name": "teraelectronvolt",
+          "lastModified": "19920228",
+          "source": "APIRP661",
+          "namespace": "RP66",
+          "persistableReference": "{\"scaleOffset\":{\"scale\":1.60219E-7,\"offset\":0.0},\"symbol\":\"TeV\",\"baseMeasurement\":{\"ancestry\":\"Energy\",\"type\":\"UM\"},\"type\":\"USO\"}"
+        },
+        "toUnit": {
+          "essence": {
+            "abcd": {
+              "a": 0,
+              "b": 1.602176487e-7,
+              "c": 1,
+              "d": 0
+            },
+            "symbol": "TeV",
+            "baseMeasurement": {
+              "ancestry": "L2M/T2",
+              "type": "UM"
+            },
+            "type": "UAD"
+          },
+          "displaySymbol": "TeV",
+          "name": "teraelectronvolt",
+          "lastModified": "20160322",
+          "source": "Energistics",
+          "namespace": "Energistics_UoM",
+          "persistableReference": "{\"abcd\":{\"a\":0.0,\"b\":1.602176487E-7,\"c\":1.0,\"d\":0.0},\"symbol\":\"TeV\",\"baseMeasurement\":{\"ancestry\":\"L2M/T2\",\"type\":\"UM\"},\"type\":\"UAD\"}"
+        },
+        "fromNamespace": "RP66",
+        "toNamespace": "Energistics_UoM"
+      },
+      {
+        "state": "different",
+        "note": "",
+        "fromUnit": {
+          "essence": {
+            "scaleOffset": {
+              "scale": 1,
+              "offset": 0
+            },
+            "symbol": "V/dB",
+            "baseMeasurement": {
+              "ancestry": "Electric_Potential_Per_Attenuation",
+              "type": "UM"
+            },
+            "type": "USO"
+          },
+          "displaySymbol": "V/dB",
+          "name": "volt per decibel",
+          "lastModified": "19920228",
+          "source": "APIRP661",
+          "namespace": "RP66",
+          "persistableReference": "{\"scaleOffset\":{\"scale\":1.0,\"offset\":0.0},\"symbol\":\"V/dB\",\"baseMeasurement\":{\"ancestry\":\"Electric_Potential_Per_Attenuation\",\"type\":\"UM\"},\"type\":\"USO\"}"
+        },
+        "toUnit": {
+          "essence": {
+            "abcd": {
+              "a": 0,
+              "b": 10,
+              "c": 1,
+              "d": 0
+            },
+            "symbol": "V/dB",
+            "baseMeasurement": {
+              "ancestry": "none",
+              "type": "UM"
+            },
+            "type": "UAD"
+          },
+          "displaySymbol": "V/dB",
+          "name": "volt per decibel",
+          "lastModified": "20160322",
+          "source": "Energistics",
+          "namespace": "Energistics_UoM",
+          "persistableReference": "{\"abcd\":{\"a\":0.0,\"b\":10.0,\"c\":1.0,\"d\":0.0},\"symbol\":\"V/dB\",\"baseMeasurement\":{\"ancestry\":\"none\",\"type\":\"UM\"},\"type\":\"UAD\"}"
+        },
+        "fromNamespace": "RP66",
+        "toNamespace": "Energistics_UoM"
+      },
+      {
+        "state": "different",
+        "note": "",
+        "fromUnit": {
+          "essence": {
+            "scaleOffset": {
+              "scale": 31558150,
+              "offset": 0
+            },
+            "symbol": "a",
+            "baseMeasurement": {
+              "ancestry": "Time",
+              "type": "UM"
+            },
+            "type": "USO"
+          },
+          "displaySymbol": "a",
+          "name": "annum (sidereal year)",
+          "lastModified": "19920228",
+          "source": "APIRP661",
+          "namespace": "RP66",
+          "persistableReference": "{\"scaleOffset\":{\"scale\":3.155815E7,\"offset\":0.0},\"symbol\":\"a\",\"baseMeasurement\":{\"ancestry\":\"Time\",\"type\":\"UM\"},\"type\":\"USO\"}"
+        },
+        "toUnit": {
+          "essence": {
+            "abcd": {
+              "a": 0,
+              "b": 31557600,
+              "c": 1,
+              "d": 0
+            },
+            "symbol": "a",
+            "baseMeasurement": {
+              "ancestry": "T",
+              "type": "UM"
+            },
+            "type": "UAD"
+          },
+          "displaySymbol": "a",
+          "name": "julian-year",
+          "lastModified": "20160322",
+          "source": "Energistics",
+          "namespace": "Energistics_UoM",
+          "persistableReference": "{\"abcd\":{\"a\":0.0,\"b\":3.15576E7,\"c\":1.0,\"d\":0.0},\"symbol\":\"a\",\"baseMeasurement\":{\"ancestry\":\"T\",\"type\":\"UM\"},\"type\":\"UAD\"}"
+        },
+        "fromNamespace": "RP66",
+        "toNamespace": "Energistics_UoM"
+      },
+      {
+        "state": "identical",
+        "note": "",
+        "fromUnit": {
+          "essence": {
+            "scaleOffset": {
+              "scale": 4046.872609874252,
+              "offset": 0
+            },
+            "symbol": "acre",
+            "baseMeasurement": {
+              "ancestry": "Area",
+              "type": "UM"
+            },
+            "type": "USO"
+          },
+          "displaySymbol": "acre",
+          "name": "acre",
+          "lastModified": "19920228",
+          "source": "APIRP661",
+          "namespace": "RP66",
+          "persistableReference": "{\"scaleOffset\":{\"scale\":4046.872609874252,\"offset\":0.0},\"symbol\":\"acre\",\"baseMeasurement\":{\"ancestry\":\"Area\",\"type\":\"UM\"},\"type\":\"USO\"}"
+        },
+        "toUnit": {
+          "essence": {
+            "abcd": {
+              "a": 0,
+              "b": 62726400000,
+              "c": 15499969,
+              "d": 0
+            },
+            "symbol": "acre",
+            "baseMeasurement": {
+              "ancestry": "L2",
+              "type": "UM"
+            },
+            "type": "UAD"
+          },
+          "displaySymbol": "acre",
+          "name": "acre",
+          "lastModified": "20160322",
+          "source": "Energistics",
+          "namespace": "Energistics_UoM",
+          "persistableReference": "{\"abcd\":{\"a\":0.0,\"b\":6.27264E10,\"c\":1.5499969E7,\"d\":0.0},\"symbol\":\"acre\",\"baseMeasurement\":{\"ancestry\":\"L2\",\"type\":\"UM\"},\"type\":\"UAD\"}"
+        },
+        "fromNamespace": "RP66",
+        "toNamespace": "Energistics_UoM"
+      },
+      {
+        "state": "identical",
+        "note": "",
+        "fromUnit": {
+          "essence": {
+            "scaleOffset": {
+              "scale": 1233.486771489672,
+              "offset": 0
+            },
+            "symbol": "acre.ft",
+            "baseMeasurement": {
+              "ancestry": "Volume",
+              "type": "UM"
+            },
+            "type": "USO"
+          },
+          "displaySymbol": "acre.ft",
+          "name": "acre foot",
+          "lastModified": "19940819",
+          "source": "APIRP661",
+          "namespace": "RP66",
+          "persistableReference": "{\"scaleOffset\":{\"scale\":1233.486771489672,\"offset\":0.0},\"symbol\":\"acre.ft\",\"baseMeasurement\":{\"ancestry\":\"Volume\",\"type\":\"UM\"},\"type\":\"USO\"}"
+        },
+        "toUnit": {
+          "essence": {
+            "abcd": {
+              "a": 0,
+              "b": 19119006720,
+              "c": 15499969,
+              "d": 0
+            },
+            "symbol": "acre.ft",
+            "baseMeasurement": {
+              "ancestry": "L3",
+              "type": "UM"
+            },
+            "type": "UAD"
+          },
+          "displaySymbol": "acre.ft",
+          "name": "acre foot",
+          "lastModified": "20160322",
+          "source": "Energistics",
+          "namespace": "Energistics_UoM",
+          "persistableReference": "{\"abcd\":{\"a\":0.0,\"b\":1.911900672E10,\"c\":1.5499969E7,\"d\":0.0},\"symbol\":\"acre.ft\",\"baseMeasurement\":{\"ancestry\":\"L3\",\"type\":\"UM\"},\"type\":\"UAD\"}"
+        },
+        "fromNamespace": "RP66",
+        "toNamespace": "Energistics_UoM"
+      },
+      {
+        "state": "identical",
+        "note": "",
+        "fromUnit": {
+          "essence": {
+            "scaleOffset": {
+              "scale": 28.14583333333333,
+              "offset": 0
+            },
+            "symbol": "atm/h",
+            "baseMeasurement": {
+              "ancestry": "Pressure_Per_Time",
+              "type": "UM"
+            },
+            "type": "USO"
+          },
+          "displaySymbol": "atm/h",
+          "name": "atmosphere per hour",
+          "lastModified": "19920228",
+          "source": "APIRP661",
+          "namespace": "RP66",
+          "persistableReference": "{\"scaleOffset\":{\"scale\":28.14583333333333,\"offset\":0.0},\"symbol\":\"atm/h\",\"baseMeasurement\":{\"ancestry\":\"Pressure_Per_Time\",\"type\":\"UM\"},\"type\":\"USO\"}"
+        },
+        "toUnit": {
+          "essence": {
+            "abcd": {
+              "a": 0,
+              "b": 101325,
+              "c": 3600,
+              "d": 0
+            },
+            "symbol": "atm/h",
+            "baseMeasurement": {
+              "ancestry": "M/LT3",
+              "type": "UM"
+            },
+            "type": "UAD"
+          },
+          "displaySymbol": "atm/h",
+          "name": "standard atmosphere per hour",
+          "lastModified": "20160322",
+          "source": "Energistics",
+          "namespace": "Energistics_UoM",
+          "persistableReference": "{\"abcd\":{\"a\":0.0,\"b\":101325.0,\"c\":3600.0,\"d\":0.0},\"symbol\":\"atm/h\",\"baseMeasurement\":{\"ancestry\":\"M/LT3\",\"type\":\"UM\"},\"type\":\"UAD\"}"
+        },
+        "fromNamespace": "RP66",
+        "toNamespace": "Energistics_UoM"
+      },
+      {
+        "state": "identical",
+        "note": "",
+        "fromUnit": {
+          "essence": {
+            "scaleOffset": {
+              "scale": 27.77777777777778,
+              "offset": 0
+            },
+            "symbol": "bar/h",
+            "baseMeasurement": {
+              "ancestry": "Pressure_Per_Time",
+              "type": "UM"
+            },
+            "type": "USO"
+          },
+          "displaySymbol": "bar/h",
+          "name": "bar per hour",
+          "lastModified": "19920228",
+          "source": "APIRP661",
+          "namespace": "RP66",
+          "persistableReference": "{\"scaleOffset\":{\"scale\":27.77777777777778,\"offset\":0.0},\"symbol\":\"bar/h\",\"baseMeasurement\":{\"ancestry\":\"Pressure_Per_Time\",\"type\":\"UM\"},\"type\":\"USO\"}"
+        },
+        "toUnit": {
+          "essence": {
+            "abcd": {
+              "a": 0,
+              "b": 100000,
+              "c": 3600,
+              "d": 0
+            },
+            "symbol": "bar/h",
+            "baseMeasurement": {
+              "ancestry": "M/LT3",
+              "type": "UM"
+            },
+            "type": "UAD"
+          },
+          "displaySymbol": "bar/h",
+          "name": "bar per hour",
+          "lastModified": "20160322",
+          "source": "Energistics",
+          "namespace": "Energistics_UoM",
+          "persistableReference": "{\"abcd\":{\"a\":0.0,\"b\":100000.0,\"c\":3600.0,\"d\":0.0},\"symbol\":\"bar/h\",\"baseMeasurement\":{\"ancestry\":\"M/LT3\",\"type\":\"UM\"},\"type\":\"UAD\"}"
+        },
+        "fromNamespace": "RP66",
+        "toNamespace": "Energistics_UoM"
+      },
+      {
+        "state": "precision",
+        "note": "",
+        "fromUnit": {
+          "essence": {
+            "scaleOffset": {
+              "scale": 0.158987304,
+              "offset": 0
+            },
+            "symbol": "bbl",
+            "baseMeasurement": {
+              "ancestry": "Volume",
+              "type": "UM"
+            },
+            "type": "USO"
+          },
+          "displaySymbol": "bbl",
+          "name": "barrel",
+          "lastModified": "19920228",
+          "source": "APIRP661",
+          "namespace": "RP66",
+          "persistableReference": "{\"scaleOffset\":{\"scale\":0.158987304,\"offset\":0.0},\"symbol\":\"bbl\",\"baseMeasurement\":{\"ancestry\":\"Volume\",\"type\":\"UM\"},\"type\":\"USO\"}"
+        },
+        "toUnit": {
+          "essence": {
+            "abcd": {
+              "a": 0,
+              "b": 0.158987294928,
+              "c": 1,
+              "d": 0
+            },
+            "symbol": "bbl",
+            "baseMeasurement": {
+              "ancestry": "L3",
+              "type": "UM"
+            },
+            "type": "UAD"
+          },
+          "displaySymbol": "bbl",
+          "name": "barrel",
+          "lastModified": "20160322",
+          "source": "Energistics",
+          "namespace": "Energistics_UoM",
+          "persistableReference": "{\"abcd\":{\"a\":0.0,\"b\":0.158987294928,\"c\":1.0,\"d\":0.0},\"symbol\":\"bbl\",\"baseMeasurement\":{\"ancestry\":\"L3\",\"type\":\"UM\"},\"type\":\"UAD\"}"
+        },
+        "fromNamespace": "RP66",
+        "toNamespace": "Energistics_UoM"
+      },
+      {
+        "state": "precision",
+        "note": "",
+        "fromUnit": {
+          "essence": {
+            "scaleOffset": {
+              "scale": 0.00003928646125703971,
+              "offset": 0
+            },
+            "symbol": "bbl/acre",
+            "baseMeasurement": {
+              "ancestry": "Length",
+              "type": "UM"
+            },
+            "type": "USO"
+          },
+          "displaySymbol": "bbl/acre",
+          "name": "barrel per acre",
+          "lastModified": "19920228",
+          "source": "APIRP661",
+          "namespace": "RP66",
+          "persistableReference": "{\"scaleOffset\":{\"scale\":3.928646125703971E-5,\"offset\":0.0},\"symbol\":\"bbl/acre\",\"baseMeasurement\":{\"ancestry\":\"Length\",\"type\":\"UM\"},\"type\":\"USO\"}"
+        },
+        "toUnit": {
+          "essence": {
+            "abcd": {
+              "a": 0,
+              "b": 2464298.14277786,
+              "c": 62726400000,
+              "d": 0
+            },
+            "symbol": "bbl/acre",
+            "baseMeasurement": {
+              "ancestry": "L",
+              "type": "UM"
+            },
+            "type": "UAD"
+          },
+          "displaySymbol": "bbl/acre",
+          "name": "barrel per acre",
+          "lastModified": "20160322",
+          "source": "Energistics",
+          "namespace": "Energistics_UoM",
+          "persistableReference": "{\"abcd\":{\"a\":0.0,\"b\":2464298.14277786,\"c\":6.27264E10,\"d\":0.0},\"symbol\":\"bbl/acre\",\"baseMeasurement\":{\"ancestry\":\"L\",\"type\":\"UM\"},\"type\":\"UAD\"}"
+        },
+        "fromNamespace": "RP66",
+        "toNamespace": "Energistics_UoM"
+      },
+      {
+        "state": "precision",
+        "note": "",
+        "fromUnit": {
+          "essence": {
+            "scaleOffset": {
+              "scale": 0.000001840130833333333,
+              "offset": 0
+            },
+            "symbol": "bbl/d",
+            "baseMeasurement": {
+              "ancestry": "Flowrate",
+              "type": "UM"
+            },
+            "type": "USO"
+          },
+          "displaySymbol": "bbl/d",
+          "name": "barrel per day",
+          "lastModified": "19920228",
+          "source": "APIRP661",
+          "namespace": "RP66",
+          "persistableReference": "{\"scaleOffset\":{\"scale\":1.840130833333333E-6,\"offset\":0.0},\"symbol\":\"bbl/d\",\"baseMeasurement\":{\"ancestry\":\"Flowrate\",\"type\":\"UM\"},\"type\":\"USO\"}"
+        },
+        "toUnit": {
+          "essence": {
+            "abcd": {
+              "a": 0,
+              "b": 0.158987294928,
+              "c": 86400,
+              "d": 0
+            },
+            "symbol": "bbl/d",
+            "baseMeasurement": {
+              "ancestry": "L3/T",
+              "type": "UM"
+            },
+            "type": "UAD"
+          },
+          "displaySymbol": "bbl/d",
+          "name": "barrel per day",
+          "lastModified": "20160322",
+          "source": "Energistics",
+          "namespace": "Energistics_UoM",
+          "persistableReference": "{\"abcd\":{\"a\":0.0,\"b\":0.158987294928,\"c\":86400.0,\"d\":0.0},\"symbol\":\"bbl/d\",\"baseMeasurement\":{\"ancestry\":\"L3/T\",\"type\":\"UM\"},\"type\":\"UAD\"}"
+        },
+        "fromNamespace": "RP66",
+        "toNamespace": "Energistics_UoM"
+      },
+      {
+        "state": "precision",
+        "note": "",
+        "fromUnit": {
+          "essence": {
+            "scaleOffset": {
+              "scale": 5.614583653707989,
+              "offset": 0
+            },
+            "symbol": "bbl/ft3",
+            "baseMeasurement": {
+              "ancestry": "Dimensionless",
+              "type": "UM"
+            },
+            "type": "USO"
+          },
+          "displaySymbol": "bbl/ft3",
+          "name": "barrel per cubic foot",
+          "lastModified": "19920228",
+          "source": "APIRP661",
+          "namespace": "RP66",
+          "persistableReference": "{\"scaleOffset\":{\"scale\":5.614583653707989,\"offset\":0.0},\"symbol\":\"bbl/ft3\",\"baseMeasurement\":{\"ancestry\":\"Dimensionless\",\"type\":\"UM\"},\"type\":\"USO\"}"
+        },
+        "toUnit": {
+          "essence": {
+            "abcd": {
+              "a": 0,
+              "b": 0.158987294928,
+              "c": 0.028316846592,
+              "d": 0
+            },
+            "symbol": "bbl/ft3",
+            "baseMeasurement": {
+              "ancestry": "1",
+              "type": "UM"
+            },
+            "type": "UAD"
+          },
+          "displaySymbol": "bbl/ft3",
+          "name": "barrel per cubic foot",
+          "lastModified": "20160322",
+          "source": "Energistics",
+          "namespace": "Energistics_UoM",
+          "persistableReference": "{\"abcd\":{\"a\":0.0,\"b\":0.158987294928,\"c\":0.028316846592,\"d\":0.0},\"symbol\":\"bbl/ft3\",\"baseMeasurement\":{\"ancestry\":\"1\",\"type\":\"UM\"},\"type\":\"UAD\"}"
+        },
+        "fromNamespace": "RP66",
+        "toNamespace": "Energistics_UoM"
+      },
+      {
+        "state": "precision",
+        "note": "",
+        "fromUnit": {
+          "essence": {
+            "scaleOffset": {
+              "scale": 0.0026497884,
+              "offset": 0
+            },
+            "symbol": "bbl/min",
+            "baseMeasurement": {
+              "ancestry": "Flowrate",
+              "type": "UM"
+            },
+            "type": "USO"
+          },
+          "displaySymbol": "bbl/min",
+          "name": "barrel per minute",
+          "lastModified": "19920228",
+          "source": "APIRP661",
+          "namespace": "RP66",
+          "persistableReference": "{\"scaleOffset\":{\"scale\":0.0026497884,\"offset\":0.0},\"symbol\":\"bbl/min\",\"baseMeasurement\":{\"ancestry\":\"Flowrate\",\"type\":\"UM\"},\"type\":\"USO\"}"
+        },
+        "toUnit": {
+          "essence": {
+            "abcd": {
+              "a": 0,
+              "b": 0.158987294928,
+              "c": 60,
+              "d": 0
+            },
+            "symbol": "bbl/min",
+            "baseMeasurement": {
+              "ancestry": "L3/T",
+              "type": "UM"
+            },
+            "type": "UAD"
+          },
+          "displaySymbol": "bbl/min",
+          "name": "barrel per minute",
+          "lastModified": "20160322",
+          "source": "Energistics",
+          "namespace": "Energistics_UoM",
+          "persistableReference": "{\"abcd\":{\"a\":0.0,\"b\":0.158987294928,\"c\":60.0,\"d\":0.0},\"symbol\":\"bbl/min\",\"baseMeasurement\":{\"ancestry\":\"L3/T\",\"type\":\"UM\"},\"type\":\"UAD\"}"
+        },
+        "fromNamespace": "RP66",
+        "toNamespace": "Energistics_UoM"
+      },
+      {
+        "state": "different",
+        "note": "",
+        "fromUnit": {
+          "essence": {
+            "scaleOffset": {
+              "scale": 3.168753554945395e-10,
+              "offset": 0
+            },
+            "symbol": "cm/a",
+            "baseMeasurement": {
+              "ancestry": "Velocity",
+              "type": "UM"
+            },
+            "type": "USO"
+          },
+          "displaySymbol": "cm/a",
+          "name": "centimeter per year",
+          "lastModified": "19920228",
+          "source": "APIRP661",
+          "namespace": "RP66",
+          "persistableReference": "{\"scaleOffset\":{\"scale\":3.168753554945395E-10,\"offset\":0.0},\"symbol\":\"cm/a\",\"baseMeasurement\":{\"ancestry\":\"Velocity\",\"type\":\"UM\"},\"type\":\"USO\"}"
+        },
+        "toUnit": {
+          "essence": {
+            "abcd": {
+              "a": 0,
+              "b": 0.01,
+              "c": 31557600,
+              "d": 0
+            },
+            "symbol": "cm/a",
+            "baseMeasurement": {
+              "ancestry": "L/T",
+              "type": "UM"
+            },
+            "type": "UAD"
+          },
+          "displaySymbol": "cm/a",
+          "name": "centimetre per julian-year",
+          "lastModified": "20160322",
+          "source": "Energistics",
+          "namespace": "Energistics_UoM",
+          "persistableReference": "{\"abcd\":{\"a\":0.0,\"b\":0.01,\"c\":3.15576E7,\"d\":0.0},\"symbol\":\"cm/a\",\"baseMeasurement\":{\"ancestry\":\"L/T\",\"type\":\"UM\"},\"type\":\"UAD\"}"
+        },
+        "fromNamespace": "RP66",
+        "toNamespace": "Energistics_UoM"
+      },
+      {
+        "state": "identical",
+        "note": "",
+        "fromUnit": {
+          "essence": {
+            "scaleOffset": {
+              "scale": 2.777777777777778e-10,
+              "offset": 0
+            },
+            "symbol": "cm3/h",
+            "baseMeasurement": {
+              "ancestry": "Flowrate",
+              "type": "UM"
+            },
+            "type": "USO"
+          },
+          "displaySymbol": "cm3/h",
+          "name": "cubic centimeter per hour",
+          "lastModified": "19960626",
+          "source": "APIRP661",
+          "namespace": "RP66",
+          "persistableReference": "{\"scaleOffset\":{\"scale\":2.777777777777778E-10,\"offset\":0.0},\"symbol\":\"cm3/h\",\"baseMeasurement\":{\"ancestry\":\"Flowrate\",\"type\":\"UM\"},\"type\":\"USO\"}"
+        },
+        "toUnit": {
+          "essence": {
+            "abcd": {
+              "a": 0,
+              "b": 0.000001,
+              "c": 3600,
+              "d": 0
+            },
+            "symbol": "cm3/h",
+            "baseMeasurement": {
+              "ancestry": "L3/T",
+              "type": "UM"
+            },
+            "type": "UAD"
+          },
+          "displaySymbol": "cm3/h",
+          "name": "cubic centimetre per hour",
+          "lastModified": "20160322",
+          "source": "Energistics",
+          "namespace": "Energistics_UoM",
+          "persistableReference": "{\"abcd\":{\"a\":0.0,\"b\":1.0E-6,\"c\":3600.0,\"d\":0.0},\"symbol\":\"cm3/h\",\"baseMeasurement\":{\"ancestry\":\"L3/T\",\"type\":\"UM\"},\"type\":\"UAD\"}"
+        },
+        "fromNamespace": "RP66",
+        "toNamespace": "Energistics_UoM"
+      },
+      {
+        "state": "identical",
+        "note": "",
+        "fromUnit": {
+          "essence": {
+            "scaleOffset": {
+              "scale": 1.666666666666667e-8,
+              "offset": 0
+            },
+            "symbol": "cm3/min",
+            "baseMeasurement": {
+              "ancestry": "Flowrate",
+              "type": "UM"
+            },
+            "type": "USO"
+          },
+          "displaySymbol": "cm3/min",
+          "name": "cubic centimeter per minute",
+          "lastModified": "19920228",
+          "source": "APIRP661",
+          "namespace": "RP66",
+          "persistableReference": "{\"scaleOffset\":{\"scale\":1.666666666666667E-8,\"offset\":0.0},\"symbol\":\"cm3/min\",\"baseMeasurement\":{\"ancestry\":\"Flowrate\",\"type\":\"UM\"},\"type\":\"USO\"}"
+        },
+        "toUnit": {
+          "essence": {
+            "abcd": {
+              "a": 0,
+              "b": 0.000001,
+              "c": 60,
+              "d": 0
+            },
+            "symbol": "cm3/min",
+            "baseMeasurement": {
+              "ancestry": "L3/T",
+              "type": "UM"
+            },
+            "type": "UAD"
+          },
+          "displaySymbol": "cm3/min",
+          "name": "cubic centimetre per minute",
+          "lastModified": "20160322",
+          "source": "Energistics",
+          "namespace": "Energistics_UoM",
+          "persistableReference": "{\"abcd\":{\"a\":0.0,\"b\":1.0E-6,\"c\":60.0,\"d\":0.0},\"symbol\":\"cm3/min\",\"baseMeasurement\":{\"ancestry\":\"L3/T\",\"type\":\"UM\"},\"type\":\"UAD\"}"
+        },
+        "fromNamespace": "RP66",
+        "toNamespace": "Energistics_UoM"
+      },
+      {
+        "state": "precision",
+        "note": "",
+        "fromUnit": {
+          "essence": {
+            "scaleOffset": {
+              "scale": 543439.619556037,
+              "offset": 0
+            },
+            "symbol": "d/bbl",
+            "baseMeasurement": {
+              "ancestry": "Time_Per_Volume",
+              "type": "UM"
+            },
+            "type": "USO"
+          },
+          "displaySymbol": "d/bbl",
+          "name": "day per barrel",
+          "lastModified": "19920615",
+          "source": "APIRP661",
+          "namespace": "RP66",
+          "persistableReference": "{\"scaleOffset\":{\"scale\":543439.619556037,\"offset\":0.0},\"symbol\":\"d/bbl\",\"baseMeasurement\":{\"ancestry\":\"Time_Per_Volume\",\"type\":\"UM\"},\"type\":\"USO\"}"
+        },
+        "toUnit": {
+          "essence": {
+            "abcd": {
+              "a": 0,
+              "b": 86400,
+              "c": 0.158987294928,
+              "d": 0
+            },
+            "symbol": "d/bbl",
+            "baseMeasurement": {
+              "ancestry": "T/L3",
+              "type": "UM"
+            },
+            "type": "UAD"
+          },
+          "displaySymbol": "d/bbl",
+          "name": "day per barrel",
+          "lastModified": "20160322",
+          "source": "Energistics",
+          "namespace": "Energistics_UoM",
+          "persistableReference": "{\"abcd\":{\"a\":0.0,\"b\":86400.0,\"c\":0.158987294928,\"d\":0.0},\"symbol\":\"d/bbl\",\"baseMeasurement\":{\"ancestry\":\"T/L3\",\"type\":\"UM\"},\"type\":\"UAD\"}"
+        },
+        "fromNamespace": "RP66",
+        "toNamespace": "Energistics_UoM"
+      },
+      {
+        "state": "different",
+        "note": "",
+        "fromUnit": {
+          "essence": {
+            "scaleOffset": {
+              "scale": 1,
+              "offset": 0
+            },
+            "symbol": "dB",
+            "baseMeasurement": {
+              "ancestry": "Attenuation",
+              "type": "UM"
+            },
+            "type": "USO"
+          },
+          "displaySymbol": "dB",
+          "name": "decibel",
+          "lastModified": "19920228",
+          "source": "APIRP661",
+          "namespace": "RP66",
+          "persistableReference": "{\"scaleOffset\":{\"scale\":1.0,\"offset\":0.0},\"symbol\":\"dB\",\"baseMeasurement\":{\"ancestry\":\"Attenuation\",\"type\":\"UM\"},\"type\":\"USO\"}"
+        },
+        "toUnit": {
+          "essence": {
+            "abcd": {
+              "a": 0,
+              "b": 0.1,
+              "c": 1,
+              "d": 0
+            },
+            "symbol": "dB",
+            "baseMeasurement": {
+              "ancestry": "none",
+              "type": "UM"
+            },
+            "type": "UAD"
+          },
+          "displaySymbol": "dB",
+          "name": "decibel",
+          "lastModified": "20160322",
+          "source": "Energistics",
+          "namespace": "Energistics_UoM",
+          "persistableReference": "{\"abcd\":{\"a\":0.0,\"b\":0.1,\"c\":1.0,\"d\":0.0},\"symbol\":\"dB\",\"baseMeasurement\":{\"ancestry\":\"none\",\"type\":\"UM\"},\"type\":\"UAD\"}"
+        },
+        "fromNamespace": "RP66",
+        "toNamespace": "Energistics_UoM"
+      },
+      {
+        "state": "different",
+        "note": "",
+        "fromUnit": {
+          "essence": {
+            "scaleOffset": {
+              "scale": 3.280839895013123,
+              "offset": 0
+            },
+            "symbol": "dB/ft",
+            "baseMeasurement": {
+              "ancestry": "Attenuation_Per_Length",
+              "type": "UM"
+            },
+            "type": "USO"
+          },
+          "displaySymbol": "dB/ft",
+          "name": "decibel per foot",
+          "lastModified": "19920228",
+          "source": "APIRP661",
+          "namespace": "RP66",
+          "persistableReference": "{\"scaleOffset\":{\"scale\":3.280839895013123,\"offset\":0.0},\"symbol\":\"dB/ft\",\"baseMeasurement\":{\"ancestry\":\"Attenuation_Per_Length\",\"type\":\"UM\"},\"type\":\"USO\"}"
+        },
+        "toUnit": {
+          "essence": {
+            "abcd": {
+              "a": 0,
+              "b": 0.1,
+              "c": 0.3048,
+              "d": 0
+            },
+            "symbol": "dB/ft",
+            "baseMeasurement": {
+              "ancestry": "none",
+              "type": "UM"
+            },
+            "type": "UAD"
+          },
+          "displaySymbol": "dB/ft",
+          "name": "decibel per foot",
+          "lastModified": "20160322",
+          "source": "Energistics",
+          "namespace": "Energistics_UoM",
+          "persistableReference": "{\"abcd\":{\"a\":0.0,\"b\":0.1,\"c\":0.3048,\"d\":0.0},\"symbol\":\"dB/ft\",\"baseMeasurement\":{\"ancestry\":\"none\",\"type\":\"UM\"},\"type\":\"UAD\"}"
+        },
+        "fromNamespace": "RP66",
+        "toNamespace": "Energistics_UoM"
+      },
+      {
+        "state": "different",
+        "note": "",
+        "fromUnit": {
+          "essence": {
+            "scaleOffset": {
+              "scale": 1,
+              "offset": 0
+            },
+            "symbol": "dB/m",
+            "baseMeasurement": {
+              "ancestry": "Attenuation_Per_Length",
+              "type": "UM"
+            },
+            "type": "USO"
+          },
+          "displaySymbol": "dB/m",
+          "name": "decibel per meter",
+          "lastModified": "19920228",
+          "source": "APIRP661",
+          "namespace": "RP66",
+          "persistableReference": "{\"scaleOffset\":{\"scale\":1.0,\"offset\":0.0},\"symbol\":\"dB/m\",\"baseMeasurement\":{\"ancestry\":\"Attenuation_Per_Length\",\"type\":\"UM\"},\"type\":\"USO\"}"
+        },
+        "toUnit": {
+          "essence": {
+            "abcd": {
+              "a": 0,
+              "b": 0.1,
+              "c": 1,
+              "d": 0
+            },
+            "symbol": "dB/m",
+            "baseMeasurement": {
+              "ancestry": "none",
+              "type": "UM"
+            },
+            "type": "UAD"
+          },
+          "displaySymbol": "dB/m",
+          "name": "decibel per metre",
+          "lastModified": "20160322",
+          "source": "Energistics",
+          "namespace": "Energistics_UoM",
+          "persistableReference": "{\"abcd\":{\"a\":0.0,\"b\":0.1,\"c\":1.0,\"d\":0.0},\"symbol\":\"dB/m\",\"baseMeasurement\":{\"ancestry\":\"none\",\"type\":\"UM\"},\"type\":\"UAD\"}"
+        },
+        "fromNamespace": "RP66",
+        "toNamespace": "Energistics_UoM"
+      },
+      {
+        "state": "identical",
+        "note": "",
+        "fromUnit": {
+          "essence": {
+            "scaleOffset": {
+              "scale": 3.280839895013123,
+              "offset": 0
+            },
+            "symbol": "degC/ft",
+            "baseMeasurement": {
+              "ancestry": "Temperature_Per_Length",
+              "type": "UM"
+            },
+            "type": "USO"
+          },
+          "displaySymbol": "degC/ft",
+          "name": "degree celsius per foot",
+          "lastModified": "19920228",
+          "source": "APIRP661",
+          "namespace": "RP66",
+          "persistableReference": "{\"scaleOffset\":{\"scale\":3.280839895013123,\"offset\":0.0},\"symbol\":\"degC/ft\",\"baseMeasurement\":{\"ancestry\":\"Temperature_Per_Length\",\"type\":\"UM\"},\"type\":\"USO\"}"
+        },
+        "toUnit": {
+          "essence": {
+            "abcd": {
+              "a": 0,
+              "b": 1,
+              "c": 0.3048,
+              "d": 0
+            },
+            "symbol": "deltaC/ft",
+            "baseMeasurement": {
+              "ancestry": "D/L",
+              "type": "UM"
+            },
+            "type": "UAD"
+          },
+          "displaySymbol": "deltaC/ft",
+          "name": "delta Celsius per foot",
+          "lastModified": "20160322",
+          "source": "Energistics",
+          "namespace": "Energistics_UoM",
+          "persistableReference": "{\"abcd\":{\"a\":0.0,\"b\":1.0,\"c\":0.3048,\"d\":0.0},\"symbol\":\"deltaC/ft\",\"baseMeasurement\":{\"ancestry\":\"D/L\",\"type\":\"UM\"},\"type\":\"UAD\"}"
+        },
+        "fromNamespace": "RP66",
+        "toNamespace": "Energistics_UoM"
+      },
+      {
+        "state": "identical",
+        "note": "",
+        "fromUnit": {
+          "essence": {
+            "scaleOffset": {
+              "scale": 0.0002777777777777778,
+              "offset": 0
+            },
+            "symbol": "degC/h",
+            "baseMeasurement": {
+              "ancestry": "Temperature_Per_Time",
+              "type": "UM"
+            },
+            "type": "USO"
+          },
+          "displaySymbol": "degC/h",
+          "name": "degree celsius per hour",
+          "lastModified": "19920228",
+          "source": "APIRP661",
+          "namespace": "RP66",
+          "persistableReference": "{\"scaleOffset\":{\"scale\":2.777777777777778E-4,\"offset\":0.0},\"symbol\":\"degC/h\",\"baseMeasurement\":{\"ancestry\":\"Temperature_Per_Time\",\"type\":\"UM\"},\"type\":\"USO\"}"
+        },
+        "toUnit": {
+          "essence": {
+            "abcd": {
+              "a": 0,
+              "b": 1,
+              "c": 3600,
+              "d": 0
+            },
+            "symbol": "deltaC/h",
+            "baseMeasurement": {
+              "ancestry": "D/T",
+              "type": "UM"
+            },
+            "type": "UAD"
+          },
+          "displaySymbol": "deltaC/h",
+          "name": "delta Celsius per hour",
+          "lastModified": "20160322",
+          "source": "Energistics",
+          "namespace": "Energistics_UoM",
+          "persistableReference": "{\"abcd\":{\"a\":0.0,\"b\":1.0,\"c\":3600.0,\"d\":0.0},\"symbol\":\"deltaC/h\",\"baseMeasurement\":{\"ancestry\":\"D/T\",\"type\":\"UM\"},\"type\":\"UAD\"}"
+        },
+        "fromNamespace": "RP66",
+        "toNamespace": "Energistics_UoM"
+      },
+      {
+        "state": "identical",
+        "note": "",
+        "fromUnit": {
+          "essence": {
+            "scaleOffset": {
+              "scale": 0.01666666666666667,
+              "offset": 0
+            },
+            "symbol": "degC/min",
+            "baseMeasurement": {
+              "ancestry": "Temperature_Per_Time",
+              "type": "UM"
+            },
+            "type": "USO"
+          },
+          "displaySymbol": "degC/min",
+          "name": "degree celsius per minute",
+          "lastModified": "19920228",
+          "source": "APIRP661",
+          "namespace": "RP66",
+          "persistableReference": "{\"scaleOffset\":{\"scale\":0.01666666666666667,\"offset\":0.0},\"symbol\":\"degC/min\",\"baseMeasurement\":{\"ancestry\":\"Temperature_Per_Time\",\"type\":\"UM\"},\"type\":\"USO\"}"
+        },
+        "toUnit": {
+          "essence": {
+            "abcd": {
+              "a": 0,
+              "b": 1,
+              "c": 60,
+              "d": 0
+            },
+            "symbol": "deltaC/min",
+            "baseMeasurement": {
+              "ancestry": "D/T",
+              "type": "UM"
+            },
+            "type": "UAD"
+          },
+          "displaySymbol": "deltaC/min",
+          "name": "delta Celsius per minute",
+          "lastModified": "20160322",
+          "source": "Energistics",
+          "namespace": "Energistics_UoM",
+          "persistableReference": "{\"abcd\":{\"a\":0.0,\"b\":1.0,\"c\":60.0,\"d\":0.0},\"symbol\":\"deltaC/min\",\"baseMeasurement\":{\"ancestry\":\"D/T\",\"type\":\"UM\"},\"type\":\"UAD\"}"
+        },
+        "fromNamespace": "RP66",
+        "toNamespace": "Energistics_UoM"
+      },
+      {
+        "state": "identical",
+        "note": "",
+        "fromUnit": {
+          "essence": {
+            "scaleOffset": {
+              "scale": 1.822688830562846,
+              "offset": 0
+            },
+            "symbol": "degF/ft",
+            "baseMeasurement": {
+              "ancestry": "Temperature_Per_Length",
+              "type": "UM"
+            },
+            "type": "USO"
+          },
+          "displaySymbol": "degF/ft",
+          "name": "degree fahrenheit per foot",
+          "lastModified": "19920228",
+          "source": "APIRP661",
+          "namespace": "RP66",
+          "persistableReference": "{\"scaleOffset\":{\"scale\":1.822688830562846,\"offset\":0.0},\"symbol\":\"degF/ft\",\"baseMeasurement\":{\"ancestry\":\"Temperature_Per_Length\",\"type\":\"UM\"},\"type\":\"USO\"}"
+        },
+        "toUnit": {
+          "essence": {
+            "abcd": {
+              "a": 0,
+              "b": 5,
+              "c": 2.7432,
+              "d": 0
+            },
+            "symbol": "deltaF/ft",
+            "baseMeasurement": {
+              "ancestry": "D/L",
+              "type": "UM"
+            },
+            "type": "UAD"
+          },
+          "displaySymbol": "deltaF/ft",
+          "name": "delta Fahrenheit per foot",
+          "lastModified": "20160322",
+          "source": "Energistics",
+          "namespace": "Energistics_UoM",
+          "persistableReference": "{\"abcd\":{\"a\":0.0,\"b\":5.0,\"c\":2.7432,\"d\":0.0},\"symbol\":\"deltaF/ft\",\"baseMeasurement\":{\"ancestry\":\"D/L\",\"type\":\"UM\"},\"type\":\"UAD\"}"
+        },
+        "fromNamespace": "RP66",
+        "toNamespace": "Energistics_UoM"
+      },
+      {
+        "state": "identical",
+        "note": "",
+        "fromUnit": {
+          "essence": {
+            "scaleOffset": {
+              "scale": 0.5555555555555556,
+              "offset": 0
+            },
+            "symbol": "degF/m",
+            "baseMeasurement": {
+              "ancestry": "Temperature_Per_Length",
+              "type": "UM"
+            },
+            "type": "USO"
+          },
+          "displaySymbol": "degF/m",
+          "name": "degree fahrenheit per meter",
+          "lastModified": "19920228",
+          "source": "APIRP661",
+          "namespace": "RP66",
+          "persistableReference": "{\"scaleOffset\":{\"scale\":0.5555555555555556,\"offset\":0.0},\"symbol\":\"degF/m\",\"baseMeasurement\":{\"ancestry\":\"Temperature_Per_Length\",\"type\":\"UM\"},\"type\":\"USO\"}"
+        },
+        "toUnit": {
+          "essence": {
+            "abcd": {
+              "a": 0,
+              "b": 5,
+              "c": 9,
+              "d": 0
+            },
+            "symbol": "deltaF/m",
+            "baseMeasurement": {
+              "ancestry": "D/L",
+              "type": "UM"
+            },
+            "type": "UAD"
+          },
+          "displaySymbol": "deltaF/m",
+          "name": "delta Fahrenheit per metre",
+          "lastModified": "20160322",
+          "source": "Energistics",
+          "namespace": "Energistics_UoM",
+          "persistableReference": "{\"abcd\":{\"a\":0.0,\"b\":5.0,\"c\":9.0,\"d\":0.0},\"symbol\":\"deltaF/m\",\"baseMeasurement\":{\"ancestry\":\"D/L\",\"type\":\"UM\"},\"type\":\"UAD\"}"
+        },
+        "fromNamespace": "RP66",
+        "toNamespace": "Energistics_UoM"
+      },
+      {
+        "state": "identical",
+        "note": "",
+        "fromUnit": {
+          "essence": {
+            "scaleOffset": {
+              "scale": 0.5555555555555556,
+              "offset": 0
+            },
+            "symbol": "degF/s",
+            "baseMeasurement": {
+              "ancestry": "Temperature_Per_Time",
+              "type": "UM"
+            },
+            "type": "USO"
+          },
+          "displaySymbol": "degF/s",
+          "name": "degree fahrenheit per second",
+          "lastModified": "19920228",
+          "source": "APIRP661",
+          "namespace": "RP66",
+          "persistableReference": "{\"scaleOffset\":{\"scale\":0.5555555555555556,\"offset\":0.0},\"symbol\":\"degF/s\",\"baseMeasurement\":{\"ancestry\":\"Temperature_Per_Time\",\"type\":\"UM\"},\"type\":\"USO\"}"
+        },
+        "toUnit": {
+          "essence": {
+            "abcd": {
+              "a": 0,
+              "b": 5,
+              "c": 9,
+              "d": 0
+            },
+            "symbol": "deltaF/s",
+            "baseMeasurement": {
+              "ancestry": "D/T",
+              "type": "UM"
+            },
+            "type": "UAD"
+          },
+          "displaySymbol": "deltaF/s",
+          "name": "delta Fahrenheit per second",
+          "lastModified": "20160322",
+          "source": "Energistics",
+          "namespace": "Energistics_UoM",
+          "persistableReference": "{\"abcd\":{\"a\":0.0,\"b\":5.0,\"c\":9.0,\"d\":0.0},\"symbol\":\"deltaF/s\",\"baseMeasurement\":{\"ancestry\":\"D/T\",\"type\":\"UM\"},\"type\":\"UAD\"}"
+        },
+        "fromNamespace": "RP66",
+        "toNamespace": "Energistics_UoM"
+      },
+      {
+        "state": "identical",
+        "note": "",
+        "fromUnit": {
+          "essence": {
+            "scaleOffset": {
+              "scale": 0.5555555555555556,
+              "offset": 0
+            },
+            "symbol": "degR",
+            "baseMeasurement": {
+              "ancestry": "Temperature",
+              "type": "UM"
+            },
+            "type": "USO"
+          },
+          "displaySymbol": "degR",
+          "name": "degree rankine",
+          "lastModified": "19920228",
+          "source": "APIRP661",
+          "namespace": "RP66",
+          "persistableReference": "{\"scaleOffset\":{\"scale\":0.5555555555555556,\"offset\":0.0},\"symbol\":\"degR\",\"baseMeasurement\":{\"ancestry\":\"Temperature\",\"type\":\"UM\"},\"type\":\"USO\"}"
+        },
+        "toUnit": {
+          "essence": {
+            "abcd": {
+              "a": 0,
+              "b": 5,
+              "c": 9,
+              "d": 0
+            },
+            "symbol": "degR",
+            "baseMeasurement": {
+              "ancestry": "K",
+              "type": "UM"
+            },
+            "type": "UAD"
+          },
+          "displaySymbol": "degR",
+          "name": "degree Rankine",
+          "lastModified": "20160322",
+          "source": "Energistics",
+          "namespace": "Energistics_UoM",
+          "persistableReference": "{\"abcd\":{\"a\":0.0,\"b\":5.0,\"c\":9.0,\"d\":0.0},\"symbol\":\"degR\",\"baseMeasurement\":{\"ancestry\":\"K\",\"type\":\"UM\"},\"type\":\"UAD\"}"
+        },
+        "fromNamespace": "RP66",
+        "toNamespace": "Energistics_UoM"
+      },
+      {
+        "state": "precision",
+        "note": "",
+        "fromUnit": {
+          "essence": {
+            "scaleOffset": {
+              "scale": 1.60219e-19,
+              "offset": 0
+            },
+            "symbol": "eV",
+            "baseMeasurement": {
+              "ancestry": "Energy",
+              "type": "UM"
+            },
+            "type": "USO"
+          },
+          "displaySymbol": "eV",
+          "name": "electron volt",
+          "lastModified": "19920228",
+          "source": "APIRP661",
+          "namespace": "RP66",
+          "persistableReference": "{\"scaleOffset\":{\"scale\":1.60219E-19,\"offset\":0.0},\"symbol\":\"eV\",\"baseMeasurement\":{\"ancestry\":\"Energy\",\"type\":\"UM\"},\"type\":\"USO\"}"
+        },
+        "toUnit": {
+          "essence": {
+            "abcd": {
+              "a": 0,
+              "b": 1.602176487e-19,
+              "c": 1,
+              "d": 0
+            },
+            "symbol": "eV",
+            "baseMeasurement": {
+              "ancestry": "L2M/T2",
+              "type": "UM"
+            },
+            "type": "UAD"
+          },
+          "displaySymbol": "eV",
+          "name": "electronvolt",
+          "lastModified": "20160322",
+          "source": "Energistics",
+          "namespace": "Energistics_UoM",
+          "persistableReference": "{\"abcd\":{\"a\":0.0,\"b\":1.602176487E-19,\"c\":1.0,\"d\":0.0},\"symbol\":\"eV\",\"baseMeasurement\":{\"ancestry\":\"L2M/T2\",\"type\":\"UM\"},\"type\":\"UAD\"}"
+        },
+        "fromNamespace": "RP66",
+        "toNamespace": "Energistics_UoM"
+      },
+      {
+        "state": "identical",
+        "note": "",
+        "fromUnit": {
+          "essence": {
+            "scaleOffset": {
+              "scale": 0.00008466666666666667,
+              "offset": 0
+            },
+            "symbol": "ft/h",
+            "baseMeasurement": {
+              "ancestry": "Velocity",
+              "type": "UM"
+            },
+            "type": "USO"
+          },
+          "displaySymbol": "ft/h",
+          "name": "foot per hour",
+          "lastModified": "19920228",
+          "source": "APIRP661",
+          "namespace": "RP66",
+          "persistableReference": "{\"scaleOffset\":{\"scale\":8.466666666666667E-5,\"offset\":0.0},\"symbol\":\"ft/h\",\"baseMeasurement\":{\"ancestry\":\"Velocity\",\"type\":\"UM\"},\"type\":\"USO\"}"
+        },
+        "toUnit": {
+          "essence": {
+            "abcd": {
+              "a": 0,
+              "b": 0.3048,
+              "c": 3600,
+              "d": 0
+            },
+            "symbol": "ft/h",
+            "baseMeasurement": {
+              "ancestry": "L/T",
+              "type": "UM"
+            },
+            "type": "UAD"
+          },
+          "displaySymbol": "ft/h",
+          "name": "foot per hour",
+          "lastModified": "20160322",
+          "source": "Energistics",
+          "namespace": "Energistics_UoM",
+          "persistableReference": "{\"abcd\":{\"a\":0.0,\"b\":0.3048,\"c\":3600.0,\"d\":0.0},\"symbol\":\"ft/h\",\"baseMeasurement\":{\"ancestry\":\"L/T\",\"type\":\"UM\"},\"type\":\"UAD\"}"
+        },
+        "fromNamespace": "RP66",
+        "toNamespace": "Energistics_UoM"
+      },
+      {
+        "state": "precision",
+        "note": "",
+        "fromUnit": {
+          "essence": {
+            "scaleOffset": {
+              "scale": 0.1781075965160086,
+              "offset": 0
+            },
+            "symbol": "ft3/bbl",
+            "baseMeasurement": {
+              "ancestry": "Dimensionless",
+              "type": "UM"
+            },
+            "type": "USO"
+          },
+          "displaySymbol": "ft3/bbl",
+          "name": "cubic foot per barrel",
+          "lastModified": "19920228",
+          "source": "APIRP661",
+          "namespace": "RP66",
+          "persistableReference": "{\"scaleOffset\":{\"scale\":0.1781075965160086,\"offset\":0.0},\"symbol\":\"ft3/bbl\",\"baseMeasurement\":{\"ancestry\":\"Dimensionless\",\"type\":\"UM\"},\"type\":\"USO\"}"
+        },
+        "toUnit": {
+          "essence": {
+            "abcd": {
+              "a": 0,
+              "b": 0.028316846592,
+              "c": 0.158987294928,
+              "d": 0
+            },
+            "symbol": "ft3/bbl",
+            "baseMeasurement": {
+              "ancestry": "1",
+              "type": "UM"
+            },
+            "type": "UAD"
+          },
+          "displaySymbol": "ft3/bbl",
+          "name": "cubic foot per barrel",
+          "lastModified": "20160322",
+          "source": "Energistics",
+          "namespace": "Energistics_UoM",
+          "persistableReference": "{\"abcd\":{\"a\":0.0,\"b\":0.028316846592,\"c\":0.158987294928,\"d\":0.0},\"symbol\":\"ft3/bbl\",\"baseMeasurement\":{\"ancestry\":\"1\",\"type\":\"UM\"},\"type\":\"UAD\"}"
+        },
+        "fromNamespace": "RP66",
+        "toNamespace": "Energistics_UoM"
+      },
+      {
+        "state": "identical",
+        "note": "",
+        "fromUnit": {
+          "essence": {
+            "scaleOffset": {
+              "scale": 0.3048006096012192,
+              "offset": 0
+            },
+            "symbol": "ftUS",
+            "baseMeasurement": {
+              "ancestry": "Length",
+              "type": "UM"
+            },
+            "type": "USO"
+          },
+          "displaySymbol": "ftUS",
+          "name": "foot (U.S. survey)",
+          "lastModified": "19920228",
+          "source": "APIRP662",
+          "namespace": "RP66",
+          "persistableReference": "{\"scaleOffset\":{\"scale\":0.3048006096012192,\"offset\":0.0},\"symbol\":\"ftUS\",\"baseMeasurement\":{\"ancestry\":\"Length\",\"type\":\"UM\"},\"type\":\"USO\"}"
+        },
+        "toUnit": {
+          "essence": {
+            "abcd": {
+              "a": 0,
+              "b": 1200,
+              "c": 3937,
+              "d": 0
+            },
+            "symbol": "ft[US]",
+            "baseMeasurement": {
+              "ancestry": "L",
+              "type": "UM"
+            },
+            "type": "UAD"
+          },
+          "displaySymbol": "ft[US]",
+          "name": "US survey foot",
+          "lastModified": "20160322",
+          "source": "Energistics",
+          "namespace": "Energistics_UoM",
+          "persistableReference": "{\"abcd\":{\"a\":0.0,\"b\":1200.0,\"c\":3937.0,\"d\":0.0},\"symbol\":\"ft[US]\",\"baseMeasurement\":{\"ancestry\":\"L\",\"type\":\"UM\"},\"type\":\"UAD\"}"
+        },
+        "fromNamespace": "RP66",
+        "toNamespace": "Energistics_UoM"
+      },
+      {
+        "state": "identical",
+        "note": "",
+        "fromUnit": {
+          "essence": {
+            "scaleOffset": {
+              "scale": 127132.8001973589,
+              "offset": 0
+            },
+            "symbol": "h/ft3",
+            "baseMeasurement": {
+              "ancestry": "Time_Per_Volume",
+              "type": "UM"
+            },
+            "type": "USO"
+          },
+          "displaySymbol": "h/ft3",
+          "name": "hour per cubic foot",
+          "lastModified": "19920610",
+          "source": "APIRP661",
+          "namespace": "RP66",
+          "persistableReference": "{\"scaleOffset\":{\"scale\":127132.8001973589,\"offset\":0.0},\"symbol\":\"h/ft3\",\"baseMeasurement\":{\"ancestry\":\"Time_Per_Volume\",\"type\":\"UM\"},\"type\":\"USO\"}"
+        },
+        "toUnit": {
+          "essence": {
+            "abcd": {
+              "a": 0,
+              "b": 3600,
+              "c": 0.028316846592,
+              "d": 0
+            },
+            "symbol": "h/ft3",
+            "baseMeasurement": {
+              "ancestry": "T/L3",
+              "type": "UM"
+            },
+            "type": "UAD"
+          },
+          "displaySymbol": "h/ft3",
+          "name": "hour per cubic foot",
+          "lastModified": "20160322",
+          "source": "Energistics",
+          "namespace": "Energistics_UoM",
+          "persistableReference": "{\"abcd\":{\"a\":0.0,\"b\":3600.0,\"c\":0.028316846592,\"d\":0.0},\"symbol\":\"h/ft3\",\"baseMeasurement\":{\"ancestry\":\"T/L3\",\"type\":\"UM\"},\"type\":\"UAD\"}"
+        },
+        "fromNamespace": "RP66",
+        "toNamespace": "Energistics_UoM"
+      },
+      {
+        "state": "identical",
+        "note": "",
+        "fromUnit": {
+          "essence": {
+            "scaleOffset": {
+              "scale": 745.6998715822701,
+              "offset": 0
+            },
+            "symbol": "hp",
+            "baseMeasurement": {
+              "ancestry": "Power",
+              "type": "UM"
+            },
+            "type": "USO"
+          },
+          "displaySymbol": "hp",
+          "name": "horsepower",
+          "lastModified": "19920228",
+          "source": "APIRP662",
+          "namespace": "RP66",
+          "persistableReference": "{\"scaleOffset\":{\"scale\":745.6998715822701,\"offset\":0.0},\"symbol\":\"hp\",\"baseMeasurement\":{\"ancestry\":\"Power\",\"type\":\"UM\"},\"type\":\"USO\"}"
+        },
+        "toUnit": {
+          "essence": {
+            "abcd": {
+              "a": 0,
+              "b": 745.69987158227,
+              "c": 1,
+              "d": 0
+            },
+            "symbol": "hp",
+            "baseMeasurement": {
+              "ancestry": "L2M/T3",
+              "type": "UM"
+            },
+            "type": "UAD"
+          },
+          "displaySymbol": "hp",
+          "name": "horsepower",
+          "lastModified": "20160322",
+          "source": "Energistics",
+          "namespace": "Energistics_UoM",
+          "persistableReference": "{\"abcd\":{\"a\":0.0,\"b\":745.69987158227,\"c\":1.0,\"d\":0.0},\"symbol\":\"hp\",\"baseMeasurement\":{\"ancestry\":\"L2M/T3\",\"type\":\"UM\"},\"type\":\"UAD\"}"
+        },
+        "fromNamespace": "RP66",
+        "toNamespace": "Energistics_UoM"
+      },
+      {
+        "state": "identical",
+        "note": "",
+        "fromUnit": {
+          "essence": {
+            "scaleOffset": {
+              "scale": 1155837.112626744,
+              "offset": 0
+            },
+            "symbol": "hp/in2",
+            "baseMeasurement": {
+              "ancestry": "Power_Per_Area",
+              "type": "UM"
+            },
+            "type": "USO"
+          },
+          "displaySymbol": "hp/in2",
+          "name": "horsepower per square inch",
+          "lastModified": "19920228",
+          "source": "APIRP661",
+          "namespace": "RP66",
+          "persistableReference": "{\"scaleOffset\":{\"scale\":1155837.112626744,\"offset\":0.0},\"symbol\":\"hp/in2\",\"baseMeasurement\":{\"ancestry\":\"Power_Per_Area\",\"type\":\"UM\"},\"type\":\"USO\"}"
+        },
+        "toUnit": {
+          "essence": {
+            "abcd": {
+              "a": 0,
+              "b": 745.69987158227,
+              "c": 0.00064516,
+              "d": 0
+            },
+            "symbol": "hp/in2",
+            "baseMeasurement": {
+              "ancestry": "M/T3",
+              "type": "UM"
+            },
+            "type": "UAD"
+          },
+          "displaySymbol": "hp/in2",
+          "name": "horsepower per square inch",
+          "lastModified": "20160322",
+          "source": "Energistics",
+          "namespace": "Energistics_UoM",
+          "persistableReference": "{\"abcd\":{\"a\":0.0,\"b\":745.69987158227,\"c\":6.4516E-4,\"d\":0.0},\"symbol\":\"hp/in2\",\"baseMeasurement\":{\"ancestry\":\"M/T3\",\"type\":\"UM\"},\"type\":\"UAD\"}"
+        },
+        "fromNamespace": "RP66",
+        "toNamespace": "Energistics_UoM"
+      },
+      {
+        "state": "different",
+        "note": "",
+        "fromUnit": {
+          "essence": {
+            "scaleOffset": {
+              "scale": 8.048634029561302e-10,
+              "offset": 0
+            },
+            "symbol": "in/a",
+            "baseMeasurement": {
+              "ancestry": "Velocity",
+              "type": "UM"
+            },
+            "type": "USO"
+          },
+          "displaySymbol": "in/a",
+          "name": "inch per year",
+          "lastModified": "19920228",
+          "source": "APIRP661",
+          "namespace": "RP66",
+          "persistableReference": "{\"scaleOffset\":{\"scale\":8.048634029561302E-10,\"offset\":0.0},\"symbol\":\"in/a\",\"baseMeasurement\":{\"ancestry\":\"Velocity\",\"type\":\"UM\"},\"type\":\"USO\"}"
+        },
+        "toUnit": {
+          "essence": {
+            "abcd": {
+              "a": 0,
+              "b": 0.0254,
+              "c": 31557600,
+              "d": 0
+            },
+            "symbol": "in/a",
+            "baseMeasurement": {
+              "ancestry": "L/T",
+              "type": "UM"
+            },
+            "type": "UAD"
+          },
+          "displaySymbol": "in/a",
+          "name": "inch per julian-year",
+          "lastModified": "20160322",
+          "source": "Energistics",
+          "namespace": "Energistics_UoM",
+          "persistableReference": "{\"abcd\":{\"a\":0.0,\"b\":0.0254,\"c\":3.15576E7,\"d\":0.0},\"symbol\":\"in/a\",\"baseMeasurement\":{\"ancestry\":\"L/T\",\"type\":\"UM\"},\"type\":\"UAD\"}"
+        },
+        "fromNamespace": "RP66",
+        "toNamespace": "Energistics_UoM"
+      },
+      {
+        "state": "identical",
+        "note": "",
+        "fromUnit": {
+          "essence": {
+            "scaleOffset": {
+              "scale": 0.0004233333333333333,
+              "offset": 0
+            },
+            "symbol": "in/min",
+            "baseMeasurement": {
+              "ancestry": "Velocity",
+              "type": "UM"
+            },
+            "type": "USO"
+          },
+          "displaySymbol": "in/min",
+          "name": "inch per minute",
+          "lastModified": "20120312",
+          "source": "",
+          "namespace": "RP66",
+          "persistableReference": "{\"scaleOffset\":{\"scale\":4.233333333333333E-4,\"offset\":0.0},\"symbol\":\"in/min\",\"baseMeasurement\":{\"ancestry\":\"Velocity\",\"type\":\"UM\"},\"type\":\"USO\"}"
+        },
+        "toUnit": {
+          "essence": {
+            "abcd": {
+              "a": 0,
+              "b": 0.0254,
+              "c": 60,
+              "d": 0
+            },
+            "symbol": "in/min",
+            "baseMeasurement": {
+              "ancestry": "L/T",
+              "type": "UM"
+            },
+            "type": "UAD"
+          },
+          "displaySymbol": "in/min",
+          "name": "inch per minute",
+          "lastModified": "20160322",
+          "source": "Energistics",
+          "namespace": "Energistics_UoM",
+          "persistableReference": "{\"abcd\":{\"a\":0.0,\"b\":0.0254,\"c\":60.0,\"d\":0.0},\"symbol\":\"in/min\",\"baseMeasurement\":{\"ancestry\":\"L/T\",\"type\":\"UM\"},\"type\":\"UAD\"}"
+        },
+        "fromNamespace": "RP66",
+        "toNamespace": "Energistics_UoM"
+      },
+      {
+        "state": "identical",
+        "note": "",
+        "fromUnit": {
+          "essence": {
+            "scaleOffset": {
+              "scale": 0.2777777777777778,
+              "offset": 0
+            },
+            "symbol": "kPa/h",
+            "baseMeasurement": {
+              "ancestry": "Pressure_Per_Time",
+              "type": "UM"
+            },
+            "type": "USO"
+          },
+          "displaySymbol": "kPa/h",
+          "name": "kilopascal per hour",
+          "lastModified": "19920228",
+          "source": "APIRP661",
+          "namespace": "RP66",
+          "persistableReference": "{\"scaleOffset\":{\"scale\":0.2777777777777778,\"offset\":0.0},\"symbol\":\"kPa/h\",\"baseMeasurement\":{\"ancestry\":\"Pressure_Per_Time\",\"type\":\"UM\"},\"type\":\"USO\"}"
+        },
+        "toUnit": {
+          "essence": {
+            "abcd": {
+              "a": 0,
+              "b": 1000,
+              "c": 3600,
+              "d": 0
+            },
+            "symbol": "kPa/h",
+            "baseMeasurement": {
+              "ancestry": "M/LT3",
+              "type": "UM"
+            },
+            "type": "UAD"
+          },
+          "displaySymbol": "kPa/h",
+          "name": "kilopascal per hour",
+          "lastModified": "20160322",
+          "source": "Energistics",
+          "namespace": "Energistics_UoM",
+          "persistableReference": "{\"abcd\":{\"a\":0.0,\"b\":1000.0,\"c\":3600.0,\"d\":0.0},\"symbol\":\"kPa/h\",\"baseMeasurement\":{\"ancestry\":\"M/LT3\",\"type\":\"UM\"},\"type\":\"UAD\"}"
+        },
+        "fromNamespace": "RP66",
+        "toNamespace": "Energistics_UoM"
+      },
+      {
+        "state": "identical",
+        "note": "",
+        "fromUnit": {
+          "essence": {
+            "scaleOffset": {
+              "scale": 16.66666666666667,
+              "offset": 0
+            },
+            "symbol": "kPa/min",
+            "baseMeasurement": {
+              "ancestry": "Pressure_Per_Time",
+              "type": "UM"
+            },
+            "type": "USO"
+          },
+          "displaySymbol": "kPa/min",
+          "name": "kilopascal per minute",
+          "lastModified": "19920520",
+          "source": "APIRP661",
+          "namespace": "RP66",
+          "persistableReference": "{\"scaleOffset\":{\"scale\":16.66666666666667,\"offset\":0.0},\"symbol\":\"kPa/min\",\"baseMeasurement\":{\"ancestry\":\"Pressure_Per_Time\",\"type\":\"UM\"},\"type\":\"USO\"}"
+        },
+        "toUnit": {
+          "essence": {
+            "abcd": {
+              "a": 0,
+              "b": 1000,
+              "c": 60,
+              "d": 0
+            },
+            "symbol": "kPa/min",
+            "baseMeasurement": {
+              "ancestry": "M/LT3",
+              "type": "UM"
+            },
+            "type": "UAD"
+          },
+          "displaySymbol": "kPa/min",
+          "name": "kilopascal per min",
+          "lastModified": "20160322",
+          "source": "Energistics",
+          "namespace": "Energistics_UoM",
+          "persistableReference": "{\"abcd\":{\"a\":0.0,\"b\":1000.0,\"c\":60.0,\"d\":0.0},\"symbol\":\"kPa/min\",\"baseMeasurement\":{\"ancestry\":\"M/LT3\",\"type\":\"UM\"},\"type\":\"UAD\"}"
+        },
+        "fromNamespace": "RP66",
+        "toNamespace": "Energistics_UoM"
+      },
+      {
+        "state": "precision",
+        "note": "",
+        "fromUnit": {
+          "essence": {
+            "scaleOffset": {
+              "scale": 1.60219e-16,
+              "offset": 0
+            },
+            "symbol": "keV",
+            "baseMeasurement": {
+              "ancestry": "Energy",
+              "type": "UM"
+            },
+            "type": "USO"
+          },
+          "displaySymbol": "keV",
+          "name": "kiloelectronvolt",
+          "lastModified": "19920228",
+          "source": "APIRP661",
+          "namespace": "RP66",
+          "persistableReference": "{\"scaleOffset\":{\"scale\":1.60219E-16,\"offset\":0.0},\"symbol\":\"keV\",\"baseMeasurement\":{\"ancestry\":\"Energy\",\"type\":\"UM\"},\"type\":\"USO\"}"
+        },
+        "toUnit": {
+          "essence": {
+            "abcd": {
+              "a": 0,
+              "b": 1.602176487e-16,
+              "c": 1,
+              "d": 0
+            },
+            "symbol": "keV",
+            "baseMeasurement": {
+              "ancestry": "L2M/T2",
+              "type": "UM"
+            },
+            "type": "UAD"
+          },
+          "displaySymbol": "keV",
+          "name": "kiloelectronvolt",
+          "lastModified": "20160322",
+          "source": "Energistics",
+          "namespace": "Energistics_UoM",
+          "persistableReference": "{\"abcd\":{\"a\":0.0,\"b\":1.602176487E-16,\"c\":1.0,\"d\":0.0},\"symbol\":\"keV\",\"baseMeasurement\":{\"ancestry\":\"L2M/T2\",\"type\":\"UM\"},\"type\":\"UAD\"}"
+        },
+        "fromNamespace": "RP66",
+        "toNamespace": "Energistics_UoM"
+      },
+      {
+        "state": "identical",
+        "note": "",
+        "fromUnit": {
+          "essence": {
+            "scaleOffset": {
+              "scale": 0.00001157407407407407,
+              "offset": 0
+            },
+            "symbol": "kg/d",
+            "baseMeasurement": {
+              "ancestry": "Mass_Per_Time",
+              "type": "UM"
+            },
+            "type": "USO"
+          },
+          "displaySymbol": "kg/d",
+          "name": "kilogram per day",
+          "lastModified": "19920228",
+          "source": "APIRP661",
+          "namespace": "RP66",
+          "persistableReference": "{\"scaleOffset\":{\"scale\":1.157407407407407E-5,\"offset\":0.0},\"symbol\":\"kg/d\",\"baseMeasurement\":{\"ancestry\":\"Mass_Per_Time\",\"type\":\"UM\"},\"type\":\"USO\"}"
+        },
+        "toUnit": {
+          "essence": {
+            "abcd": {
+              "a": 0,
+              "b": 1,
+              "c": 86400,
+              "d": 0
+            },
+            "symbol": "kg/d",
+            "baseMeasurement": {
+              "ancestry": "M/T",
+              "type": "UM"
+            },
+            "type": "UAD"
+          },
+          "displaySymbol": "kg/d",
+          "name": "kilogram per day",
+          "lastModified": "20160322",
+          "source": "Energistics",
+          "namespace": "Energistics_UoM",
+          "persistableReference": "{\"abcd\":{\"a\":0.0,\"b\":1.0,\"c\":86400.0,\"d\":0.0},\"symbol\":\"kg/d\",\"baseMeasurement\":{\"ancestry\":\"M/T\",\"type\":\"UM\"},\"type\":\"UAD\"}"
+        },
+        "fromNamespace": "RP66",
+        "toNamespace": "Energistics_UoM"
+      },
+      {
+        "state": "identical",
+        "note": "",
+        "fromUnit": {
+          "essence": {
+            "scaleOffset": {
+              "scale": 0.0002777777777777778,
+              "offset": 0
+            },
+            "symbol": "kg/h",
+            "baseMeasurement": {
+              "ancestry": "Mass_Per_Time",
+              "type": "UM"
+            },
+            "type": "USO"
+          },
+          "displaySymbol": "kg/h",
+          "name": "kilogram per hour",
+          "lastModified": "19920520",
+          "source": "APIRP661",
+          "namespace": "RP66",
+          "persistableReference": "{\"scaleOffset\":{\"scale\":2.777777777777778E-4,\"offset\":0.0},\"symbol\":\"kg/h\",\"baseMeasurement\":{\"ancestry\":\"Mass_Per_Time\",\"type\":\"UM\"},\"type\":\"USO\"}"
+        },
+        "toUnit": {
+          "essence": {
+            "abcd": {
+              "a": 0,
+              "b": 1,
+              "c": 3600,
+              "d": 0
+            },
+            "symbol": "kg/h",
+            "baseMeasurement": {
+              "ancestry": "M/T",
+              "type": "UM"
+            },
+            "type": "UAD"
+          },
+          "displaySymbol": "kg/h",
+          "name": "kilogram per hour",
+          "lastModified": "20160322",
+          "source": "Energistics",
+          "namespace": "Energistics_UoM",
+          "persistableReference": "{\"abcd\":{\"a\":0.0,\"b\":1.0,\"c\":3600.0,\"d\":0.0},\"symbol\":\"kg/h\",\"baseMeasurement\":{\"ancestry\":\"M/T\",\"type\":\"UM\"},\"type\":\"UAD\"}"
+        },
+        "fromNamespace": "RP66",
+        "toNamespace": "Energistics_UoM"
+      },
+      {
+        "state": "identical",
+        "note": "",
+        "fromUnit": {
+          "essence": {
+            "scaleOffset": {
+              "scale": 0.01666666666666667,
+              "offset": 0
+            },
+            "symbol": "kg/min",
+            "baseMeasurement": {
+              "ancestry": "Mass_Per_Time",
+              "type": "UM"
+            },
+            "type": "USO"
+          },
+          "displaySymbol": "kg/min",
+          "name": "kilogram per minute",
+          "lastModified": "19920520",
+          "source": "APIRP661",
+          "namespace": "RP66",
+          "persistableReference": "{\"scaleOffset\":{\"scale\":0.01666666666666667,\"offset\":0.0},\"symbol\":\"kg/min\",\"baseMeasurement\":{\"ancestry\":\"Mass_Per_Time\",\"type\":\"UM\"},\"type\":\"USO\"}"
+        },
+        "toUnit": {
+          "essence": {
+            "abcd": {
+              "a": 0,
+              "b": 1,
+              "c": 60,
+              "d": 0
+            },
+            "symbol": "kg/min",
+            "baseMeasurement": {
+              "ancestry": "M/T",
+              "type": "UM"
+            },
+            "type": "UAD"
+          },
+          "displaySymbol": "kg/min",
+          "name": "kilogram per min",
+          "lastModified": "20160322",
+          "source": "Energistics",
+          "namespace": "Energistics_UoM",
+          "persistableReference": "{\"abcd\":{\"a\":0.0,\"b\":1.0,\"c\":60.0,\"d\":0.0},\"symbol\":\"kg/min\",\"baseMeasurement\":{\"ancestry\":\"M/T\",\"type\":\"UM\"},\"type\":\"UAD\"}"
+        },
+        "fromNamespace": "RP66",
+        "toNamespace": "Energistics_UoM"
+      },
+      {
+        "state": "identical",
+        "note": "",
+        "fromUnit": {
+          "essence": {
+            "scaleOffset": {
+              "scale": 0.2777777777777778,
+              "offset": 0
+            },
+            "symbol": "km/h",
+            "baseMeasurement": {
+              "ancestry": "Velocity",
+              "type": "UM"
+            },
+            "type": "USO"
+          },
+          "displaySymbol": "km/h",
+          "name": "kilometer per hour",
+          "lastModified": "19960220",
+          "source": "APIRP661",
+          "namespace": "RP66",
+          "persistableReference": "{\"scaleOffset\":{\"scale\":0.2777777777777778,\"offset\":0.0},\"symbol\":\"km/h\",\"baseMeasurement\":{\"ancestry\":\"Velocity\",\"type\":\"UM\"},\"type\":\"USO\"}"
+        },
+        "toUnit": {
+          "essence": {
+            "abcd": {
+              "a": 0,
+              "b": 1,
+              "c": 3.6,
+              "d": 0
+            },
+            "symbol": "km/h",
+            "baseMeasurement": {
+              "ancestry": "L/T",
+              "type": "UM"
+            },
+            "type": "UAD"
+          },
+          "displaySymbol": "km/h",
+          "name": "kilometre per hour",
+          "lastModified": "20160322",
+          "source": "Energistics",
+          "namespace": "Energistics_UoM",
+          "persistableReference": "{\"abcd\":{\"a\":0.0,\"b\":1.0,\"c\":3.6,\"d\":0.0},\"symbol\":\"km/h\",\"baseMeasurement\":{\"ancestry\":\"L/T\",\"type\":\"UM\"},\"type\":\"UAD\"}"
+        },
+        "fromNamespace": "RP66",
+        "toNamespace": "Energistics_UoM"
+      },
+      {
+        "state": "identical",
+        "note": "",
+        "fromUnit": {
+          "essence": {
+            "scaleOffset": {
+              "scale": 47.88025898033584,
+              "offset": 0
+            },
+            "symbol": "lbf.s/ft2",
+            "baseMeasurement": {
+              "ancestry": "Mass_Per_Length_Per_Time",
+              "type": "UM"
+            },
+            "type": "USO"
+          },
+          "displaySymbol": "lbf.s/ft2",
+          "name": "pound-second per square foot",
+          "lastModified": "19920520",
+          "source": "APIRP661",
+          "namespace": "RP66",
+          "persistableReference": "{\"scaleOffset\":{\"scale\":47.88025898033584,\"offset\":0.0},\"symbol\":\"lbf.s/ft2\",\"baseMeasurement\":{\"ancestry\":\"Mass_Per_Length_Per_Time\",\"type\":\"UM\"},\"type\":\"USO\"}"
+        },
+        "toUnit": {
+          "essence": {
+            "abcd": {
+              "a": 0,
+              "b": 4.4482216152605,
+              "c": 0.09290304,
+              "d": 0
+            },
+            "symbol": "lbf.s/ft2",
+            "baseMeasurement": {
+              "ancestry": "M/LT",
+              "type": "UM"
+            },
+            "type": "UAD"
+          },
+          "displaySymbol": "lbf.s/ft2",
+          "name": "pound-force second per square foot",
+          "lastModified": "20160322",
+          "source": "Energistics",
+          "namespace": "Energistics_UoM",
+          "persistableReference": "{\"abcd\":{\"a\":0.0,\"b\":4.4482216152605,\"c\":0.09290304,\"d\":0.0},\"symbol\":\"lbf.s/ft2\",\"baseMeasurement\":{\"ancestry\":\"M/LT\",\"type\":\"UM\"},\"type\":\"UAD\"}"
+        },
+        "fromNamespace": "RP66",
+        "toNamespace": "Energistics_UoM"
+      },
+      {
+        "state": "corrected",
+        "note": "",
+        "fromUnit": {
+          "essence": {
+            "scaleOffset": {
+              "scale": 175.1268504,
+              "offset": 0
+            },
+            "symbol": "lbf/in",
+            "baseMeasurement": {
+              "ancestry": "Force_Per_Length",
+              "type": "UM"
+            },
+            "type": "USO"
+          },
+          "displaySymbol": "lbf/in",
+          "name": "pound force per inch",
+          "lastModified": "20141127",
+          "source": "",
+          "namespace": "RP66",
+          "persistableReference": "{\"scaleOffset\":{\"scale\":175.1268504,\"offset\":0.0},\"symbol\":\"lbf/in\",\"baseMeasurement\":{\"ancestry\":\"Force_Per_Length\",\"type\":\"UM\"},\"type\":\"USO\"}"
+        },
+        "toUnit": {
+          "essence": {
+            "abcd": {
+              "a": 0,
+              "b": 4.4482216152605,
+              "c": 0.0254,
+              "d": 0
+            },
+            "symbol": "lbf/in",
+            "baseMeasurement": {
+              "ancestry": "M/T2",
+              "type": "UM"
+            },
+            "type": "UAD"
+          },
+          "displaySymbol": "lbf/in",
+          "name": "pound-force per inch",
+          "lastModified": "20160322",
+          "source": "Energistics",
+          "namespace": "Energistics_UoM",
+          "persistableReference": "{\"abcd\":{\"a\":0.0,\"b\":4.4482216152605,\"c\":0.0254,\"d\":0.0},\"symbol\":\"lbf/in\",\"baseMeasurement\":{\"ancestry\":\"M/T2\",\"type\":\"UM\"},\"type\":\"UAD\"}"
+        },
+        "fromNamespace": "RP66",
+        "toNamespace": "Energistics_UoM"
+      },
+      {
+        "state": "precision",
+        "note": "",
+        "fromUnit": {
+          "essence": {
+            "scaleOffset": {
+              "scale": 2.853010011415754,
+              "offset": 0
+            },
+            "symbol": "lbm/bbl",
+            "baseMeasurement": {
+              "ancestry": "Mass_Per_Volume",
+              "type": "UM"
+            },
+            "type": "USO"
+          },
+          "displaySymbol": "lbm/bbl",
+          "name": "pound per barrel",
+          "lastModified": "19940819",
+          "source": "APIRP661",
+          "namespace": "RP66",
+          "persistableReference": "{\"scaleOffset\":{\"scale\":2.853010011415754,\"offset\":0.0},\"symbol\":\"lbm/bbl\",\"baseMeasurement\":{\"ancestry\":\"Mass_Per_Volume\",\"type\":\"UM\"},\"type\":\"USO\"}"
+        },
+        "toUnit": {
+          "essence": {
+            "abcd": {
+              "a": 0,
+              "b": 0.45359237,
+              "c": 0.158987294928,
+              "d": 0
+            },
+            "symbol": "lbm/bbl",
+            "baseMeasurement": {
+              "ancestry": "M/L3",
+              "type": "UM"
+            },
+            "type": "UAD"
+          },
+          "displaySymbol": "lbm/bbl",
+          "name": "pound-mass per barrel",
+          "lastModified": "20160322",
+          "source": "Energistics",
+          "namespace": "Energistics_UoM",
+          "persistableReference": "{\"abcd\":{\"a\":0.0,\"b\":0.45359237,\"c\":0.158987294928,\"d\":0.0},\"symbol\":\"lbm/bbl\",\"baseMeasurement\":{\"ancestry\":\"M/L3\",\"type\":\"UM\"},\"type\":\"UAD\"}"
+        },
+        "fromNamespace": "RP66",
+        "toNamespace": "Energistics_UoM"
+      },
+      {
+        "state": "identical",
+        "note": "",
+        "fromUnit": {
+          "essence": {
+            "scaleOffset": {
+              "scale": 0.000005249911689814815,
+              "offset": 0
+            },
+            "symbol": "lbm/d",
+            "baseMeasurement": {
+              "ancestry": "Mass_Per_Time",
+              "type": "UM"
+            },
+            "type": "USO"
+          },
+          "displaySymbol": "lbm/d",
+          "name": "pound mass per day",
+          "lastModified": "19920228",
+          "source": "APIRP661",
+          "namespace": "RP66",
+          "persistableReference": "{\"scaleOffset\":{\"scale\":5.249911689814815E-6,\"offset\":0.0},\"symbol\":\"lbm/d\",\"baseMeasurement\":{\"ancestry\":\"Mass_Per_Time\",\"type\":\"UM\"},\"type\":\"USO\"}"
+        },
+        "toUnit": {
+          "essence": {
+            "abcd": {
+              "a": 0,
+              "b": 0.45359237,
+              "c": 86400,
+              "d": 0
+            },
+            "symbol": "lbm/d",
+            "baseMeasurement": {
+              "ancestry": "M/T",
+              "type": "UM"
+            },
+            "type": "UAD"
+          },
+          "displaySymbol": "lbm/d",
+          "name": "pound-mass per day",
+          "lastModified": "20160322",
+          "source": "Energistics",
+          "namespace": "Energistics_UoM",
+          "persistableReference": "{\"abcd\":{\"a\":0.0,\"b\":0.45359237,\"c\":86400.0,\"d\":0.0},\"symbol\":\"lbm/d\",\"baseMeasurement\":{\"ancestry\":\"M/T\",\"type\":\"UM\"},\"type\":\"UAD\"}"
+        },
+        "fromNamespace": "RP66",
+        "toNamespace": "Energistics_UoM"
+      },
+      {
+        "state": "identical",
+        "note": "",
+        "fromUnit": {
+          "essence": {
+            "scaleOffset": {
+              "scale": 1.488163943569554,
+              "offset": 0
+            },
+            "symbol": "lbm/ft",
+            "baseMeasurement": {
+              "ancestry": "Mass_Per_Length",
+              "type": "UM"
+            },
+            "type": "USO"
+          },
+          "displaySymbol": "lbm/ft",
+          "name": "pound mass per foot",
+          "lastModified": "19920228",
+          "source": "APIRP661",
+          "namespace": "RP66",
+          "persistableReference": "{\"scaleOffset\":{\"scale\":1.488163943569554,\"offset\":0.0},\"symbol\":\"lbm/ft\",\"baseMeasurement\":{\"ancestry\":\"Mass_Per_Length\",\"type\":\"UM\"},\"type\":\"USO\"}"
+        },
+        "toUnit": {
+          "essence": {
+            "abcd": {
+              "a": 0,
+              "b": 0.45359237,
+              "c": 0.3048,
+              "d": 0
+            },
+            "symbol": "lbm/ft",
+            "baseMeasurement": {
+              "ancestry": "M/L",
+              "type": "UM"
+            },
+            "type": "UAD"
+          },
+          "displaySymbol": "lbm/ft",
+          "name": "pound-mass per foot",
+          "lastModified": "20160322",
+          "source": "Energistics",
+          "namespace": "Energistics_UoM",
+          "persistableReference": "{\"abcd\":{\"a\":0.0,\"b\":0.45359237,\"c\":0.3048,\"d\":0.0},\"symbol\":\"lbm/ft\",\"baseMeasurement\":{\"ancestry\":\"M/L\",\"type\":\"UM\"},\"type\":\"UAD\"}"
+        },
+        "fromNamespace": "RP66",
+        "toNamespace": "Energistics_UoM"
+      },
+      {
+        "state": "identical",
+        "note": "",
+        "fromUnit": {
+          "essence": {
+            "scaleOffset": {
+              "scale": 16.01846337396014,
+              "offset": 0
+            },
+            "symbol": "lbm/ft3",
+            "baseMeasurement": {
+              "ancestry": "Mass_Per_Volume",
+              "type": "UM"
+            },
+            "type": "USO"
+          },
+          "displaySymbol": "lbm/ft3",
+          "name": "pound per cubic foot",
+          "lastModified": "19920228",
+          "source": "APIRP661",
+          "namespace": "RP66",
+          "persistableReference": "{\"scaleOffset\":{\"scale\":16.01846337396014,\"offset\":0.0},\"symbol\":\"lbm/ft3\",\"baseMeasurement\":{\"ancestry\":\"Mass_Per_Volume\",\"type\":\"UM\"},\"type\":\"USO\"}"
+        },
+        "toUnit": {
+          "essence": {
+            "abcd": {
+              "a": 0,
+              "b": 0.45359237,
+              "c": 0.028316846592,
+              "d": 0
+            },
+            "symbol": "lbm/ft3",
+            "baseMeasurement": {
+              "ancestry": "M/L3",
+              "type": "UM"
+            },
+            "type": "UAD"
+          },
+          "displaySymbol": "lbm/ft3",
+          "name": "pound-mass per cubic foot",
+          "lastModified": "20160322",
+          "source": "Energistics",
+          "namespace": "Energistics_UoM",
+          "persistableReference": "{\"abcd\":{\"a\":0.0,\"b\":0.45359237,\"c\":0.028316846592,\"d\":0.0},\"symbol\":\"lbm/ft3\",\"baseMeasurement\":{\"ancestry\":\"M/L3\",\"type\":\"UM\"},\"type\":\"UAD\"}"
+        },
+        "fromNamespace": "RP66",
+        "toNamespace": "Energistics_UoM"
+      },
+      {
+        "state": "identical",
+        "note": "",
+        "fromUnit": {
+          "essence": {
+            "scaleOffset": {
+              "scale": 0.007559872833333333,
+              "offset": 0
+            },
+            "symbol": "lbm/min",
+            "baseMeasurement": {
+              "ancestry": "Mass_Per_Time",
+              "type": "UM"
+            },
+            "type": "USO"
+          },
+          "displaySymbol": "lbm/min",
+          "name": "pound per minute",
+          "lastModified": "19920520",
+          "source": "APIRP661",
+          "namespace": "RP66",
+          "persistableReference": "{\"scaleOffset\":{\"scale\":0.007559872833333333,\"offset\":0.0},\"symbol\":\"lbm/min\",\"baseMeasurement\":{\"ancestry\":\"Mass_Per_Time\",\"type\":\"UM\"},\"type\":\"USO\"}"
+        },
+        "toUnit": {
+          "essence": {
+            "abcd": {
+              "a": 0,
+              "b": 0.45359237,
+              "c": 60,
+              "d": 0
+            },
+            "symbol": "lbm/min",
+            "baseMeasurement": {
+              "ancestry": "M/T",
+              "type": "UM"
+            },
+            "type": "UAD"
+          },
+          "displaySymbol": "lbm/min",
+          "name": "pound-mass per minute",
+          "lastModified": "20160322",
+          "source": "Energistics",
+          "namespace": "Energistics_UoM",
+          "persistableReference": "{\"abcd\":{\"a\":0.0,\"b\":0.45359237,\"c\":60.0,\"d\":0.0},\"symbol\":\"lbm/min\",\"baseMeasurement\":{\"ancestry\":\"M/T\",\"type\":\"UM\"},\"type\":\"UAD\"}"
+        },
+        "fromNamespace": "RP66",
+        "toNamespace": "Energistics_UoM"
+      },
+      {
+        "state": "identical",
+        "note": "",
+        "fromUnit": {
+          "essence": {
+            "scaleOffset": {
+              "scale": 0.0002777777777777778,
+              "offset": 0
+            },
+            "symbol": "m/h",
+            "baseMeasurement": {
+              "ancestry": "Velocity",
+              "type": "UM"
+            },
+            "type": "USO"
+          },
+          "displaySymbol": "m/h",
+          "name": "meter per hour",
+          "lastModified": "19920228",
+          "source": "APIRP661",
+          "namespace": "RP66",
+          "persistableReference": "{\"scaleOffset\":{\"scale\":2.777777777777778E-4,\"offset\":0.0},\"symbol\":\"m/h\",\"baseMeasurement\":{\"ancestry\":\"Velocity\",\"type\":\"UM\"},\"type\":\"USO\"}"
+        },
+        "toUnit": {
+          "essence": {
+            "abcd": {
+              "a": 0,
+              "b": 1,
+              "c": 3600,
+              "d": 0
+            },
+            "symbol": "m/h",
+            "baseMeasurement": {
+              "ancestry": "L/T",
+              "type": "UM"
+            },
+            "type": "UAD"
+          },
+          "displaySymbol": "m/h",
+          "name": "metre per hour",
+          "lastModified": "20160322",
+          "source": "Energistics",
+          "namespace": "Energistics_UoM",
+          "persistableReference": "{\"abcd\":{\"a\":0.0,\"b\":1.0,\"c\":3600.0,\"d\":0.0},\"symbol\":\"m/h\",\"baseMeasurement\":{\"ancestry\":\"L/T\",\"type\":\"UM\"},\"type\":\"UAD\"}"
+        },
+        "fromNamespace": "RP66",
+        "toNamespace": "Energistics_UoM"
+      },
+      {
+        "state": "identical",
+        "note": "",
+        "fromUnit": {
+          "essence": {
+            "scaleOffset": {
+              "scale": 0.01666666666666667,
+              "offset": 0
+            },
+            "symbol": "m/min",
+            "baseMeasurement": {
+              "ancestry": "Velocity",
+              "type": "UM"
+            },
+            "type": "USO"
+          },
+          "displaySymbol": "m/min",
+          "name": "meter per minute",
+          "lastModified": "19920228",
+          "source": "APIRP661",
+          "namespace": "RP66",
+          "persistableReference": "{\"scaleOffset\":{\"scale\":0.01666666666666667,\"offset\":0.0},\"symbol\":\"m/min\",\"baseMeasurement\":{\"ancestry\":\"Velocity\",\"type\":\"UM\"},\"type\":\"USO\"}"
+        },
+        "toUnit": {
+          "essence": {
+            "abcd": {
+              "a": 0,
+              "b": 1,
+              "c": 60,
+              "d": 0
+            },
+            "symbol": "m/min",
+            "baseMeasurement": {
+              "ancestry": "L/T",
+              "type": "UM"
+            },
+            "type": "UAD"
+          },
+          "displaySymbol": "m/min",
+          "name": "metre per minute",
+          "lastModified": "20160322",
+          "source": "Energistics",
+          "namespace": "Energistics_UoM",
+          "persistableReference": "{\"abcd\":{\"a\":0.0,\"b\":1.0,\"c\":60.0,\"d\":0.0},\"symbol\":\"m/min\",\"baseMeasurement\":{\"ancestry\":\"L/T\",\"type\":\"UM\"},\"type\":\"UAD\"}"
+        },
+        "fromNamespace": "RP66",
+        "toNamespace": "Energistics_UoM"
+      },
+      {
+        "state": "identical",
+        "note": "",
+        "fromUnit": {
+          "essence": {
+            "scaleOffset": {
+              "scale": 0.0002777777777777778,
+              "offset": 0
+            },
+            "symbol": "m2/h",
+            "baseMeasurement": {
+              "ancestry": "Area_Per_Time",
+              "type": "UM"
+            },
+            "type": "USO"
+          },
+          "displaySymbol": "m2/h",
+          "name": "square meter per hour",
+          "lastModified": "20010524",
+          "source": "APIRP661",
+          "namespace": "RP66",
+          "persistableReference": "{\"scaleOffset\":{\"scale\":2.777777777777778E-4,\"offset\":0.0},\"symbol\":\"m2/h\",\"baseMeasurement\":{\"ancestry\":\"Area_Per_Time\",\"type\":\"UM\"},\"type\":\"USO\"}"
+        },
+        "toUnit": {
+          "essence": {
+            "abcd": {
+              "a": 0,
+              "b": 1,
+              "c": 3600,
+              "d": 0
+            },
+            "symbol": "m2/h",
+            "baseMeasurement": {
+              "ancestry": "L2/T",
+              "type": "UM"
+            },
+            "type": "UAD"
+          },
+          "displaySymbol": "m2/h",
+          "name": "square metre per hour",
+          "lastModified": "20160322",
+          "source": "Energistics",
+          "namespace": "Energistics_UoM",
+          "persistableReference": "{\"abcd\":{\"a\":0.0,\"b\":1.0,\"c\":3600.0,\"d\":0.0},\"symbol\":\"m2/h\",\"baseMeasurement\":{\"ancestry\":\"L2/T\",\"type\":\"UM\"},\"type\":\"UAD\"}"
+        },
+        "fromNamespace": "RP66",
+        "toNamespace": "Energistics_UoM"
+      },
+      {
+        "state": "identical",
+        "note": "",
+        "fromUnit": {
+          "essence": {
+            "scaleOffset": {
+              "scale": 0.00001157407407407407,
+              "offset": 0
+            },
+            "symbol": "m3/d",
+            "baseMeasurement": {
+              "ancestry": "Flowrate",
+              "type": "UM"
+            },
+            "type": "USO"
+          },
+          "displaySymbol": "m3/d",
+          "name": "cubic meter per day",
+          "lastModified": "19920228",
+          "source": "APIRP661",
+          "namespace": "RP66",
+          "persistableReference": "{\"scaleOffset\":{\"scale\":1.157407407407407E-5,\"offset\":0.0},\"symbol\":\"m3/d\",\"baseMeasurement\":{\"ancestry\":\"Flowrate\",\"type\":\"UM\"},\"type\":\"USO\"}"
+        },
+        "toUnit": {
+          "essence": {
+            "abcd": {
+              "a": 0,
+              "b": 1,
+              "c": 86400,
+              "d": 0
+            },
+            "symbol": "m3/d",
+            "baseMeasurement": {
+              "ancestry": "L3/T",
+              "type": "UM"
+            },
+            "type": "UAD"
+          },
+          "displaySymbol": "m3/d",
+          "name": "cubic metre per day",
+          "lastModified": "20160322",
+          "source": "Energistics",
+          "namespace": "Energistics_UoM",
+          "persistableReference": "{\"abcd\":{\"a\":0.0,\"b\":1.0,\"c\":86400.0,\"d\":0.0},\"symbol\":\"m3/d\",\"baseMeasurement\":{\"ancestry\":\"L3/T\",\"type\":\"UM\"},\"type\":\"UAD\"}"
+        },
+        "fromNamespace": "RP66",
+        "toNamespace": "Energistics_UoM"
+      },
+      {
+        "state": "identical",
+        "note": "",
+        "fromUnit": {
+          "essence": {
+            "scaleOffset": {
+              "scale": 0.0002777777777777778,
+              "offset": 0
+            },
+            "symbol": "m3/h",
+            "baseMeasurement": {
+              "ancestry": "Flowrate",
+              "type": "UM"
+            },
+            "type": "USO"
+          },
+          "displaySymbol": "m3/h",
+          "name": "cubic meter per hour",
+          "lastModified": "19920228",
+          "source": "APIRP661",
+          "namespace": "RP66",
+          "persistableReference": "{\"scaleOffset\":{\"scale\":2.777777777777778E-4,\"offset\":0.0},\"symbol\":\"m3/h\",\"baseMeasurement\":{\"ancestry\":\"Flowrate\",\"type\":\"UM\"},\"type\":\"USO\"}"
+        },
+        "toUnit": {
+          "essence": {
+            "abcd": {
+              "a": 0,
+              "b": 1,
+              "c": 3600,
+              "d": 0
+            },
+            "symbol": "m3/h",
+            "baseMeasurement": {
+              "ancestry": "L3/T",
+              "type": "UM"
+            },
+            "type": "UAD"
+          },
+          "displaySymbol": "m3/h",
+          "name": "cubic metre per hour",
+          "lastModified": "20160322",
+          "source": "Energistics",
+          "namespace": "Energistics_UoM",
+          "persistableReference": "{\"abcd\":{\"a\":0.0,\"b\":1.0,\"c\":3600.0,\"d\":0.0},\"symbol\":\"m3/h\",\"baseMeasurement\":{\"ancestry\":\"L3/T\",\"type\":\"UM\"},\"type\":\"UAD\"}"
+        },
+        "fromNamespace": "RP66",
+        "toNamespace": "Energistics_UoM"
+      },
+      {
+        "state": "identical",
+        "note": "",
+        "fromUnit": {
+          "essence": {
+            "scaleOffset": {
+              "scale": 0.01666666666666667,
+              "offset": 0
+            },
+            "symbol": "m3/min",
+            "baseMeasurement": {
+              "ancestry": "Flowrate",
+              "type": "UM"
+            },
+            "type": "USO"
+          },
+          "displaySymbol": "m3/min",
+          "name": "cubic meter per minute",
+          "lastModified": "19920520",
+          "source": "APIRP661",
+          "namespace": "RP66",
+          "persistableReference": "{\"scaleOffset\":{\"scale\":0.01666666666666667,\"offset\":0.0},\"symbol\":\"m3/min\",\"baseMeasurement\":{\"ancestry\":\"Flowrate\",\"type\":\"UM\"},\"type\":\"USO\"}"
+        },
+        "toUnit": {
+          "essence": {
+            "abcd": {
+              "a": 0,
+              "b": 1,
+              "c": 60,
+              "d": 0
+            },
+            "symbol": "m3/min",
+            "baseMeasurement": {
+              "ancestry": "L3/T",
+              "type": "UM"
+            },
+            "type": "UAD"
+          },
+          "displaySymbol": "m3/min",
+          "name": "cubic metre per minute",
+          "lastModified": "20160322",
+          "source": "Energistics",
+          "namespace": "Energistics_UoM",
+          "persistableReference": "{\"abcd\":{\"a\":0.0,\"b\":1.0,\"c\":60.0,\"d\":0.0},\"symbol\":\"m3/min\",\"baseMeasurement\":{\"ancestry\":\"L3/T\",\"type\":\"UM\"},\"type\":\"UAD\"}"
+        },
+        "fromNamespace": "RP66",
+        "toNamespace": "Energistics_UoM"
+      },
+      {
+        "state": "identical",
+        "note": "",
+        "fromUnit": {
+          "essence": {
+            "scaleOffset": {
+              "scale": 0.01076391041670972,
+              "offset": 0
+            },
+            "symbol": "mA/ft2",
+            "baseMeasurement": {
+              "ancestry": "Current_Density",
+              "type": "UM"
+            },
+            "type": "USO"
+          },
+          "displaySymbol": "mA/ft2",
+          "name": "milliampere per square foot",
+          "lastModified": "19920228",
+          "source": "APIRP661",
+          "namespace": "RP66",
+          "persistableReference": "{\"scaleOffset\":{\"scale\":0.01076391041670972,\"offset\":0.0},\"symbol\":\"mA/ft2\",\"baseMeasurement\":{\"ancestry\":\"Current_Density\",\"type\":\"UM\"},\"type\":\"USO\"}"
+        },
+        "toUnit": {
+          "essence": {
+            "abcd": {
+              "a": 0,
+              "b": 0.001,
+              "c": 0.09290304,
+              "d": 0
+            },
+            "symbol": "mA/ft2",
+            "baseMeasurement": {
+              "ancestry": "I/L2",
+              "type": "UM"
+            },
+            "type": "UAD"
+          },
+          "displaySymbol": "mA/ft2",
+          "name": "milliampere per square foot",
+          "lastModified": "20160322",
+          "source": "Energistics",
+          "namespace": "Energistics_UoM",
+          "persistableReference": "{\"abcd\":{\"a\":0.0,\"b\":0.001,\"c\":0.09290304,\"d\":0.0},\"symbol\":\"mA/ft2\",\"baseMeasurement\":{\"ancestry\":\"I/L2\",\"type\":\"UM\"},\"type\":\"UAD\"}"
+        },
+        "fromNamespace": "RP66",
+        "toNamespace": "Energistics_UoM"
+      },
+      {
+        "state": "precision",
+        "note": "",
+        "fromUnit": {
+          "essence": {
+            "scaleOffset": {
+              "scale": 9.869233e-13,
+              "offset": 0
+            },
+            "symbol": "mD/cP",
+            "baseMeasurement": {
+              "ancestry": "Mobility",
+              "type": "UM"
+            },
+            "type": "USO"
+          },
+          "displaySymbol": "mD/cP",
+          "name": "millidarcy per centipoise",
+          "lastModified": "19920228",
+          "source": "APIRP661",
+          "namespace": "RP66",
+          "persistableReference": "{\"scaleOffset\":{\"scale\":9.869233E-13,\"offset\":0.0},\"symbol\":\"mD/cP\",\"baseMeasurement\":{\"ancestry\":\"Mobility\",\"type\":\"UM\"},\"type\":\"USO\"}"
+        },
+        "toUnit": {
+          "essence": {
+            "abcd": {
+              "a": 0,
+              "b": 1e-12,
+              "c": 1.01325,
+              "d": 0
+            },
+            "symbol": "mD/cP",
+            "baseMeasurement": {
+              "ancestry": "L3T/M",
+              "type": "UM"
+            },
+            "type": "UAD"
+          },
+          "displaySymbol": "mD/cP",
+          "name": "millidarcy per centipoise",
+          "lastModified": "20160322",
+          "source": "Energistics",
+          "namespace": "Energistics_UoM",
+          "persistableReference": "{\"abcd\":{\"a\":0.0,\"b\":1.0E-12,\"c\":1.01325,\"d\":0.0},\"symbol\":\"mD/cP\",\"baseMeasurement\":{\"ancestry\":\"L3T/M\",\"type\":\"UM\"},\"type\":\"UAD\"}"
+        },
+        "fromNamespace": "RP66",
+        "toNamespace": "Energistics_UoM"
+      },
+      {
+        "state": "precision",
+        "note": "",
+        "fromUnit": {
+          "essence": {
+            "scaleOffset": {
+              "scale": 2.777777777778e-7,
+              "offset": 0
+            },
+            "symbol": "mSv/h",
+            "baseMeasurement": {
+              "ancestry": "Energy_Per_Mass_Per_Time",
+              "type": "UM"
+            },
+            "type": "USO"
+          },
+          "displaySymbol": "mSv/h",
+          "name": "millisievert per hour",
+          "lastModified": "20091202",
+          "source": "APIRP661",
+          "namespace": "RP66",
+          "persistableReference": "{\"scaleOffset\":{\"scale\":2.777777777778E-7,\"offset\":0.0},\"symbol\":\"mSv/h\",\"baseMeasurement\":{\"ancestry\":\"Energy_Per_Mass_Per_Time\",\"type\":\"UM\"},\"type\":\"USO\"}"
+        },
+        "toUnit": {
+          "essence": {
+            "abcd": {
+              "a": 0,
+              "b": 0.001,
+              "c": 3600,
+              "d": 0
+            },
+            "symbol": "mSv/h",
+            "baseMeasurement": {
+              "ancestry": "L2/T3",
+              "type": "UM"
+            },
+            "type": "UAD"
+          },
+          "displaySymbol": "mSv/h",
+          "name": "millisievert per hour",
+          "lastModified": "20160322",
+          "source": "Energistics",
+          "namespace": "Energistics_UoM",
+          "persistableReference": "{\"abcd\":{\"a\":0.0,\"b\":0.001,\"c\":3600.0,\"d\":0.0},\"symbol\":\"mSv/h\",\"baseMeasurement\":{\"ancestry\":\"L2/T3\",\"type\":\"UM\"},\"type\":\"UAD\"}"
+        },
+        "fromNamespace": "RP66",
+        "toNamespace": "Energistics_UoM"
+      }
+    ],
+    "measurementMapItems": [],
+    "mapStates": [],
+    "count": 100
+  }
