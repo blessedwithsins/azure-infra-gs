@@ -11,7 +11,7 @@ UNIQUE="<your_osdu_unique>"         # ie: demo
 AZURE_DNS_NAME="<your_osdu_fqdn>"   # ie: osdu-$UNIQUE.contoso.com
 DATA_PARTITION="<your_partition>"   # ie:opendes
 ACR_REGISTRY="<repository>"         # ie: msosdu.azurecr.io
-TAG="<app_version>"                 # ie: 0.11.0
+TAG="<app_version>"                 # ie: 0.12.0
 
 # This logs your local Azure CLI in using the configured service principal.
 az login --service-principal -u $ARM_CLIENT_ID -p $ARM_CLIENT_SECRET --tenant $ARM_TENANT_ID
@@ -21,15 +21,15 @@ ENV_VAULT=$(az keyvault list --resource-group $GROUP --query [].name -otsv)
 
 cat > .env << EOF
 DATA_PARTITION=$DATA_PARTITION
-AZURE_TENANT_ID=$ARM_TENANT_ID
 AZURE_DNS_NAME=$AZURE_DNS_NAME
+AZURE_TENANT_ID=$(az keyvault secret show --id https://${ENV_VAULT}.vault.azure.net/secrets/tenant-id --query value -otsv)
 AZURE_AD_APP_RESOURCE_ID=$(az keyvault secret show --id https://${ENV_VAULT}.vault.azure.net/secrets/aad-client-id --query value -otsv)
 AZURE_CLIENT_ID=$(az keyvault secret show --id https://${ENV_VAULT}.vault.azure.net/secrets/app-dev-sp-username --query value -otsv)
 AZURE_CLIENT_SECRET=$(az keyvault secret show --id https://${ENV_VAULT}.vault.azure.net/secrets/app-dev-sp-password --query value -otsv)
 EOF
 
 # Execute container to load the schema's
-docker run --env-file .env $ACR_REGISTRY/schema-load:$TAG
+docker run --env-file .env $ACR_REGISTRY/schema-data-init:$TAG
 ```
 ## Policy Data Loading
 
