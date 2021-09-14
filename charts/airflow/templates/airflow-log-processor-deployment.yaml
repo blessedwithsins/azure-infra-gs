@@ -1,4 +1,4 @@
-{{- $isEnabled := .Values.airflow.isDataPartitionDeployment | default false -}}
+{{- $isEnabled := .Values.keda.version_2_enabled | default false -}}
 apiVersion: apps/v1
 kind: Deployment
 metadata:
@@ -41,20 +41,6 @@ spec:
               secretKeyRef:
                 name: airflow
                 key: storage-connection
-        
----
-{{- if $isEnabled }}
-apiVersion: keda.sh/v1alpha1
-{{- else }}
-apiVersion: keda.k8s.io/v1alpha1
-{{- end }}
-kind: TriggerAuthentication
-metadata:
-  name: azure-queue-auth
-spec:
-  podIdentity:
-    provider: azure
-
 ---
 kind: ScaledObject
 metadata:
@@ -73,9 +59,10 @@ spec:
   triggers:
   - type: azure-queue
     metadata:
-      # Required
       queueName: airflowlogqueue
-      # Optional
       queueLength: "5" # default 5
-    authenticationRef:
-        name: azure-queue-auth # authenticationRef would need either podIdentity or define a connection parameter
+      {{- if $isEnabled }}
+      connectionFromEnv: AzureWebJobsStorage
+      {{- else }}
+      connection: AzureWebJobsStorage
+      {{- end }}

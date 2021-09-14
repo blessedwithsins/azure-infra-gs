@@ -98,6 +98,7 @@ terraform workspace new $TF_WORKSPACE || terraform workspace select $TF_WORKSPAC
 > Manually create a custom variable file to use for template configuration and edit as appropriate and desired.
 
 ```bash
+# File location : /infra-azure-provisioning/infra/templates/osdu-r3-mvp/central_resources
 cp terraform.tfvars custom.tfvars
 ```
 

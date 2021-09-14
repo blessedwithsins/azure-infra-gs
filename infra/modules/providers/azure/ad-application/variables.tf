@@ -12,6 +12,12 @@
 //  See the License for the specific language governing permissions and
 //  limitations under the License.
 
+variable "enable_bring_your_own_ad_app" {
+  description = "Feature flag for BYOA"
+  default     = false
+  type        = bool
+}
+
 variable "name" {
   type        = string
   description = "The display name of the application"

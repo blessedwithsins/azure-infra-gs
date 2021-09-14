@@ -313,6 +313,7 @@ airflow:
       AIRFLOW_VAR_CORE__SERVICE__STORAGE__URL: "http://storage.osdu.svc.cluster.local/api/storage/v2/records"
       AIRFLOW_VAR_CORE__SERVICE__FILE__HOST: "http://file.osdu.svc.cluster.local/api/file/v2"
       AIRFLOW_VAR_CORE__SERVICE__WORKFLOW__HOST: "http://ingestion-workflow.osdu.svc.cluster.local/api/workflow"
+      AIRFLOW_VAR_CORE__SERVICE__DATASET__HOST: "http://dataset.osdu.svc.cluster.local/api/dataset/v1"
       AIRFLOW__WEBSERVER__WORKERS: 15
       AIRFLOW__WEBSERVER__WORKER_REFRESH_BATCH_SIZE: 0
       AIRFLOW__CORE__STORE_SERIALIZED_DAGS: True #This flag decides whether to serialise DAGs and persist them in DB
@@ -339,7 +340,11 @@ airflow:
             key: ENV_KEYVAULT
       # Needed for installing python osdu python sdk. In future this will be changed
       - name: CI_COMMIT_TAG
-        value: "v0.10.0"
+        value: "v0.11.0"
+      - name: AIRFLOW_VAR_AZURE_DNS_HOST
+        value: #{DNS_HOST}#
+      - name: AIRFLOW_VAR_AZURE_ENABLE_MSI
+        value: "false"    
     extraConfigmapMounts:
       - name: remote-log-config
         mountPath: /opt/airflow/config
@@ -364,7 +369,8 @@ airflow:
         "pyyaml==5.4.1",
         "requests==2.25.1",
         "tenacity==8.0.1",
-        "https://azglobalosdutestlake.blob.core.windows.net/pythonsdk/osdu_api-0.10.0.tar.gz"
+        "https://azglobalosdutestlake.blob.core.windows.net/pythonsdk/osdu_api-0.11.0.tar.gz",
+        "https://azglobalosdutestlake.blob.core.windows.net/pythonsdk/osdu_airflow-0.0.1.tar.gz"
     ]
     extraVolumeMounts:
       - name: azure-keyvault
@@ -405,6 +411,7 @@ git clone https://community.opengroup.org/osdu/platform/system/reference/crs-cat
 git clone https://community.opengroup.org/osdu/platform/system/reference/crs-conversion-service.git $SRC_DIR/crs-conversion-service
 git clone https://community.opengroup.org/osdu/platform/system/notification.git $SRC_DIR/notification
 git clone https://community.opengroup.org/osdu/platform/data-flow/enrichment/wks.git $SRC_DIR/wks
+git clone https://community.opengroup.org/osdu/platform/system/dataset.git $SRC_DIR/dataset
 git clone https://community.opengroup.org/osdu/platform/system/register.git $SRC_DIR/register
 git clone https://community.opengroup.org/osdu/platform/system/schema-service.git $SRC_DIR/schema-service
 git clonehttps://community.opengroup.org/osdu/platform/data-flow/ingestion/ingestion-workflow.git $SRC_DIR/ingestion-workflow
@@ -515,7 +522,8 @@ SERVICE_LIST="infra-azure-provisioning \
               notification \
               schema-service \
               ingestion-workflow \
-              ingestion-service"
+              ingestion-service \
+              dataset"
 
 for SERVICE in $SERVICE_LIST;
 do

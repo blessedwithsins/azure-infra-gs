@@ -18,8 +18,8 @@
 
 parameters:
   outputDagsFolder: 'output_dags'
-  dockerfilePath: ''
   environmentVars: ''
+  postmanCollection: ''
 
 stages:
   - stage: 'Execute_End_to_End_Tests'
@@ -35,24 +35,88 @@ stages:
               artifact: ${{ parameters.outputDagsFolder }}
               path: $(System.DefaultWorkingDirectory)/output_dags
 
+          - task: UsePythonVersion@0
+            inputs:
+              versionSpec: '3.8'
+              
+          - task: NodeTool@0 
+            inputs:
+              versionSpec: '14.x'
+
           - task: AzureCLI@1
             displayName: Execute End to End Tests
             env:
               AZURE_TENANT_ID: $(app-dev-sp-tenant-id)
+              AZURE_POSTMAN_ENVIRONMENT_FILE_URL: $AZURE_POSTMAN_ENVIRONMENT_FILE_URL
+              AZURE_POSTMAN_COLLECTION_FILE_URL: ${{ parameters.postmanCollection }}
+              CLIENT_ID: $(aad-client-id)
+              
             inputs:
               azureSubscription: $(SERVICE_CONNECTION_NAME)
               addSpnToEnvironment: true
               scriptLocation: inlineScript
               inlineScript: |
-                // Generate the env file for docker run
                 NEWLINE=$'\n'
-                cat > .env << EOF
+                cat > python_env_vars.txt << EOF
                 ${{ parameters.environmentVars }}
                 EOF
 
-                docker_image_name=execute-end-to-end-tests:$(Build.SourceVersion)
+                cat > run_postman_collection.py << EOF
 
-                docker build -t $docker_image_name --file ${{ parameters.dockerfilePath }} .
+                import requests
+                import os
+                import json
 
-                docker run --env-file .env $docker_image_name
+                def bootstrap():
+
+                    f = open('./output_dags/workflow_request_body.json', 'r', encoding='utf-8')
+                    data = json.load(f)
+                    f.close()
+                    dag_name = data[0]['workflowName']
+                    prepare_environment(dag_name)
+
+                    prepare_postman_collection()
+
+                def prepare_postman_collection():
+                    # Downloading the postman collection json file
+                    url_collection = os.environ.get('AZURE_POSTMAN_COLLECTION_FILE_URL')
+
+                    r = requests.get(url_collection, allow_redirects=True)
+                    open('collection_file.json', 'wb').write(r.content)
+
+                def prepare_environment(dag_name):
+                    # Downloading the environment file to trigger the postman collections
+
+                    url_env_file = os.environ.get('AZURE_POSTMAN_ENVIRONMENT_FILE_URL')
+                    r = requests.get(url_env_file, allow_redirects=True)
+                    open('env_file.json', 'wb').write(r.content)
+
+                    env_file = open('env_file.json', "r")
+
+                    data = json.load(env_file)
+
+                    # Setting env variables
+                    postman_var_to_env_dict = {}
+                    python_vars = open("python_env_vars.txt")
+                    for line in python_vars:
+                        key, value = line.split()
+                        postman_var_to_env_dict[key] = eval(value)
+
+                    for value in data['values']:
+                        if value['key'] in postman_var_to_env_dict.keys():
+                            value['value'] = postman_var_to_env_dict[value['key']]
+                    env_file = open('env_file.json', "w")
+                    json.dump(data, env_file)
+                    env_file.close()
+
+                if __name__ == "__main__":
+                    bootstrap()
+
+                EOF
+                pip install requests
+                python ./run_postman_collection.py
+                npm install -g newman
+                newman run collection_file.json -e env_file.json
+
+
 

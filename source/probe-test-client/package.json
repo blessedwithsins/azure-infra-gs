@@ -1,5 +1,5 @@
 {
-  "name": "probe-test",
+  "name": "osdu-probe",
   "version": "0.9.0",
   "description": "Test client used to run automated or manual probe tests on an OSDU environment",
   "main": "index.js",

@@ -117,3 +117,7 @@ spec:
               serviceName: policy-service
               servicePort: 80
             path: /api/policy/*
+          - backend:
+              serviceName: dataset
+              servicePort: 80
+            path: /api/dataset/v1/*

@@ -1,0 +1,13 @@
+{
+  "id": "test-action",
+  "name": "My listener",
+  "description": "My test listener.",
+  "url":"https://osdu-abc.com/api/register",
+  "img": "https://osdu-abc.com/api/register",
+  "contactEmail": "integrationtest@test.com",
+  "filter": {
+    "entityType": ["*"],
+    "source": ["*"],
+    "version": ["*"]
+  }
+}

@@ -2,14 +2,17 @@
 
 __Repository__
 
-Clone the following repository and have them in the same file structure level as infra repository
+Clone the following repository and have them in the same file structure level as infra repository using following commands
 
 ```bash
-https://community.opengroup.org/osdu/platform/system/reference/unit-service
-https://community.opengroup.org/osdu/platform/system/reference/crs-conversion-service
-https://community.opengroup.org/osdu/platform/system/reference/crs-catalog-service
-https://community.opengroup.org/osdu/platform/system/schema-service
-https://community.opengroup.org/osdu/platform/data-flow/ingestion
+// you should be at one directory level above infra-azure-provisioning
+export BRANCH_NAME="release/0.10" // branch name for the release 0.10.0
+
+git clone -b $BRANCH_NAME --single-branch https://community.opengroup.org/osdu/platform/system/reference/crs-catalog-service.git
+git clone -b $BRANCH_NAME --single-branch https://community.opengroup.org/osdu/platform/system/reference/crs-conversion-service.git
+git clone -b $BRANCH_NAME --single-branch https://community.opengroup.org/osdu/platform/data-flow/ingestion/ingestion-dags.git
+git clone -b $BRANCH_NAME --single-branch https://community.opengroup.org/osdu/platform/system/schema-service.git
+git clone -b $BRANCH_NAME --single-branch https://community.opengroup.org/osdu/platform/system/reference/unit-service.git
 ```
 ![File Structure](./images/directory-structure.png "File Structure")
 
@@ -26,11 +29,11 @@ Login to Azure CLI using the OSDU Environment Service Principal.
 az login --service-principal -u $ARM_CLIENT_ID -p $ARM_CLIENT_SECRET --tenant $ARM_TENANT_ID
 ```
 
-__Upload Configuration Data__
+## Upload Configuration Data
 
 3 services that required configuration data to be loaded into the configuration storage account file shares.
 
-_Unit_
+### Unit
 
 ```bash
 FILE_SHARE="unit"
@@ -46,7 +49,7 @@ az storage file upload \
   --source ${FILE}
 ```
 
-_CRS Catalog_
+### CRS Catalog
 
 ```bash
 FILE_SHARE="crs"
@@ -62,7 +65,7 @@ az storage file upload \
   --source ${FILE}
 ```
 
-_CRS Conversion_
+### CRS Conversion
 
 ```bash
 FILE_SHARE="crs-conversion"
@@ -80,7 +83,7 @@ az storage file upload-batch \
   --pattern ${SOURCE_FOLDER}
 ```
 
-_Ingest Manifest DAGS_
+# Ingest Manifest DAGS
 
 ```bash
 FILE_SHARE="airflowdags"

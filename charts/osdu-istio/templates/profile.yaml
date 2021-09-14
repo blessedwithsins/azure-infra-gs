@@ -42,4 +42,13 @@ spec:
     ingressGateways:
     - name: istio-ingressgateway
       enabled: true
+      k8s:
+        hpaSpec:
+          minReplicas: {{ .Values.global.istio.minReplicaCount }}
+          maxReplicas: {{ .Values.global.istio.maxReplicaCount }}
+          metrics:
+            - type: Resource
+              resource:
+                name: cpu
+                targetAverageUtilization: 40
 {{- end }} 

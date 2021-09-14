@@ -1,0 +1,16 @@
+version: '3'
+services:
+  entitlements-data-init:
+    build:
+      context: ../
+      dockerfile: ./entitlements_init/Dockerfile
+    image: msosdu.azurecr.io/entitlements-data-init:$VERSION
+    environment:
+      ADMIN_ID: $ADMIN_ID
+      SERVICE_DOMAIN: $SERVICE_DOMAIN
+      OSDU_HOST: $OSDU_HOST
+      OSDU_IDENTITY_ID: $OSDU_IDENTITY_ID
+      RESOURCE_GROUP_NAME: $RESOURCE_GROUP_NAME
+      PARTITIONS: $PARTITIONS # comma separated list of partitions
+      CONFIG_MAP_NAME: $CONFIG_MAP_NAME
+      VERSION: $VERSION

@@ -258,6 +258,8 @@ __Manual Installation (**Preferred**)__
 
 1. Register your partition with the Data Partition API by following the instructions [here](./tools/rest/README.md) to configure your IDE to make authenticated requests to your OSDU instance and send the API request located [here](./tools/rest/partition.http) (createPartition).
 
+1. Initialize tenant provisioning by hitting POST {{ENTITLEMENTS_HOST}}/tenant-provisioning api in [here](./tools/rest/entitlement_manage.http).
+
 1. Load Service Data following directions [here](./docs/service-data.md).
 
 

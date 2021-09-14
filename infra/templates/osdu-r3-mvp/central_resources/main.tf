@@ -298,6 +298,7 @@ module "service_principal" {
     appId    = var.principal_appId
     password = var.principal_password
   }
+
 }
 
 
@@ -321,6 +322,8 @@ module "ad_application" {
       ]
     }
   ]
+
+  enable_bring_your_own_ad_app = var.enable_bring_your_own_ad_app
 }
 
 

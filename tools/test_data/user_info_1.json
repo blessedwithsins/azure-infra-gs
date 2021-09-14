@@ -27,6 +27,8 @@
         "notification.pubsub",
         "service.file.viewers",
         "service.file.editors",
+        "service.dataset.viewers",
+        "service.dataset.editors",
         "service.delivery.viewer"
       ]
     },
@@ -58,6 +60,8 @@
         "notification.pubsub",
         "service.file.viewers",
         "service.file.editors",
+        "service.dataset.viewers",
+        "service.dataset.editors",
         "service.delivery.viewer"
       ]
     }

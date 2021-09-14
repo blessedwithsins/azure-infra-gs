@@ -16,8 +16,8 @@ spec:
         - "{{ .Values.global.istio.dns_host }}"
       tls:
         mode: SIMPLE
-        {{- if .Values.global.ingress.enableKeyvaultCert }}
-        credentialName: appgw-ssl-cert
+        {{- if .Values.global.istio.enableIstioKeyvaultCert }}
+        credentialName: istio-appgw-ssl-cert
         {{ else }}
         credentialName: osdu-certificate
         {{- end }} 

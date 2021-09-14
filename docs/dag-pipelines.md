@@ -218,7 +218,7 @@ build arguments or environment variables required to execute the docker containe
 [**example**](https://community.opengroup.org/osdu/platform/data-flow/enrichment/wks/-/blob/master/devops/azure/bootstrap.yml#L23) on how to override a stage in Gitlab pipelines.
 
 ```
-azure_test_dag:
+azure_standalone_tests:
   before_script:
     - <any custom script can be executed>
 ```
@@ -248,7 +248,7 @@ should be set with the output_dag folder path as value
   add new additional environment variables, the environment variables are set by creating an .env file
 
 ```
-azure_create_dag:
+azure_build_dag:
   before_script:
     - <any custom script can be executed>
 ```

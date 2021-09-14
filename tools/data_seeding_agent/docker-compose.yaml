@@ -1,0 +1,18 @@
+version: '3'
+services:
+  data-seeding-agent:
+    build:
+      context: ../
+      dockerfile: ./data_seeding_agent/Dockerfile
+    image: msosdu.azurecr.io/data-seeding-agent:$VERSION
+    environment:
+      ARM_TENANT_ID: $ARM_TENANT_ID
+      ARM_SUBSCRIPTION_ID: $ARM_SUBSCRIPTION_ID
+      ARM_CLIENT_ID: $ARM_CLIENT_ID
+      ADMIN_ID: $ADMIN_ID
+      ARM_CLIENT_SECRET: $ARM_CLIENT_SECRET
+      OSDU_IDENTITY_ID: $OSDU_IDENTITY_ID
+      PARTITIONS: $PARTITIONS # comma separated list of partitions
+      RESOURCE_GROUP_NAME: $RESOURCE_GROUP_NAME
+      CONFIG_MAP_NAME: $CONFIG_MAP_NAME
+      VERSION: $VERSION

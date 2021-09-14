@@ -57,7 +57,7 @@ spec:
             - -c
             - |
               SIDECAR_PORT=15020
-              KV_CERT_NAME=appgw-ssl-cert
+              KV_CERT_NAME=istio-appgw-ssl-cert
               K8S_ISTIONAMESPACE_NAME=istio-system
 
               # Compare expire dates of certificates in Key Vault and in istio-system namespaces
@@ -111,9 +111,9 @@ spec:
               # Log In in Azure
               az login --service-principal -u ${client_id} -p ${client_secret} --tenant ${tenant_id}
 
-{{- if .Values.global.ingress.enableKeyvaultCert }}
+{{- if .Values.global.istio.enableIstioKeyvaultCert  }}
 
-              K8S_CERT_SECRET=appgw-ssl-cert
+              K8S_CERT_SECRET=istio-appgw-ssl-cert
               K8S_NAMESPACE_NAME=istio-system
               
               # Check certificate expire date.

@@ -1,8 +1,9 @@
+# Elevated permissions are required for running these commands.
 $myWebhookAadTenantId = "<Your Webhook's Azure AD tenant id>"
 
 Connect-AzureAD -TenantId $myWebhookAadTenantId
 
-# This is the "Azure Event Grid" Azure Active Directory (AAD) AppId
+# This is the "Azure Event Grid" Azure Active Directory (AAD) AppId. Don't change this value.
 $eventGridAppId = "4962773b-9cdb-44cf-a8bf-237846a00ab7"
 
 # Create the "Azure Event Grid" AAD Application service principal if it doesn't exist
@@ -66,8 +67,8 @@ Write-Host $myAppRoles
 #####################################################
 
 
-# This is the app id of the application which will create event subscription. Set to $null if you are not assigning the role to app.
-#$eventSubscriptionWriterAppId = "<the app id of the application which will create event subscription>"
+# This is the app id of the application which will create event subscription. Set to $null if you are not assigning the role to app. app-dev-sp-username in common resource keyvault contains this values.
+$eventSubscriptionWriterAppId = "<the app id of the application which will create event subscription>"
 
 $myServicePrincipal = Get-AzureADServicePrincipal -Filter ("appId eq '" + $myApp.AppId + "'")
 

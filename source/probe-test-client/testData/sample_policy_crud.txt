@@ -1,0 +1,8 @@
+package test
+import data.acls
+import data.nonexpired 
+default allow = false
+allow = true {
+    acls.allow
+    nonexpired.allow
+}

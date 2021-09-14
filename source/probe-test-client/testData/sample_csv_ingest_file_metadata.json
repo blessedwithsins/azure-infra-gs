@@ -1,0 +1,104 @@
+{
+    "id": "opendes:dataset--File.Generic:372035cd-e426-4628-a604-a09dcbedf58c",
+    "version": 1613026613300180,
+    "kind": "##PARTITION##:wks:dataset--File.Generic:1.0.0",
+    "acl": {
+      "viewers": [
+        "data.default.viewers@##PARTITION##.contoso.com"
+      ],
+      "owners": [
+        "data.default.viewers@##PARTITION##.contoso.com"
+      ]
+    },
+    "legal": {
+      "legaltags": [
+        "##TAG##"
+      ],
+      "otherRelevantDataCountries": [
+        "US"
+      ],
+      "status": "compliant"
+    },
+    "tags": {
+      "dataflowId": "test-dataflowid-proxy"
+    },
+    "data": {
+      "Endian": "BIG",
+      "Checksum": "string",
+      "DatasetProperties": {
+        "FileSourceInfo": {
+          "FileSource": "##FILE_SOURCE##",
+          "Name": "sample.csv"
+        }
+      },
+      "ExtensionProperties": {
+        "Classification": "Raw File",
+        "Description": "An text further describing this file example.",
+        "ExternalIds": [
+          "string"
+        ],
+        "FileDateCreated": {},
+        "FileDateModified": {},
+        "FileContentsDetails": {
+          "TargetKind": "##KIND##",
+          "FileType": "csv",
+          "FrameOfReference": [
+            {
+              "kind": "CRS",
+              "name": "GCS_WGS_1984",
+              "persistableReference": "{\"wkt\":\"GEOGCS[\\\"GCS_WGS_1984\\\",DATUM[\\\"D_WGS_1984\\\",SPHEROID[\\\"WGS_1984\\\",6378137.0,298.257223563]],PRIMEM[\\\"Greenwich\\\",0.0],UNIT[\\\"Degree\\\",0.0174532925199433],AUTHORITY[\\\"EPSG\\\",4326]]\",\"ver\":\"PE_10_3_1\",\"name\":\"GCS_WGS_1984\",\"authCode\":{\"auth\":\"EPSG\",\"code\":\"4326\"},\"type\":\"LBC\"}",
+              "propertyNames": [
+                "LATITUDE",
+                "LONGUITUDE"
+              ],
+              "propertyValues": [
+                "deg"
+              ],
+              "uncertainty": 0
+            },
+            {
+              "kind": "DateTime",
+              "persistableReference": "{\"type\": \"DAT\", \"format\": \"MM-dd-yyyy\"}",
+              "propertyNames": [
+                "PERMIT_DATE",
+                "INITIAL_COMPLETION_DATE",
+                "STATUS_DATE",
+                "SPUD_date"
+              ],
+              "propertyValues": [],
+              "uncertainty": 0
+            },
+            {
+              "kind": "Unit",
+              "name": "ft",
+              "persistableReference": "{\"scaleOffset\":{\"scale\":0.3048,\"offset\":0.0},\"symbol\":\"ft\",\"baseMeasurement\":{\"ancestry\":\"Length\",\"type\":\"UM\"},\"type\":\"USO\"}",
+              "propertyNames": [
+                "MD",
+                "TVD",
+                "ELEVATION"
+              ],
+              "propertyValues": [
+                "ft"
+              ],
+              "uncertainty": 0
+            }
+          ],
+          "relatedNaturalKey": [
+            {
+              "singlekey": {
+                "sourceColumn": "UWI",
+                "targetKind": "##KIND##",
+                "targetAttribute": "UWI",
+                "relationship-name": "Wellbore"
+              }
+            }
+          ],
+          "ParentReference": "CSBE0417"
+        }
+      },
+      "EncodingFormatTypeID": "string",
+      "Name": "sample.csv",
+      "SchemaFormatTypeID": "string"
+    },
+    "meta": []
+  }

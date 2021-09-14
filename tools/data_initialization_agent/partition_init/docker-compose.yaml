@@ -1,0 +1,14 @@
+version: '3'
+services:
+  partition-data-init:
+    build:
+      context: ../
+      dockerfile: ./partition_init/Dockerfile
+    image: msosdu.azurecr.io/partition-data-init:$VERSION
+    environment:
+      OSDU_HOST: $OSDU_HOST
+      OSDU_IDENTITY_ID: $OSDU_IDENTITY_ID
+      RESOURCE_GROUP_NAME: $RESOURCE_GROUP_NAME
+      PARTITIONS: $PARTITIONS # comma separated list of partitions
+      CONFIG_MAP_NAME: $CONFIG_MAP_NAME
+      VERSION: $VERSION

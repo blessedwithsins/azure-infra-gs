@@ -1,0 +1,10 @@
+{
+    "name": "My listener",
+    "description": "My test listener.",
+    "pushEndpoint": "https://domain.com",
+    "topic": "recordstopic",
+    "secret": {
+        "secretType": "HMAC",
+        "value": "redactedSecretValue"
+    }
+}

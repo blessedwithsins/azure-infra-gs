@@ -113,8 +113,8 @@ variable "redis_config_schedule" {
     cache_shard_count = number
   })
   default = {
-    server_patch_day  = "Friday"
-    server_patch_hour = 17
+    server_patch_day  = "Saturday"
+    server_patch_hour = 11
     cache_shard_count = 0
   }
 }
