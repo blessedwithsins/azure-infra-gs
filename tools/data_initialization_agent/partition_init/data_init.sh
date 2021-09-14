@@ -3,11 +3,6 @@
 currentStatus=""
 currentMessage=""
 
-az login --identity
-ENV_AKS=$(az aks list --resource-group $RESOURCE_GROUP_NAME --query [].name -otsv)
-az aks get-credentials --resource-group $RESOURCE_GROUP_NAME --name $ENV_AKS
-kubectl config set-context $RESOURCE_GROUP_NAME --cluster $ENV_AKS
-
 OSDU_URI=${OSDU_HOST}
 
 if [[ ${OSDU_HOST} != "https://"* ]] || [[ ${OSDU_HOST} != "http://"* ]]; then
@@ -37,6 +32,7 @@ else
   
     i=0
     while [[ $i -lt 3 ]]; do
+      i=$(expr $i + 1)
   
       init_response=$(curl -s -w " Http_Status_Code:%{http_code} " \
         -X POST \
@@ -53,11 +49,11 @@ else
         continue
       fi
   
-      # Status code check. succeed only if 2xx
+      # Status code check. succeed only if 2xx, or 409
       # quit for partition if 404 or 400.
       # 401 or 403, then retry after getting access token.
       # else sleep for 1min and retry
-      if [[ ${init_response} != *"Http_Status_Code:2"* ]];then
+      if [[ ${init_response} != *"Http_Status_Code:2"* ]] && [[ ${init_response} != *"Http_Status_Code:409"* ]];then
         if [[ ${init_response} == *"Http_Status_Code:400"* ]] || [[ ${init_response} == *"Http_Status_Code:404"* ]];then
           currentStatus="failure"
           currentMessage="${currentMessage}. Partition Init for partition ${partitions_array[index]} failed with response $init_response. "
@@ -82,14 +78,16 @@ else
   
         continue
       else
+        if [[ ${init_response} == *"Http_Status_Code:409"* ]];then
+          currentMessage="${currentMessage}. HTTP Status Code: 409 -> Partition ${partitions_array[index]} Already Exists. "
+          echo "HTTP Status Code: 409 -> Partition ${partitions_array[index]} Already Exists."
+        fi
         currentMessage="${currentMessage}. Partition ${partitions_array[index]} Initialized successfully. "
         echo "Partition ${partitions_array[index]} Initialized successfully."
         partition_initialized_count=$(expr $partition_initialized_count + 1)
   
         break
       fi
-      
-      i=$(expr $i + 1)
     done
 
     if [[ $i -ge 3 ]]; then
@@ -115,16 +113,21 @@ echo "Current Status: ${currentStatus}"
 echo "Current Message: ${currentMessage}"
 
 if [ ! -z "$CONFIG_MAP_NAME" -a "$CONFIG_MAP_NAME" != " " ]; then
-    Status=$(kubectl get configmap $CONFIG_MAP_NAME -o jsonpath='{.data.status}')
-    Message=$(kubectl get configmap $CONFIG_MAP_NAME -o jsonpath='{.data.message}')
+  az login --identity --username $OSDU_IDENTITY_ID
+  ENV_AKS=$(az aks list --resource-group $RESOURCE_GROUP_NAME --query [].name -otsv)
+  az aks get-credentials --resource-group $RESOURCE_GROUP_NAME --name $ENV_AKS
+  kubectl config set-context $RESOURCE_GROUP_NAME --cluster $ENV_AKS
 
-    if [[ ${Status} == *"success"* ]]; then # If status is already failed, do not over-write in any case.
-        Status="${currentStatus}"
-    fi
-    Message="${Message}. Partition Data Initialization: ${currentMessage}. "
+  Status=$(kubectl get configmap $CONFIG_MAP_NAME -o jsonpath='{.data.status}')
+  Message=$(kubectl get configmap $CONFIG_MAP_NAME -o jsonpath='{.data.message}')
 
-    ## Update ConfigMap
-    kubectl create configmap $CONFIG_MAP_NAME --from-literal=status="$Status" --from-literal=message="$Message" -o yaml --dry-run=client | kubectl replace -f -
+  Message="${Message}Partition Init Message: ${currentMessage}. "
+
+  ## Update ConfigMap
+  kubectl create configmap $CONFIG_MAP_NAME \
+    --from-literal=status="$currentStatus" \
+    --from-literal=message="$Message" \
+    -o yaml --dry-run=client | kubectl replace -f -
 fi
 
 if [[ ${currentStatus} == "success" ]]; then

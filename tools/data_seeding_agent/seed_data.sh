@@ -4,13 +4,9 @@ currentStatus=""
 currentMessage=""
 
 # This logs the Azure CLI in using the configured service principal.
-az login --service-principal -u $ARM_CLIENT_ID -p $ARM_CLIENT_SECRET --tenant $ARM_TENANT_ID
-az account set -s $ARM_SUBSCRIPTION_ID
-
-# Merge AKS context with current k8s cluster
-ENV_AKS=$(az aks list --resource-group $RESOURCE_GROUP_NAME --query [].name -otsv)
-az aks get-credentials --resource-group $RESOURCE_GROUP_NAME --name $ENV_AKS
-kubectl config set-context $RESOURCE_GROUP_NAME --cluster $ENV_AKS
+# az login --service-principal -u $ARM_CLIENT_ID -p $ARM_CLIENT_SECRET --tenant $ARM_TENANT_ID
+# az account set -s $ARM_SUBSCRIPTION_ID
+az login --identity --username $OSDU_IDENTITY_ID
 
 # The Legal_COO.json file needs to be loaded into the Data Partition Storage Account,
 # in the container  legal-service-azure-configuration.
@@ -103,16 +99,21 @@ echo "Current Status: ${currentStatus}"
 echo "Current Message: ${currentMessage}"
 
 if [ ! -z "$CONFIG_MAP_NAME" -a "$CONFIG_MAP_NAME" != " " ]; then
-    Status=$(kubectl get configmap $CONFIG_MAP_NAME -o jsonpath='{.data.status}')
-    Message=$(kubectl get configmap $CONFIG_MAP_NAME -o jsonpath='{.data.message}')
+  az login --identity --username $OSDU_IDENTITY_ID
+  ENV_AKS=$(az aks list --resource-group $RESOURCE_GROUP_NAME --query [].name -otsv)
+  az aks get-credentials --resource-group $RESOURCE_GROUP_NAME --name $ENV_AKS
+  kubectl config set-context $RESOURCE_GROUP_NAME --cluster $ENV_AKS
 
-    if [[ ${Status} == *"success"* ]]; then # If status is already failed, do not over-write in any case.
-        Status="${currentStatus}"
-    fi
-    Message="${Message}. Data Seeding Message: ${currentMessage}. "
+  Status=$(kubectl get configmap $CONFIG_MAP_NAME -o jsonpath='{.data.status}')
+  Message=$(kubectl get configmap $CONFIG_MAP_NAME -o jsonpath='{.data.message}')
 
-    ## Update ConfigMap
-    kubectl create configmap $CONFIG_MAP_NAME --from-literal=status="$Status" --from-literal=message="$Message" -o yaml --dry-run=client | kubectl replace -f -
+  Message="${Message}Static File Data Seeding Message: ${currentMessage}. "
+
+  ## Update ConfigMap
+  kubectl create configmap $CONFIG_MAP_NAME \
+    --from-literal=status="$currentStatus" \
+    --from-literal=message="$Message" \
+    -o yaml --dry-run=client | kubectl replace -f -
 fi
 
 if [[ ${currentStatus} == "success" ]]; then
