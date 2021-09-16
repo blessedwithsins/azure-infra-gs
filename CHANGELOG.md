@@ -6,7 +6,7 @@
 
 __Branch__ https://community.opengroup.org/osdu/platform/deployment-and-operations/infra-azure-provisioning/-/tree/release/0.11
 
-__Tag__ https://community.opengroup.org/osdu/platform/deployment-and-operations/infra-azure-provisioning/-/tags/0.11.2
+__Tag__ https://community.opengroup.org/osdu/platform/deployment-and-operations/infra-azure-provisioning/-/tags/v0.11.2
 
 __Infra Changes__
 - [Keda Upgrade to 2.x](https://community.opengroup.org/osdu/platform/deployment-and-operations/infra-azure-provisioning/-/issues/128) - Follow this Documentation to do it: [Keda Upgrade](docs/keda-upgrade.md)
