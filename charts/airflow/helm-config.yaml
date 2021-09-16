@@ -309,6 +309,8 @@ airflow:
       value: #{DNS_HOST}#
     - name: AIRFLOW_VAR_AZURE_ENABLE_MSI
       value: "false"
+    - name: AIRFLOW_VAR_AZURE_CONTAINER_REGISTRY
+      value: #{container-registry}#.azurecr.io
     - name: PYTHONPATH
       value: "/opt/celery"
     # Needed for installing python osdu python sdk. In future this will be changed
